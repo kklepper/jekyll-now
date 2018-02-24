@@ -548,3 +548,9 @@ Last but not least this text will be indexed by search engines and may be found 
 As people in times of Docker containers tend to use minimal Linux systems like Boot2Docker or Alpine Linux using ash instead of bash, most probably there will be more need for a substitute for LINENO. That's the path I have taken. Those 2 MySQL (or rather MariaDB) replication engines run in Docker containers as does the master. The OS is Boot2Docker which is based on Tiny Linux which in turn is based on Busybox.
 
 Hopefully, this text will give somebody else some insight in some time to come as well. Furthermore, I hope that you, having read so far, did enjoy the article and don't regret having spent your time.
+
+
+
+[1]: http://datacharmer.blogspot.de/2011/04/refactored-again-poor-mans-mysql.html
+[2]: https://www.percona.com/doc/percona-toolkit/LATEST/pt-table-checksum.html
+[3]: https://www.percona.com/doc/percona-toolkit/LATEST/pt-table-sync.html
