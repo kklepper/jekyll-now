@@ -3,9 +3,6 @@ layout: post
 title: Workaround for shells without LINENO
 ---
 
-![_config.yml]({{ site.baseurl }}/images/config.png)
-
-
 ## Table of Contents
 - [Workaround for shells without LINENO](#workaround-for-shells-without-lineno)
 - [Debugging](#debugging)
