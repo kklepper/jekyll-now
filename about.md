@@ -24,7 +24,7 @@ A place to include any other types of information that you'd like to include abo
 
 # Table of Contents
 
-1. [Workaround for shells without LINENO](#workaround)
+1. [Workaround for shells without LINENO](#workaround for shells without LINENO)
 2. [Debugging](#debugging)
 
 
