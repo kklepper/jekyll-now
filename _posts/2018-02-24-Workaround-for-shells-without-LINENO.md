@@ -282,7 +282,7 @@ Let's assume you have a fairly complex setup with a database engine of type MySQ
     # check mysql replication every minute
     * * * * * /path_to_your_script/mysql_repl_monitor.sh
 
-(See Giuseppe Maxia: [Refactored again: poor man's MySQL replicator monitor][1]). 
+(See Giuseppe Maxia: [Refactored again: poor man's MySQL replicator monitor](http://datacharmer.blogspot.de/2011/04/refactored-again-poor-mans-mysql.html). 
 
 The resulting output of this script is logged to `/tmp/repl_monitor.log`, so you may permanently watch the health status by calling
 
@@ -508,7 +508,7 @@ Why roll your own, revisited
 
 Some more considerations might be helpful. Let's again learn by example.
 
-I already mentioned the ready-to-use solutions for the problem of slaves running out of sync by Percona ([pt-table-checksum][4], [pt-table-sync][5]), but those make heavy use of Perl which may not be at your disposal and you may not be willing to install a big software packet just to connect to your database engine to begin with. So this is of no use for you. 
+I already mentioned the ready-to-use solutions for the problem of slaves running out of sync by Percona ([pt-table-checksum](https://www.percona.com/doc/percona-toolkit/LATEST/pt-table-checksum.html), [pt-table-sync](https://www.percona.com/doc/percona-toolkit/LATEST/pt-table-sync.html), but those make heavy use of Perl which may not be at your disposal and you may not be willing to install a big software packet just to connect to your database engine to begin with. So this is of no use for you. 
 
 But there is another reason why to step back here. I concede that, at first glance, it's compelling to be lazy and use other people's programs, but you have to understand them, too, if you want to make use of them, and if these tools don't work out as expected, you will have to analyze their code anyway (if you can) and try to make sense of it and find that piece of code that doesn't do as it should (I am no expert in Perl and would not like to invest time and energy to become good enough to debug a program by Percona). 
 
@@ -548,9 +548,3 @@ Last but not least this text will be indexed by search engines and may be found 
 As people in times of Docker containers tend to use minimal Linux systems like Boot2Docker or Alpine Linux using ash instead of bash, most probably there will be more need for a substitute for LINENO. That's the path I have taken. Those 2 MySQL (or rather MariaDB) replication engines run in Docker containers as does the master. The OS is Boot2Docker which is based on Tiny Linux which in turn is based on Busybox.
 
 Hopefully, this text will give somebody else some insight in some time to come as well. Furthermore, I hope that you, having read so far, did enjoy the article and don't regret having spent your time.
-
-
-
-[1]: http://datacharmer.blogspot.de/2011/04/refactored-again-poor-mans-mysql.html
-[2]: https://www.percona.com/doc/percona-toolkit/LATEST/pt-table-checksum.html
-[3]: https://www.percona.com/doc/percona-toolkit/LATEST/pt-table-sync.html
