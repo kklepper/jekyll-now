@@ -18,7 +18,9 @@ Workaround for shells without LINENO
 
 Lucky are those who have bash, but ash does not have LINENO, alas. Which is bad if you need to do a lot of testing on `Busybox` or the like.
 
-That's why I finally developed a simple and powerful workaround with interesting side effects for debugging and logging purposes. Instead of using 
+That's why I finally developed a simple and powerful workaround with interesting side effects for debugging and logging purposes. 
+
+Instead of using 
 
     echo $LINENO this is a simple comment with a line number
 
@@ -31,10 +33,9 @@ Use it with quotes like
 Output is
 
     16   "this is a simple comment with a line number"
+if the number of this line in the source file is 16. 
 
-if the number of this line in the source file is 16. Fine.
-
-The definition of this function is:
+Fine. The definition of this function is:
 
     echo_line_no () {
         cat -n $0 | grep "$1" |  sed "s/echo_line_no//g" 
@@ -43,7 +44,9 @@ The definition of this function is:
         # replace the string echo_line_no with nothing 
     } # echo_line_no
 
-This basically answers the question [How to show line number when executing bash script](https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script). Anything more to add? 
+This basically answers the question [How to show line number when executing bash script](https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script). 
+
+Anything more to add? 
 
 Sure. Why do you need this? How do you work with this? What can you do with this? Why do you want to tinker with this at all?
 
