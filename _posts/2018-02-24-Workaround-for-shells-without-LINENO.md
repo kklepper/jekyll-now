@@ -14,6 +14,7 @@ title: Workaround for shells without LINENO
 - [Error handling](#error-handling)
 - [Table Partitioning](#table-partitioning)
 - [Regular health checking](#regular-health-checking)
+- [Automatic failover](#automatic-failover)
 - [Adding a stopwatch](#adding-a-stopwatch)
 - [Why roll your own, revisited](#why-roll-your-own,-revisited)
 - [Have fun](#have-fun)
