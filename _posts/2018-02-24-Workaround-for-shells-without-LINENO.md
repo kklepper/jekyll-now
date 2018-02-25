@@ -10,7 +10,7 @@ title: Workaround for shells without LINENO
 - [Caveats](#caveats)
 - [Logging](#logging)
 - [Example](#example)
-- [Why roll your own?](#why-roll-your-own?)
+- [Why roll your own?](#why-roll-your-own)
 - [Error handling](#error-handling)
 - [Table Partitioning](#table-partitioning)
 - [Regular health checking](#regular-health-checking)
