@@ -372,6 +372,7 @@ All those tables have an auto increment primary key id, so the partition formula
 or 
 
     ALTER TABLE tbl PARTITION BY hash (id * 1000 + id) PARTITIONS 1000;
+
 respectively.
 
 Looking at the biggest of those tables, only 605 of these 1000 partitions contain data so far, so the data obviously is not distributed evenly. The positive feature is that all data belonging to a particular id will be found within a single partition. As most queries ask for data correlating to a particular id, this means that only one partition table has to be opened.
