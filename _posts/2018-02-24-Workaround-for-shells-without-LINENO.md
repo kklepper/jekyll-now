@@ -548,7 +548,7 @@ A second example: The shell script of Giuseppe Maxia mentioned above didn't reco
 
 Too bad and easily fixed by adding a 2nd function especially for use in the e-mail or the log file extracting not only a single value from the response of the server but the complete sentence to be used for those error messages. 
 
-In addition, he uses arrays, which are handy in bash, but not implemented in ash. So for this reason alone his code is not usable out-of-the-box and has to be rewritten for platforms not having bash.
+But he also uses arrays, which are handy in bash, albeit not implemented in ash. So for this reason alone his code is not usable out-of-the-box and has to be rewritten for platforms not having bash.
 
 Nevertheless, it is great to build upon brilliant code of masters like Giuseppe Maxia, learn from them and grow along the way. Which is exactly the mission of Stack Overflow, if I understand correctly. 
 
