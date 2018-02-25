@@ -6,6 +6,7 @@ title: Workaround for shells without LINENO
 ## Table of Contents
 - [Workaround for shells without LINENO](#workaround-for-shells-without-lineno)
 - [Debugging](#debugging)
+- [More complex cases](#more-complex-cases)
 - [How to use](#how-to-use)
 - [Caveats](#caveats)
 - [Logging](#logging)
@@ -22,6 +23,33 @@ title: Workaround for shells without LINENO
 Workaround for shells without LINENO
 ----------
 
+Define a function
+
+    echo_line_no () {
+        grep -n "$1" $0 |  sed "s/echo_line_no//g" 
+        # grep the line(s) containing input $1 with line numbers
+        # replace the function name with nothing 
+    } # echo_line_no
+
+Use it with quotes like 
+
+    echo_line_no "this is a simple comment with a line number"
+
+Output is
+
+    16   "this is a simple comment with a line number"
+
+if the number of this line in the source file is 16. 
+
+This basically answers the question [How to show line number when executing bash script](https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script) for ash users. 
+
+Anything more to add? 
+
+Sure. Why do you need this? How do you work with this? What can you do with this? Why do you want to tinker with this at all?
+
+Debugging
+----------
+
 Lucky are those who have bash, but ash does not have LINENO, alas. Which is bad if you need to do a lot of testing on `Busybox` or the like.
 
 That's why I finally developed a simple and powerful workaround with interesting side effects for debugging and logging purposes. 
@@ -31,33 +59,6 @@ Instead of using
     echo $LINENO this is a simple comment with a line number
 
 which does not work with e.g. `Busybox` or `Boot2Docker` or `Tiny Linux`, introduce a small and simple function `echo_line_no` (or whatever function name you like better) which prints the line number pretty much, but not exactly like LINENO. 
-
-Use it with quotes like 
-
-    echo_line_no "this is a simple comment with a line number"
-
-Output is
-
-    16   "this is a simple comment with a line number"
-if the number of this line in the source file is 16. 
-
-Fine. The definition of this function is:
-
-    echo_line_no () {
-        cat -n $0 | grep "$1" |  sed "s/echo_line_no//g" 
-        # show the file content with line numbers
-        # grep the line(s) containing input $1
-        # replace the string "echo_line_no" with nothing 
-    } # echo_line_no
-
-This basically answers the question [How to show line number when executing bash script](https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script). 
-
-Anything more to add? 
-
-Sure. Why do you need this? How do you work with this? What can you do with this? Why do you want to tinker with this at all?
-
-Debugging
-----------
 
 Line numbers are not just for fun, they are badly needed for debugging, and that's where things get more complicated. 
 
@@ -72,6 +73,9 @@ In particular I don't want to insult all you experts who are better than I and c
 It's for people like me I take the pain to write this all up, those who are new to the subject and have to fight their way more or less alone. Kind of paying back my debt according to the old mailing list ethics. 
 
 Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt.
+
+More complex cases
+----------
 
 Back to work. For example, if you like to use multi-line comments or show variables in your debugging messages, that simple approach given above will not work for those cases. 
 
@@ -88,7 +92,7 @@ Use the enhanced version instead:
         VARTOKEN=:
         input=${input%%$VARTOKEN*}
         # for variables: cut off everything before $VARTOKEN
-        cat -n $0 | grep "$input" |  sed "s/echo_line_no//g" 
+        grep -n "$input" $0 |  sed "s/echo_line_no//g" 
     } # echo_line_no
 
 The result for the enhanced version using the test script `test_echo_line_no.sh` (see below) is:
@@ -133,7 +137,7 @@ Create a script defining the function only. This script is to be included in the
         input=${input%%"$NL"*}
         VARTOKEN=:
         input=${input%%$VARTOKEN*}
-        cat -n $0 | grep "$input" |  sed "s/echo_line_no//g" 
+        grep -n "$input" $0 |  sed "s/echo_line_no//g" 
     } # echo_line_no
 
 Include this script into your working script (which you want to debug) via `source` call 
@@ -224,11 +228,11 @@ Logging
 
 You may even write a protocol for later inspection or tracking the performance of the working script. To this end simply add the appropriate instruction to your function, e.g. 
 
-`| tee -a /tmp/echo_line_no.log`
+    | tee -a /tmp/echo_line_no.log
 
 like so:
 
-    cat -n $0 | grep "$input" |  sed "s/echo_line_no//g" | tee -a /tmp/echo_line_no.log
+    grep -n "$input" $0 |  sed "s/echo_line_no//g" | tee -a /tmp/echo_line_no.log
 
 The log file in this case -- no surprise -- looks like
 
@@ -254,9 +258,9 @@ To implement this feature, first change the function script as follows:
 
     if [ -n $log_echo_line_no ]
     then
-        cat -n $0 | grep "$input" |  sed "s/echo_line_no//g"  | tee -a $log_echo_line_no 
+        grep -n "$input" $0 |  sed "s/echo_line_no//g"  | tee -a $log_echo_line_no 
     else
-        cat -n $0 | grep "$input" |  sed "s/echo_line_no//g" 
+        grep -n "$input" $0 |  sed "s/echo_line_no//g" 
     fi
     # log_echo_line_no may be defined in calling script 
 
@@ -571,9 +575,7 @@ Finally, if you want to repeat the above given tests, don't forget to replace `p
 
 You see, I haven't tested this approach under heavy conditions because unfortunately I already had developed these database repair scripts mentioned above without making use of `echo_line_no` -- in fact the deficiencies in debugging these programs finally made me look for a solution. I reckoned with lots of people having the same problem and some who not only know what to do, but published solutions on StackOverflow, for example.
 
-Well, not really. I found this page via one of those fantastic search engines (in fact Google). It wasn't easy, though, and I cannot even reproduce this search. What's more, I can't find the original search in my browser history. 
-
-The most refined search string therein is "shell script display line numbers -bash -diff -tail" and the title of [How to show line number when executing bash script](https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script) is not among the first 150 entries, so I have no idea how on earth I have found it at all. Of course, now that I know the exact title, searching for that title delivers this page at position number one.
+I finally found this page via Google "shell script display line numbers -diff -tail"; the term "shell script display line numbers -bash -diff -tail" which I used before obviously missed this entry. 
 
 The contributions to this page so far are nearly 5 years old now. They have shown me that there is no solution for my problem except I create one myself, which I did.
 
