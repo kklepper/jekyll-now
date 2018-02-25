@@ -527,8 +527,8 @@ This is the synchronizing script:
     
     # take the datetime here
     echo_line_no " -------- done, exit" DATE
-    
-    exit
+
+Here we use `docker` in combination with the `mysql` client like a function which is extremely elegant and very powerful. You can do quite complex database operations this way.
 
 It would be fine to get the total number of seconds at the end of the script. To not bloat the snippet here, I leave this as an exercise for you.
 
