@@ -46,8 +46,8 @@ Fine. The definition of this function is:
     echo_line_no () {
         cat -n $0 | grep "$1" |  sed "s/echo_line_no//g" 
         # show the file content with line numbers
-        # grep the line(s) containing $input
-        # replace the string echo_line_no with nothing 
+        # grep the line(s) containing input $1
+        # replace the string "echo_line_no" with nothing 
     } # echo_line_no
 
 This basically answers the question [How to show line number when executing bash script](https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script). 
