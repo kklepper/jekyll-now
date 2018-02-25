@@ -292,4 +292,11 @@ footer {
 @import "highlights";
 @import "svg-icons";
 
+body {
+	background-color:#FFF;
+	margin:10px 200px 40px 200px;
+	font:15px/20px normal Helvetica, Arial, sans-serif;
+	color:#4F5155;
+    padding: 0;
+}
             
