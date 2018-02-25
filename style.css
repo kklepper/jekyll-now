@@ -292,4 +292,6 @@ footer {
 @import "highlights";
 @import "svg-icons";
 
-p  { font-size: 1.9em; }            
+.entry {
+    font-size: 15px;
+}
