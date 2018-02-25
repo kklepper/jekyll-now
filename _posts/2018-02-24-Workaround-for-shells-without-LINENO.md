@@ -69,7 +69,7 @@ Sorry, it gets a bit lengthy for that reason.
 
 In case you fear I get talkative or be prating, just stop reading. 
 
-In particular I don't want to insult all you experts who are better than I and can do all of this on their own. 
+In particular I don't want to insult all you experts who are better than I, have far more experience and can do all of this on their own. 
 
 It's for people like me I take the pain to write this all up, those who are new to the subject and have to fight their way more or less alone. Kind of paying back my debt according to the old mailing list ethics. 
 
