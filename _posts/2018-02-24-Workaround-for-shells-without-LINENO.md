@@ -388,7 +388,9 @@ respectively.
 
 Looking at the biggest of those tables, only 605 of these 1000 partitions contain data so far, so the data obviously is not distributed evenly. The positive feature is that all data belonging to a particular id will be found within a single partition. As most queries ask for data correlating to a particular id, this means that only one partition table has to be opened.
 
-The average size of the partition tables is about 2 MB. The biggest chunk, however, has about 400 MB, which isn't quite what I was heading for. The situation doesn't seem to be that bad, though. The chance to hit one of the bigger partitions actually is much lower than hitting the whole unpartitioned table.
+The average size of the partition tables is about 2 MB. The biggest chunk, however, has about 416 MB, which isn't quite what I was heading for. The situation doesn't seem to be that bad, though. The chance to hit one of the bigger partitions actually is much lower than hitting the whole unpartitioned table.
+
+With a table of different type, all 1000 partitions were filled quite evenly, so the principle as such seems to be correct.
 
 MyISAM vs. InnoDB
 ----------
