@@ -457,7 +457,7 @@ the 2nd snippet has to be put inside the function `echo_line_no`.
         echo "    =========================================== $DATETAKEN "
     fi
 
-This is the script which does the synchronizing work:
+This is the synchronizing script:
 
     #!/bin/sh
     # /path_to_your_script/mysql_rsync_lock.sh
