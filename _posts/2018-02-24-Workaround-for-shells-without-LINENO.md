@@ -564,7 +564,9 @@ Finally, if you want to repeat the above given tests, don't forget to replace `p
 
 You see, I haven't tested this approach under heavy conditions because unfortunately I already had developed these database repair scripts mentioned above without making use of `echo_line_no` -- in fact the deficiencies in debugging these programs finally made me look for a solution. I reckoned with lots of people having the same problem and some who not only know what to do, but published solutions on StackOverflow, for example.
 
-Well, not really. I found this page via one of those fantastic search engines (in fact Google). It wasn't easy, though, and I cannot even reproduce this search. What's more, I can't find the original search in my browser history. The most refined search string therein is "shell script display line numbers -bash -diff -tail" and the title of [How to show line number when executing bash script](https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script) is not among the first 150 entries, so I have no idea how on earth I have found it at all. Of course, now that I know the exact title, searching for that title delivers this page at position number one.
+Well, not really. I found this page via one of those fantastic search engines (in fact Google). It wasn't easy, though, and I cannot even reproduce this search. What's more, I can't find the original search in my browser history. 
+
+The most refined search string therein is "shell script display line numbers -bash -diff -tail" and the title of [How to show line number when executing bash script](https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script) is not among the first 150 entries, so I have no idea how on earth I have found it at all. Of course, now that I know the exact title, searching for that title delivers this page at position number one.
 
 The contributions to this page so far are nearly 5 years old now. They have shown me that there is no solution for my problem except I create one myself, which I did.
 
