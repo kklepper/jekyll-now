@@ -532,7 +532,7 @@ Here we use `docker` in combination with the `mysql` client like a function whic
 
 It would be fine to get the total number of seconds at the end of the script. To not bloat the snippet here, I leave this as an exercise for you.
 
-As you see from the replication log, the script `/path_to_your_script/mysql_repl_monitor.sh` polls every minute, which is as frequent as cron allows. The call is cheap on the respective database engines, so there is no performance problem to be expected.
+As you see from the replication log and `crontab -l`, the script `/path_to_your_script/mysql_repl_monitor.sh` polls every minute, which is as frequent as cron allows. The call is cheap on the respective database engines, so there is no performance problem to be expected.
 
 Why roll your own, revisited
 ----------
