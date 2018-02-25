@@ -413,7 +413,7 @@ Here you may feel that this whole scenario isn't just something for individual s
 
 The problem is as general as load-balancing. You wouldn't want to write a load balancer yourself. That's why I included [haproxy](http://www.haproxy.org/) as a docker container and let this container do the load-balancing work for the 3 database containers.
 
-Just as well I could have used [MaxScale](https://mariadb.com/resources/blog/mariadb-maxscale-22-introducing-failover-switchover-and-automatic-rejoin) for this purpose, and indeed I have experimented with it in times when it was not yet mature. It's time to switch, I guess, so I will have a 2nd look soon.
+Just as well I could have used [MaxScale](https://mariadb.com/resources/blog/mariadb-maxscale-22-introducing-failover-switchover-and-automatic-rejoin) for this purpose, and indeed I have experimented with it in times when it was not yet mature. It's time to switch, I guess, so I will have a 2nd look soon, because in addition to load balancing, MaxScale has a lot of additional features, one of them being automatic failover. And this is something you definitely want to have if you can get it.
 
 Adding a stopwatch
 ----------
