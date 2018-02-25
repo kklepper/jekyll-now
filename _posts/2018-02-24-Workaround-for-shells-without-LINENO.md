@@ -447,7 +447,7 @@ In the snippet below you see the 2 calls to rsync plus the time but no line numb
         =========================================== 2018-02-23_21:58:18
         71   " -------- done, exit" DATE
 
-To this end, add the first snippet to the top of `/path_to_your_script/echo_line_no.sh`, 
+To implement this, add the first snippet to the top of `/path_to_your_script/echo_line_no.sh`, 
 
     TIMEDIFF=3600
     # to compensate UTC when called by cron
