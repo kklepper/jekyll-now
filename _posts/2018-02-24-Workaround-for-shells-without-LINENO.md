@@ -359,19 +359,24 @@ Table Partitioning
 
 For example, I have more than a dozen MyISAM tables of the same type of data some of which with more than 1 GB datafile each. This will slow down rsync operations on those tables. 
 
-Investigating this problem, I ended up dividing those tables into 3 groups, those small enough to not be partitioned, those to be partitioned into 100 chunks and into 1000 chunks. This way, I can keep table size in the range of at most 10 Mbytes. All those tables have an auto increment primary key id, so the formula is a kind of modulus operation given by
+Investigating this problem, I ended up dividing those tables into 3 groups, those small enough to not be partitioned, those to be partitioned into 100 chunks and into 1000 chunks. This way, I hoped to be able to keep table size in the range of at most 10 Mbytes. 
+
+All those tables have an auto increment primary key id, so the partition formula is a kind of modulus operation given by
 
     ALTER TABLE tbl PARTITION BY hash (id * 100 + id) PARTITIONS 100;
 
-respectively
+or 
 
     ALTER TABLE tbl PARTITION BY hash (id * 1000 + id) PARTITIONS 1000;
+respectively.
 
-Only 605 of these 1000 partitions contain data, and the average is about 2 MB. Looking at it, the situation doesn't seem to be as bad as it seemed to be at first sight. The chance to hit one of the bigger partitions actually is much lower than hitting the whole table.
+Looking at the biggest of those tables, only 605 of these 1000 partitions contain data so far, so the data obviously is not distributed evenly. The positive feature is that all data belonging to a particular id will be found within a single partition. As most queries ask for data correlating to a particular id, this means that only one partition table has to be opened.
 
-The data collected so far is just the beginning. Eventually all the partitions will be filled up quite evenly. Also, the overall size will grow accordingly, so we might have to introduce partitions by 10,000 - well, this is not possible at the moment, the limit is 8192, which makes it more difficult to compute the partition a particular id is to be found.
+The average size of the partition tables is about 2 MB. The biggest chunk, however, has about 400 MB, which isn't quite what I was heading for. The situation doesn't seem to be that bad, though. The chance to hit one of the bigger partitions actually is much lower than hitting the whole unpartitioned table.
 
-There are a good reasons why I chose MyISAM as database engine for these tables and not InnoDB. With partitioned InnoDB tables, things are more complicated, as usual, but moving files around can be done nevertheless. See Importing InnoDB Partitions in MySQL 5.6 and MariaDB 10.0/10.1
+The data collected so far is just the beginning. Eventually all the partitions will be filled up quite evenly. Also, the overall size will grow accordingly, so we might have to introduce partitions by 10,000 - well, this is not possible at the moment, the limit is 8192, which, for a human, makes it more difficult to compute the partition a particular id is to be found.
+
+There are a good reasons why I chose MyISAM as database engine for these tables and not InnoDB. With partitioned InnoDB tables, things are more complicated, as usual, but moving files around can be done nevertheless. See [Importing InnoDB Partitions in MySQL 5.6 and MariaDB 10.0/10.1](http://www.geoffmontee.com/importing-innodb-partitions-in-mysql-5-6-and-mariadb-10-010-1/)
 
 In case of MyISAM you can even choose which method to apply if things go wrong, `repair` or `copy`. The `frm` file is not touched as a rule, so there is nothing to do. If the data file `MYD` is different between master and slave, you best copy. `REPAIR TABLE` must copy as well, so this doesn't cost you any more time. 
 
