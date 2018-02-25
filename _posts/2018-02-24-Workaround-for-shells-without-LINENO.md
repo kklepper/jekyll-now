@@ -69,7 +69,9 @@ In case you fear I get talkative or be prating, just stop reading.
 
 In particular I don't want to insult all you experts who are better than I and can do all of this on their own. 
 
-It's for people like me I take the pain to write this all up, those who are new to the subject and have to fight their way more or less alone. Kind of paying back my debt according to the old mailing list ethics. Bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt.
+It's for people like me I take the pain to write this all up, those who are new to the subject and have to fight their way more or less alone. Kind of paying back my debt according to the old mailing list ethics. 
+
+Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt.
 
 Back to work. For example, if you like to use multi-line comments or show variables in your debugging messages, that simple approach given above will not work for those cases. 
 
