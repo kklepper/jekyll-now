@@ -122,6 +122,7 @@ img {
 .date {
   font-style: italic;
   color: $gray;
+  font-size:11px;
 }
 
 // Specify the color of the selection
@@ -287,11 +288,12 @@ footer {
   text-align: center;
 }
 
+.entry {
+    font-size: 25px;
+}
+
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
 @import "svg-icons";
 
-.entry {
-    font-size: 25px;
-}
