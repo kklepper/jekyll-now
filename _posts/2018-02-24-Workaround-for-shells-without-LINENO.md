@@ -178,15 +178,19 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     
     echo_line_no "this is another simple comment with line number and variable FOO enclosed :$FOO:"
     
-    echo_line_no $FOO
+    echo_line_no "$FOO"
     
+    # you might omit the quotes here because the variable contains no blanks
+
     echo '    -- you can always show the value of a variable and the line it is defined'
     
-    echo_line_no $msg
+    echo_line_no "$msg"
+    
+    # mind the quotes -- the variable contains blanks
     
     msg='another simple message'
     
-    echo_line_no $msg
+    # mind the quotes -- the variable contains blanks
     
     echo "    -- simple call inside function will try to filter for the argument"
     
@@ -198,7 +202,7 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     
     whatsup "howdy $buddy"
     
-    echo_line_no $buddy
+    echo_line_no "$buddy"
     
     whatsup "hi my dear buddy :$buddy:"
 
