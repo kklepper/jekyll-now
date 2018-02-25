@@ -289,7 +289,7 @@ footer {
 }
 
 .entry {
-    font-size: 25px;
+    font-size: 15px;
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
