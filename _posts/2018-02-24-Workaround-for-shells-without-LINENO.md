@@ -16,7 +16,7 @@ title: Workaround for shells without LINENO
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
 - [Adding a stopwatch](#adding-a-stopwatch)
-- [Why roll your own, revisited](#why-roll-your-own,-revisited)
+- [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
 Workaround for shells without LINENO
