@@ -71,7 +71,7 @@ In case you fear I get talkative or be prating, just stop reading.
 
 In particular I don't want to insult all you experts who are better than I, have far more experience and can do all of this on their own. 
 
-It's for people like me I take the pain to write this all up, those who are new to the subject and have to fight their way more or less alone. Kind of paying back my debt according to the old mailing list ethics. 
+It's for people like me I take the pain to write this all up, those who are new to the subject and have to fight their way more or less alone. Kind of paying back my debt according to the old mailing list ethics. In addition it turned out that this study revealed a lot of insight for myself as well.
 
 Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt.
 
