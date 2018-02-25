@@ -589,7 +589,7 @@ I finally found this page via Google "shell script display line numbers -diff -t
 
 The contributions to this page so far are nearly 5 years old now. They have shown me that there is no solution for my problem except I create one myself, which I did.
 
-Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution to their problems related to any of the search-relevant technical terms I have used. 
+Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
 
 As people in times of Docker containers tend to use minimal Linux systems like Boot2Docker or Alpine Linux using ash instead of bash, most probably there will be more need for a substitute for LINENO. That's the path I have taken. Those 2 MySQL (or rather MariaDB) replication engines run in Docker containers as does the master. The OS is Boot2Docker which is based on Tiny Linux which in turn is based on Busybox.
 
