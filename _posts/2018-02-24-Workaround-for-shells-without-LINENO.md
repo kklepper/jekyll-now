@@ -112,7 +112,7 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     ==:hey:====== argument given to function whatsup ========
     43  whatsup "hey"
     11       "this was from inside function whatsup, argument :$1:, line number is call line"
-    -- without VARTOKEN results in not showing at all
+    -- without VARTOKEN results in not showing anything
     ==:howdy joe:====== argument given to function whatsup ========
     11       "this was from inside function whatsup, argument :$1:, line number is call line"
     45  buddy=joe
