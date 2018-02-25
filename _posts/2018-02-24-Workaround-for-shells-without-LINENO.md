@@ -420,7 +420,9 @@ Just as well I could have used [MaxScale](https://mariadb.com/resources/blog/mar
 Adding a stopwatch
 ----------
 
-As I wanted to prove my claim with respect to the time taken, I noticed my chance to show you the power and elegance of Docker and improve the original debugging mechanism by adding a kind of stopwatch. Remember, `echo_line_no` takes exactly one parameter. If we add a 2nd parameter and this parameter is "DATE", then we take the time and show it.
+As I wanted to prove my claim with respect to the time taken, I noticed my chance to show you the power and elegance of Docker and improve the original debugging mechanism by adding a kind of stopwatch. 
+
+Remember, `echo_line_no` takes exactly one parameter. If we add a 2nd parameter and this parameter is "DATE", then we take the time and show it.
 
 The property of `echo_line_no` not showing anything if a variable is part of the first parameter, which looks like a flaw, now turns into a feature. We use the variable to suppress the output and only show the datetime. You see the output of the 2 calls to rsync which is where we take the time again but don't want to see anything else.
 
