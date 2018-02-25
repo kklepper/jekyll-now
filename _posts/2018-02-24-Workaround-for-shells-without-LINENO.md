@@ -554,7 +554,7 @@ Nevertheless, it is great to build upon brilliant code of masters like Giuseppe 
 
 Thanks a lot to everybody involved in this great and wonderful worldwide endeavor. Who would have been able to dream of this phenomenon, say, 30 years ago?
 
-Also, if you roll your own solution, 
+Summarizing, if you roll your own solution, 
 
  - you know what you're doing,  
 
