@@ -392,14 +392,6 @@ With a table of different type, but the same property of giving exact hits in ca
 
 The average size of the partition tables is about 2 MB. The biggest chunk, however, has about 416 MB, which isn't quite what I was heading for. The situation doesn't seem to be that bad, though. The chance to hit one of the bigger partitions actually is much lower than hitting the whole unpartitioned table.
 
-Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value. There is no algorithm for partitioning based on md5 values.  
-
-Right now there is no reason yet to partition this table, but in case it would make sense, the question was how to handle this case. It isn't hard to do:
-
-    ALTER TABLE tbl_md5 PARTITION BY hash (CONV(md5, 16, 10) * 100 + CONV(md5, 16, 10)) PARTITIONS 100;
-
-In words: convert the md5 value to a number and then proceed as usual.
-
 MyISAM vs. InnoDB
 ----------
 
