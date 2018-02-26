@@ -16,7 +16,7 @@ published: true
 - [Why roll your own?](#why-roll-your-own)
 - [Error handling](#error-handling)
 > - [Repair or copy (digression)](#repair-or-copy-digression)
-> - [Table Partitioning (digression)](#table-partitioning-digression)
+> - [Table partitioning (digression)](#table-partitioning-digression)
 > - [Partition by md5 (digression)](#partition-by-md5-digression)
 > - [Unusable distribution (digression)](#unusable-distribution-digression)
 > - [Experimenting with CONV (digression)](#experimenting-with-conv-digression)
@@ -376,7 +376,7 @@ This (repair or copy) may take a lot of time depending on the size of your table
 
 Chances are, only one file of the partition tables has a problem. In this case you only copy the faulty file which is most probably the fastest operation you can get.
 
-Table Partitioning (digression)
+Table partitioning (digression)
 ----------
 
 For example, I have more than a dozen MyISAM tables of the same type of data some of which with more than 1 GB datafile each. This will slow down rsync operations on those tables. 
@@ -404,7 +404,9 @@ You may wonder about the peculiar formulas for the partition definition. They ar
 Partition by md5 (digression)
 ----------
 
-Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value. There is no algorithm for partitioning based on md5 values. Right now there is no reason yet to partition this table, but in case it would make sense, the question was how to handle this case. 
+Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value. There is no algorithm for partitioning based on md5 values. 
+
+Right now there is no reason yet to partition this table, but in case it would make sense, the question is how to handle this case. 
 
 In order to get some idea, I first copied this table to a test database:
 
