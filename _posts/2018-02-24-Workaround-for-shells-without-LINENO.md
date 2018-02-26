@@ -404,9 +404,17 @@ You may wonder about the peculiar formulas for the partition definition. They ar
 Partition by md5 (digression)
 ----------
 
-Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value. There is no algorithm for partitioning based on md5 values. 
+Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value instead of an integer, as in the other cases. There is no algorithm for partitioning based on md5 values. 
 
-Right now there is no reason yet to partition this table, but in case it would make sense, the question is how to handle this case. 
+Right now there is no reason yet to partition this table, but in case it would make sense, the question is how to handle this case. Is it possible at all? And if so, how to do it best? 
+
+Most of the articles I read discourage partitioning by `HASH`. The official MariaDB features [Rick's RoTs -- Rules of Thumb for MySQL](http://mysql.rjweb.org/doc.php/ricksrots) at [Partition Maintenance](https://mariadb.com/kb/en/library/partition-maintenance/). Rick James claims
+
+    PARTITION BY RANGE is the only useful method. 
+
+and doesn't even mention partitioning by `HASH`. 
+
+There are lots of examples for partitioning by `RANGE`, but this is not really our business. We do have some tables where we collect data by date and will profit from this construction, but that isn't the main theme. So it may be interesting for others to see examples for partitioning by `HASH` here. 
 
 In order to get some idea, I first copied this table to a test database:
 
