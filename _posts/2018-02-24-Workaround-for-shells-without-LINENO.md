@@ -19,7 +19,7 @@ published: true
 > - [Table partitioning (digression)](#table-partitioning-digression)
 > - [Partition by md5 (digression)](#partition-by-md5-digression)
 > - [PRIMARY KEY clause (digression)](#primary-key-clause-digression)
-> - [Unusable distribution (digression)](#unusable-distribution-digression)
+> - [Unusable partition distribution (digression)](#unusable-partition-distribution-digression)
 > - [Experimenting with CONV (digression)](#experimenting-with-conv-digression)
 > - [Max value of bigint datatype (digression)](#max-value-of-bigint-datatype-digression)
 > - [Table type: MyISAM vs. InnoDB (digression)](#table-type-myisam-vs-innodb-digression)
@@ -486,10 +486,12 @@ Oh, I see, the engine had to switch to exponential representation. Okay, the fac
 
 Finally it works. 
 
-Unusable distribution (digression)
+Unusable partition distribution (digression)
 ----------
 
-Now what is the result? Big surprise. I expected all the values to be distributed evenly over all partitions. But on the contrary all of them are in one partition. How come?
+Now what is the result? Big surprise. 
+
+I expected all the values to be distributed evenly over all partitions. But on the contrary all of them are in one partition. How come?
 
 Well, which values may I expect?
 
