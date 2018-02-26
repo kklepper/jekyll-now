@@ -435,23 +435,27 @@ Next I populated this column with the integer value of the md5 column:
 
     >UPDATE tbl_md5 SET id = CONV(md5, 16, 10);
 
-Does it work now?
+Does it work now? No, it doesn't.
 
 PRIMARY KEY clause (digression)
 ----------
 
-No, it doesn't.
-
     >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
     ERROR 1503 (HY000): A PRIMARY KEY must include all columns in the table's partitioning function
 
-Oh yes, of course. When I encountered this error the first time it took quite a while for me to understand. Of course, Google was my first reach for help, but everybody just said: the error message tells it all. This didn't help me much.
+Oh yes, of course. 
 
-With a primary key as the only unique key, things may be easier to understand, but I happened to tackle a table with an additional unique key and had to comprehend that every unique key has to be changed accordingly.
+When I encountered this error the first time it took quite a while for me to understand. Google was my first reach for help as usual, but everybody just said: the error message tells it all. This didn't help me much.
+
+With a primary key as the only unique key, things may be easier to understand, but I happened to tackle a table with an additional unique key and had to comprehend that every unique key has to be changed accordingly. 
+
+The fix is easily done in any case:
 
     >ALTER TABLE `tbl_md5` ADD PRIMARY KEY `md5_lg_id_ct` (`md5`, `lg`, `id_ct`), DROP INDEX `PRIMARY`;
 
-As you see, the primary key was a compound key to begin with, adding a language code to the md5 value. But now it should work, right?
+As you see, the primary key was a compound key to begin with, adding a language code to the md5 value. 
+
+But now it should work, right?
 
     >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
     ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in '(`bak`.`#sql-180b_fc18`.`id_ct` * 100)'
