@@ -72,7 +72,7 @@ Line numbers are not just for fun, they are badly needed for debugging, and that
 
 I could just leave all of that as an exercise to you, but this is not the intention of Stack Overflow as I understand it. Hence I elaborate on the subject to give you as complete an insight as is possible for me. 
 
-Sorry, it gets a bit lengthy for that reason. While I was developing my ideas, I digressed a bit into database specifics new to me. If you are not interested, please skip those sections.
+Sorry, it gets a bit lengthy for that reason. While I was developing my ideas, I digressed a bit into database specifics new to me. If you are not interested, please simply skip those sections.
 
 In case you fear I get talkative or be prating, just stop reading. 
 
