@@ -414,7 +414,7 @@ Most of the articles I read discourage partitioning by `HASH`. The official Mari
 
 and doesn't even mention partitioning by `HASH`. 
 
-There are lots of examples for partitioning by `RANGE`, but this is not really our business. We do have some tables where we collect data by date and will profit from this construction, but that isn't the main theme. So it may be interesting for others to see examples for partitioning by `HASH` here. 
+There are lots of examples for partitioning by `RANGE`, but this is not really our business. We do have some tables where we collect data by date and will profit from this construction, but that isn't the main theme. So it may be interesting for others to see one more example for partitioning by `HASH` here. 
 
 In order to get some idea, I first copied this table to a test database:
 
