@@ -20,7 +20,7 @@ published: true
 > - [Partition by md5](#partition-by-md5)
 > - [Unusable distribution](#unusable-distribution)
 > - [Experimenting with CONV](#experimenting-with-conv)
-> - [Max of bigint](#max-of-bigint)
+> - [Max value of bigint datatype](#max-of-bigint)
 > - [MyISAM vs. InnoDB](#myisam-vs-innodb)
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
@@ -664,7 +664,7 @@ All of these experiments resulted in partition sizes which looked pretty similar
  
 At least I have found a solution to the md5 partitioning problem. And that's good.
 
-Max of bigint (digression)
+Max value of bigint datatype (digression)
 ----------
 
 To see where things get wrong, I issued the following:
