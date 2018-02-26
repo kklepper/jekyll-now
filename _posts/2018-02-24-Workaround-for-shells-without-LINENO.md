@@ -407,7 +407,7 @@ Partition by md5 (digression)
 
 Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value instead of an integer, as in the other cases. There is no algorithm for partitioning based on md5 values. 
 
-Right now there is no reason yet to partition this table, but in case it would make sense, the question is how to handle this case. Is it possible at all? And if so, how to do it best? 
+Right now there is no reason yet to partition this table, which has only a couple of hundred rows but already nearly 100 MB of data, but in case it would make sense, the question is how to handle this case. Is it possible at all? And if so, how to do it best? 
 
 Most of the articles I read discourage partitioning by `HASH`. The official MariaDB features [Rick's RoTs -- Rules of Thumb for MySQL](http://mysql.rjweb.org/doc.php/ricksrots) at [Partition Maintenance](https://mariadb.com/kb/en/library/partition-maintenance/). Rick James claims
 
@@ -489,7 +489,7 @@ Finally it works.
 Unusable partition distribution (digression)
 ----------
 
-Now what is the result? Big surprise. 
+What is the result? Big surprise. 
 
 I expected all the values to be distributed evenly over all partitions. But on the contrary all of them are in one partition. How come?
 
@@ -503,7 +503,7 @@ Well, which values may I expect?
     +--------------------------------------------------+
     1 row in set (0.00 sec)
 
-No surprise. We should expect the whole spectrum, but obviously the distribution is by no means evenly. 
+No surprise here. We should expect the whole spectrum the other end of which we already saw, but obviously the distribution is by no means evenly. In fact we only have one single value for all the different md5 values. 
 
     >SELECT MIN(id), MAX(id) FROM bak.tbl_md5;
     +----------------------+----------------------+
