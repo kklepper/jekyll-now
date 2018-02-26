@@ -691,7 +691,7 @@ At least I have found a solution to the md5 partitioning problem. And that's goo
 Max value of bigint datatype (digression)
 ----------
 
-To see where things get wrong, I issued the following:
+To see where things get wrong, I issued the following (concatenating 2 simple SQL commands to make testing easier -- sorry, reading is worse, but it may be interesting to see that this technique, which is well known from the shell, works in SQL as well):
 
     >UPDATE bak.tbl_md5 SET id = CONV(right(md5,15), 16, 10); SELECT MIN(id), MAX(id) FROM bak.tbl_md5;
     Query OK, 361 rows affected (0.21 sec)
