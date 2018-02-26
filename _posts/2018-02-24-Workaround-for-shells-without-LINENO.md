@@ -16,6 +16,7 @@ title: Workaround for shells without LINENO
 - [Table Partitioning](#table-partitioning)
 - [Partition by md5](#partition-by-md5)
 - [Unusable distribution](#unusable-distribution)
+- [Experimenting with CONV](#experimenting-with-conv)
 - [Max of bigint](#max-of-bigint)
 - [MyISAM vs. InnoDB](#myisam-vs-innodb)
 - [Regular health checking](#regular-health-checking)
@@ -553,7 +554,12 @@ Now this looks like it should be. Obviously this function `CONV` fails with 32-b
     +-------------------------------------------------+
     1 row in set (0.00 sec)
     
-This is what our conversion function delivers -- ever the same number. Let's experiment with chopping off a part of this 32 byte md5 value.
+This is what our conversion function delivers -- ever the same number. 
+
+Experimenting with CONV
+----------
+
+Let's experiment with chopping off a part of this 32 byte md5 value.
 
     >SELECT CONV('236125ffcece', 16, 10);
     +------------------------------+
