@@ -703,7 +703,7 @@ To see where things get wrong, I issued the following:
 
 Maybe it is time now to write a bug report. 
 
-Nope. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. That's why! I never hit that number before. 
+Better not. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. That's why! I never hit that number before. 
 
 MyISAM vs. InnoDB (digression)
 ----------
