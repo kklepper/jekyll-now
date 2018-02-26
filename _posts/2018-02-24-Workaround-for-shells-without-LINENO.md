@@ -402,8 +402,8 @@ Investigating the bigger tables in my collection, I noticed a kind of key-value-
 
 Right now there is no reason yet to partition this table, but in case it would make sense, the question was how to handle this case. In order to get some idea, I first copied this table to a test database:
 
-    >CREATE TABLE bak.tbl_md5 LIKE ci4.tbl_md5; 
-    >INSERT IGNORE INTO bak.tbl_md5 SELECT * FROM ci4.tbl_md5 ;
+    >CREATE TABLE bak.tbl_md5 LIKE main.tbl_md5; 
+    >INSERT IGNORE INTO bak.tbl_md5 SELECT * FROM main.tbl_md5 ;
 
 The first idea was to transform the md5 value to an integer and then proceed as usual:
 
@@ -577,7 +577,7 @@ This is the synchronizing script:
     dat1="/$DISK_1/data/slave1"
     dat2="/$DISK_2/data/slave2"
     # data directories for master and slaves
-    db=ci4
+    db=main
     # we only syncronize this database
     
     # take the datetime here
