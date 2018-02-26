@@ -15,6 +15,7 @@ title: Workaround for shells without LINENO
 - [Error handling](#error-handling)
 - [Table Partitioning](#table-partitioning)
 - [Partition by md5](#partition-by-md5)
+- [Unusable distribution](#unusable-distribution)
 - [Max of bigint](#max-of-bigint)
 - [MyISAM vs. InnoDB](#myisam-vs-innodb)
 - [Regular health checking](#regular-health-checking)
@@ -457,7 +458,12 @@ Oh, I see, the engine had to switch to exponential representation. Okay, the fac
     Query OK, 361 rows affected (1.19 sec)
     Records: 361  Duplicates: 0  Warnings: 0
 
-Finally it works. Now what is the result? Big surprise. I expected all the values to be distributed evenly over all partitions. But on the contrary all of them are in one partition. How come?
+Finally it works. 
+
+Unusable distribution
+----------
+
+Now what is the result? Big surprise. I expected all the values to be distributed evenly over all partitions. But on the contrary all of them are in one partition. How come?
 
 Well, which values may I expect?
 
@@ -479,8 +485,7 @@ No surprise. We should expect the whole spectrum, but obviously the distribution
     +----------------------+----------------------+
     1 row in set (0.00 sec)
 
-Now this is funny. It shouldn't be. In my understanding a hex value should just be a number. Let's start simple.
-
+This is funny. It shouldn't be. In my understanding a hex value should just be a number. Let's start simple.
 
     >SELECT CONV('f', 16, 10);
     +-------------------+
