@@ -793,23 +793,24 @@ The property of `echo_line_no` not showing anything if a variable is part of the
 In the snippet below you see the 2 calls to rsync plus the time but no line number.
 
     docker@boot2docker:/tmp$ /path_to_your_script/mysql_rsync_lock.sh
-        =========================================== 2018-02-23_21:58:17
-        39   " -------- flush tables lock tables" DATE
-        46   " -------- rsync dat_master dat_slaves"
+        =========================================== 2018-02-27_00:12:57
+    41: " -------- flush tables lock tables" DATE
+    48: " -------- rsync datm dat1"
     sending incremental file list
     
-    sent 5,483 bytes  received 12 bytes  10,990.00 bytes/sec
-    total size is 4,955,904,567  speedup is 901,893.46
-        =========================================== 2018-02-23_21:58:17
+    sent 294,577 bytes  received 12 bytes  589,178.00 bytes/sec
+    total size is 4,125,301,375  speedup is 14,003.58
+        =========================================== 2018-02-27_00:12:58
     sending incremental file list
     
-    sent 5,483 bytes  received 12 bytes  10,990.00 bytes/sec
-    total size is 4,955,904,567  speedup is 901,893.46
-        =========================================== 2018-02-23_21:58:17
-        57   " -------- SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1"
-        64   " unlock tables flush tables"
-        =========================================== 2018-02-23_21:58:18
-        71   " -------- done, exit" DATE
+    sent 294,577 bytes  received 12 bytes  589,178.00 bytes/sec
+    total size is 4,125,301,375  speedup is 14,003.58
+        =========================================== 2018-02-27_00:12:58
+    59: " -------- SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1"
+    66: " unlock tables flush tables"
+        =========================================== 2018-02-27_00:12:59
+    75: " -------- done" DATE
+     -------- time taken 2 seconds
 
 To implement this, add the first snippet to the top of `/path_to_your_script/echo_line_no.sh`, 
 
@@ -892,15 +893,15 @@ This is the synchronizing script:
         docker exec $db_server mysql -e "use $db; unlock tables; flush tables;"  
     done
     
-    # Unix timestamp
+    echo_line_no " -------- done" DATE
+    
     END=$(date +%s)
-
-    # take the datetime here
-    echo_line_no " -------- done, exit" DATE
+    
+    let USED=$END-$BEGIN
+    
+    echo " -------- time taken $USED seconds"
 
 Here we use `docker` in combination with the `mysql` client like a function which is extremely elegant and very powerful. You can do quite complex database operations this way.
-
-It would be fine to get the total number of seconds at the end of the script. To not bloat the snippet here, I leave this as an exercise for you.
 
 The script `/path_to_your_script/mysql_repl_monitor.sh` polls every minute, as you see from the replication log and `crontab -l`, which is as frequent as cron allows. The call is cheap on the respective database engines, so there is no performance problem to be expected.
 
