@@ -14,6 +14,7 @@ title: Workaround for shells without LINENO
 - [Why roll your own?](#why-roll-your-own)
 - [Error handling](#error-handling)
 - [Table Partitioning](#table-partitioning)
+- [Partition by md5](partition-by-md5)
 - [MyISAM vs. InnoDB](#myisam-vs-innodb)
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
@@ -391,6 +392,74 @@ Looking at the biggest of those tables, only 605 of these 1000 partitions contai
 With a table of different type, but the same property of giving exact hits in case of partitions, all 1000 partitions were filled quite evenly, so the principle as such seems to be correct and viable.
 
 The average size of the partition tables is about 2 MB. The biggest chunk, however, has about 416 MB, which isn't quite what I was heading for. The situation doesn't seem to be that bad, though. The chance to hit one of the bigger partitions actually is much lower than hitting the whole unpartitioned table.
+
+You may wonder about the peculiar formulas for the partition definition. They are due to the fact that the integer column used for hash partitioning starts with 1, which would make all records belonging to the first 100 or 1000 id would populate the first partition table. This formula avoids that. All of these first id records now belong to different partitions.
+
+Partition by md5
+----------
+
+Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value. There is no algorithm for partitioning based on md5 values.  
+
+Right now there is no reason yet to partition this table, but in case it would make sense, the question was how to handle this case. In order to get some idea, I first copied this table to a test database:
+
+    >CREATE TABLE bak.tbl_md5 LIKE ci4.tbl_md5; 
+    >INSERT IGNORE INTO bak.tbl_md5 SELECT * FROM ci4.tbl_md5 ;
+
+The first idea was to transform the md5 value to an integer and then proceed as usual:
+
+    >ALTER TABLE tbl_md5 PARTITION BY hash (CONV(md5, 16, 10) * 100 + CONV(md5, 16, 10)) PARTITIONS 100;
+    ERROR 1564 (HY000): This partition function is not allowed
+
+Therefore I introduced a new bigint column:
+
+    >ALTER TABLE `tbl_md5`
+    ADD `id` bigint unsigned NOT NULL AFTER `lg`;
+
+Next I populated this column with the integer value of the md5 column:
+
+    >UPDATE tbl_md5 SET id = CONV(md5, 16, 10);
+
+Does it work now?
+
+    >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
+    ERROR 1503 (HY000): A PRIMARY KEY must include all columns in the table's partitioning function
+
+Oh yes, of course.
+
+    >ALTER TABLE `tbl_md5`
+    ADD PRIMARY KEY `md5_lg_id_ct` (`md5`, `lg`, `id_ct`),
+    DROP INDEX `PRIMARY`;
+
+But now it should work, right?
+
+    >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
+    ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in '(`bak`.`#sql-180b_fc18`.`id_ct` * 100)'
+
+How come? What is the biggest bigint value I can get from a md5 column? 
+
+    >SELECT CONV('ffffffffffffffffffffffffffffffff', 16, 10);
+    +--------------------------------------------------+
+    | CONV('ffffffffffffffffffffffffffffffff', 16, 10) |
+    +--------------------------------------------------+
+    | 18446744073709551615                             |
+    +--------------------------------------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('ffffffffffffffffffffffffffffffff', 16, 10) *100;
+    +-------------------------------------------------------+
+    | CONV('ffffffffffffffffffffffffffffffff', 16, 10) *100 |
+    +-------------------------------------------------------+
+    |                                 1.8446744073709552e21 |
+    +-------------------------------------------------------+
+    1 row in set (0.00 sec)
+
+Oh, I see, the engine had to switch to exponential representation. Okay, the factor of 100 is not needed here and only makes things more complicated.
+
+    >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct) PARTITIONS 100;
+    Query OK, 361 rows affected (1.19 sec)
+    Records: 361  Duplicates: 0  Warnings: 0
+
+Finally it works.
 
 MyISAM vs. InnoDB
 ----------
