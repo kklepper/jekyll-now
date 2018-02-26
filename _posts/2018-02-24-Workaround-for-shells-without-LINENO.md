@@ -20,8 +20,8 @@ published: true
 > - [Partition by md5](#partition-by-md5)
 > - [Unusable distribution](#unusable-distribution)
 > - [Experimenting with CONV](#experimenting-with-conv)
-> - [Max value of bigint datatype](#max-of-bigint)
-> - [MyISAM vs. InnoDB](#myisam-vs-innodb)
+> - [Max value of bigint datatype](#max-value-of-bigint-datatype)
+> - [Table type: MyISAM vs. InnoDB](#table-type-myisam-vs-innodb)
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
 - [Adding a stopwatch](#adding-a-stopwatch)
@@ -706,7 +706,7 @@ Maybe it is time now to write a bug report.
 
 Better not. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. That's why! I never hit that number before. 
 
-MyISAM vs. InnoDB (digression)
+Table type: MyISAM vs. InnoDB (digression)
 ----------
 
 The data collected so far is just the beginning. Eventually all the partitions will be filled up quite evenly. Also, the overall size will grow accordingly, so we might have to introduce partitions by 10,000 - well, this is not possible at the moment, the limit is 8192, which, for a human only, makes it more difficult to compute the partition a particular id is to be found.
