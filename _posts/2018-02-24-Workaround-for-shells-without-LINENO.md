@@ -14,7 +14,6 @@ title: Workaround for shells without LINENO
 - [Why roll your own?](#why-roll-your-own)
 - [Error handling](#error-handling)
 - [Table Partitioning](#table-partitioning)
-- [Partition by md5](partition-by-md5)
 - [MyISAM vs. InnoDB](#myisam-vs-innodb)
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
