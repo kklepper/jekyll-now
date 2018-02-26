@@ -369,7 +369,7 @@ As these are the only errors I ever experienced apart from those induced by faul
 
 Consider for example the case that both master and slave tables differ because the slave table is corrupt for some reason (this may happen and usually nobody knows why -- could be hardware failure). 
 
-There are 2 strategies here. Either you let the database engine of the slave repair the slave table (which you have to do anyway even if this error is not detected by sync checking) which still doesn't give you the guarantee that both tables are identical or you copy the master table to the slave right away.
+There are 2 strategies here. Either you let the database engine of the slave repair the slave table (which you have to do anyway even if this error is not detected by sync checking). This still doesn't give you the guarantee that both tables are identical bytewise. Or you copy the master table to the slave right away.
 
 This (repair or copy) may take a lot of time depending on the size of your tables. For this reason, you may contemplate to partition big tables into sizable chunks. 
 
