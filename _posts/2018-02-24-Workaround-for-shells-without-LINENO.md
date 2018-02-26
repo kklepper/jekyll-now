@@ -5,40 +5,26 @@ title: Workaround for shells without LINENO
 
 ## Table of Contents
 
-
 - [Workaround for shells without LINENO](#workaround-for-shells-without-lineno)
-
 - [Debugging](#debugging)
-
 - [More complex cases](#more-complex-cases)
-
 - [How to use](#how-to-use)
-
 - [Caveats](#caveats)
-
 - [Logging](#logging)
-
 - [Example](#example)
-
 - [Why roll your own?](#why-roll-your-own)
-
 - [Error handling](#error-handling)
- - [Repair or copy](#repair-or-copy)
- - [Table Partitioning](#table-partitioning)
- - [Partition by md5](#partition-by-md5)
- - [Unusable distribution](#unusable-distribution)
- - [Experimenting with CONV](#experimenting-with-conv)
- - [Max of bigint](#max-of-bigint)
- - [MyISAM vs. InnoDB](#myisam-vs-innodb)
-
+> - [Repair or copy](#repair-or-copy)
+> - [Table Partitioning](#table-partitioning)
+> - [Partition by md5](#partition-by-md5)
+> - [Unusable distribution](#unusable-distribution)
+> - [Experimenting with CONV](#experimenting-with-conv)
+> - [Max of bigint](#max-of-bigint)
+> - [MyISAM vs. InnoDB](#myisam-vs-innodb)
 - [Regular health checking](#regular-health-checking)
-
 - [Automatic failover](#automatic-failover)
-
 - [Adding a stopwatch](#adding-a-stopwatch)
-
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
-
 - [Have fun](#have-fun)
 
 Workaround for shells without LINENO
