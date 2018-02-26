@@ -743,7 +743,7 @@ In case of MyISAM you can even choose which method to apply if things go wrong, 
 
 If the index file `MYI` is different, you best use `REPAIR TABLE`. Chances are, the repair is immediate, because very often it is just the number of records which is wrong being zero or any other number different from the correct number.
 
-Of course you have to make sure that the master table is not changed during these procedures. And if the process succeeded, you restart the slave reporting that problem and check if everything is okay now.
+Of course you have to make sure that the master table is not changed during these procedures. And if the process succeeded, you restart the slave reporting that problem and check if everything is okay now. End of digression.
 
 Regular health checking
 ----------
@@ -779,7 +779,7 @@ Here you may feel that this whole scenario isn't just something for individual s
 
 The problem is as general as load-balancing. You wouldn't want to write a load balancer yourself. That's why I included [haproxy](http://www.haproxy.org/) as a docker container and let this container do the load-balancing work for the 3 database containers.
 
-Just as well I could have used [MaxScale](https://mariadb.com/resources/blog/mariadb-maxscale-22-introducing-failover-switchover-and-automatic-rejoin) for this purpose, and indeed I have experimented with it in times when it was not yet mature. It's time to switch, I guess, so I will have a 2nd look soon, because in addition to load balancing, MaxScale has some more features, one of them being automatic failover. And this is something you definitely want to have if you can get it. End of digression.
+Just as well I could have used [MaxScale](https://mariadb.com/resources/blog/mariadb-maxscale-22-introducing-failover-switchover-and-automatic-rejoin) for this purpose, and indeed I have experimented with it in times when it was not yet mature. It's time to switch, I guess, so I will have a 2nd look soon, because in addition to load balancing, MaxScale has some more features, one of them being automatic failover. And this is something you definitely want to have if you can get it.
 
 Adding a stopwatch
 ----------
@@ -861,6 +861,9 @@ This is the synchronizing script:
     db=main
     # we only syncronize this database
     
+    # Unix timestamp
+    BEGIN=$(date +%s)
+
     # take the datetime here
     echo_line_no " -------- flush tables lock tables" DATE
     for db_server in m1 s1 s2 
@@ -889,6 +892,9 @@ This is the synchronizing script:
         docker exec $db_server mysql -e "use $db; unlock tables; flush tables;"  
     done
     
+    # Unix timestamp
+    END=$(date +%s)
+
     # take the datetime here
     echo_line_no " -------- done, exit" DATE
 
