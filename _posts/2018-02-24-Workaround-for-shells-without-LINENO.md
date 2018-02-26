@@ -587,14 +587,6 @@ This is what our conversion function delivers -- ever the same number. Let's exp
     +------------------------------+
     1 row in set (0.00 sec)
     
-    >SELECT CONV('33b293f632d0', 16, 10);
-    +------------------------------+
-    | CONV('33b293f632d0', 16, 10) |
-    +------------------------------+
-    | 56842079580880               |
-    +------------------------------+
-    1 row in set (0.00 sec)
-
 It looks like I am on the right track.
 
     >UPDATE bak.tbl_md5 SET id = CONV(right(md5,10), 16, 10);
