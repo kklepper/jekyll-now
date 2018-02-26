@@ -398,9 +398,9 @@ You may wonder about the peculiar formulas for the partition definition. They ar
 Partition by md5
 ----------
 
-Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value. There is no algorithm for partitioning based on md5 values.  
+Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value. There is no algorithm for partitioning based on md5 values. Right now there is no reason yet to partition this table, but in case it would make sense, the question was how to handle this case. 
 
-Right now there is no reason yet to partition this table, but in case it would make sense, the question was how to handle this case. In order to get some idea, I first copied this table to a test database:
+In order to get some idea, I first copied this table to a test database:
 
     >CREATE TABLE bak.tbl_md5 LIKE main.tbl_md5; 
     >INSERT IGNORE INTO bak.tbl_md5 SELECT * FROM main.tbl_md5 ;
