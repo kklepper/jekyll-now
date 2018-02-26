@@ -659,8 +659,10 @@ It looks like I am on the right track.
     Query OK, 361 rows affected (0.71 sec)
     Records: 361  Duplicates: 0  Warnings: 0
 
- All of these experiments resulted in partition sizes which looked pretty similar: 2 or 3 empty partition tables, the rest filled quite satisfactorily. At first sight, there was not much difference. So truncating the md5 value by some sensible number should be the cure here.
+All of these experiments resulted in partition sizes which looked pretty similar: 2 or 3 empty partition tables, the rest filled quite satisfactorily. At first sight, there was not much difference. So truncating the md5 value by some sensible number should be the cure here.
  
+At least I have found a solution to the md5 partitioning problem. And that's good.
+
 To see where things get wrong, I issued the following:
 
     >UPDATE bak.tbl_md5 SET id = CONV(right(md5,15), 16, 10); SELECT MIN(id), MAX(id) FROM bak.tbl_md5;
@@ -696,7 +698,9 @@ To see where things get wrong, I issued the following:
     +----------------------+----------------------+
     1 row in set (0.00 sec)
 
-Maybe it is time now to write a bug report. At least I have found a solution to the md5 partitioning problem. And that's good.
+Maybe it is time now to write a bug report. 
+
+Nope. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. Never hit that number before. 
 
 MyISAM vs. InnoDB
 ----------
