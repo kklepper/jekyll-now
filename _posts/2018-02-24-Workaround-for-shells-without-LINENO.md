@@ -15,6 +15,7 @@ title: Workaround for shells without LINENO
 - [Error handling](#error-handling)
 - [Table Partitioning](#table-partitioning)
 - [Partition by md5](#partition-by-md5)
+- [Max of bigint](#max-of-bigint)
 - [MyISAM vs. InnoDB](#myisam-vs-innodb)
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
@@ -662,6 +663,9 @@ It looks like I am on the right track.
 All of these experiments resulted in partition sizes which looked pretty similar: 2 or 3 empty partition tables, the rest filled quite satisfactorily. At first sight, there was not much difference. So truncating the md5 value by some sensible number should be the cure here.
  
 At least I have found a solution to the md5 partitioning problem. And that's good.
+
+Max of bigint
+----------
 
 To see where things get wrong, I issued the following:
 
