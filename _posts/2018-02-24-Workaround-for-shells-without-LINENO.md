@@ -362,8 +362,7 @@ But if you are sure that this doesn't happen and the error is not triggered and 
 
 Here I don't write about fancy scenarios. I have experienced replication errors which obviously stem from the database engines involved and which I could not explain. Google of course knows about these errors. They are discussed in the MySQL forum, but none of these cases has found a solution. So there is nothing I can conclude here. Brute force is the only remedy.
 
-Repair or copy
-----------
+###Repair or copy
 
 As these are the only errors I ever experienced apart from those induced by faulty code, I decided to develop a solution along the strategy of Percona. Thinking about it, it is an elegant solution as well. 
 
