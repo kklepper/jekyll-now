@@ -18,6 +18,7 @@ published: true
 > - [Repair or copy (digression)](#repair-or-copy-digression)
 > - [Table partitioning (digression)](#table-partitioning-digression)
 > - [Partition by md5 (digression)](#partition-by-md5-digression)
+> - [PRIMARY KEY clause (digression)](#primary-key-clause-digression)
 > - [Unusable distribution (digression)](#unusable-distribution-digression)
 > - [Experimenting with CONV (digression)](#experimenting-with-conv-digression)
 > - [Max value of bigint datatype (digression)](#max-value-of-bigint-datatype-digression)
@@ -436,14 +437,21 @@ Next I populated this column with the integer value of the md5 column:
 
 Does it work now?
 
+PRIMARY KEY clause (digression)
+----------
+
+No, it doesn't.
+
     >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
     ERROR 1503 (HY000): A PRIMARY KEY must include all columns in the table's partitioning function
 
-Oh yes, of course.
+Oh yes, of course. When I encountered this error the first time it took quite a while for me to understand. Of course, Google was my first reach for help, but everybody just said: the error message tells it all. This didn't help me much.
+
+With a primary key as the only unique key, things may be easier to understand, but I happened to tackle a table with an additional unique key and had to comprehend that every unique key has to be changed accordingly.
 
     >ALTER TABLE `tbl_md5` ADD PRIMARY KEY `md5_lg_id_ct` (`md5`, `lg`, `id_ct`), DROP INDEX `PRIMARY`;
 
-But now it should work, right?
+As you see, the primary key was a compound key to begin with, adding a language code to the md5 value. But now it should work, right?
 
     >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
     ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in '(`bak`.`#sql-180b_fc18`.`id_ct` * 100)'
