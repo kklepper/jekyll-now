@@ -13,6 +13,7 @@ title: Workaround for shells without LINENO
 - [Example](#example)
 - [Why roll your own?](#why-roll-your-own)
 - [Error handling](#error-handling)
+- [Repair or copy](#repair-or-copy)
 - [Table Partitioning](#table-partitioning)
 - [Partition by md5](#partition-by-md5)
 - [Unusable distribution](#unusable-distribution)
