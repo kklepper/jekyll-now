@@ -14,6 +14,7 @@ title: Workaround for shells without LINENO
 - [Why roll your own?](#why-roll-your-own)
 - [Error handling](#error-handling)
 - [Table Partitioning](#table-partitioning)
+- [Partition by md5](partition-by-md5)
 - [MyISAM vs. InnoDB](#myisam-vs-innodb)
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
@@ -393,6 +394,309 @@ With a table of different type, but the same property of giving exact hits in ca
 The average size of the partition tables is about 2 MB. The biggest chunk, however, has about 416 MB, which isn't quite what I was heading for. The situation doesn't seem to be that bad, though. The chance to hit one of the bigger partitions actually is much lower than hitting the whole unpartitioned table.
 
 You may wonder about the peculiar formulas for the partition definition. They are due to the fact that the integer column used for hash partitioning starts with 1, which would make all records belonging to the first 100 or 1000 id would populate the first partition table. This formula avoids that. All of these first id records now belong to different partitions.
+
+Partition by md5
+----------
+
+Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value. There is no algorithm for partitioning based on md5 values. Right now there is no reason yet to partition this table, but in case it would make sense, the question was how to handle this case. 
+
+In order to get some idea, I first copied this table to a test database:
+
+    >CREATE TABLE bak.tbl_md5 LIKE main.tbl_md5; 
+    >INSERT IGNORE INTO bak.tbl_md5 SELECT * FROM main.tbl_md5;
+
+The first idea was to transform the md5 value to an integer and then proceed as usual:
+
+    >ALTER TABLE tbl_md5 PARTITION BY hash (CONV(md5, 16, 10) * 100 + CONV(md5, 16, 10)) PARTITIONS 100;
+    ERROR 1564 (HY000): This partition function is not allowed
+
+Therefore I introduced a new bigint column:
+
+    >ALTER TABLE `tbl_md5` ADD `id` bigint unsigned NOT NULL AFTER `lg`;
+
+Next I populated this column with the integer value of the md5 column:
+
+    >UPDATE tbl_md5 SET id = CONV(md5, 16, 10);
+
+Does it work now?
+
+    >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
+    ERROR 1503 (HY000): A PRIMARY KEY must include all columns in the table's partitioning function
+
+Oh yes, of course.
+
+    >ALTER TABLE `tbl_md5` ADD PRIMARY KEY `md5_lg_id_ct` (`md5`, `lg`, `id_ct`), DROP INDEX `PRIMARY`;
+
+But now it should work, right?
+
+    >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
+    ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in '(`bak`.`#sql-180b_fc18`.`id_ct` * 100)'
+
+How come? What is the biggest bigint value I can get from a md5 column? 
+
+    >SELECT CONV('ffffffffffffffffffffffffffffffff', 16, 10);
+    +--------------------------------------------------+
+    | CONV('ffffffffffffffffffffffffffffffff', 16, 10) |
+    +--------------------------------------------------+
+    | 18446744073709551615                             |
+    +--------------------------------------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('ffffffffffffffffffffffffffffffff', 16, 10) *100;
+    +-------------------------------------------------------+
+    | CONV('ffffffffffffffffffffffffffffffff', 16, 10) *100 |
+    +-------------------------------------------------------+
+    |                                 1.8446744073709552e21 |
+    +-------------------------------------------------------+
+    1 row in set (0.00 sec)
+
+Oh, I see, the engine had to switch to exponential representation. Okay, the factor of 100 is not needed here and only makes things more complicated.
+
+    >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct) PARTITIONS 100;
+    Query OK, 361 rows affected (1.19 sec)
+    Records: 361  Duplicates: 0  Warnings: 0
+
+Finally it works. Now what is the result? Big surprise. I expected all the values to be distributed evenly over all partitions. But on the contrary all of them are in one partition. How come?
+
+Well, which values may I expect?
+
+    >SELECT CONV('00000000000000000000000000000000', 16, 10);
+    +--------------------------------------------------+
+    | CONV('00000000000000000000000000000000', 16, 10) |
+    +--------------------------------------------------+
+    | 0                                                |
+    +--------------------------------------------------+
+    1 row in set (0.00 sec)
+
+No surprise. We should expect the whole spectrum, but obviously the distribution is by no means evenly. 
+
+    >SELECT MIN(id), MAX(id) FROM bak.tbl_md5;
+    +----------------------+----------------------+
+    | min(id)              | max(id)              |
+    +----------------------+----------------------+
+    | 18446744073709551615 | 18446744073709551615 |
+    +----------------------+----------------------+
+    1 row in set (0.00 sec)
+
+Now this is funny. It shouldn't be. In my understanding a hex value should just be a number. Let's start simple.
+
+
+    >SELECT CONV('f', 16, 10);
+    +-------------------+
+    | CONV('f', 16, 10) |
+    +-------------------+
+    | 15                |
+    +-------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('e', 16, 10);
+    +-------------------+
+    | CONV('e', 16, 10) |
+    +-------------------+
+    | 14                |
+    +-------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('c0', 16, 10);
+    +--------------------+
+    | CONV('c0', 16, 10) |
+    +--------------------+
+    | 192                |
+    +--------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('cece', 16, 10);
+    +----------------------+
+    | CONV('cece', 16, 10) |
+    +----------------------+
+    | 52942                |
+    +----------------------+
+    1 row in set (0.00 sec)
+
+Now this looks like it should be. Obviously this function `CONV` fails with 32-byte values:
+    
+    >SELECT CONV('3e5fb34e6dbf83ad19236125ffcece', 16, 10);
+    +------------------------------------------------+
+    | CONV('3e5fb34e6dbf83ad19236125ffcece', 16, 10) |
+    +------------------------------------------------+
+    | 18446744073709551615                           |
+    +------------------------------------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('26b67a08ec79b047f6c21bcbad7109c', 16, 10);
+    +-------------------------------------------------+
+    | CONV('26b67a08ec79b047f6c21bcbad7109c', 16, 10) |
+    +-------------------------------------------------+
+    | 18446744073709551615                            |
+    +-------------------------------------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('32e6588e792ae357eb4a05175cab87e', 16, 10);
+    +-------------------------------------------------+
+    | CONV('32e6588e792ae357eb4a05175cab87e', 16, 10) |
+    +-------------------------------------------------+
+    | 18446744073709551615                            |
+    +-------------------------------------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('3d1ff61f4c797e2d63087715ff016f5', 16, 10);
+    +-------------------------------------------------+
+    | CONV('3d1ff61f4c797e2d63087715ff016f5', 16, 10) |
+    +-------------------------------------------------+
+    | 18446744073709551615                            |
+    +-------------------------------------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('3d5933685c7889c57cf33b293f632d0', 16, 10);
+    +-------------------------------------------------+
+    | CONV('3d5933685c7889c57cf33b293f632d0', 16, 10) |
+    +-------------------------------------------------+
+    | 18446744073709551615                            |
+    +-------------------------------------------------+
+    1 row in set (0.00 sec)
+    
+This is what our conversion function delivers -- ever the same number. Let's experiment with chopping off a part of this 32 byte md5 value.
+
+    >SELECT CONV('236125ffcece', 16, 10);
+    +------------------------------+
+    | CONV('236125ffcece', 16, 10) |
+    +------------------------------+
+    | 38900156321486               |
+    +------------------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('21bcbad7109c', 16, 10);
+    +------------------------------+
+    | CONV('21bcbad7109c', 16, 10) |
+    +------------------------------+
+    | 37094472224924               |
+    +------------------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('a05175cab87e', 16, 10);
+    +------------------------------+
+    | CONV('a05175cab87e', 16, 10) |
+    +------------------------------+
+    | 176271729014910              |
+    +------------------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('87715ff016f5', 16, 10);
+    +------------------------------+
+    | CONV('87715ff016f5', 16, 10) |
+    +------------------------------+
+    | 148921010624245              |
+    +------------------------------+
+    1 row in set (0.00 sec)
+    
+    >SELECT CONV('33b293f632d0', 16, 10);
+    +------------------------------+
+    | CONV('33b293f632d0', 16, 10) |
+    +------------------------------+
+    | 56842079580880               |
+    +------------------------------+
+    1 row in set (0.00 sec)
+
+It looks like I am on the right track.
+
+    >UPDATE bak.tbl_md5 SET id = CONV(right(md5,10), 16, 10);
+    Query OK, 361 rows affected (0.18 sec)
+    Rows matched: 361  Changed: 361  Warnings: 0
+    
+    >SELECT MIN(id), MAX(id) FROM bak.tbl_md5;
+    +------------+---------------+
+    | MIN(id)    | MAX(id)       |
+    +------------+---------------+
+    | 1249212789 | 1097729061761 |
+    +------------+---------------+
+    1 row in set (0.00 sec)
+    
+    >UPDATE bak.tbl_md5 SET id = CONV(right(md5,5), 16, 10);
+    Query OK, 361 rows affected (0.14 sec)
+    Rows matched: 361  Changed: 361  Warnings: 0
+    
+    >SELECT MIN(id), MAX(id) FROM bak.tbl_md5;
+    +---------+---------+
+    | MIN(id) | MAX(id) |
+    +---------+---------+
+    |     622 | 1044978 |
+    +---------+---------+
+    1 row in set (0.01 sec)
+    
+    >UPDATE bak.tbl_md5 SET id = CONV(right(md5,15), 16, 10);
+    Query OK, 361 rows affected (0.13 sec)
+    Rows matched: 361  Changed: 361  Warnings: 0
+    
+    >SELECT MIN(id), MAX(id) FROM bak.tbl_md5;
+    +-----------------+---------------------+
+    | MIN(id)         | MAX(id)             |
+    +-----------------+---------------------+
+    | 585822353884923 | 1149761746146186111 |
+    +-----------------+---------------------+
+    1 row in set (0.00 sec)
+    
+    >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id) PARTITIONS 100;
+    Query OK, 361 rows affected (0.48 sec)
+    Records: 361  Duplicates: 0  Warnings: 0
+    
+    >ALTER TABLE bak.tbl_md5 REMOVE PARTITIONING;
+    Query OK, 361 rows affected (0.69 sec)
+    Records: 361  Duplicates: 0  Warnings: 0
+    
+    >UPDATE bak.tbl_md5 SET id = CONV(right(md5,5), 16, 10);
+    Query OK, 361 rows affected (0.12 sec)
+    Rows matched: 361  Changed: 361  Warnings: 0
+    
+    >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id) PARTITIONS 100;
+    Query OK, 361 rows affected (0.36 sec)
+    Records: 361  Duplicates: 0  Warnings: 0
+    
+    >ALTER TABLE bak.tbl_md5 REMOVE PARTITIONING;
+    Query OK, 361 rows affected (0.57 sec)
+    Records: 361  Duplicates: 0  Warnings: 0
+    
+    >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id*100 + id) PARTITIONS 100;
+    Query OK, 361 rows affected (0.71 sec)
+    Records: 361  Duplicates: 0  Warnings: 0
+
+ All of these experiments resulted in partition sizes which looked pretty similar: 2 or 3 empty partition tables, the rest filled quite satisfactorily. At first sight, there was not much difference. So truncating the md5 value by some sensible number should be the cure here.
+ 
+To see where things get wrong, I issued the following:
+
+    >UPDATE bak.tbl_md5 SET id = CONV(right(md5,15), 16, 10); SELECT MIN(id), MAX(id) FROM bak.tbl_md5;
+    Query OK, 361 rows affected (0.21 sec)
+    Rows matched: 361  Changed: 361  Warnings: 0
+    
+    +-----------------+---------------------+
+    | MIN(id)         | MAX(id)             |
+    +-----------------+---------------------+
+    | 585822353884923 | 1149761746146186111 |
+    +-----------------+---------------------+
+    1 row in set (0.01 sec)
+    
+    >UPDATE bak.tbl_md5 SET id = CONV(right(md5,20), 16, 10); SELECT MIN(id), MAX(id) FROM bak.tbl_md5;
+    Query OK, 361 rows affected (0.76 sec)
+    Rows matched: 361  Changed: 361  Warnings: 0
+    
+    +----------------------+----------------------+
+    | MIN(id)              | MAX(id)              |
+    +----------------------+----------------------+
+    | 18446744073709551615 | 18446744073709551615 |
+    +----------------------+----------------------+
+    1 row in set (0.00 sec)
+    
+    >UPDATE bak.tbl_md5 SET id = CONV(right(md5,25), 16, 10); SELECT MIN(id), MAX(id) FROM bak.tbl_md5;
+    Query OK, 0 rows affected (0.05 sec)
+    Rows matched: 361  Changed: 0  Warnings: 0
+    
+    +----------------------+----------------------+
+    | MIN(id)              | MAX(id)              |
+    +----------------------+----------------------+
+    | 18446744073709551615 | 18446744073709551615 |
+    +----------------------+----------------------+
+    1 row in set (0.00 sec)
+
+Maybe it is time now to write a bug report. At least I have found a solution to the md5 partitioning problem. And that's good.
 
 MyISAM vs. InnoDB
 ----------
