@@ -729,7 +729,7 @@ Well, this is not based on actual production data. In case your data moves quick
 
 You see, a solution to problems depends heavily on the nature of your setup.  If your system resembles Wikipedia, you have totally different problems from one that works like Facebook, eBay, YouTube or Google.
 
-For the repair process it would be intelligent to analyze the error message from the slave. If that shows that just one table is affected, then only this table has to be processed. This will speed up the whole thing tremendously, if you have lots of tables.
+For the repair process it would be intelligent to analyze the error message from the slave. If that shows that just one table is affected, then only this table has to be processed. Doing so will speed up the whole thing tremendously, if you have lots of tables.
 
 Automatic failover
 ----------
