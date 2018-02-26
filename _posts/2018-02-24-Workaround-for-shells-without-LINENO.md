@@ -362,7 +362,7 @@ But if you are sure that this doesn't happen and the error is not triggered and 
 
 Here I don't write about fancy scenarios. I have experienced replication errors which obviously stem from the database engines involved and which I could not explain. Google of course knows about these errors. They are discussed in the MySQL forum, but none of these cases has found a solution. So there is nothing I can conclude here. Brute force is the only remedy.
 
-Repair or copy
+Repair or copy (digression)
 ----------
 
 As these are the only errors I ever experienced apart from those induced by faulty code, I decided to develop a solution along the strategy of Percona. Thinking about it, it is an elegant solution as well. 
@@ -375,7 +375,7 @@ This (repair or copy) may take a lot of time depending on the size of your table
 
 Chances are, only one file of the partition tables has a problem. In this case you only copy the faulty file which is most probably the fastest operation you can get.
 
-Table Partitioning
+Table Partitioning (digression)
 ----------
 
 For example, I have more than a dozen MyISAM tables of the same type of data some of which with more than 1 GB datafile each. This will slow down rsync operations on those tables. 
@@ -400,7 +400,7 @@ The average size of the partition tables is about 2 MB. The biggest chunk, howev
 
 You may wonder about the peculiar formulas for the partition definition. They are due to the fact that the integer column used for hash partitioning starts with 1, which would make all records belonging to the first 100 or 1000 id would populate the first partition table. This formula avoids that. All of these first id records now belong to different partitions.
 
-Partition by md5
+Partition by md5 (digression)
 ----------
 
 Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value. There is no algorithm for partitioning based on md5 values. Right now there is no reason yet to partition this table, but in case it would make sense, the question was how to handle this case. 
@@ -463,7 +463,7 @@ Oh, I see, the engine had to switch to exponential representation. Okay, the fac
 
 Finally it works. 
 
-Unusable distribution
+Unusable distribution (digression)
 ----------
 
 Now what is the result? Big surprise. I expected all the values to be distributed evenly over all partitions. But on the contrary all of them are in one partition. How come?
@@ -558,7 +558,7 @@ Now this looks like it should be. Obviously this function `CONV` fails with 32-b
     
 This is what our conversion function delivers -- ever the same number. 
 
-Experimenting with CONV
+Experimenting with CONV (digression)
 ----------
 
 Let's experiment with chopping off a part of this 32 byte md5 value.
@@ -663,7 +663,7 @@ All of these experiments resulted in partition sizes which looked pretty similar
  
 At least I have found a solution to the md5 partitioning problem. And that's good.
 
-Max of bigint
+Max of bigint (digression)
 ----------
 
 To see where things get wrong, I issued the following:
@@ -705,7 +705,7 @@ Maybe it is time now to write a bug report.
 
 Nope. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. Never hit that number before. 
 
-MyISAM vs. InnoDB
+MyISAM vs. InnoDB (digression)
 ----------
 
 The data collected so far is just the beginning. Eventually all the partitions will be filled up quite evenly. Also, the overall size will grow accordingly, so we might have to introduce partitions by 10,000 - well, this is not possible at the moment, the limit is 8192, which, for a human only, makes it more difficult to compute the partition a particular id is to be found.
