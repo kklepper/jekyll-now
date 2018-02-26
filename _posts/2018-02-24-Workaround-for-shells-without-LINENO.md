@@ -553,14 +553,6 @@ Now this looks like it should be. Obviously this function `CONV` fails with 32-b
     +-------------------------------------------------+
     1 row in set (0.00 sec)
     
-    >SELECT CONV('3d5933685c7889c57cf33b293f632d0', 16, 10);
-    +-------------------------------------------------+
-    | CONV('3d5933685c7889c57cf33b293f632d0', 16, 10) |
-    +-------------------------------------------------+
-    | 18446744073709551615                            |
-    +-------------------------------------------------+
-    1 row in set (0.00 sec)
-    
 This is what our conversion function delivers -- ever the same number. Let's experiment with chopping off a part of this 32 byte md5 value.
 
     >SELECT CONV('236125ffcece', 16, 10);
@@ -640,6 +632,8 @@ It looks like I am on the right track.
     | 585822353884923 | 1149761746146186111 |
     +-----------------+---------------------+
     1 row in set (0.00 sec)
+
+This looks promising.
     
     >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id) PARTITIONS 100;
     Query OK, 361 rows affected (0.48 sec)
