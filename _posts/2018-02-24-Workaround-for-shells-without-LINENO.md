@@ -973,7 +973,7 @@ Or even more compact:
 
 With the utility program `mysqlbinlog` we can read and export the binary log file to a file which is readable in parts; in parts only because SQL instructions which may contain sensible data are encrypted. The correct syntax for the docker instruction is for example
 
-    docker exec s2 /bin/ash -c 'mysqlbinlog -r /tmp/mysql-relay.s2.000002.sql /var/lib/mysql/mysql-relay.000002'
+    docker exec s2 /bin/ash -c 'mysqlbinlog -r /tmp/s2.mysql-relay.000002.sql /var/lib/mysql/mysql-relay.000002'
 
 In order to be able to inspect the protocol file from the host, you have to map your tmp directory accordingly. This you do in the docker-compose yml file for master and slaves in case you use docker compose, for example:
 
