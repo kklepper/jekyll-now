@@ -395,7 +395,9 @@ or
 
 respectively.
 
-Looking at the biggest of those tables, only 605 of these 1000 partitions contain data so far, so the data obviously is not distributed evenly. The positive feature is that all data belonging to a particular id will be found within a single partition. As most queries ask for data correlating to a particular id, this means that only one partition table has to be opened. This justifies partitioning in the first place.
+Looking at the biggest of those tables, only 605 of these 1000 partitions contain data so far, so the data obviously is not distributed evenly. The positive feature is that all data belonging to a particular id will be found within a single partition. 
+
+As most queries ask for data correlating to a particular id, this means that only one partition table has to be opened. This justifies partitioning in the first place. Also, quite regularly deletes on these id are performed, and the performance hit for this operation is not as big if the table is partitioned.
 
 With a table of different type, but the same property of giving exact hits in case of partitions, all 1000 partitions were filled quite evenly, so the principle as such seems to be correct and viable.
 
