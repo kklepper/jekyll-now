@@ -907,6 +907,8 @@ This is the synchronizing script:
 
 Here we use `docker` in combination with the `mysql` client like a function which is extremely elegant and very powerful. You can do quite complex database operations this way.
 
+Notice that for MySQL, `This option is incompatible with GTID-based replication` ([Replication Slave Options and Variables](https://dev.mysql.com/doc/refman/5.6/en/replication-options-slave.html#sysvar_sql_slave_skip_counter)). This restriction does not apply to [MariaDB](https://mariadb.com/kb/en/library/set-global-sql_slave_skip_counter/).
+
 Obviously, the slave is in sync with the master after this operation. So skipping the offending operation on the slave will get the slave running again. 
 
 At least I hope so. Maybe there is some more work to be done. The master has been locked and his binary log stopped at a certain position. Maybe we need to also synchronize the slave with respect to this position. Under heavy load you will certainly find out. Even in test condition, you can produce that load. Well, I should investigate this question. 
