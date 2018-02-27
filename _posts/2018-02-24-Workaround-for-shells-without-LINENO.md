@@ -27,6 +27,7 @@ published: true
 - [Automatic failover](#automatic-failover)
 - [Adding a stopwatch](#adding-a-stopwatch)
 > - [Docker and mysqlbinlog (digression)](#docker-and-mysqlbinlog-digression)
+> - [Partitioning by RANGE (digression)](#partitioning-by-range-digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
@@ -979,7 +980,12 @@ Or even more compact:
     $ docker exec s1 mysql -e 'SHOW SLAVE STATUS\G' | grep Relay_Log_File
                    Relay_Log_File: mysql-relay.000002
 
-With the utility program `mysqlbinlog` we can read and export the binary log file to a file which is readable in parts; in parts only because SQL instructions which may contain sensible data are encrypted. Online you will find recommendations to inspect the binlog file. You may even save the result to a file for thorough inspection. 
+These binary files are where information may be found when things go wrong -- at least they say so.
+
+Partitioning by RANGE (digression)
+----------
+
+With the utility program `mysqlbinlog` we can read and export the binary log files to a file which is human readable in parts; in parts only because SQL instructions which may contain sensible data are encrypted. Online you will find recommendations to inspect the binlog file. You may even save the result to a file for thorough inspection. 
 
 The correct syntax for the docker instruction is for example
 
@@ -995,18 +1001,22 @@ In order to be able to inspect the protocol file from the host, you have to map 
 
 As you see here, we also use the [Sphinx database search engine](http://sphinxsearch.com/).
 
-If you want to see what your database engine really does, you better record every data changing operation in a separate table. As we don't utilize MaxScale yet, we had to implement a master/slave-switch in our application. That's where the logging mechanism belongs:
+In my opinion, due to the encryption, the log file isn't really useful. If you want to see what your database engine really does, you better record every data changing operation in a separate table. 
+
+As we don't utilize MaxScale (yet), we had to implement a master/slave-switch in our application to send all data changing operations to the master and the rest to the slaves. 
+
+That's where the logging mechanism belongs:
 
     $this->_connection_type = 'db_master';
     $this->_sql_log_record($sql);
 
 The SQL term is compressed to save space, so searching for or looking at specific queries requires uncompressing. You cannot see the queries in your conventional [Adminer](https://www.adminer.org/) interface.
 
-MaxScale can do all that for you via [MaxScale Read-write splitting](https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-21-readwritesplit/) and [MaxScale Query Log All Filter](https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/maxscale-query-log-all-filter/). 
+MaxScale can do all that for you via [MaxScale Read-write splitting](https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-21-readwritesplit/) and [MaxScale Query Log All Filter](https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/maxscale-query-log-all-filter/), but of course you have to spend some time to understand all the bells and whistles or rather parameters and options. 
 
 Rolling your own, however, you know exactly what you do. If you record all your data changing queries, that table may fill up very quickly, so you might implement a mechanism to regularly discard data as well.
 
-This is another example for a good use of partitioning a table, this time by a `RANGE`. The benefit is, that dropping lots of records by range cost nothing, as it is done immediately by dropping that particular partition. 
+This is another example for a good use of partitioning a table, this time by `RANGE`. The benefit is, that dropping lots of records by range cost nothing, as it is done immediately by dropping that particular partition. 
 
 This regular dropping of the oldest partition and creating a new partition instead can be realized via stored procedure (you will find examples via Google, e.g. [MySQL Stored Procedure for Table Partitioning](https://gist.github.com/CodMonk/4b89294bbb48eb1edb31)) or conventionally via crontab, shell script and docker. Take your pick. End of digression.
 
