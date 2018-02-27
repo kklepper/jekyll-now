@@ -905,7 +905,7 @@ This is the `rsync` synchronizing script:
     
     echo "---------------------------------------------- time taken $USED seconds"
 
-Here we use `docker` in combination with the `mysql` client like a function which is extremely elegant and very powerful. 
+Here we use `docker` in combination with the `mysql` client like a function which is extremely elegant and very powerful: 
 
     docker exec $db_slave mysql -e "STOP SLAVE; SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1; START SLAVE;"  
 
@@ -979,7 +979,9 @@ Or even more compact:
     $ docker exec s1 mysql -e 'SHOW SLAVE STATUS\G' | grep Relay_Log_File
                    Relay_Log_File: mysql-relay.000002
 
-With the utility program `mysqlbinlog` we can read and export the binary log file to a file which is readable in parts; in parts only because SQL instructions which may contain sensible data are encrypted. The correct syntax for the docker instruction is for example
+With the utility program `mysqlbinlog` we can read and export the binary log file to a file which is readable in parts; in parts only because SQL instructions which may contain sensible data are encrypted. Online you will find recommendations to inspect the binlog file. You may even save the result to a file for thorough inspection. 
+
+The correct syntax for the docker instruction is for example
 
     docker exec s2 /bin/ash -c 'mysqlbinlog -r /tmp/s2.mysql-relay.000002.sql /var/lib/mysql/mysql-relay.000002'
 
