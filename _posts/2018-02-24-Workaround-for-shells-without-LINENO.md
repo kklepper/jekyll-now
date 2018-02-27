@@ -968,7 +968,7 @@ Another example: We use docker to get information from the slave which relay log
 
 Or even more compact:
 
-    $ docker exec -it s1 mysql -e 'SHOW SLAVE STATUS\G' | grep Relay_Log_File
+    $ docker exec s1 mysql -e 'SHOW SLAVE STATUS\G' | grep Relay_Log_File
                    Relay_Log_File: mysql-relay.000002
 
 With the utility program `mysqlbinlog` we can read and export the binary log file to a file which is readable in parts; in parts only because SQL instructions which may contain sensible data are encrypted. The correct syntax for the docker instruction is for example
