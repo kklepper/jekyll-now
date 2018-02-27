@@ -905,7 +905,11 @@ This is the synchronizing script:
     
     echo "---------------------------------------------- time taken $USED seconds"
 
-Here we use `docker` in combination with the `mysql` client like a function which is extremely elegant and very powerful. You can do quite complex database operations this way.
+Here we use `docker` in combination with the `mysql` client like a function which is extremely elegant and very powerful. 
+
+    docker exec $db_slave mysql -e "STOP SLAVE; SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1; START SLAVE;"  
+
+You can do quite complex database operations this way.
 
 Notice that for MySQL, `This option is incompatible with GTID-based replication` ([Replication Slave Options and Variables](https://dev.mysql.com/doc/refman/5.6/en/replication-options-slave.html#sysvar_sql_slave_skip_counter)). This restriction does not apply to [MariaDB](https://mariadb.com/kb/en/library/set-global-sql_slave_skip_counter/).
 
