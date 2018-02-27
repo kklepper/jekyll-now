@@ -26,6 +26,7 @@ published: true
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
 - [Adding a stopwatch](#adding-a-stopwatch)
+> - [Docker and mysqlbinlog (digression)](#docker-and-mysqlbinlog-digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
@@ -311,16 +312,16 @@ The resulting output of this script is logged to `/tmp/repl_monitor.log`, so you
 An example output with those 2 replication slaves might look like
 
     240 /path_to_your_script/mysql_repl_monitor.sh ---------------------------------------------- 2018-02-27_12:23:00 
-    175 =====> s1 2018-02-27_12:23:00 Replication s1 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82352145
-    175 =====> s2 2018-02-27_12:23:00 Replication s2 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82352145
+    175 =====> s1 2018-02-27_12:23:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82352145
+    175 =====> s2 2018-02-27_12:23:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82352145
     
     240 ----------------------------------------------------------------------- 2018-02-27_12:24:00 ---
-    175 =====> s1 2018-02-27_12:24:00 Replication s1 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82424522
-    175 =====> s2 2018-02-27_12:24:00 Replication s2 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82424522
+    175 =====> s1 2018-02-27_12:24:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82424522
+    175 =====> s2 2018-02-27_12:24:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82424522
     
     240 ----------------------------------------------------------------------- 2018-02-27_12:25:00 ---
-    175 =====> s1 2018-02-27_12:25:00 Replication s1 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82496899
-    175 =====> s2 2018-02-27_12:25:00 Replication s2 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82496899
+    175 =====> s1 2018-02-27_12:25:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82496899
+    175 =====> s2 2018-02-27_12:25:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82496899
 
 This is how it should be, regular entries at the given interval, nice and boring. 
 
@@ -909,6 +910,75 @@ Obviously, the slave is in sync with the master after this operation. So skippin
 At least I hope so. Maybe there is some more work to be done. The master has been locked and his binary log stopped at a certain position. Maybe we need to also synchronize the slave with respect to this position. Under heavy load you will certainly find out. Even in test condition, you can produce that load. Well, I should investigate this question. 
 
 The script `/path_to_your_script/mysql_repl_monitor.sh` polls every minute, as you see from the replication log and `crontab -l`, which is as frequent as cron allows. The call is cheap on the respective database engines, so there is no performance problem to be expected.
+
+Docker and mysqlbinlog (digression)
+----------
+
+Another example: We know from the slave which relay log it is working on
+
+    $ docker exec -it s1 mysql -e 'SHOW SLAVE STATUS\G'
+    *************************** 1. row ***************************
+                   Slave_IO_State: Waiting for master to send event
+                      Master_Host: mysql
+                      Master_User: replica
+                      Master_Port: 3306
+                    Connect_Retry: 30
+                  Master_Log_File: mysql-bin.000001
+              Read_Master_Log_Pos: 73291
+                   Relay_Log_File: mysql-relay.000002
+                    Relay_Log_Pos: 5403
+            Relay_Master_Log_File: mysql-bin.000001
+                 Slave_IO_Running: Yes
+                Slave_SQL_Running: Yes
+                  Replicate_Do_DB:
+              Replicate_Ignore_DB: tmp,bak
+               Replicate_Do_Table:
+           Replicate_Ignore_Table:
+          Replicate_Wild_Do_Table:
+      Replicate_Wild_Ignore_Table: tmp.%,bak.%
+                       Last_Errno: 0
+                       Last_Error:
+                     Skip_Counter: 0
+              Exec_Master_Log_Pos: 5537
+                  Relay_Log_Space: 73451
+                  Until_Condition: None
+                   Until_Log_File:
+                    Until_Log_Pos: 0
+               Master_SSL_Allowed: No
+               Master_SSL_CA_File:
+               Master_SSL_CA_Path:
+                  Master_SSL_Cert:
+                Master_SSL_Cipher:
+                   Master_SSL_Key:
+            Seconds_Behind_Master: 107
+    Master_SSL_Verify_Server_Cert: No
+                    Last_IO_Errno: 0
+                    Last_IO_Error:
+                   Last_SQL_Errno: 0
+                   Last_SQL_Error:
+      Replicate_Ignore_Server_Ids:
+                 Master_Server_Id: 7727678
+                   Master_SSL_Crl:
+               Master_SSL_Crlpath:
+                       Using_Gtid: Slave_Pos
+                      Gtid_IO_Pos: 1-7727678-13
+          Replicate_Do_Domain_Ids:
+      Replicate_Ignore_Domain_Ids:
+                    Parallel_Mode: conservative
+
+With the utility program `mysqlbinlog` we can read and export the binary log file to a file which is readable in parts; in parts only because SQL instructions which may contain sensible data are encrypted. The correct syntax for the docker instruction is for example
+
+    docker exec -it s2 /bin/ash -c 'mysqlbinlog -r /tmp/mysql-relay.s2.000002.sql /var/lib/mysql/mysql-relay.000002'
+
+In order to be able to inspect the protocol file from the host, you have to map your tmp directory accordingly which you do in the docker-compose yml file for master and slaves in case you use docker compose:
+
+    volumes:
+      - /c/tmp:/tmp
+      - /d/data/master:/var/lib/mysql
+      - /d/data/sphinx:/var/lib/sphinx/data
+      - /etc/ssh/:/etc/ssh/
+
+As you see here, we also use the [Sphinx database search engine](http://sphinxsearch.com/).
 
 Why roll your own, revisited
 ----------
