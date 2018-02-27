@@ -985,6 +985,13 @@ In order to be able to inspect the protocol file from the host, you have to map 
 
 As you see here, we also use the [Sphinx database search engine](http://sphinxsearch.com/).
 
+If you want to see what your database engine really does, you better record every data changing operation in a separate table. As we don't utilize MaxScale yet, we had to implement a master/slave-switch in our application. That's where the logging mechanism belongs:
+
+    $this->_connection_type = 'db_master';
+    $this->_sql_log_record($sql);
+
+MaxScale can do all that for you via [MaxScale Read-write splitting](https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-21-readwritesplit/) and [MaxScale Query Log All Filter](https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/maxscale-query-log-all-filter/). End of digression.
+
 Why roll your own, revisited
 ----------
 
