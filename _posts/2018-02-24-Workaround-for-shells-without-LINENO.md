@@ -833,7 +833,7 @@ the 2nd snippet has to be put inside the function `echo_line_no`.
         echo "    =========================================== $DATETAKEN "
     fi
 
-This is the synchronizing script:
+This is the `rsync` synchronizing script:
 
     #!/bin/sh
     # /path_to_your_script/mysql_rsync_lock.sh
@@ -880,7 +880,7 @@ This is the synchronizing script:
     for db_dir in $dat1 $dat2 
     do
         sudo rsync -av --delete $datm/$db/ $db_dir/$db/  
-        # in case of slave error will eventually find something
+        # in case of slave error rsync will find something
         echo_line_no " ---$db_dir---- " DATE
         # take the datetime here, suppress line, show only datetime 
     done
