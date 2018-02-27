@@ -310,17 +310,17 @@ The resulting output of this script is logged to `/tmp/repl_monitor.log`, so you
 
 An example output with those 2 replication slaves might look like
 
-    240    /path_to_your_script/mysql_repl_monitor.sh --- 2018-02-22_12:49:00 ---
-    175    =====> 2018-02-22_12:49:00 Replication s1 OK
-    175    =====> 2018-02-22_12:49:00 Replication s2 OK
+    240 /path_to_your_script/mysql_repl_monitor.sh ---------------------------------------------- 2018-02-27_12:23:00 
+    175 =====> s1 2018-02-27_12:23:00 Replication s1 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82352145
+    175 =====> s2 2018-02-27_12:23:00 Replication s2 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82352145
     
-    240    /path_to_your_script/mysql_repl_monitor.sh --- 2018-02-22_12:50:00 ---
-    175    =====> 2018-02-22_12:50:00 Replication s1 OK
-    175    =====> 2018-02-22_12:50:00 Replication s2 OK
+    240 ----------------------------------------------------------------------- 2018-02-27_12:24:00 ---
+    175 =====> s1 2018-02-27_12:24:00 Replication s1 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82424522
+    175 =====> s2 2018-02-27_12:24:00 Replication s2 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82424522
     
-    240    /path_to_your_script/mysql_repl_monitor.sh --- 2018-02-22_12:51:00 ---
-    175    =====> 2018-02-22_12:51:00 Replication s1 OK
-    175    =====> 2018-02-22_12:51:00 Replication s2 OK
+    240 ----------------------------------------------------------------------- 2018-02-27_12:25:00 ---
+    175 =====> s1 2018-02-27_12:25:00 Replication s1 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82496899
+    175 =====> s2 2018-02-27_12:25:00 Replication s2 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82496899
 
 This is how it should be, regular entries at the given interval, nice and boring. 
 
@@ -779,7 +779,7 @@ Here you may feel that this whole scenario isn't just something for individual s
 
 The problem is as general as load-balancing. You wouldn't want to write a load balancer yourself. That's why I included [haproxy](http://www.haproxy.org/) as a docker container and let this container do the load-balancing work for the 3 database containers.
 
-Just as well I could have used [MaxScale](https://mariadb.com/resources/blog/mariadb-maxscale-22-introducing-failover-switchover-and-automatic-rejoin) for this purpose, and indeed I have experimented with it in times when it was not yet mature. It's time to switch, I guess, so I will have a 2nd look soon, because in addition to load balancing, MaxScale has some more features, one of them being automatic failover. And this is something you definitely want to have if you can get it. 
+Just as well I could have used [MaxScale](https://mariadb.com/resources/blog/mariadb-maxscale-22-introducing-failover-switchover-and-automatic-rejoin) for this purpose, and indeed I have experimented with it in times when it was not yet mature. It's time to switch, I guess, so I will have a 2nd look soon, because in addition to load balancing, MaxScale has some more features, one of them being automatic failover. And this is something you definitely want to have if you can get it. And of course there are alternatives, too, like [Master High Availability Manager](https://www.percona.com/blog/2016/09/02/mha-quickstart-guide/).
 
 Adding a stopwatch
 ----------
