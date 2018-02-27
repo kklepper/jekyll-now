@@ -998,7 +998,7 @@ Rolling your own, however, you know exactly what you do. If you record all your 
 
 This is another example for a good use of partitioning a table, this time by a `RANGE`. The benefit is, that dropping lots of records by range cost nothing, as it is done immediately by dropping that particular partition. 
 
-This regular dropping of the oldest partition and creating a new partition instead can be realized via stored procedure (you will find examples via Google) or conventionally via crontab, shell script and docker. Take your pick. End of digression.
+This regular dropping of the oldest partition and creating a new partition instead can be realized via stored procedure (you will find examples via Google, e.g. [MySQL Stored Procedure for Table Partitioning](https://gist.github.com/CodMonk/4b89294bbb48eb1edb31)) or conventionally via crontab, shell script and docker. Take your pick. End of digression.
 
 Why roll your own, revisited
 ----------
