@@ -810,7 +810,8 @@ In the snippet below you see the 2 calls to rsync plus the time but no line numb
     66: " unlock tables flush tables"
         =========================================== 2018-02-27_00:12:59
     75: " -------- done" DATE
-     -------- time taken 2 seconds
+    ---------------------------------------------- time taken 2 seconds
+
 
 To implement this, add the first snippet to the top of `/path_to_your_script/echo_line_no.sh`, 
 
@@ -899,7 +900,7 @@ This is the synchronizing script:
     
     let USED=$END-$BEGIN
     
-    echo " -------- time taken $USED seconds"
+    echo "---------------------------------------------- time taken $USED seconds"
 
 Here we use `docker` in combination with the `mysql` client like a function which is extremely elegant and very powerful. You can do quite complex database operations this way.
 
