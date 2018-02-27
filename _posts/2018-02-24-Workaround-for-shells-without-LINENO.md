@@ -914,7 +914,7 @@ The script `/path_to_your_script/mysql_repl_monitor.sh` polls every minute, as y
 Docker and mysqlbinlog (digression)
 ----------
 
-Another example: We know from the slave which relay log it is working on
+Another example: We use docker to get information from the slave which relay log it is working on:
 
     $ docker exec -it s1 mysql -e 'SHOW SLAVE STATUS\G'
     *************************** 1. row ***************************
@@ -966,11 +966,16 @@ Another example: We know from the slave which relay log it is working on
       Replicate_Ignore_Domain_Ids:
                     Parallel_Mode: conservative
 
+Or even more compact:
+
+    $ docker exec -it s1 mysql -e 'SHOW SLAVE STATUS\G' | grep Relay_Log_File
+                   Relay_Log_File: mysql-relay.000002
+
 With the utility program `mysqlbinlog` we can read and export the binary log file to a file which is readable in parts; in parts only because SQL instructions which may contain sensible data are encrypted. The correct syntax for the docker instruction is for example
 
     docker exec -it s2 /bin/ash -c 'mysqlbinlog -r /tmp/mysql-relay.s2.000002.sql /var/lib/mysql/mysql-relay.000002'
 
-In order to be able to inspect the protocol file from the host, you have to map your tmp directory accordingly which you do in the docker-compose yml file for master and slaves in case you use docker compose:
+In order to be able to inspect the protocol file from the host, you have to map your tmp directory accordingly. This you do in the docker-compose yml file for master and slaves in case you use docker compose, for example:
 
     volumes:
       - /c/tmp:/tmp
