@@ -990,13 +990,15 @@ If you want to see what your database engine really does, you better record ever
     $this->_connection_type = 'db_master';
     $this->_sql_log_record($sql);
 
+The SQL term is compressed to save space, so searching for or looking at specific queries requires uncompressing. You cannot see the queries in your conventional [Adminer](https://www.adminer.org/) interface.
+
 MaxScale can do all that for you via [MaxScale Read-write splitting](https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-21-readwritesplit/) and [MaxScale Query Log All Filter](https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/maxscale-query-log-all-filter/). 
 
 Rolling your own, however, you know exactly what you do. If you record all your data changing queries, that table may fill up very quickly, so you might implement a mechanism to regularly discard data as well.
 
 This is another example for a good use of partitioning a table, this time by a `RANGE`. The benefit is, that dropping lots of records by range cost nothing, as it is done immediately by dropping that particular partition. 
 
-End of digression.
+This regular dropping of the oldest partition and creating a new partition can be realized via stored procedure (you will find examples via Google) or conventionally via crontab, shell script and docker. Take your pick. End of digression.
 
 Why roll your own, revisited
 ----------
