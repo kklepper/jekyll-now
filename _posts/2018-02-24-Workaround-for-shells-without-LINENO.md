@@ -982,9 +982,6 @@ Or even more compact:
 
 These binary files are where information may be found when things go wrong -- at least they say so.
 
-Partitioning by RANGE (digression)
-----------
-
 With the utility program `mysqlbinlog` we can read and export the binary log files to a file which is human readable in parts; in parts only because SQL instructions which may contain sensible data are encrypted. Online you will find recommendations to inspect the binlog file. You may even save the result to a file for thorough inspection. 
 
 The correct syntax for the docker instruction is for example
@@ -1000,6 +997,9 @@ In order to be able to inspect the protocol file from the host, you have to map 
       - /etc/ssh/:/etc/ssh/
 
 As you see here, we also use the [Sphinx database search engine](http://sphinxsearch.com/).
+
+Partitioning by RANGE (digression)
+----------
 
 In my opinion, due to the encryption, the log file isn't really useful. If you want to see what your database engine really does, you better record every data changing operation in a separate table. 
 
