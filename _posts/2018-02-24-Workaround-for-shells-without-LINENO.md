@@ -29,7 +29,7 @@ published: true
 > - [Docker and mysqlbinlog (digression)](#docker-and-mysqlbinlog-digression)
 > - [Partitioning by RANGE (digression)](#partitioning-by-range-digression)
 > - [Reorganizing sql logging (digression)](#reorganizing-sql-logging-digression)
-> - [Partitioning the table by day of week (digression)](#partitioning-the-table-by-day-of-week-digression)
+> - [Partitioning by day of week (digression)](#partitioning-by-day-of-week-digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
@@ -85,7 +85,7 @@ In particular I don't want to insult all you experts who are better than I, have
 
 It's for people like me I take the pain to write this all up, those who are new to the subject and have to fight their way more or less alone. Kind of paying back my debt according to the old mailing list ethics. In addition it turned out that this study revealed a lot of insight for myself as well.
 
-Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt.
+Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on this text, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. And still I don't now what I'm heading for in the end.
 
 More complex cases
 ----------
@@ -1113,10 +1113,10 @@ Apart from that, I can always add
 to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated.
 
 
-Partitioning the table by day of week (digression)
+Partitioning by day of week (digression)
 ----------
 
-I don't need that old data anymore. To save time testing partitioning, I just `truncate` the table.
+I don't need that old data anymore. To save time testing partitioning, I just `truncate` that table.
 
     M:7727678 [tmp]>TRUNCATE TABLE tmp.sql_log;
     Query OK, 0 rows affected (0.16 sec)
