@@ -1196,7 +1196,7 @@ I can't resist. The sentence above "Great. All that with just a few keystrokes y
 
 Back then we were serving this profession and we offered them this product. Of course, I had to prove that it worked, and the climax of the show was when I demonstrated the capability of defining complex macros triggered by just a few words. Those words could have been made up. The machine would learn this "word".
 
-A lawyer, after having produced his text, will have to save his legal document, printed for his client, the opposing party, the attorney, the court. And maybe he will also use his new acquisition, the fax machine, which was the latest technical equipment. So the term I coined for this complex operation was "fax it up". And of course, it worked.
+A lawyer, after having produced his text, will have to save his legal document, printed for his client, the opposing party, the attorney, the court, maybe several consultants and witnesses. And maybe he will also use his new acquisition, the fax machine, which was the latest technical equipment. So the term I coined for this complex operation was "fax it up". And of course, it worked.
 
 I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I did work with Windows Speech Recognition for a long time as well, using one for one language and the other for another, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
 
@@ -1367,7 +1367,7 @@ You see, in the meantime I issued other data changing operations so we now have 
 
 Great surprise here. Why are all our records of the day in partition `p4`? shouldn't they be in `p3`? 
 
-Well, the database starts with 1 for Sunday -- at least the shell and the database agree on the day to start with. Partitioning also starts with 0, so let's change our partitioning scheme again:
+Well, the database starts with 1 for Sunday -- at least the shell and the database agree on the day to start with. Partitioning also starts with 0, so let's change our partitioning scheme again (remove the old one first):
 
     M:7727678 [tmp]>ALTER TABLE `sql_log` PARTITION BY HASH ((DAYOFWEEK(tmstmp) % 7) -1) PARTITIONS 7;
     Query OK, 310 rows affected (0.03 sec)
