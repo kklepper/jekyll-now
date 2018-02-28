@@ -1246,7 +1246,7 @@ Finally we are ready to partition this table.
 
     ALTER TABLE `tmp.sql_log` PARTITION BY HASH (DAY(tmstmp)) PARTITIONS 7;
 
-As the day number of today is 28, the modulus by 7 of which is 0, partition 0 should be effected. To test it, I truncated the table, initiated an operation which would change data, got 154 entries in my table `tmp.sql_log` in partition `p0`. To make sure I'm on the right track, I issued a couple of entries manually to get different timestamp values:
+As the day number of today is 28, the modulus by 7 of which is 0, partition 0 should be effected. To test it, I initiated an operation which would change data, got 154 entries in my table `tmp.sql_log` in partition `p0`. To make sure I'm on the right track, I issued a couple of entries manually to get different timestamp values:
 
     M:7727678 [tmp]>insert into tmp.sql_log (tmstmp) values ('2018-02-27 12:59:00');
     Query OK, 1 row affected, 2 warnings (0.01 sec)
@@ -1335,7 +1335,9 @@ So we have to reorganize our partitions. But before doing that, let's have a loo
     -rw-rw----    1 dockrema dockrema        20 Feb 27 12:11 /d/data/master/tmp/sql_log#P#p6.MYD
     -rw-rw----    1 dockrema dockrema    112920 Feb 28 14:58 /d/data/master/tmp/sql_log#P#p0.MYD
 
-From here we see easily which partition is the oldest and should be dropped.
+From here we see easily which partition is the oldest and should be dropped. You may wonder about the group and the owner of these files. We manipulate these files from inside the docker container via group and owner `mysql`. If you look at these files from inside the container, you will see that. 
+
+But here I am looking from the host, and docker somehow introduces a group and a user to cope with this inside outside view. That's all I know. Most probably there will be some more to explain and understand, but that's enough for me.
 
 We need a similar function given by the shell.
 
@@ -1352,7 +1354,7 @@ That's correct. Let's reorganize our partition now. Unfortunately I was misled b
     Query OK, 310 rows affected (0.02 sec)
     Records: 310  Duplicates: 0  Warnings: 0
 
-Let's inspect the file data. 
+You see, in the meantime I issued other data changing operations so we now have 310 records. Let's inspect the file data. 
 
     $ ls -latr  /d/data/master/tmp/sql_log#*.MYD
     -rw-rw----    1 dockrema dockrema         0 Feb 28 16:08 /d/data/master/tmp/sql_log#P#p6.MYD
