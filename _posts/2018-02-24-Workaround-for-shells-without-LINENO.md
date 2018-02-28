@@ -1204,13 +1204,13 @@ The reason why I stuck with DragonDictate is that Windows Speech Recognition int
 
 Dragon dictate, for instance, if you just say one word, because you're still thinking about the rest of the sentence, will search all tabs in your application for this word in order to switch to that tab. It took me a long time to understand what's happening here.
 
-At the beginning of the new century, I taught database classes and sometimes used in DragonDictate to dictate SQL into my notebook. I don't program with DragonDictate, instead I rather use AHK. But if I have to write more than just a few characters, I'll switch to DragonDictate. 
+At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than just a few characters, I'll switch to DragonDictate. And if I don't have that tool to my disposition, I feel like crippled. 
 
-And I don't use the latest edition. I don't see the need to buy this product again and again. It's excellent, at least for my purposes, and I don't even have the professional edition, so I don't use any macros.
+I don't use the latest edition as I don't see the need to buy this product again and again. It's excellent, at least for my purposes, and I don't even have the professional edition, so I don't use any macros.
 
-Every once in a while, when I met colleagues complaining about stress injury syndrome, I told them about this fascinating technique. You cannot have it in Linux, unfortunately, except you simulate Windows, but anyway I still have to meet somebody who is interested. I don't know anybody who dictates.
+Every once in a while, when I met colleagues complaining about stress injury syndrome, I told them about this fascinating technique. You cannot have it in Linux, unfortunately, except you simulate Windows, but anyway I still have to meet somebody who is interested. I don't know of anybody who dictates.
 
-Of course, there are lots of people online using these products, but they are professionally producing huge amounts of text. The industry has concentrated on lawyers or physicians, although back then everybody was dreaming of talking with a machine. Nowadays we have Siri and Cortana, but sorry, I don't use that.
+Of course, there are lots of people online using these products and chatting about it in their forums, but they are a totally different kind of people and professionally producing huge amounts of text. The industry has concentrated on lawyers and physicians, obviously successfully. Although back then everybody was dreaming of talking with a machine ("hello computer"), not much has happened in the private realm. Nowadays we have Siri and Cortana, but sorry, I don't use that.
 
 Partitioning by day of week -- digression
 ----------
