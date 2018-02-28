@@ -1056,7 +1056,7 @@ In replication, every machine must have a different ID. If you have several slav
 
 Oh, 3 warnings here... Better see what it is:
 
-    M:7727678 [tmp]>SHOW warnings;
+    M:7727678 [tmp]>SHOW WARNINGS;
     +-------+------+-------------------------------------------------------------------+
     | Level | Code | Message                                                           |
     +-------+------+-------------------------------------------------------------------+
@@ -1158,7 +1158,7 @@ You may then utilize your keyboard and type bravely `SHOW processlist;` -- until
 
     ::spl::SHOW processlist;
 
-Here are some other snippets I use:
+Here are some other snippets I use often:
 
     ::saf::SELECT * FROM 
     ::sbl::SHOW BINARY LOGS;
@@ -1168,12 +1168,24 @@ Here are some other snippets I use:
     ::sss::SHOW SLAVE STATUS\G
     ::ssu::SELECT user, host, password FROM mysql.user ORDER BY 1; 
     ::ssv::SHOW VARIABLES LIKE 'serv%';   
-    ::stt::SHOW tables;
-    ::sttt::SHOW tables FROM tmp;
+    ::stt::SHOW TABLES;
+    ::sttt::SHOW TABLES FROM tmp;
     ::svl::SHOW VARIABLES LIKE '%%';   
-    ::sww::SHOW warnings;
+    ::sww::SHOW WARNINGS;
+    ::ggrr::grep -rn '/mnt/sda1/wp/ci/application/' -e '' ; search for terms in source code
+    ::ggc::git clone
+    ::ggcc::git checkout  
+    ::ggs::git status
+    ::ggp::git push origin master
+    ::ggpp::git pull origin master    
+    ::mms1::docker exec -it s1 mysql ci4                  ; start mysql session on slave 1
+    ::mms2::docker exec -it s2 mysql ci4                  ; start mysql session on slave 2 
 
-You see it cost me next to nothing to call `SHOW warnings;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I just use AHK to define something new. 
+You see it cost me next to nothing to call `SHOW warnings;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I just use AHK to define something new.
+
+The best are more complex commands which really do good work. For example, I placed a command to the Windows key plus o (denoted in AHL lingo: #o) to immediately jump to the function definition in my file, when the cursor is placed on the function name. 
+
+Likewise, #k will produce a list of all the function calls of that function. #j will produce a list with all the lines containing the word the cursor happens to be placed on. And so on. The limit is only your imagination. These are real productivity boosts; to achieve this by typing you would have to type a couple of keystrokes and combinations of those again and again. 
 
 Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I just have to look up what the right shortcut is. It's important to define shortcuts you can easily remember under all circumstances.
 
@@ -1255,7 +1267,7 @@ As the day number of today is 28, the modulus by 7 of which is 0, partition 0 sh
     M:7727678 [tmp]>insert into tmp.sql_log (tmstmp) values ('2018-02-27 12:59:00');
     Query OK, 1 row affected, 2 warnings (0.01 sec)
     
-    M:7727678 [tmp]>SHOW warnings;
+    M:7727678 [tmp]>SHOW WARNINGS;
     +---------+------+-----------------------------------------------------+
     | Level   | Code | Message                                             |
     +---------+------+-----------------------------------------------------+
