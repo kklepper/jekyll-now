@@ -1028,7 +1028,7 @@ This regular dropping of the oldest partition and creating a new partition inste
 Reorganizing sql logging -- digression
 ----------
 
-While I was reorganizing my tmp.sql_log table, I dropped the idea of using `RANGE`. You can drop a table or a partition very fast, that's true, but you can truncate a table just as fast. That's even better. You don't have to create a new partition regularly.
+While I was reorganizing my tmp.sql_log table, I dropped the idea of using `RANGE`. You can drop a table or a partition very fast, that's true, but you can truncate a table just as fast. That's even better. You don't have to create a new partition regularly. You just recycle the partitions you have.
 
 You may have noticed that I have called the database `tmp` here explicitly. The reason is that I don't want to replicate stuff I deposit there:
 
@@ -1129,7 +1129,7 @@ Other tools -- digression
 
 So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too long a time with more or less trouble): My workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
 
-For example, this might be the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine and main database: 
+WinSCP is my window to my Linux workhorse, which is booted from a stick with boot2docker. For example, this might be the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine and main database: 
 
     docker@boot2docker:~$ /path_to_your_script/mysql_start.sh ci4
 
@@ -1198,13 +1198,15 @@ Back then we were serving this profession and we offered them this product. Of c
 
 A lawyer, after having produced his text, will have to save his legal document, printed for his client, the opposing party, the attorney, the court, maybe several consultants and witnesses. And maybe he will also use his new acquisition, the fax machine, which was the latest technical equipment of the time. So the term I coined for this complex operation was "fax it up". And of course, it worked.
 
-I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I did work with Windows Speech Recognition for a long time as well, using one for one language and the other for another, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
+I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I did work with Windows Speech Recognition for a long time as well, using Windows for my mother tongue and DragonDictate for English, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
 
 Windows Speech Recognition works equally fine, although it uses other terms to navigate the speech engine. That's really bad, but, hey, we are human, that shouldn't be a problem for us. And it isn't. You can learn that, too, and switch the navigation terms. The reason why I stuck with DragonDictate is that Windows Speech Recognition interferes badly with some programs. Most probably because those programs are way too smart these days. 
 
-DragonDictate, for instance, if you just say one word, because you're still thinking about the rest of the sentence, will search all tabs in your application for this word in order to switch to that tab. It took me a long time to understand what's happening here.
+DragonDictate, for instance, if you just say one word, because you're still thinking about the rest of the sentence, will search all tabs in your application for this word in order to switch to that tab. It took me a long time to understand what's happening here. It's really annoying if your machine all of a sudden does something which you didn't expect and cannot understand.
 
-At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than just a few characters, I'll switch to DragonDictate. And if I don't have that tool to my disposition, I feel like crippled. 
+At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than just a few characters, I'll switch to DragonDictate. 
+
+If I don't have speech recognition to my disposition, I feel like crippled. I use speech recognition on my notebook just the same. That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. 
 
 I don't use the latest edition of DragonDictate as I don't see the need to buy this product again and again. It's excellent, at least for my purposes, and I don't even have the professional edition, so I can't use any macros (preferred 10.10, must be 10 or rather 15 years old now).
 
@@ -1242,7 +1244,7 @@ As I want to partition with respect to this`tmstmp` column, I have to make sure 
     ALTER TABLE `tmp.sql_log` 
     ADD PRIMARY KEY `id_sql_tmstmp` (`id_sql`, `tmstmp`), DROP INDEX `PRIMARY`;
 
-Finally we are ready to partition this table.
+Finally we are ready to partition this table. I think the 7 days of the week are a convenient roster to work with in this case. We wouldn't like to keep this data for a whole year or month.
 
     ALTER TABLE `tmp.sql_log` PARTITION BY HASH (DAY(tmstmp)) PARTITIONS 7;
 
@@ -1387,6 +1389,63 @@ Now we should see what we want:
 The shell script for regularly truncating the oldest partition now reads
 
     p_no=$(($(($(date "+%w") + 1)) % 7)) && docker exec m1 mysql -e "ALTER TABLE tmp.sql_log TRUNCATE PARTITION p$p_no"
+
+Inspecting the SQL log -- digression
+----------
+
+The function `_sql_log_record` responsible for logging data changing actions must filter several commands which, although not changing any data, have to be sent to the master but should not be logged nevertheless because they don't add anything to our understanding. These are `USE`, `SHOW`, `SET`.
+
+The result is a very nice list of all the actions the program performs on the database. If you format your SQL statements by line break, you can read them better as seen above, where the comment appears on a new line instead of at the end of the whole query.
+
+Why did I take the pain in the first place? Well, unfortunately things don't work as I thought. When I start with a clean system and I launch this relatively simple action, my system is out of sync immediately.
+
+The replication Monitor tells me everything is okay. 
+
+    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------ 2018-02-28_22:49:00
+    175 =====> s1 OK 2018-02-28_22:49:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000001 Read_Master_Log_Pos 437588
+    175 =====> s2 OK 2018-02-28_22:49:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000001 Read_Master_Log_Pos 437588
+
+But the synchronizing script tells me otherwise:
+
+    docker@boot2docker:/path_to_your_script$ ./mysql_rsync_yaws.sh
+        =========================================== 2018-02-28_22:50:23
+    41: " -------- flush tables lock tables" DATE
+    48: " -------- rsync datm dat1"
+    sending incremental file list
+    cmp_ex_sm#P#p6.MYD
+    cmp_ex_sm#P#p6.MYI
+    cmp_temp.MYD
+    cmp_temp.MYI
+    ex.MYD
+    ex.MYI
+    sm_de#P#p6.MYD
+    sm_de#P#p6.MYI
+    
+    sent 192,358,460 bytes  received 172 bytes  29,593,635.69 bytes/sec
+    total size is 4,469,961,199  speedup is 23.24
+        =========================================== 2018-02-28_22:50:29
+    sending incremental file list
+    cmp_ex_sm#P#p6.MYD
+    cmp_ex_sm#P#p6.MYI
+    cmp_temp.MYD
+    cmp_temp.MYI
+    ex.MYD
+    ex.MYI
+    sm_de#P#p6.MYD
+    sm_de#P#p6.MYI
+    
+    sent 192,358,460 bytes  received 172 bytes  54,959,609.14 bytes/sec
+    total size is 4,469,961,199  speedup is 23.24
+        =========================================== 2018-02-28_22:50:32
+    59: " -------- SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1"
+    66: " unlock tables flush tables"
+        =========================================== 2018-02-28_22:50:35
+    75: " -------- done" DATE
+    ---------------------------------------------- time taken 12 seconds
+
+Here you see that the ID plays a significant role. All partitioned tables were only touched in the partition belonging to ID 6.
+
+In order to find out I used the SQL logging table, because the binlog information didn't help me much. I must believe that the statements recorded in the logging table are written to the binlog and then read by the slaves, copied to their relay log and processed from there.
 
 End of digression.
 
