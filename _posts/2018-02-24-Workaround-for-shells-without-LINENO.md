@@ -1084,7 +1084,7 @@ Everything okay now? Test it.
     *************************** 1. row ***************************
                         id_sql: 1
     uncompress(sql_compressed): DROP TABLE IF EXISTS tmp.tbl_ar, tmp.tbl_bn, tmp.tbl_de, tmp.tbl_en, tmp.tbl_es, tmp.tbl_fa, tmp.tbl_fr, tmp.tbl_hi, tmp.tbl_it, tmp.tbl_ja, tmp.tbl_nl, tmp.tbl_pt, tmp.tbl_ru, tmp.tbl_ur, tmp.tbl_zh
-    # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sitemap
+    # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sm
     1 row in set (0.00 sec)
 
 The code is pretty much self-explanatory. May I point you to the comments in this SQL statement?
@@ -1094,7 +1094,7 @@ Comments and editors -- digression
 
 If you have fairly complex application, you want to know where to look when an error occurs. That's why I made it a habit to add this kind of debug information to every single SQL query in my code. I want to see the line, the file and the method which has called this database query. 
 
-    # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sitemap 
+    # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sm 
 
 Maybe there are even more calls in between, so I get something like a trace. I have 2 mechanisms for this. The first is used when I don't want to clutter the SQL term with debug information. I then simply insert the line
 
@@ -1158,7 +1158,7 @@ You may then utilize your keyboard and type bravely `SHOW processlist;` -- until
 
     ::spl::SHOW processlist;
 
-Here are some other snippets of use:
+Here are some other snippets I use:
 
     ::saf::SELECT * FROM 
     ::sbl::SHOW BINARY LOGS;
@@ -1449,6 +1449,68 @@ Here you see that the ID plays a significant role. All partitioned tables were o
 
 In order to find out I used the SQL logging table, because the binlog information didn't help me much. I must believe that the statements recorded in the logging table are written to the binlog and then read by the slaves, copied to their relay log and processed from there. The SQL logging table doesn't revieal anything unusual. Again: What happens here?
 
+What does it mean when rsync thinks a file is different? In my understanding there should be some byte difference in both files. And if so, shouldn't this difference be reflected in the data?
+
+    root@boot2docker:~# ls -la /d/data/master/ci4/cmp_ex_sm#P#p6.MYD
+    -rw-rw----    1 dockrema dockrema    142740 Feb 28 23:10 /d/data/master/ci4/cmp_ex_sm#P#p6.MYD
+    root@boot2docker:~# ls -la /d/data/slave1/ci4/cmp_ex_sm#P#p6.MYD
+    -rw-rw----    1 dockrema dockrema    142740 Feb 28 21:19 /d/data/slave1/ci4/cmp_ex_sm#P#p6.MYD
+
+Now this is revealing, isn't it? Both files have different file time data. How come?
+
+The file on the master is written to, so it reflects the new file date. It is written to because the original record has been deleted and a new one has been inserted.
+
+Exactly this mechanism should have happened on the slave as well. Therefore the data file of the slave should have been updated accordingly.
+
+Let's see what we have got:
+
+    M:7727678 [ci4]>desc cmp_ex_sm;
+    +-------------+-----------------------+------+-----+-------------------+-----------------------------+
+    | Field       | Type                  | Null | Key | Default           | Extra                       |
+    +-------------+-----------------------+------+-----+-------------------+-----------------------------+
+    | id_ex       | bigint(20) unsigned   | NO   | PRI | NULL              |                             |
+    | lg          | varchar(2)            | NO   | PRI |                   |                             |
+    | str         | mediumblob            | NO   |     | NULL              |                             |
+    | sm_cnt      | mediumint(8) unsigned | NO   |     | 0                 |                             |
+    | ca_tmstmp   | timestamp             | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
+    +-------------+-----------------------+------+-----+-------------------+-----------------------------+
+    5 rows in set (0.00 sec)
+
+We have a timestamp here. That's another habit of mine. Most every table has an auto increment column and a timestamp. We can use that here.
+
+    M:7727678 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
+    +-------+---------------------+
+    | id_ex | ca_tmstmp           |
+    +-------+---------------------+
+    |     6 | 2018-03-01 00:10:56 |
+    +-------+---------------------+
+    1 row in set (0.00 sec)
+
+Now let us start the mysql client for the slave:
+
+     docker exec -it s1 mysql ci4
+
+and issue the same command here:
+
+    S:8728244 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sitemap WHERE id_ex = 6;
+    +-------+---------------------+
+    | id_ex | ca_tmstmp           |
+    +-------+---------------------+
+    |     6 | 2018-03-01 00:10:56 |
+    +-------+---------------------+
+    1 row in set (0.00 sec)
+
+Same procedure for the other slave:
+
+    S:8715945 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sitemap WHERE id_ex = 6;
+    +-------+---------------------+
+    | id_ex | ca_tmstmp           |
+    +-------+---------------------+
+    |     6 | 2018-03-01 00:10:56 |
+    +-------+---------------------+
+    1 row in set (0.00 sec)
+
+Well, this is perfect, isn't it?
 
 End of digression.
 
