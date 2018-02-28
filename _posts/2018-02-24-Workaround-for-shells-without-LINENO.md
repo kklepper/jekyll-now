@@ -1126,9 +1126,9 @@ to whatever code I have in place. Of course, many more complex ready to use SQL 
 Other tools -- digression
 ----------
 
-For this I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too much time with more or less trouble): my workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
+So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too long a time with more or less trouble): My workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
 
-For example, this might be the command which is executed automatically via PuTTY Configuration: 
+For example, this might be the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine database: 
 
     docker@boot2docker:~$ /path_to_your_script/mysql_start.sh ci4
 
