@@ -1210,7 +1210,7 @@ I don't use the latest edition as I don't see the need to buy this product again
 
 Every once in a while, when I met colleagues complaining about stress injury syndrome, I told them about this fascinating technique. You cannot have it in Linux, unfortunately, except you simulate Windows, but anyway I still have to meet somebody who is interested. I don't know of anybody who dictates.
 
-Of course, there are lots of people online using these products and chatting about it in their forums, but they are a totally different kind of people and professionally producing huge amounts of text. The industry has concentrated on lawyers and physicians, obviously successfully. Although back then everybody was dreaming of talking with a machine ("hello computer"), not much has happened in the private realm. Nowadays we have Siri and Cortana, but sorry, I don't use that.
+Of course, there are lots of people online using these products and chatting about it in their forums, but they are a totally different kind of people and professionally producing huge amounts of text. The industry has concentrated on lawyers and physicians, obviously successfully. Although back then everybody was dreaming of talking with a machine (["hello computer"](https://www.youtube.com/watch?v=v9kTVZiJ3Uc), not much has happened in the private realm. Nowadays we have Siri and Cortana, but sorry, I don't use that.
 
 Partitioning by day of week -- digression
 ----------
