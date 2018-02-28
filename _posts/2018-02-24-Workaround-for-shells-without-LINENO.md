@@ -28,6 +28,7 @@ published: true
 - [Adding a stopwatch](#adding-a-stopwatch)
 > - [Docker and mysqlbinlog (digression)](#docker-and-mysqlbinlog-digression)
 > - [Partitioning by RANGE (digression)](#partitioning-by-range-digression)
+> - [Reorganizing sql logging (digression)](#reorganizing-sql-logging-digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
@@ -1001,16 +1002,16 @@ As you see here, we also use the [Sphinx database search engine](http://sphinxse
 Partitioning by RANGE (digression)
 ----------
 
-In my opinion, due to the encryption, the log file isn't really useful. If you want to see what your database engine really does, you better record every data changing operation in a separate table. 
+In my opinion, due to the encryption, the log file isn't really useful. If you want to see what your database engine really does, you better record every data changing operation in a separate table, much like [Adminer](https://www.adminer.org/) does with it's history (`...&sql=&history=all`). 
 
 As we don't utilize MaxScale (yet), we had to implement a master/slave-switch in our application to send all data changing operations to the master and the rest to the slaves. 
 
 That's where the logging mechanism belongs:
 
     $this->_connection_type = 'db_master';
-    $this->_sql_log_record($sql);
+    $this->_tmp.sql_log_record($sql);
 
-The SQL term is compressed to save space, so searching for or looking at specific queries requires uncompressing. You cannot see the queries in your conventional [Adminer](https://www.adminer.org/) interface.
+The SQL term is compressed to save space, so searching for or looking at specific queries requires uncompressing. You cannot see the queries in your conventional Adminer interface.
 
 MaxScale can do all that for you via [MaxScale Read-write splitting](https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-21-readwritesplit/) and [MaxScale Query Log All Filter](https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/maxscale-query-log-all-filter/), but of course you have to spend some time to understand all the bells and whistles or rather parameters and options. 
 
@@ -1018,7 +1019,242 @@ Rolling your own, however, you know exactly what you do. If you record all your 
 
 This is another example for a good use of partitioning a table, this time by `RANGE`. The benefit is, that dropping lots of records by range cost nothing, as it is done immediately by dropping that particular partition. 
 
-This regular dropping of the oldest partition and creating a new partition instead can be realized via stored procedure (you will find examples via Google, e.g. [MySQL Stored Procedure for Table Partitioning](https://gist.github.com/CodMonk/4b89294bbb48eb1edb31)) or conventionally via crontab, shell script and docker. Take your pick. End of digression.
+This regular dropping of the oldest partition and creating a new partition instead can be realized via stored procedure (you will find examples via Google, e.g. [MySQL Stored Procedure for Table Partitioning](https://gist.github.com/CodMonk/4b89294bbb48eb1edb31)) or conventionally via crontab, shell script and docker. Take your pick. 
+
+Reorganizing sql logging (digression)
+----------
+
+While I was reorganizing my tmp.sql_log table, I dropped the idea of using `RANGE`. You can drop a table or a partition very fast, that's true, but you can truncate a table just as fast. That's even better. You don't have to create a new partition regularly.
+
+You may have noticed that I have called the database `tmp` here explicitly. The reason is that I don't want to replicate stuff I deposit there:
+
+    $ docker exec s1 mysql -e 'SHOW SLAVE STATUS\G' | grep Replicate_Ignore_DB:
+              Replicate_Ignore_DB: tmp,bak
+
+What's the current state of the table definition?
+
+    M:7727678 [tmp]>SHOW CREATE TABLE tmp.sql_log_log\G
+    *************************** 1. row ***************************
+           Table: tmp.sql_log
+    Create Table: CREATE TABLE `tmp.sql_log` (
+      `id_sql` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+      `tmstmp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      `sql_compressed` longblob NOT NULL,
+      PRIMARY KEY (`id_sql`)
+    ) ENGINE=MyISAM AUTO_INCREMENT=3064769 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci PACK_KEYS=1 COMMENT='test counter'
+    1 row in set, 3 warnings (19.26 sec)
+
+Here you see that I defined the prompt of the MySQL client to show if I am on a master or slave machine; that is what the `M:` stands for. After that you see the ID of that server which is a random number generated at startup.
+
+The `AUTO_INCREMENT` counter shows that this log file has been in use for about 3,000,000 data changing operations already. 
+
+In replication, every machine must have a different ID. If you have several slave machines, you can see by that number which is which. Slaves, of course, are characterized by `S:` respectively.
+
+Oh, 3 warnings here... Better see what it is:
+
+    M:7727678 [tmp]>SHOW warnings;
+    +-------+------+-------------------------------------------------------------------+
+    | Level | Code | Message                                                           |
+    +-------+------+-------------------------------------------------------------------+
+    | Error |  145 | Table './tmp/tmp.sql_log' is marked as crashed and should be repaired |
+    | Error | 1194 | Table 'tmp.sql_log' is marked as crashed and should be repaired       |
+    | Error | 1034 | 1 client is using or hasn't closed the table properly             |
+    +-------+------+-------------------------------------------------------------------+
+    3 rows in set (0.00 sec)
+
+No choice of what to do:
+
+    M:7727678 [tmp]>repair TABLE tmp.sql_log_log\G
+    *************************** 1. row ***************************
+       Table: tmp.sql_log_log
+          Op: repair
+    Msg_type: status
+    Msg_text: OK
+    1 row in set (49.02 sec)
+
+Well, the table had about 1.2 GB data, so it took some time. Here I chose the delimiter `\G` just to show you the difference. This feature is particularly interesting with extremely long rows. 
+
+Everything okay now? Test it.
+
+    M:7727678 [tmp]>SELECT id_sql, uncompress(sql_compressed) FROM tmp.sql_log_log ORDER BY 1 LIMIT 1\G
+    *************************** 1. row ***************************
+                        id_sql: 1
+    uncompress(sql_compressed): DROP TABLE IF EXISTS tmp.tbl_ar, tmp.tbl_bn, tmp.tbl_de, tmp.tbl_en, tmp.tbl_es, tmp.tbl_fa, tmp.tbl_fr, tmp.tbl_hi, tmp.tbl_it, tmp.tbl_ja, tmp.tbl_nl, tmp.tbl_pt, tmp.tbl_ru, tmp.tbl_ur, tmp.tbl_zh
+    # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sitemap
+    1 row in set (0.00 sec)
+
+I don't need that old data anymore. To save time testing partitioning, I just `truncate` the table.
+
+    M:7727678 [tmp]>TRUNCATE TABLE tmp.sql_log;
+    Query OK, 0 rows affected (0.16 sec)
+
+For partitioning the table by date, the first thing I had to change was the definition of the timestamp column. I cannot use the type `timestamp` for partitioning, but `datetime` is fine.
+
+    ALTER TABLE `tmp.sql_log` 
+    CHANGE `tmstmp` `tmstmp` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP AFTER `id_sql`;
+
+Next I had to change my code because a `timestamp` value will be populated automatically, whereas a `datetime` value has to be set manually. Partitioning by day doesn't make sense when every timestamp has value `0000-00-00 00:00:00`. No big problem.
+
+Thinking about it, I am wrong. I just have to set the correct default value.
+
+    ALTER TABLE `tmp.sql_log`
+    CHANGE `tmstmp` `tmstmp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `id_sql`;
+
+Also, I decided to add a new column to my logging table. Many queries target a special ID, and this ID should be part of the record as well to be able to pick all the queries belonging to this ID. Your mileage will vary. Nothing hinders you to add whatever you want.
+
+    ALTER TABLE `tmp.sql_log` 
+    ADD `id_ex` bigint(20) unsigned NOT NULL AFTER `id_sql`;
+
+As I want to partition with respect to this`tmstmp` column, I have to make sure that this is part of the primary key -- or more correctly -- of every unique key.
+
+    ALTER TABLE `tmp.sql_log` 
+    ADD PRIMARY KEY `id_sql_tmstmp` (`id_sql`, `tmstmp`), DROP INDEX `PRIMARY`;
+
+Finally we are ready to partition this table.
+
+    ALTER TABLE `tmp.sql_log` PARTITION BY HASH (DAY(tmstmp)) PARTITIONS 7;
+
+As the day number of today is 28, the modulus by 7 of which is 0, partition 0 should be effected. To test it, I truncated the table, initiated an operation which would change data, got 154 entries in my table `tmp.sql_log` in partition `p0`. To make sure I'm on the right track, I issued a couple of entries manually to get different timestamp values:
+
+    M:7727678 [tmp]>insert into tmp.sql_log (tmstmp) values ('2018-02-27 12:59:00');
+    Query OK, 1 row affected, 2 warnings (0.01 sec)
+    
+    M:7727678 [tmp]>SHOW warnings;
+    +---------+------+-----------------------------------------------------+
+    | Level   | Code | Message                                             |
+    +---------+------+-----------------------------------------------------+
+    | Warning | 1364 | Field 'id_ex' doesn't have a default value          |
+    | Warning | 1364 | Field 'sql_compressed' doesn't have a default value |
+    +---------+------+-----------------------------------------------------+
+    2 rows in set (0.00 sec)
+
+We have 2 warnings here; the first one is easily taken care for:
+
+    ALTER TABLE `tmp.sql_log`
+    CHANGE `id_ex` `id_ex` bigint(20) unsigned NOT NULL DEFAULT '0' AFTER `tmstmp`
+    PARTITION BY HASH(DAY(tmstmp) % 7) PARTITIONS 7;
+
+The 2nd one is equally easily avoided by providing an empty value:
+
+    M:7727678 [tmp]>insert into tmp.sql_log (tmstmp, sql_compressed) values ('2018-02-26 12:59:00', '');
+    Query OK, 1 row affected (0.00 sec)
+
+Let's look at the result at operation system level:
+
+    / #  ls -la /var/lib/mysql/tmp/sql*.MYD
+    -rw-rw----    1 mysql    mysql        56460 Feb 28 13:31 /var/lib/mysql/tmp/tmp.sql_log#P#p0.MYD
+    -rw-rw----    1 mysql    mysql            0 Feb 28 13:31 /var/lib/mysql/tmp/tmp.sql_log#P#p1.MYD
+    -rw-rw----    1 mysql    mysql            0 Feb 28 13:31 /var/lib/mysql/tmp/tmp.sql_log#P#p2.MYD
+    -rw-rw----    1 mysql    mysql            0 Feb 28 13:31 /var/lib/mysql/tmp/tmp.sql_log#P#p3.MYD
+    -rw-rw----    1 mysql    mysql            0 Feb 28 13:31 /var/lib/mysql/tmp/tmp.sql_log#P#p4.MYD
+    -rw-rw----    1 mysql    mysql           20 Feb 28 13:31 /var/lib/mysql/tmp/tmp.sql_log#P#p5.MYD
+    -rw-rw----    1 mysql    mysql           20 Feb 28 13:31 /var/lib/mysql/tmp/tmp.sql_log#P#p6.MYD
+
+Beautiful. That's what I wanted to see.
+
+Again, a stored procedure or a cron job could take care of table maintenance. 
+
+    p_no=$(($(($(date "+%d") + 1)) % 7)) && docker exec m1 mysql -e "ALTER TABLE tmp.sql_log TRUNCATE PARTITION p$p_no"
+
+Let me explain. The 2nd part is self-explanatory:
+
+    docker exec m1 mysql -e "ALTER TABLE tmp.sql_log TRUNCATE PARTITION p$p_no"
+
+The first part defines the variable `p_no`. 
+
+p_no=$(($(($(date "+%d") + 1)) % 7))
+
+`$(date "+%d")` gives the date number. We add 1 by the expression `$(($(date "+%d") + 1))` and then we calculate the modulus by the expression `$(($(($(date "+%d") + 1)) % 7))`. That's fine.
+
+But now it is obvious that the whole construction is screwed up. We work by the day number and have to take the modulus, so we will not cycle evenly to all of the partitions. We should not take the `day number` but the `day of week` number:
+
+    M:7727678 [tmp]>SELECT DAY(NOW());
+    +------------+
+    | DAY(NOW()) |
+    +------------+
+    |         28 |
+    +------------+
+    1 row in set (0.00 sec)
+    
+    M:7727678 [tmp]>SELECT DAYOFWEEK(NOW());
+    +------------------+
+    | DAYOFWEEK(NOW()) |
+    +------------------+
+    |                4 |
+    +------------------+
+    1 row in set (0.00 sec)
+
+So we have to reorganize our partitions. But before doing that, let's have a look at what we think the files should look like. To this end, I have manipulated the file-time of our data files:
+
+    $ sudo touch -d 201802271211 /d/data/master/tmp/sql_log#P#p6.MYD
+    $ sudo touch -d 201802261211 /d/data/master/tmp/sql_log#P#p5.MYD
+    $ sudo touch -d 201802251211 /d/data/master/tmp/sql_log#P#p4.MYD
+    $ sudo touch -d 201802241211 /d/data/master/tmp/sql_log#P#p3.MYD
+    $ sudo touch -d 201802231211 /d/data/master/tmp/sql_log#P#p2.MYD
+    $ sudo touch -d 201802221211 /d/data/master/tmp/sql_log#P#p1.MYD
+    
+    
+    $ ls -latr  /d/data/master/tmp/sql_log#*.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 22 12:11 /d/data/master/tmp/sql_log#P#p1.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 23 12:11 /d/data/master/tmp/sql_log#P#p2.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 24 12:11 /d/data/master/tmp/sql_log#P#p3.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 25 12:11 /d/data/master/tmp/sql_log#P#p4.MYD
+    -rw-rw----    1 dockrema dockrema        20 Feb 26 12:11 /d/data/master/tmp/sql_log#P#p5.MYD
+    -rw-rw----    1 dockrema dockrema        20 Feb 27 12:11 /d/data/master/tmp/sql_log#P#p6.MYD
+    -rw-rw----    1 dockrema dockrema    112920 Feb 28 14:58 /d/data/master/tmp/sql_log#P#p0.MYD
+
+From here we see easily which partition is the oldest and should be dropped.
+
+We need a similar function given by the shell.
+
+    $  date +%w
+    3
+
+That's correct. Let's reorganize our partition now. Unfortunately I was misled by the naming `REORGANIZE PARTITION`. You cannot reorganize the whole scheme with that statement, but only one single partition. So the way to choose is
+
+    M:7727678 [tmp]>ALTER TABLE `sql_log` REMOVE PARTITIONING;
+    Query OK, 310 rows affected (0.03 sec)
+    Records: 310  Duplicates: 0  Warnings: 0
+
+    M:7727678 [tmp]>ALTER TABLE `sql_log` PARTITION BY HASH (DAYOFWEEK(tmstmp) % 7) PARTITIONS 7;
+    Query OK, 310 rows affected (0.02 sec)
+    Records: 310  Duplicates: 0  Warnings: 0
+
+Let's inspect the file data. 
+
+    $ ls -latr  /d/data/master/tmp/sql_log#*.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 28 16:08 /d/data/master/tmp/sql_log#P#p6.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 28 16:08 /d/data/master/tmp/sql_log#P#p5.MYD
+    -rw-rw----    1 dockrema dockrema    112920 Feb 28 16:08 /d/data/master/tmp/sql_log#P#p4.MYD
+    -rw-rw----    1 dockrema dockrema        20 Feb 28 16:08 /d/data/master/tmp/sql_log#P#p3.MYD
+    -rw-rw----    1 dockrema dockrema        20 Feb 28 16:08 /d/data/master/tmp/sql_log#P#p2.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 28 16:08 /d/data/master/tmp/sql_log#P#p1.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 28 16:08 /d/data/master/tmp/sql_log#P#p0.MYD
+
+Great surprise here. Why are all our records of the day in partition `p4`? shouldn't they be in `p3`? 
+
+Well, the database starts with 1 for Sunday -- at least the shell and the database agree on the day to start with. Partitioning also starts with 0, so let's change our partitioning scheme again:
+
+    M:7727678 [tmp]>ALTER TABLE `sql_log` PARTITION BY HASH ((DAYOFWEEK(tmstmp) % 7) -1) PARTITIONS 7;
+    Query OK, 310 rows affected (0.03 sec)
+    Records: 310  Duplicates: 0  Warnings: 0
+
+Now we should see what we want:
+
+    $ ls -latr  /d/data/master/tmp/sql_log#*.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 28 16:14 /d/data/master/tmp/sql_log#P#p6.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 28 16:14 /d/data/master/tmp/sql_log#P#p5.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 28 16:14 /d/data/master/tmp/sql_log#P#p4.MYD
+    -rw-rw----    1 dockrema dockrema    112920 Feb 28 16:14 /d/data/master/tmp/sql_log#P#p3.MYD
+    -rw-rw----    1 dockrema dockrema        20 Feb 28 16:14 /d/data/master/tmp/sql_log#P#p2.MYD
+    -rw-rw----    1 dockrema dockrema        20 Feb 28 16:14 /d/data/master/tmp/sql_log#P#p1.MYD
+    -rw-rw----    1 dockrema dockrema         0 Feb 28 16:14 /d/data/master/tmp/sql_log#P#p0.MYD
+
+The shell script for regularly truncating the oldest partition now reads
+
+    p_no=$(($(($(date "+%w") + 1)) % 7)) && docker exec m1 mysql -e "ALTER TABLE tmp.sql_log TRUNCATE PARTITION p$p_no"
+
+End of digression.
 
 Why roll your own, revisited
 ----------
