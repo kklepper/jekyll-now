@@ -29,7 +29,8 @@ published: true
 > - [Docker and mysqlbinlog -- digression](#docker-and-mysqlbinlog-digression)
 > - [Partitioning by RANGE -- digression](#partitioning-by-range-digression)
 > - [Reorganizing sql logging -- digression](#reorganizing-sql-logging-digression)
-> - [Comments, editors and other tools -- digression](#comments,-editors-and-other-tools-digression)
+> - [Comments and editors -- digression](#comments-and-editors-digression)
+> - [Other tools -- digression](#comments-other-tools-digression)
 > - [Partitioning by day of week -- digression](#partitioning-by-day-of-week-digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
@@ -1087,7 +1088,7 @@ Everything okay now? Test it.
 
 The code is pretty much self-explanatory. May I point you to the comments in this SQL statement?
 
-Comments, editors and other tools -- digression
+Comments and editors -- digression
 ----------
 
 If you have fairly complex application, you want to know where to look when an error occurs. That's why I made it a habit to add this kind of debug information to every single SQL query in my code. I want to see the line, the file and the method which has called this database query. 
@@ -1110,69 +1111,6 @@ I don't write this line by typing, that would be cruel. Instead I use [AutoHotke
 
 AutoHotkey or short AHK works under Windows from everywhere, but, this being PHP code, I need this particular term in my favorite editor [PSPad](https://www.pspad.com/en/) only. And this editor has its own hotkeys or rather expansion of shortcuts into whatever you want -- pretty much like Word for Windows, plus some more functionality. 
 
-For this I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too much time with more or less trouble): my workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
-
-For example, this might be the command which is executed automatically via PuTTY Configuration: 
-
-docker@boot2docker:~$ /path_to_your_script/mysql_start.sh ci4
-
-This script reads:
-
-#/path_to_your_script/mysql_start.sh
-
-#!/bin/sh
-
-
-DB=$1
-
-if [[ -z $1 ]]
-then
-  DB=tmp
-fi
-
-docker exec m1 mysql -e "SET GLOBAL max_binlog_stmt_cache_size = 2097152000;" && docker exec -it m1 mysql $DB 
-
-Mind the parameter `-it` in the 2nd call to `docker exec` here. It makes sure that you get a window (interactive terminal) to work with.
-
-Once in that MySQL session, you might want to see the process list because some processes hang which indicates that there is another process with a lock on a table the other processes one to use and can not until that first process ends and releases this lock.
-
-You may then utilize your keyboard and type bravely `SHOW processlist;` -- until one of these days you say "I don't want to type this anymore" and define a AHK hotkey:
-
-::spl::SHOW processlist;
-
-Here are some other snippets of use:
-
-::saf::SELECT * FROM 
-::sbl::SHOW BINARY LOGS;
-::scf::SELECT COUNT(*) FROM 
-::sct::SHOW CREATE TABLE \G 
-::sdb::SHOW databases;
-::sss::SHOW SLAVE STATUS\G
-::ssu::SELECT user, host, password FROM mysql.user ORDER BY 1; 
-::ssv::SHOW VARIABLES LIKE 'serv%';   
-::stt::SHOW tables;
-::sttt::SHOW tables FROM tmp;
-::svl::SHOW VARIABLES LIKE '%%';   
-::sww::SHOW warnings;
-
-You see it cost me next to nothing to call `SHOW warnings;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I just use AHK to define something new. 
-
-Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I just have to look up what the right shortcut is. It's important to define shortcuts you can remember under all circumstances.
-
-Another nifty command I use regularly reads like this:
-
-git checkout temp$NO && git merge -s ours master && git checkout master && git merge temp$NO && git push origin master && git checkout temp$NO && git branch -a --color 
-
-That's quite a long line and you don't want to type that in. What does it do? Well, usually I use the branch temp for git. If I get screwed up, I might define the shell variable `NO` and branch out to that, say `NO=2`. If that's okay and I feel like pushing to the master, I call the above sequence.
-
-It checks out the branch I am in and merges this to master and checks out master, and -- yes, it merges the temp branch back -- and then pushes the master to origin and then checks back to the temp branch I was in and shows this date in colors.
-
-I'm sorry, I cannot explain why it merges the temp branch back -- I didn't construct this, I found it somewhere online and found it extremely useful. I didn't record the URL which I do quite often, but not here, unfortunately. If you Google for `git merge -s ours master && git checkout master` you find a Russian page with a similar sequence, that's it.
-
-Your creativity will find lots of situations where you can ease your workload. One more tip: for this task I also used a number of other tools, but the Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/) is excellent. 
-
-I have defined `F1` as the hotkey to the clipboard list and defined a 2nd tab which copies all images. Also I have enlarged the available space as much as possible. This tool is very fast and has a very efficient search engine. Highly recommended as well.
-
 Every once in a while I look for other editors in case the technical development has produced something more productive than PSPad. My latest adventure in this direction was [Atom](https://atom.io/), but it turned out to be of no use for several reasons.
 
 One of them was that one property was not usable, so I contacted the person in charge to discuss things with him. He answered that he actually did have implemented it the way I wanted to, but the community had decided otherwise. And that was that. 
@@ -1185,6 +1123,70 @@ Apart from that, I can always add the term
 
 to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated, actually all of them. That's why although I do have a shortcut for this snippet, I simply don't need it.
 
+Other tools -- digression
+----------
+
+For this I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too much time with more or less trouble): my workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
+
+For example, this might be the command which is executed automatically via PuTTY Configuration: 
+
+    docker@boot2docker:~$ /path_to_your_script/mysql_start.sh ci4
+
+This script reads:
+
+    #/path_to_your_script/mysql_start.sh
+    
+    #!/bin/sh
+    
+    DB=$1
+    
+    if [[ -z $1 ]]
+    then
+      DB=tmp
+    fi
+    
+    docker exec m1 mysql -e "SET GLOBAL max_binlog_stmt_cache_size = 2097152000;" && docker exec -it m1 mysql $DB 
+
+Mind the parameter `-it` in the 2nd call to `docker exec` here. It makes sure that you get a window (interactive terminal) to work with.
+
+Once in that MySQL session, you might want to see the process list because some processes hang which indicates that there is another process with a lock on a table the other processes one to use and can not until that first process ends and releases this lock.
+
+You may then utilize your keyboard and type bravely `SHOW processlist;` -- until one of these days you say "I don't want to type this anymore" and define a AHK hotkey:
+
+    ::spl::SHOW processlist;
+
+Here are some other snippets of use:
+
+    ::saf::SELECT * FROM 
+    ::sbl::SHOW BINARY LOGS;
+    ::scf::SELECT COUNT(*) FROM 
+    ::sct::SHOW CREATE TABLE \G 
+    ::sdb::SHOW databases;
+    ::sss::SHOW SLAVE STATUS\G
+    ::ssu::SELECT user, host, password FROM mysql.user ORDER BY 1; 
+    ::ssv::SHOW VARIABLES LIKE 'serv%';   
+    ::stt::SHOW tables;
+    ::sttt::SHOW tables FROM tmp;
+    ::svl::SHOW VARIABLES LIKE '%%';   
+    ::sww::SHOW warnings;
+
+You see it cost me next to nothing to call `SHOW warnings;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I just use AHK to define something new. 
+
+Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I just have to look up what the right shortcut is. It's important to define shortcuts you can remember under all circumstances.
+
+Another nifty command I use regularly reads like this:
+
+    git checkout temp$NO && git merge -s ours master && git checkout master && git merge temp$NO && git push origin master && git checkout temp$NO && git branch -a --color 
+
+That's quite a long line and you don't want to type that in. What does it do? Well, usually I use the branch temp for git. If I get screwed up, I might define the shell variable `NO` and branch out to that, say `NO=2`. If that's okay and I feel like pushing to the master, I call the above sequence.
+
+It checks out the branch I am in and merges this to master and checks out master, and -- yes, it merges the temp branch back -- and then pushes the master to origin and then checks back to the temp branch I was in and shows this date in colors.
+
+I'm sorry, I cannot explain why it merges the temp branch back -- I didn't construct this, I found it somewhere online and found it extremely useful. I didn't record the URL which I do quite often, but not here, unfortunately. If you Google for `git merge -s ours master && git checkout master` you find a Russian page with a similar sequence, that's it. I don't speak Russian, so I didn't find it here. It must've been lost, at least to Google.
+
+Your creativity will find lots of situations where you can ease your workload. One more tip: for the task of recording clipboard snippets I also used a number of other tools, but the Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/) is excellent. 
+
+I have defined `F1` as the hotkey to the clipboard list and defined a 2nd tab which copies all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. Highly recommended as well.
 
 Partitioning by day of week -- digression
 ----------
