@@ -31,6 +31,7 @@ published: true
 > - [Reorganizing sql logging -- digression](#reorganizing-sql-logging-digression)
 > - [Comments and editors -- digression](#comments-and-editors-digression)
 > - [Other tools -- digression](#comments-other-tools-digression)
+> - [Speech recognition -- digression](#speech-recognition-digression)
 > - [Partitioning by day of week -- digression](#partitioning-by-day-of-week-digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
@@ -1128,7 +1129,7 @@ Other tools -- digression
 
 So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too long a time with more or less trouble): My workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
 
-For example, this might be the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine database: 
+For example, this might be the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine and main database: 
 
     docker@boot2docker:~$ /path_to_your_script/mysql_start.sh ci4
 
@@ -1147,11 +1148,11 @@ This script reads:
     
     docker exec m1 mysql -e "SET GLOBAL max_binlog_stmt_cache_size = 2097152000;" && docker exec -it m1 mysql $DB 
 
-Mind the parameter `-it` in the 2nd call to `docker exec` here. It makes sure that you get a window (interactive terminal) to work with.
+Mind the parameter `-it` in the 2nd call to `docker exec` here. It makes sure that you get a window (**i**nteractive **t**erminal) to work with.
 
-Once in that MySQL session, you might want to see the process list because some processes hang which indicates that there is another process with a lock on a table the other processes one to use and can not until that first process ends and releases this lock.
+Once in that mysql session, you might want to see the process list because some processes hang which indicates that there is another process with a lock on a table the other processes want to use and can not until that first process ends and releases this lock. You want to see what kind of long-running process that is in order to get things.
 
-You may then utilize your keyboard and type bravely `SHOW processlist;` -- until one of these days you say "I don't want to type this anymore" and define a AHK hotkey:
+You may then utilize your keyboard and type bravely `SHOW processlist;` -- until one of these days you say "I don't want to type this anymore" and define an AHK hotkey:
 
     ::spl::SHOW processlist;
 
@@ -1172,21 +1173,44 @@ Here are some other snippets of use:
 
 You see it cost me next to nothing to call `SHOW warnings;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I just use AHK to define something new. 
 
-Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I just have to look up what the right shortcut is. It's important to define shortcuts you can remember under all circumstances.
+Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I just have to look up what the right shortcut is. It's important to define shortcuts you can easily remember under all circumstances.
 
 Another nifty command I use regularly reads like this:
 
     git checkout temp$NO && git merge -s ours master && git checkout master && git merge temp$NO && git push origin master && git checkout temp$NO && git branch -a --color 
 
-That's quite a long line and you don't want to type that in. What does it do? Well, usually I use the branch temp for git. If I get screwed up, I might define the shell variable `NO` and branch out to that, say `NO=2`. If that's okay and I feel like pushing to the master, I call the above sequence.
+That's quite a long line and you don't want to type that in. What does it do? Well, usually I use the branch temp for git. If I get screwed up, I might define the shell variable `NO` and branch out to `temp$NO`, say `NO=2`. If that's okay and I feel like pushing to the master, I call the above sequence.
 
-It checks out the branch I am in and merges this to master and checks out master, and -- yes, it merges the temp branch back -- and then pushes the master to origin and then checks back to the temp branch I was in and shows this date in colors.
+It checks out the branch I am in and merges this to master and checks out master, and -- yes, it merges the temp branch back -- and then pushes the master to origin and then checks back to the temp branch I was in and shows this date in colors. Great. All that with just a few keystrokes you have to remember.
 
-I'm sorry, I cannot explain why it merges the temp branch back -- I didn't construct this, I found it somewhere online and found it extremely useful. I didn't record the URL which I do quite often, but not here, unfortunately. If you Google for `git merge -s ours master && git checkout master` you find a Russian page with a similar sequence, that's it. I don't speak Russian, so I didn't find it here. It must've been lost, at least to Google.
+I'm sorry, I cannot explain why it merges the temp branch back -- I didn't construct this, I found it somewhere online and found it extremely useful. I didn't record the URL, though, which I do quite often, but not here, unfortunately. If you Google for `git merge -s ours master && git checkout master` you find a Russian page with a similar sequence, that's it. I don't speak Russian, so I didn't find it there. The original must've been lost, at least to Google.
 
 Your creativity will find lots of situations where you can ease your workload. One more tip: for the task of recording clipboard snippets I also used a number of other tools, but the Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/) is excellent. 
 
 I have defined `F1` as the hotkey to the clipboard list and defined a 2nd tab which copies all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. Highly recommended as well.
+
+Speech recognition -- digression
+----------
+
+I can't resist. The sentence above "Great. All that with just a few keystrokes you have to remember." brought back to memory an incident of about 1995. Dragon's first product hit the market. I guess it was called something like 35k because it could remember 35,000 words. It worked on MS DOS, needed some piece of hardware, and was quite expensive, but for professionals like lawyers, who have to dictate lots of text every day, this investment might have made sense.
+
+Back then we were serving this profession and we offered them this product. Of course, I had to prove that it worked, and the climax of the show was when I demonstrated the capability of defining complex macros triggered by just a few words. Those words could have been made up. The machine would learn this "word".
+
+A lawyer, after having produced his text, will have to save his legal document, printed for his client, the opposing party, the attorney, the court. And maybe he will also use his new acquisition, the fax machine, which was the latest technical equipment. So the term I coined for this complex operation was "fax it up". And of course, it worked.
+
+I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I did work with Windows Speech Recognition for a long time as well, using one for one language and the other for another, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
+
+The reason why I stuck with DragonDictate is that Windows Speech Recognition interferes badly with some programs. Most probably because those programs are way too smart these days. 
+
+Dragon dictate, for instance, if you just say one word, because you're still thinking about the rest of the sentence, will search all tabs in your application for this word in order to switch to that tab. It took me a long time to understand what's happening here.
+
+At the beginning of the new century, I taught database classes and sometimes used in DragonDictate to dictate SQL into my notebook. I don't program with DragonDictate, instead I rather use AHK. But if I have to write more than just a few characters, I'll switch to DragonDictate. 
+
+And I don't use the latest edition. I don't see the need to buy this product again and again. It's excellent, at least for my purposes, and I don't even have the professional edition, so I don't use any macros.
+
+Every once in a while, when I met colleagues complaining about stress injury syndrome, I told them about this fascinating technique. You cannot have it in Linux, unfortunately, except you simulate Windows, but anyway I still have to meet somebody who is interested. I don't know anybody who dictates.
+
+Of course, there are lots of people online using these products, but they are professionally producing huge amounts of text. The industry has concentrated on lawyers or physicians, although back then everybody was dreaming of talking with a machine. Nowadays we have Siri and Cortana, but sorry, I don't use that.
 
 Partitioning by day of week -- digression
 ----------
