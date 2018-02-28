@@ -1129,7 +1129,9 @@ Other tools -- digression
 
 So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too long a time with more or less trouble): My workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
 
-WinSCP is my window to my Linux workhorse, which is booted from a stick with boot2docker. For example, this might be the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine and main database: 
+WinSCP is my window to my Linux workhorse on the same network, which is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant, but rather more production-like on a separate machine. 
+
+For example, this might be the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine and main database: 
 
     docker@boot2docker:~$ /path_to_your_script/mysql_start.sh ci4
 
@@ -1206,7 +1208,7 @@ DragonDictate, for instance, if you just say one word, because you're still thin
 
 At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than just a few characters, I'll switch to DragonDictate. 
 
-If I don't have speech recognition to my disposition, I feel like crippled. I use speech recognition on my notebook just the same. That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. 
+If I don't have speech recognition to my disposition, I feel like crippled. I use speech recognition on my notebook just the same when travelling. That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. 
 
 I don't use the latest edition of DragonDictate as I don't see the need to buy this product again and again. It's excellent, at least for my purposes, and I don't even have the professional edition, so I can't use any macros (preferred 10.10, must be 10 or rather 15 years old now).
 
@@ -1443,9 +1445,10 @@ But the synchronizing script tells me otherwise:
     75: " -------- done" DATE
     ---------------------------------------------- time taken 12 seconds
 
-Here you see that the ID plays a significant role. All partitioned tables were only touched in the partition belonging to ID 6.
+Here you see that the ID plays a significant role. All partitioned tables were only touched in the partition belonging to ID 6. What happens here?
 
-In order to find out I used the SQL logging table, because the binlog information didn't help me much. I must believe that the statements recorded in the logging table are written to the binlog and then read by the slaves, copied to their relay log and processed from there.
+In order to find out I used the SQL logging table, because the binlog information didn't help me much. I must believe that the statements recorded in the logging table are written to the binlog and then read by the slaves, copied to their relay log and processed from there. The SQL logging table doesn't revieal anything unusual. Again: What happens here?
+
 
 End of digression.
 
