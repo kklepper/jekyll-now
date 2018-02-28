@@ -1115,7 +1115,7 @@ Apart from that, I can always add
 
     "# L: ".__LINE__.". F: ".__FILE__.". M: ".__METHOD__;
 
-to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated, actually all of them. That's why I don't have a shortcut for.
+to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated, actually all of them. That's why I don't have a shortcut for this edition. I simply don't need it.
 
 
 Partitioning by day of week (digression)
