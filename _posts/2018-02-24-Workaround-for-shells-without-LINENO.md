@@ -1086,6 +1086,9 @@ Everything okay now? Test it.
 
 The code is pretty much self-explanatory. May I point you to the comments in this SQL statement?
 
+Comments and editors (digression)
+----------
+
 If you have fairly complex application, you want to know where to look when an error occurs. That's why I made it a habit to add this kind of debug information to every single SQL query in my code. I want to see the line, the file and the method which has called this database query. 
 
     # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sitemap 
