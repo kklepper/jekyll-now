@@ -29,6 +29,7 @@ published: true
 > - [Docker and mysqlbinlog (digression)](#docker-and-mysqlbinlog-digression)
 > - [Partitioning by RANGE (digression)](#partitioning-by-range-digression)
 > - [Reorganizing sql logging (digression)](#reorganizing-sql-logging-digression)
+> - [Partitioning the table by day of week (digression)](#partitioning-the-table-by-day-of-week-digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
@@ -1082,6 +1083,38 @@ Everything okay now? Test it.
     uncompress(sql_compressed): DROP TABLE IF EXISTS tmp.tbl_ar, tmp.tbl_bn, tmp.tbl_de, tmp.tbl_en, tmp.tbl_es, tmp.tbl_fa, tmp.tbl_fr, tmp.tbl_hi, tmp.tbl_it, tmp.tbl_ja, tmp.tbl_nl, tmp.tbl_pt, tmp.tbl_ru, tmp.tbl_ur, tmp.tbl_zh
     # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sitemap
     1 row in set (0.00 sec)
+
+The code is pretty much self-explanatory. May I point you to the comments in this SQL statement?
+
+If you have fairly complex application, you want to know where to look when an error occurs. That's why I made it a habit to add this kind of debug information to every single SQL query in my code. I want to see the line, the file and the method which has called this database query. 
+
+    # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sitemap 
+
+Maybe there are even more calls in between, so I get something like a trace. I have 2 mechanisms for this. The first is used when I don't want to clutter the SQL term with debug information. I then just insert the line
+
+        $this->dba->comment = "# L: ".__LINE__.". F: ".__FILE__.". M: ".__METHOD__;
+
+just before the query. Of course, I don't
+
+I use [CodeIgniter](https://codeigniter.com/), and as far as I remember in the earlier days they had a module named `Active_record`. Anyway, I wrote an Active Record Class which takes care of everything I like. This is what the `dba` stands for. So this class has a member `comment`.
+
+    public $comment = '';
+
+I don't write this line from hand, that would be cruel. Instead I use [AutoHotkey](https://autohotkey.com/) extensively, so I might have defined a hotkey to produce this line. AutoHotkey or short AHK works under Windows from everywhere, but as a rule I need this term in my favorite editor only. And this editor has its own hotkeys or rather expansion of shortcuts into whatever you want pretty much like Word for Windows.
+
+Every once in a while I look for other editors in case the technical development has produced something more productive than [PSPad](https://www.pspad.com/en/). My latest adventure in this direction was [Atom](https://atom.io/), but it turned out to be of no use for several reasons.
+
+One of them was that one property was not usable, so I contacted the person in charge to discuss things with him. He just answered that he actually did have implemented it the way I wanted to, but the community had decided otherwise. And that was that. Sorry. I don't want to hack my own editor. I just want to be productive. And I'm happy with PSPad. By the way the shortcut for the comment line is `tdc`, for `this dba comment`.
+
+Apart from that, I can always add 
+
+    "# L: ".__LINE__.". F: ".__FILE__.". M: ".__METHOD__;
+
+to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated.
+
+
+Partitioning the table by day of week (digression)
+----------
 
 I don't need that old data anymore. To save time testing partitioning, I just `truncate` the table.
 
