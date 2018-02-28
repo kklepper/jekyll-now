@@ -15,21 +15,22 @@ published: true
 - [Example](#example)
 - [Why roll your own?](#why-roll-your-own)
 - [Error handling](#error-handling)
-> - [Repair or copy (digression)](#repair-or-copy-digression)
-> - [Table partitioning (digression)](#table-partitioning-digression)
-> - [Partition by md5 (digression)](#partition-by-md5-digression)
-> - [PRIMARY KEY clause (digression)](#primary-key-clause-digression)
-> - [Unusable partition distribution (digression)](#unusable-partition-distribution-digression)
-> - [Experimenting with CONV (digression)](#experimenting-with-conv-digression)
-> - [Max value of bigint datatype (digression)](#max-value-of-bigint-datatype-digression)
-> - [Table type: MyISAM vs. InnoDB (digression)](#table-type-myisam-vs-innodb-digression)
+> - [Repair or copy -- digression](#repair-or-copy-digression)
+> - [Table partitioning -- digression](#table-partitioning-digression)
+> - [Partition by md5 -- digression](#partition-by-md5-digression)
+> - [PRIMARY KEY clause -- digression](#primary-key-clause-digression)
+> - [Unusable partition distribution -- digression](#unusable-partition-distribution-digression)
+> - [Experimenting with CONV -- digression](#experimenting-with-conv-digression)
+> - [Max value of bigint datatype -- digression](#max-value-of-bigint-datatype-digression)
+> - [Table type: MyISAM vs. InnoDB -- digression](#table-type-myisam-vs-innodb-digression)
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
 - [Adding a stopwatch](#adding-a-stopwatch)
-> - [Docker and mysqlbinlog (digression)](#docker-and-mysqlbinlog-digression)
-> - [Partitioning by RANGE (digression)](#partitioning-by-range-digression)
-> - [Reorganizing sql logging (digression)](#reorganizing-sql-logging-digression)
-> - [Partitioning by day of week (digression)](#partitioning-by-day-of-week-digression)
+> - [Docker and mysqlbinlog -- digression](#docker-and-mysqlbinlog-digression)
+> - [Partitioning by RANGE -- digression](#partitioning-by-range-digression)
+> - [Reorganizing sql logging -- digression](#reorganizing-sql-logging-digression)
+> - [Comments, editors and other tools -- digression](#comments,-editors-and-other-tools-digression)
+> - [Partitioning by day of week -- digression](#partitioning-by-day-of-week-digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
@@ -368,7 +369,7 @@ But if you are sure that this doesn't happen and the error is not triggered and 
 
 Here I don't write about fancy scenarios. I have experienced replication errors which obviously stem from the database engines involved and which I could not explain. Google of course knows about these errors. They are discussed in the MySQL forum, but none of these cases has found a solution. So there is nothing I can conclude here. Brute force is the only remedy.
 
-Repair or copy (digression)
+Repair or copy -- digression
 ----------
 
 As these are the only errors I ever experienced apart from those induced by faulty code, I decided to develop a solution along the strategy of Percona. Thinking about it, it is an elegant solution as well. 
@@ -381,7 +382,7 @@ This (repair or copy) may take a lot of time depending on the size of your table
 
 Chances are, only one file of the partition tables has a problem. In this case you only copy the faulty file which is most probably the fastest operation you can get.
 
-Table partitioning (digression)
+Table partitioning -- digression
 ----------
 
 For example, I have more than a dozen MyISAM tables of the same type of data some of which with more than 1 GB datafile each. This will slow down rsync operations on those tables. 
@@ -408,7 +409,7 @@ The average size of the partition tables is about 2 MB. The biggest chunk, howev
 
 You may wonder about the peculiar formulas for the partition definition. They are due to the fact that the integer column used for hash partitioning starts with 1, which would make all records belonging to the first 100 or 1000 id would populate the first partition table. This formula avoids that. All of these first id records now belong to different partitions.
 
-Partition by md5 (digression)
+Partition by md5 -- digression
 ----------
 
 Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value instead of an integer, as in the other cases. There is no algorithm for partitioning based on md5 values. 
@@ -443,7 +444,7 @@ Next I populated this column with the integer value of the md5 column:
 
 Does it work now? No, it doesn't.
 
-PRIMARY KEY clause (digression)
+PRIMARY KEY clause -- digression
 ----------
 
     >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
@@ -492,7 +493,7 @@ Oh, I see, the engine had to switch to exponential representation. Okay, the fac
 
 Finally it works. 
 
-Unusable partition distribution (digression)
+Unusable partition distribution -- digression
 ----------
 
 What is the result? Big surprise. 
@@ -589,7 +590,7 @@ Now this looks like it should be. Obviously this function `CONV` fails with 32-b
     
 This is what our conversion function delivers -- ever the same number. 
 
-Experimenting with CONV (digression)
+Experimenting with CONV -- digression
 ----------
 
 Let's experiment with chopping off a part of this 32 byte md5 value.
@@ -694,7 +695,7 @@ All of these experiments resulted in partition sizes which looked pretty similar
  
 At least I have found a solution to the md5 partitioning problem. And that's good.
 
-Max value of bigint datatype (digression)
+Max value of bigint datatype -- digression
 ----------
 
 To see where things get wrong, I issued the following (concatenating 2 simple SQL commands to make testing easier -- sorry, reading is worse, but it may be interesting to see that this technique, which is well known from the shell, works in SQL as well):
@@ -736,7 +737,7 @@ Maybe it is time now to write a bug report.
 
 Better not. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. That's why! I never hit that number before. 
 
-Table type: MyISAM vs. InnoDB (digression)
+Table type: MyISAM vs. InnoDB -- digression
 ----------
 
 The data collected so far is just the beginning. Eventually all the partitions will be filled up quite evenly. Also, the overall size will grow accordingly, so we might have to introduce partitions by 10,000 - well, this is not possible at the moment, the limit is 8192, which, for a human only, makes it more difficult to compute the partition a particular id is to be found.
@@ -922,7 +923,7 @@ At least I hope so. Maybe there is some more work to be done. The master has bee
 
 The script `/path_to_your_script/mysql_repl_monitor.sh` polls every minute, as you see from the replication log and `crontab -l`, which is as frequent as cron allows. The call is cheap on the respective database engines, so there is no performance problem to be expected.
 
-Docker and mysqlbinlog (digression)
+Docker and mysqlbinlog -- digression
 ----------
 
 Another example: We use docker to get information from the slave which relay log it is working on:
@@ -1000,7 +1001,7 @@ In order to be able to inspect the protocol file from the host, you have to map 
 
 As you see here, we also use the [Sphinx database search engine](http://sphinxsearch.com/).
 
-Partitioning by RANGE (digression)
+Partitioning by RANGE -- digression
 ----------
 
 In my opinion, due to the encryption, the log file isn't really useful. If you want to see what your database engine really does, you better record every data changing operation in a separate table, much like [Adminer](https://www.adminer.org/) does with it's history (`...&sql=&history=all`). 
@@ -1022,7 +1023,7 @@ This is another example for a good use of partitioning a table, this time by `RA
 
 This regular dropping of the oldest partition and creating a new partition instead can be realized via stored procedure (you will find examples via Google, e.g. [MySQL Stored Procedure for Table Partitioning](https://gist.github.com/CodMonk/4b89294bbb48eb1edb31)) or conventionally via crontab, shell script and docker. Take your pick. 
 
-Reorganizing sql logging (digression)
+Reorganizing sql logging -- digression
 ----------
 
 While I was reorganizing my tmp.sql_log table, I dropped the idea of using `RANGE`. You can drop a table or a partition very fast, that's true, but you can truncate a table just as fast. That's even better. You don't have to create a new partition regularly.
@@ -1086,14 +1087,14 @@ Everything okay now? Test it.
 
 The code is pretty much self-explanatory. May I point you to the comments in this SQL statement?
 
-Comments and editors (digression)
+Comments, editors and other tools -- digression
 ----------
 
 If you have fairly complex application, you want to know where to look when an error occurs. That's why I made it a habit to add this kind of debug information to every single SQL query in my code. I want to see the line, the file and the method which has called this database query. 
 
     # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sitemap 
 
-Maybe there are even more calls in between, so I get something like a trace. I have 2 mechanisms for this. The first is used when I don't want to clutter the SQL term with debug information. I then just insert the line
+Maybe there are even more calls in between, so I get something like a trace. I have 2 mechanisms for this. The first is used when I don't want to clutter the SQL term with debug information. I then simply insert the line
 
         $this->dba->comment = "# L: ".__LINE__.". F: ".__FILE__.". M: ".__METHOD__;
 
@@ -1103,24 +1104,89 @@ I use [CodeIgniter](https://codeigniter.com/), and as far as I remember, in the 
 
     public $comment = '';
 
-I don't write this line from hand, that would be cruel. Instead I use [AutoHotkey](https://autohotkey.com/) extensively, so I might have defined a hotkey to produce this line. 
+The query method of that class makes use of this member. That's all.
 
-AutoHotkey or short AHK works under Windows from everywhere, but as a rule I need this term in my favorite editor [PSPad](https://www.pspad.com/en/) only. And this editor has its own hotkeys or rather expansion of shortcuts into whatever you want -- pretty much like Word for Windows, plus some more functionality.
+I don't write this line by typing, that would be cruel. Instead I use [AutoHotkey](https://autohotkey.com/) extensively, so I might have defined a hotkey to produce this line. 
+
+AutoHotkey or short AHK works under Windows from everywhere, but, this being PHP code, I need this particular term in my favorite editor [PSPad](https://www.pspad.com/en/) only. And this editor has its own hotkeys or rather expansion of shortcuts into whatever you want -- pretty much like Word for Windows, plus some more functionality. 
+
+For this I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too much time with more or less trouble): my workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
+
+For example, this might be the command which is executed automatically via PuTTY Configuration: 
+
+docker@boot2docker:~$ /path_to_your_script/mysql_start.sh ci4
+
+This script reads:
+
+#/path_to_your_script/mysql_start.sh
+
+#!/bin/sh
+
+
+DB=$1
+
+if [[ -z $1 ]]
+then
+  DB=tmp
+fi
+
+docker exec m1 mysql -e "SET GLOBAL max_binlog_stmt_cache_size = 2097152000;" && docker exec -it m1 mysql $DB 
+
+Mind the parameter `-it` in the 2nd call to `docker exec` here. It makes sure that you get a window (interactive terminal) to work with.
+
+Once in that MySQL session, you might want to see the process list because some processes hang which indicates that there is another process with a lock on a table the other processes one to use and can not until that first process ends and releases this lock.
+
+You may then utilize your keyboard and type bravely `SHOW processlist;` -- until one of these days you say "I don't want to type this anymore" and define a AHK hotkey:
+
+::spl::SHOW processlist;
+
+Here are some other snippets of use:
+
+::saf::SELECT * FROM 
+::sbl::SHOW BINARY LOGS;
+::scf::SELECT COUNT(*) FROM 
+::sct::SHOW CREATE TABLE \G 
+::sdb::SHOW databases;
+::sss::SHOW SLAVE STATUS\G
+::ssu::SELECT user, host, password FROM mysql.user ORDER BY 1; 
+::ssv::SHOW VARIABLES LIKE 'serv%';   
+::stt::SHOW tables;
+::sttt::SHOW tables FROM tmp;
+::svl::SHOW VARIABLES LIKE '%%';   
+::sww::SHOW warnings;
+
+You see it cost me next to nothing to call `SHOW warnings;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I just use AHK to define something new. 
+
+Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I just have to look up what the right shortcut is. It's important to define shortcuts you can remember under all circumstances.
+
+Another nifty command I use regularly reads like this:
+
+git checkout temp$NO && git merge -s ours master && git checkout master && git merge temp$NO && git push origin master && git checkout temp$NO && git branch -a --color 
+
+That's quite a long line and you don't want to type that in. What does it do? Well, usually I use the branch temp for git. If I get screwed up, I might define the shell variable `NO` and branch out to that, say `NO=2`. If that's okay and I feel like pushing to the master, I call the above sequence.
+
+It checks out the branch I am in and merges this to master and checks out master, and -- yes, it merges the temp branch back -- and then pushes the master to origin and then checks back to the temp branch I was in and shows this date in colors.
+
+I'm sorry, I cannot explain why it merges the temp branch back -- I didn't construct this, I found it somewhere online and found it extremely useful. I didn't record the URL which I do quite often, but not here, unfortunately. If you Google for `git merge -s ours master && git checkout master` you find a Russian page with a similar sequence, that's it.
+
+Your creativity will find lots of situations where you can ease your workload. One more tip: for this task I also used a number of other tools, but the Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/) is excellent. 
+
+I have defined `F1` as the hotkey to the clipboard list and defined a 2nd tab which copies all images. Also I have enlarged the available space as much as possible. This tool is very fast and has a very efficient search engine. Highly recommended as well.
 
 Every once in a while I look for other editors in case the technical development has produced something more productive than PSPad. My latest adventure in this direction was [Atom](https://atom.io/), but it turned out to be of no use for several reasons.
 
-One of them was that one property was not usable, so I contacted the person in charge to discuss things with him. He just answered that he actually did have implemented it the way I wanted to, but the community had decided otherwise. And that was that. 
+One of them was that one property was not usable, so I contacted the person in charge to discuss things with him. He answered that he actually did have implemented it the way I wanted to, but the community had decided otherwise. And that was that. 
 
-Sorry. I don't want to hack my own editor. I just want to be productive. And I'm happy and very productive with PSPad. By the way the shortcut for the comment line is `tdc`, for **t**his **d**ba **c**omment.
+Sorry. I don't want to hack my own editor. I just want to be productive. And I'm happy and very productive with PSPad. By the way the shortcut for the comment line is `tdc`, for $**t**his->**d**ba->**c**omment.
 
-Apart from that, I can always add 
+Apart from that, I can always add the term
 
     "# L: ".__LINE__.". F: ".__FILE__.". M: ".__METHOD__;
 
-to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated, actually all of them. That's why I don't have a shortcut for this snippet. I simply don't need it.
+to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated, actually all of them. That's why although I do have a shortcut for this snippet, I simply don't need it.
 
 
-Partitioning by day of week (digression)
+Partitioning by day of week -- digression
 ----------
 
 I don't need that old data anymore. To save time testing partitioning, I just `truncate` that table.
