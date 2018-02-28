@@ -1215,7 +1215,7 @@ Of course, there are lots of people online using these products, but they are pr
 Partitioning by day of week -- digression
 ----------
 
-I don't need that old data anymore. To save time testing partitioning, I just `truncate` that table.
+Back to partitioning. I don't need that old data anymore. To save time testing partitioning, I just `truncate` that table.
 
     M:7727678 [tmp]>TRUNCATE TABLE tmp.sql_log;
     Query OK, 0 rows affected (0.16 sec)
