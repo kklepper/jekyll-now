@@ -1097,9 +1097,9 @@ Maybe there are even more calls in between, so I get something like a trace. I h
 
         $this->dba->comment = "# L: ".__LINE__.". F: ".__FILE__.". M: ".__METHOD__;
 
-just before the query. Of course, I don't
+just before the query. That's obviously PHP, and in order to understand this line, I have to tell you more.
 
-I use [CodeIgniter](https://codeigniter.com/), and as far as I remember in the earlier days they had a module named `Active_record`. Anyway, I wrote an Active Record Class which takes care of everything I like. This is what the `dba` stands for. So this class has a member `comment`.
+I use [CodeIgniter](https://codeigniter.com/), and as far as I remember in the earlier days they had a module named `Active_record`. Anyway, I wrote an `Active Record Class` which takes care of everything I like. This is what the `dba` stands for. So this class has a member `comment`.
 
     public $comment = '';
 
@@ -1107,13 +1107,15 @@ I don't write this line from hand, that would be cruel. Instead I use [AutoHotke
 
 Every once in a while I look for other editors in case the technical development has produced something more productive than [PSPad](https://www.pspad.com/en/). My latest adventure in this direction was [Atom](https://atom.io/), but it turned out to be of no use for several reasons.
 
-One of them was that one property was not usable, so I contacted the person in charge to discuss things with him. He just answered that he actually did have implemented it the way I wanted to, but the community had decided otherwise. And that was that. Sorry. I don't want to hack my own editor. I just want to be productive. And I'm happy with PSPad. By the way the shortcut for the comment line is `tdc`, for `this dba comment`.
+One of them was that one property was not usable, so I contacted the person in charge to discuss things with him. He just answered that he actually did have implemented it the way I wanted to, but the community had decided otherwise. And that was that. 
+
+Sorry. I don't want to hack my own editor. I just want to be productive. And I'm happy with PSPad. By the way the shortcut for the comment line is `tdc`, for `this dba comment`.
 
 Apart from that, I can always add 
 
     "# L: ".__LINE__.". F: ".__FILE__.". M: ".__METHOD__;
 
-to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated.
+to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated, actually all of them. That's why I don't have a shortcut for.
 
 
 Partitioning by day of week (digression)
