@@ -1522,7 +1522,23 @@ Same procedure for the other slave:
     +-------+---------------------+
     1 row in set (0.00 sec)
 
-Well, this is perfect, isn't it?
+Well, this is perfect, isn't it? Why does rsync think otherwise? 
+
+Here my memory fails me. Somewhere in one of my scripts I used the term `diff`. I remember I investigated the question of the best methods to find if 2 files are identical a couple of days ago. And I remember that this question had no easy answer, and I chose `diff` as being the most reliable.
+
+Now I need something like
+
+grep -rn '/mnt/sda1/wp/ci/application/' -e '' 
+
+for a totally different directory: `path_to_your_script`. Numerous times I have overwritten the template by typing, but now I will define a new hotkey or rather shortcut.
+
+::ggrp::grep -rn '/path_to_your_script/' -e ''
+
+I don't find anything. Now I remember. `diff` was one of the candidates which were not good. It was something with `md5`. 
+
+And here I have it: `md5sum`, and it is contained in a script named `mysql_cmp.sh`. This script compares all the files and takes action if `md5sum` is different.
+
+
 
 End of digression.
 
