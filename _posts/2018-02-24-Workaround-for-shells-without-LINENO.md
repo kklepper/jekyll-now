@@ -95,7 +95,9 @@ It's for people like me I take the pain to write this all up, those who are new 
 
 Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on it, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. And still I don't now what I'm heading for in the end.
 
-Another caveat: As I took my notes while developing my ideas, I recorded all detours as well. It is a question if they should have been cleared later. Even if you pursue the wrong way, you do learn a lot nevertheless. Contemplating about it, I decided to leave it in place.
+Another caveat: As I took my notes while developing my ideas, I recorded all detours as well and didn't hesitate to document my stupidity. It is a question if all of these dumb attempts should have been cleared later. But even if you pursue the wrong way, you do learn a lot nevertheless. 
+
+Contemplating about it, I decided to leave all that in place.
 
 More complex cases <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
