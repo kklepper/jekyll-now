@@ -1383,7 +1383,7 @@ So we have to reorganize our partitions. But before doing that, let's have a loo
 
 From here we see easily which partition is the oldest and should be truncated. 
 
-You may wonder about the group and the owner of these files. In order to have permanent data, we map a directory structure from the host to the container `/d/data/master:/var/lib/mysql` (see <a href="#volumes">above</a>), so we look at the same data from 2 different positions. 
+You may wonder about the group and the owner of these files. In order to have permanent data, we map a directory structure from the host to the container `/d/data/master:/var/lib/mysql` (see volume definition <a href="#volumes">above</a>), so we look at the same data from 2 different positions. 
 
 We manipulate these files from inside the docker container via group and owner `mysql`. If you look at these files from inside the container, you will see `mysql mysql`. 
 
