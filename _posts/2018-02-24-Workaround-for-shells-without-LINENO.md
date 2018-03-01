@@ -1210,18 +1210,24 @@ It checks out the branch I am in and merges this to master and checks out master
 
 I'm sorry, I cannot explain why it merges the temp branch back -- I didn't construct this, I found it somewhere online and found it extremely useful. I didn't record the URL, though, which I do quite often, but not here, unfortunately. If you Google for `git merge -s ours master && git checkout master` you find a Russian page with a similar sequence, that's it. I don't speak Russian, so I didn't find it there. The original must've been lost, at least to Google.
 
-Your creativity will find lots of situations where you can ease your workload. One more tip: for the task of recording clipboard snippets I also used a number of other tools, but  the Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/) is excellent. 
+Your creativity will find lots of situations where you can ease your workload. One more tip: for the task of recording clipboard snippets I also used a number of other tools, but none of them were really good. The Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/), however, is absolutely excellent. 
 
 I have defined `F1` as the hotkey to the clipboard list and defined a second tab which copies all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. Highly recommended as well.
 
 Digression: Speech recognition <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-I can't resist. The sentence above "Great. All that with just a few keystrokes you have to remember." brought back to memory an incident of about 1995. Dragon's first product hit the market. I guess it was called something like 35k because it could remember 35,000 words. It worked on MS DOS, needed some piece of hardware, and was quite expensive, but for professionals like lawyers, who have to dictate lots of text every day, this investment might have made sense.
+I can't resist. The sentence above "Great. All that with just a few keystrokes you have to remember." brought back to memory an incident of about 1995. Dragon's first product hit the market. I guess it was called something like 30k because it could remember 30,000 words. It worked on MS DOS, needed some piece of hardware, and was quite expensive, but for professionals like lawyers, who have to dictate lots of text every day, this investment might have made sense.
 
 Back then we were serving this profession and we offered them this product. Of course, I had to prove that it worked, and the climax of the show was when I demonstrated the capability of defining complex macros triggered by just a few words. Those words could have been made up. The machine would learn this "word".
 
-A lawyer, after having produced his text, will have to save his legal document, printed for his client, the opposing party, the attorney, the court, maybe several consultants and witnesses. And maybe he will also use his new acquisition, the fax machine, which was the latest technical equipment of the time. So the term I coined for this complex operation was "fax it off". And of course, it worked.
+A lawyer, after having produced his text, usually by normal dictation, would give this to his secretary who would listen to dictation and type the text to whatever machine she has at hand. Back then it was the time when many offices still had electric or electronic typewriters, no computer. Sometimes they had dictation machines which looked like being 50 years old or more. Hey, they worked.
+
+The secretary would then have to save this legal document, print it for the client, the opposing party, the attorney, the court, maybe several consultants and witnesses. And maybe she will also use his new acquisition, the fax machine, which was the latest technical equipment of the time. 
+
+With a computer and the dictation system, the lawyer would be able to produce the text file himself and also do the rest, that is producing all those copies, which isn't what he is trained for. The term I coined for this complex operation was "fax it off". And of course, it worked.
+
+The argument was not that he didn't need a secretary anymore. He probably would dictate into his dictation machine faster and with more ease than into the new speech recognition engine. But he could have been productive even in non-office times, when there was no secretary around. And this did happen.
 
 I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I did work with Windows Speech Recognition for a long time as well, using Windows for my mother tongue and DragonDictate for English, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
 
