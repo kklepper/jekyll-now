@@ -36,7 +36,7 @@ Why are data files different -- digression
 > - [Partitioning by day of week -- digression](#partitioning-by-day-of-week--digression)
 > - [Comparing files -- digression](#comparing-files----digression)
 > - [Why are data files different -- digression](#why-are-data-files-different--digression)
-> - [Automatic checkout -- digression](#automatic-checkout--digression)
+> - [Automatic git checkout -- digression](#automatic-git-checkout--digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
@@ -1635,7 +1635,7 @@ But even thorough inspection reveals that they are indeed identical.
 
 Any explanation why the data files are different? No idea.
 
-Automatic checkout -- digression
+Automatic git checkout -- digression
 ----------
 
 Looking at my crontab file, I notice a nice service running every minute which not only saves my work but eases my life as well. I let this script checkout all my work every minute. 
