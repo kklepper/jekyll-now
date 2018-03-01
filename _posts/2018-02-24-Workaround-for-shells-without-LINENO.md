@@ -1817,7 +1817,7 @@ Last but not least I want to thank all those experts out there emphatically for 
 
 Nowadays, whenever I have a problem, I call Google, and if there is a solution, most probably I find it this way. If nobody had this kind of problem, there is a good chance that the problem isn't where I think it is.
 
-It's hard to look into the future, but we can look back. My first encounter with computers was in the 60s, when [ALGOL 60](https://en.wikipedia.org/wiki/Algol_60) had just been invented. We punched cards a deck of which was transferred to an operator, and a week later the result was handed back, maybe with a typo.
+It's hard to look into the future, but we can look back. My first encounter with computers was in the 60s, when [ALGOL 60](https://en.wikipedia.org/wiki/Algol_60) had just been invented. We tediously punched lots of cards a deck of which was transferred to an operator, and a week later the result was handed back, maybe with a typo.
 
 The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/Fortran), so that was my second language. The Department of Theoretical Physics owned the second computer of the whole university, a [Zuse Z25](https://en.wikipedia.org/wiki/Z25_(computer)), which was fed with telex ticker tape. Here I learned my first and only machine language.
 
