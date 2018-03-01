@@ -742,7 +742,9 @@ To see where things get wrong, I issued the following (concatenating 2 simple SQ
 
 Maybe it is time now to write a bug report. 
 
-Better not. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. That's why! I never hit that number before. 
+Better not. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. That's why! 
+
+I never hit that number before. 
 
 Digression: Table type: MyISAM vs. InnoDB <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
