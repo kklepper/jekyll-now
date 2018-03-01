@@ -32,6 +32,7 @@ published: true
 > - [Digression: Comments and editors](#digression-comments-and-editors-table-of-content)
 > - [Digression: Other tools](#digression-other-tools-table-of-content)
 > - [Digression: Speech recognition](#digression-speech-recognition-table-of-content)
+> - [Digression: WSR vs. DragonDictate](#digression-wsr-vs-dragondictate-table-of-content)
 > - [Digression: Partitioning by day of week](#digression-partitioning-by-day-of-week-table-of-content)
 > - [Digression: Comparing files](#digression-comparing-files-table-of-content)
 > - [Digression: Why are data files different](#digression-why-are-data-files-different-table-of-content)
@@ -1226,7 +1227,7 @@ I can't resist. The sentence above "Great. All that with just a few keystrokes y
 
 Back then we were serving this profession and we offered them this product. Of course, I had to prove that it worked, and the climax of the show was when I demonstrated the capability of defining complex macros triggered by just a few words. Those words could have been made up. The machine would learn this "word".
 
-A lawyer, after having produced his text, usually by normal dictation, would give this to his secretary who would listen to this dictation and type the text to whatever machine she has at hand. Back then it was the time when many offices still had electric or electronic typewriters, no computer. Sometimes they had dictation machines which looked like being 50 years old or more. Hey, they worked.
+A lawyer, after having produced his text, usually by normal dictation, would give this to his secretary who would listen to this dictation and type the text to whatever machine she has at hand. Back then it was the time when many offices still had electric or electronic typewriters, no computer. Sometimes they had dictation machines which looked like being 50 years old or more. Why, they still worked fine.
 
 The secretary would then have to save this legal document, print it for the client, the opposing party, the attorney, the court, maybe several consultants and witnesses. And maybe she will also use his new acquisition, the fax machine, which was the latest technical equipment of the time. 
 
@@ -1234,7 +1235,10 @@ With a computer and the dictation system, the lawyer would be able to produce th
 
 The argument was not that he didn't need a secretary anymore. He probably would dictate into his dictation machine faster and with more ease than into the new speech recognition engine. But he could have been productive even in non-office times, when there was no secretary around. And this did happen.
 
-I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I did work with Windows Speech Recognition for a long time as well, using Windows for my mother tongue and DragonDictate for English, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
+Digression: WSR vs. DragonDictate <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I did work with Windows Speech Recognition WSR for a long time as well, using Windows for my mother tongue and DragonDictate for English, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
 
 Windows Speech Recognition works equally fine, although it uses other terms to navigate the speech engine. That's really bad, but, hey, we are human, that shouldn't be a problem for us. And it isn't. You can learn that, too, and switch the navigation terms. The reason why I stuck with DragonDictate is that Windows Speech Recognition interferes badly with some programs. Most probably because those programs are way too smart these days. 
 
