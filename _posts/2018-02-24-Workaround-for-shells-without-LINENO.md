@@ -1368,7 +1368,7 @@ So we have to reorganize our partitions. But before doing that, let's have a loo
     -rw-rw----    1 dockrema dockrema        20 Feb 27 12:11 /d/data/master/tmp/sql_log#P#p6.MYD
     -rw-rw----    1 dockrema dockrema    112920 Feb 28 14:58 /d/data/master/tmp/sql_log#P#p0.MYD
 
-From here we see easily which partition is the oldest and should be dropped. You may wonder about the group and the owner of these files. We manipulate these files from inside the docker container via group and owner `mysql`. If you look at these files from inside the container, you will see that. 
+From here we see easily which partition is the oldest and should be truncated. You may wonder about the group and the owner of these files. We manipulate these files from inside the docker container via group and owner `mysql`. If you look at these files from inside the container, you will see that. 
 
 But here I am looking from the host, and docker somehow introduces a group and a user to cope with this inside outside view. That's all I know. Most probably there will be some more to explain and understand, but that's enough for me.
 
