@@ -1094,7 +1094,7 @@ Everything okay now? Test it.
     M:7727678 [tmp]>SELECT id_sql, uncompress(sql_compressed) FROM tmp.sql_log_log ORDER BY 1 LIMIT 1\G
     *************************** 1. row ***************************
                         id_sql: 1
-    uncompress(sql_compressed): DROP TABLE IF EXISTS tmp.tbl_ar, tmp.tbl_bn, tmp.tbl_de, tmp.tbl_en, tmp.tbl_es, tmp.tbl_fa, tmp.tbl_fr, tmp.tbl_hi, tmp.tbl_it, tmp.tbl_ja, tmp.tbl_nl, tmp.tbl_pt, tmp.tbl_ru, tmp.tbl_ur, tmp.tbl_zh
+    uncompress(sql_compressed): DROP TABLE IF EXISTS tmp.sm_id_ar, tmp.sm_id_bn, tmp.sm_id_de, tmp.sm_id_en, tmp.sm_id_es, tmp.sm_id_fa, tmp.sm_id_fr, tmp.sm_id_hi, tmp.sm_id_it, tmp.sm_id_ja, tmp.sm_id_nl, tmp.sm_id_pt, tmp.sm_id_ru, tmp.sm_id_ur, tmp.sm_id_zh
     # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sm
     1 row in set (0.00 sec)
 
