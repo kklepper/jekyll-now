@@ -30,7 +30,7 @@ published: true
 > - [Digression: Partitioning by RANGE](#digression-partitioning-by-range)
 > - [Digression: Reorganizing sql logging](#digression-reorganizing-sql-logging)
 > - [Digression: Comments and editors](#digression-comments-and-editors)
-> - [Digression: Other tools](#digression-comments-other-tools)
+> - [Digression: Other tools](#digression-other-tools)
 > - [Digression: Speech recognition](#digression-speech-recognition)
 > - [Digression: Partitioning by day of week](#digression-partitioning-by-day-of-week)
 > - [Digression: Comparing files](#digression-comparing-files--)
