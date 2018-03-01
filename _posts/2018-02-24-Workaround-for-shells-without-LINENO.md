@@ -1547,7 +1547,18 @@ for a totally different directory: `path_to_your_script`. Numerous times I have 
 
 I don't find anything. Now I remember. `diff` was one of the candidates which were not good. It was something with `md5`. 
 
-And here I have it: `md5sum`, and it is contained in a script named `mysql_cmp.sh`. This script compares all the files and takes action if `md5sum` is different.
+And here I have it: `md5sum`, and it is contained in a script named `mysql_cmp.sh`.  I have written the script a couple of days ago and I can't remember. I guess this is the result of having done something with utmost satisfaction, when as a result the mind puts things at rest.
+
+This script compares all the files and takes action if the `md5sum` of files which should be equal is different. 
+
+Looking at the script, the first thing I see is that it is triggered by a file. This file should have been written to by another script which just adds the name of the slave having problems. This file is read and reset, the list of lines is made unique, so the script is fed with the names of the slaves to take action on.
+
+Obviously, the supervising script writing the trigger file will be called much more often than this script. Or the other way around: I don't take action the moment I notice a problem, but only in much bigger intervals as the repair action may take much longer. Otherwise I might call the repair script again and again while it is still running with unknown consequences. 
+
+If the trigger file is empty, no action is taken at all. So this script only knows about slaves, not about files which are different. This is what the script tries to find out.
+
+ 
+
 
 
 
