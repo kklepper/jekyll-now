@@ -41,7 +41,7 @@ published: true
 - [Have fun](#have-fun-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
 
-Workaround for shells without LINENO <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Workaround for shells without LINENO <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Define a function
@@ -68,7 +68,7 @@ Anything more to add?
 
 Sure. Why do you need this? How do you work with this? What can you do with this? Why do you want to tinker with this at all?
 
-Debugging <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Debugging <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Lucky are those who have bash, but ash does not have LINENO, alas. Which is bad if you need to do a lot of testing on `Busybox` or the like.
@@ -95,7 +95,7 @@ It's for people like me I take the pain to write this all up, those who are new 
 
 Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on this text, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. And still I don't now what I'm heading for in the end.
 
-More complex cases <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+More complex cases <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Back to work. For example, if you like to use multi-line comments or show variables in your debugging messages, that simple approach given above will not work for those cases. 
@@ -141,7 +141,7 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     53  whatsup "hi my dear buddy :$buddy:"
     11       "this was from inside function whatsup, argument :$1:, line number is call line"
 
-How to use <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Create a script defining the function only. This script is to be included in the real script to be debugged:
@@ -227,7 +227,7 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     
     whatsup "hi my dear buddy :$buddy:"
 
-Caveats <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 1. Remember, all the magic stems from `grep`. Make sure each input string is significantly different to any other line in the script, as this is the token for `grep` -- otherwise you get more than that single line you want to see.
@@ -248,7 +248,7 @@ Caveats <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
 
    c. If you use `VARTOKEN`, the line number is shown as in the 3rd function example; this example also shows that inside the function quotes are crucial as well due to the same reason, but in special cases you may even be interested in other places your first word appears (try it without quotes to see the result). Also, if a comment repeats the trigger, it will be shown, too, that's why the comment inside this function has been crafted carefully to not fall into this trap. You will notice anyway and know what to do, if it happens by chance.
 
-Logging <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Logging <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 You may even write a protocol for later inspection or tracking the performance of the working script. To this end simply add the appropriate instruction to your function, e.g. 
@@ -301,7 +301,7 @@ If you also want to clear the log file when starting the test script, simply add
 
 before the first call to `echo_line_no`.
 
-Example <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Example <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 It may not be obvious why logging should be important in the first place. After all, while debugging, you will see the output on screen already, so you don't want to switch to the log file.
@@ -342,7 +342,7 @@ Line numbers aren't important if things are going smoothly, but if you are creat
 
 So this should illustrate the importance of logging. Some final thoughts about the background of all this debugging business. 
 
-Why roll your own? <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Why roll your own? <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Why take the pain and write your own complex shell scripts including all that tedious debugging hassle? 
@@ -363,7 +363,7 @@ Of course it would be, and shell scripts are the perfect tool to accomplish this
 
 Giuseppe Maxia knows all that just as well, but it is not his job to do my job. He could not even do it if he wanted to, because he doesn't know anything about the nature of my setup. Therefore his intention is not to deliver a ready-to-use solution, but instead to outline how this task might be done in order to get you or me on the right track. So this is the first reason why we have to write our own scripts. But there is more to it.
 
-Error handling <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Error handling <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 We would need at least one more shell script to clean up the problem as soon as possible, and that is the moment an error is detected, which only depends on the interval of the monitoring service, itself being realized as a shell script. 
@@ -376,7 +376,7 @@ But if you are sure that this doesn't happen and the error is not triggered and 
 
 Here I don't write about fancy scenarios. I have experienced replication errors which obviously stem from the database engines involved and which I could not explain. Google of course knows about these errors. They are discussed in the MySQL forum, but none of these cases has found a solution. So there is nothing I can conclude here. Brute force is the only remedy.
 
-Digression: Repair or copy <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Repair or copy <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 As these are the only errors I ever experienced apart from those induced by faulty code, I decided to develop a solution along the strategy of Percona. Thinking about it, it is an elegant solution as well. 
@@ -389,7 +389,7 @@ This (repair or copy) may take a lot of time depending on the size of your table
 
 Chances are, only one file of the partition tables has a problem. In this case you only copy the faulty file which is most probably the fastest operation you can get.
 
-Digression: Table partitioning <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Table partitioning <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 For example, I have more than a dozen MyISAM tables of the same type of data some of which with more than 1 GB datafile each. This will slow down rsync operations on those tables. 
@@ -416,7 +416,7 @@ The average size of the partition tables is about 2 MB. The biggest chunk, howev
 
 You may wonder about the peculiar formulas for the partition definition. They are due to the fact that the integer column used for hash partitioning starts with 1, which would make all records belonging to the first 100 or 1000 id would populate the first partition table. This formula avoids that. All of these first id records now belong to different partitions.
 
-Digression: Partition by md5 <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Partition by md5 <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value instead of an integer, as in the other cases. There is no algorithm for partitioning based on md5 values. 
@@ -451,7 +451,7 @@ Next I populated this column with the integer value of the md5 column:
 
 Does it work now? No, it doesn't.
 
-Digression: PRIMARY KEY clause <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: PRIMARY KEY clause <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
     >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
@@ -500,7 +500,7 @@ Oh, I see, the engine had to switch to exponential representation. Okay, the fac
 
 Finally it works. 
 
-Digression: Unusable partition distribution <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Unusable partition distribution <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 What is the result? Big surprise. 
@@ -597,7 +597,7 @@ Now this looks like it should be. Obviously this function `CONV` fails with 32-b
     
 This is what our conversion function delivers -- ever the same number. 
 
-Digression: Experimenting with CONV <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Experimenting with CONV <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Let's experiment with chopping off a part of this 32 byte md5 value.
@@ -702,7 +702,7 @@ All of these experiments resulted in partition sizes which looked pretty similar
  
 At least I have found a solution to the md5 partitioning problem. And that's good.
 
-Digression: Max value of bigint datatype <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Max value of bigint datatype <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 To see where things get wrong, I issued the following (concatenating 2 simple SQL commands to make testing easier -- sorry, reading is worse, but it may be interesting to see that this technique, which is well known from the shell, works in SQL as well):
@@ -744,7 +744,7 @@ Maybe it is time now to write a bug report.
 
 Better not. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. That's why! I never hit that number before. 
 
-Digression: Table type: MyISAM vs. InnoDB <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Table type: MyISAM vs. InnoDB <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 The data collected so far is just the beginning. Eventually all the partitions will be filled up quite evenly. Also, the overall size will grow accordingly, so we might have to introduce partitions by 10,000 - well, this is not possible at the moment, the limit is 8192, which, for a human only, makes it more difficult to compute the partition a particular id is to be found.
@@ -761,7 +761,7 @@ Of course you have to make sure that the master table is not changed during thes
 
 End of digression.
 
-Regular health checking <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Regular health checking <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 One more consideration here. The monitoring script can only detect errors which occur during operation. If at startup the table setup on the slave is different from the master for some reason or the slave database engine produces an error maybe due to some hardware failure, the slave will never find out and the monitoring script is of no use in this case. Comparing the files directly however will find out and the copy process will successfully synchronize any files that are not in sync.
@@ -784,7 +784,7 @@ This way you can be sure to not leave any transaction out and to not duplicate a
 
 For the repair process it would be intelligent to analyze the error message from the slave. If that shows that just one table is affected, then only this table has to be processed. Doing so will speed up the whole thing tremendously, in particular if you have lots of tables.
 
-Automatic failover <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Automatic failover <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Having a solution for occasional errors on slave machines doesn't mean your done. What happens when the master has a problem and this problem is propagated to the slaves? Well, I'm afraid there is no automatic solution for that problem.
@@ -797,7 +797,7 @@ The problem is as general as load-balancing. You wouldn't want to write a load b
 
 Just as well I could have used [MaxScale](https://mariadb.com/resources/blog/mariadb-maxscale-22-introducing-failover-switchover-and-automatic-rejoin) for this purpose, and indeed I have experimented with it at times when it was not yet mature. It's time to switch, I guess, so I will have a second look soon, because in addition to load balancing, MaxScale has some more features, one of them being automatic failover. And this is something you definitely want to have if you can get it. Of course there are alternatives, too, like [Master High Availability Manager](https://www.percona.com/blog/2016/09/02/mha-quickstart-guide/).
 
-Adding a stopwatch <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Adding a stopwatch <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 As I wanted to prove my claim with respect to the time taken, I noticed my chance to show you the power and elegance of Docker and improve the original debugging mechanism by adding a kind of stopwatch. 
@@ -932,7 +932,7 @@ At least I hope so. Maybe there is some more work to be done. The master has bee
 
 The script `/path_to_your_script/mysql_repl_monitor.sh` polls every minute, as you see from the replication log and `crontab -l`, which is as frequent as cron allows. The call is cheap on the respective database engines, so there is no performance problem to be expected.
 
-Digression: Docker and mysqlbinlog <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Docker and mysqlbinlog <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Another example: We use docker to get information from the slave which relay log it is working on:
@@ -1010,7 +1010,7 @@ In order to be able to inspect the protocol file from the host, you have to map 
 
 As you see here, we also use the [Sphinx database search engine](http://sphinxsearch.com/).
 
-Digression: Partitioning by RANGE <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Partitioning by RANGE <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 In my opinion, due to the encryption, the log file isn't really useful. If you want to see what your database engine really does, you better record every data changing operation in a separate table, much like [Adminer](https://www.adminer.org/) does with it's history (`...&sql=&history=all`). 
@@ -1032,7 +1032,7 @@ This is another example for a good use of partitioning a table, this time by `RA
 
 This regular dropping of the oldest partition and creating a new partition instead can be realized via stored procedure (you will find examples via Google, e.g. [MySQL Stored Procedure for Table Partitioning](https://gist.github.com/CodMonk/4b89294bbb48eb1edb31)) or conventionally via crontab, shell script and docker. Take your pick. 
 
-Digression: Reorganizing sql logging <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Reorganizing sql logging <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 While I was reorganizing my tmp.sql_log table, I dropped the idea of using `RANGE`. You can drop a table or a partition very fast, that's true, but you can truncate a table just as fast. That's even better. You don't have to create a new partition regularly. You just recycle the partitions you have.
@@ -1096,7 +1096,7 @@ Everything okay now? Test it.
 
 The code is pretty much self-explanatory. May I point you to the comments in this SQL statement?
 
-Digression: Comments and editors <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Comments and editors <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 If you have fairly complex application, you want to know where to look when an error occurs. That's why I made it a habit to add this kind of debug information to every single SQL query in my code. I want to see the line, the file and the method which has called this database query. 
@@ -1131,7 +1131,7 @@ Apart from that, I can always add the term
 
 to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated, actually all of them. That's why although I do have a shortcut for this snippet, I simply don't need it.
 
-Digression: Other tools <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Other tools <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too long a time with more or less trouble): My workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
@@ -1210,7 +1210,7 @@ Your creativity will find lots of situations where you can ease your workload. O
 
 I have defined `F1` as the hotkey to the clipboard list and defined a second tab which copies all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. Highly recommended as well.
 
-Digression: Speech recognition <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Speech recognition <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 I can't resist. The sentence above "Great. All that with just a few keystrokes you have to remember." brought back to memory an incident of about 1995. Dragon's first product hit the market. I guess it was called something like 35k because it could remember 35,000 words. It worked on MS DOS, needed some piece of hardware, and was quite expensive, but for professionals like lawyers, who have to dictate lots of text every day, this investment might have made sense.
@@ -1235,7 +1235,7 @@ Every once in a while, when I met colleagues complaining about stress injury syn
 
 Of course, there are lots of people online using these products and chatting about it in their forums, but they are a totally different kind of people and professionally producing huge amounts of text. The industry has concentrated on lawyers and physicians, obviously successfully. Although back then everybody was dreaming of talking with a machine (see Star Trek IV: ["hello computer"](https://www.youtube.com/watch?v=v9kTVZiJ3Uc), 32 secs), not much has happened in the private realm. Nowadays we have Siri and Cortana, but sorry, I don't use that.
 
-Digression: Partitioning by day of week <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Partitioning by day of week <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Back to partitioning. I don't need that old data anymore. To save time testing partitioning, I just `truncate` that table.
@@ -1411,7 +1411,7 @@ The shell script for regularly truncating the oldest partition now reads
 
     p_no=$(($(($(date "+%w") + 1)) % 7)) && docker exec m1 mysql -e "ALTER TABLE tmp.sql_log TRUNCATE PARTITION p$p_no"
 
-Digression: Inspecting the SQL log <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Inspecting the SQL log <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 The function `_sql_log_record` responsible for logging data changing actions must filter several commands which, although not changing any data, have to be sent to the master but should not be logged nevertheless because they don't add anything to our understanding. These are `USE`, `SHOW`, `SET`.
@@ -1556,7 +1556,7 @@ for a totally different directory: `path_to_your_script`. Numerous times I have 
 
 I don't find anything. Now I remember. `diff` was one of the candidates which were not good. It was something with `md5`. 
 
-Digression: Comparing files <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Comparing files <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 And here I have it: `md5sum`, and it is contained in a script named `mysql_cmp.sh`.  I have written the script a couple of days ago and I can't remember. I guess this is the result of having done something with utmost satisfaction, when as a result the mind puts things at rest.
@@ -1609,7 +1609,7 @@ Or ask Google: [MariaDB Error Codes](https://mariadb.com/kb/en/library/mariadb-e
 
 It shouldn't be too hard to get the table name from this information. 
 
-Digression: Why are data files different <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Why are data files different <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Still, I feel uneasy about the situation. In my understanding those files should be identical. Of course, depending on the structure of the disc, this data could be spread out over totally different sectors and whatnot, but byte-wise they should be equal.
@@ -1638,7 +1638,7 @@ But even thorough inspection reveals that they are indeed identical.
 
 Any explanation why the data files are different? No idea.
 
-Digression: Automatic git checkout <span style="font-size: 11px"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Automatic git checkout <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Looking at my crontab file, I notice a nice service running every minute which not only saves my work but eases my life as well. I let this script checkout all my work every minute. 
@@ -1728,7 +1728,7 @@ At the end you see the message from pushing the whole stuff to origin or rather 
 
 In case I have screwed things up somewhere along the lines without noticing and have to find the last clean checkout, I simply check out different revisions by jumping in this list and picking the one in the middle until I have what I want. This procedure is very fast and guaranteed to succeed.
 
-Digression: Automatic boot2docker setup <span style="font-size: 11px"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Digression: Automatic boot2docker setup <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 One more thing that I had been struggling with very long until I found a good solution: If you work with boot2docker, at reboot you will lose all data which is not saved at some safe place. In particular, crontab data is lost. Of course, data in the `tmp` directory is lost as well, but that's to be expected and rather nice.
@@ -1767,7 +1767,7 @@ So whenever I change something in my crontab, in order to make it permanent, I h
 
 End of digression.
 
-Why roll your own, revisited <span style="font-size: 11px"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Why roll your own, revisited <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Some more considerations might be helpful. Let's again learn by example.
@@ -1796,7 +1796,7 @@ Summarizing, if you roll your own solution,
 
 Again you will be glad to have a handy debugging tool like `echo_line_no` with complex tasks like database replication repair on platforms without LINENO. You will need it even more so as your solution cannot claim to be tested by a plethora of experts with all kinds of field experience.
 
-Have fun <span style="font-size: 11px"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+Have fun <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Finally, if you want to repeat the above given tests, don't forget to replace `path_to_your_script` with your own path (or create a symbolic link, whichever is easier for you). Take this sample as a starting point for your own creativity. Maybe there are other exciting things you can do with this approach I couldn't come up with (yet). 
@@ -1813,7 +1813,7 @@ As people in times of Docker containers tend to use minimal Linux systems like `
 
 Hopefully, this text will give somebody else some insight in the future as well. Furthermore, I hope that you, having read so far, did enjoy the article and don't regret having spent your time.
 
-A big thank you to you all <span style="font-size: 11px"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
+A big thank you to you all <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Last but not least I want to thank all those experts out there emphatically for all their excellent work. There are very many fine solutions I've found for my problems which have been incorporated in my setup without a note.
