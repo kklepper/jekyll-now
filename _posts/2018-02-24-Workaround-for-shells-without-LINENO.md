@@ -1502,7 +1502,7 @@ But the synchronizing script tells me otherwise:
 
 Here you see that the ID plays a significant role. All partitioned tables were only touched in the partition belonging to ID 6. What happens here?
 
-In order to find out I used the SQL logging table, because the binlog information didn't help me much. I must believe that the statements recorded in the logging table are written to the binlog and then read by the slaves, copied to their relay log and processed from there. The SQL logging table doesn't revieal anything unusual. Again: What happens here?
+In order to find out I used the SQL logging table, because the binlog information didn't help me much. I must believe that the statements recorded in the logging table are written to the binlog and then read by the slaves, copied to their relay log and processed from there. The SQL logging table doesn't reveal anything unusual. Again: What happens here?
 
 What does it mean when rsync thinks a file is different? In my understanding there should be some byte difference in both files. And if so, shouldn't this difference be reflected in the data?
 
