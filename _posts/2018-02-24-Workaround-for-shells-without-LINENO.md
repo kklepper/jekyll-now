@@ -1733,7 +1733,7 @@ There is one place where you can manipulate the startup behavior:
 
     /var/lib/boot2docker/profile
 
-It is very inconvenient to manipulate this file directly (you have to remember this path and be root), so I only use it to call another script from my `path_to_your_script` directory called `up.sh` where I put all my instructions to.
+It is inconvenient to manipulate this file directly (remember this path and be root), so I only use it to call another script from my `path_to_your_script` directory called `up.sh` where I put all my instructions to instead.
 
     # /var/lib/boot2docker/profile
     #!/bin/sh
@@ -1748,7 +1748,7 @@ It is very inconvenient to manipulate this file directly (you have to remember t
 
 This script is called at shutdown also and will make sure that the whole setup is shut down cleanly. In particular the database engine may not like to be suddenly killed. This way you're safe.
 
-In starting, the script `up.sh` will call the script `/path_to_your_script/cron_build.sh` which populates the crontab file based on the template `cron.sh`. 
+In starting, the script `up.sh` will call the script `cron_build.sh` which populates the crontab file based on the template `cron.sh`. 
 
     #!/bin/ash
     # /path_to_your_script/cron_build.sh
