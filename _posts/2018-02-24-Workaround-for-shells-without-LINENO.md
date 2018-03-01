@@ -15,28 +15,28 @@ published: true
 - [Example](#example)
 - [Why roll your own?](#why-roll-your-own)
 - [Error handling](#error-handling)
-> - [Repair or copy -- digression](#repair-or-copy--digression)
-> - [Table partitioning -- digression](#table-partitioning--digression)
-> - [Partition by md5 -- digression](#partition-by-md5--digression)
-> - [PRIMARY KEY clause -- digression](#primary-key-clause--digression)
-> - [Unusable partition distribution -- digression](#unusable-partition-distribution--digression)
-> - [Experimenting with CONV -- digression](#experimenting-with-conv--digression)
-> - [Max value of bigint datatype -- digression](#max-value-of-bigint-datatype--digression)
-> - [Table type: MyISAM vs. InnoDB -- digression](#table-type-myisam-vs-innodb--digression)
+> - [Digression: Repair or copy](#digression-repair-or-copy)
+> - [Digression: Table partitioning](#digression-table-partitioning)
+> - [Digression: Partition by md5](#digression-partition-by-md5)
+> - [Digression: PRIMARY KEY clause](#digression-primary-key-clause)
+> - [Digression: Unusable partition distribution](#digression-unusable-partition-distribution)
+> - [Digression: Experimenting with CONV](#digression-experimenting-with-conv)
+> - [Digression: Max value of bigint datatype](#digression-max-value-of-bigint-datatype)
+> - [Digression: Table type: MyISAM vs. InnoDB](#digression-table-type-myisam-vs-innodb)
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
 - [Adding a stopwatch](#adding-a-stopwatch)
-> - [Docker and mysqlbinlog -- digression](#docker-and-mysqlbinlog--digression)
-> - [Partitioning by RANGE -- digression](#partitioning-by-range--digression)
-> - [Reorganizing sql logging -- digression](#reorganizing-sql-logging--digression)
-> - [Comments and editors -- digression](#comments-and-editors--digression)
-> - [Other tools -- digression](#comments-other-tools--digression)
-> - [Speech recognition -- digression](#speech-recognition--digression)
-> - [Partitioning by day of week -- digression](#partitioning-by-day-of-week--digression)
-> - [Comparing files -- digression](#comparing-files----digression)
-> - [Why are data files different -- digression](#why-are-data-files-different--digression)
-> - [Automatic git checkout -- digression](#automatic-git-checkout--digression)
-> - [Automatic boot2docker setup -- digression ](#automatic-boot2docker-setup--digression)
+> - [Digression: Docker and mysqlbinlog](#digression-docker-and-mysqlbinlog)
+> - [Digression: Partitioning by RANGE](#digression-partitioning-by-range)
+> - [Digression: Reorganizing sql logging](#digression-reorganizing-sql-logging)
+> - [Digression: Comments and editors](#digression-comments-and-editors)
+> - [Digression: Other tools](#digression-comments-other-tools)
+> - [Digression: Speech recognition](#digression-speech-recognition)
+> - [Digression: Partitioning by day of week](#digression-partitioning-by-day-of-week)
+> - [Digression: Comparing files](#digression-comparing-files--)
+> - [Digression: Why are data files different](#digression-why-are-data-files-different)
+> - [Digression: Automatic git checkout](#digression-automatic-git-checkout)
+> - [Digression: Automatic boot2docker setup](#digression-automatic-boot2docker-setup)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 - [A big thank you to you all](#a-big-thank-you-to-you-all)
@@ -376,7 +376,7 @@ But if you are sure that this doesn't happen and the error is not triggered and 
 
 Here I don't write about fancy scenarios. I have experienced replication errors which obviously stem from the database engines involved and which I could not explain. Google of course knows about these errors. They are discussed in the MySQL forum, but none of these cases has found a solution. So there is nothing I can conclude here. Brute force is the only remedy.
 
-Repair or copy -- digression
+Digression: Repair or copy
 ----------
 
 As these are the only errors I ever experienced apart from those induced by faulty code, I decided to develop a solution along the strategy of Percona. Thinking about it, it is an elegant solution as well. 
@@ -389,7 +389,7 @@ This (repair or copy) may take a lot of time depending on the size of your table
 
 Chances are, only one file of the partition tables has a problem. In this case you only copy the faulty file which is most probably the fastest operation you can get.
 
-Table partitioning -- digression
+Digression: Table partitioning
 ----------
 
 For example, I have more than a dozen MyISAM tables of the same type of data some of which with more than 1 GB datafile each. This will slow down rsync operations on those tables. 
@@ -416,7 +416,7 @@ The average size of the partition tables is about 2 MB. The biggest chunk, howev
 
 You may wonder about the peculiar formulas for the partition definition. They are due to the fact that the integer column used for hash partitioning starts with 1, which would make all records belonging to the first 100 or 1000 id would populate the first partition table. This formula avoids that. All of these first id records now belong to different partitions.
 
-Partition by md5 -- digression
+Digression: Partition by md5
 ----------
 
 Investigating the bigger tables in my collection, I noticed a kind of key-value-store based on a primary key given by a md5 value instead of an integer, as in the other cases. There is no algorithm for partitioning based on md5 values. 
@@ -451,7 +451,7 @@ Next I populated this column with the integer value of the md5 column:
 
 Does it work now? No, it doesn't.
 
-PRIMARY KEY clause -- digression
+Digression: PRIMARY KEY clause
 ----------
 
     >ALTER TABLE bak.tbl_md5 PARTITION BY hash (id_ct * 100 + id_ct) PARTITIONS 100;
@@ -500,7 +500,7 @@ Oh, I see, the engine had to switch to exponential representation. Okay, the fac
 
 Finally it works. 
 
-Unusable partition distribution -- digression
+Digression: Unusable partition distribution
 ----------
 
 What is the result? Big surprise. 
@@ -597,7 +597,7 @@ Now this looks like it should be. Obviously this function `CONV` fails with 32-b
     
 This is what our conversion function delivers -- ever the same number. 
 
-Experimenting with CONV -- digression
+Digression: Experimenting with CONV
 ----------
 
 Let's experiment with chopping off a part of this 32 byte md5 value.
@@ -702,7 +702,7 @@ All of these experiments resulted in partition sizes which looked pretty similar
  
 At least I have found a solution to the md5 partitioning problem. And that's good.
 
-Max value of bigint datatype -- digression
+Digression: Max value of bigint datatype
 ----------
 
 To see where things get wrong, I issued the following (concatenating 2 simple SQL commands to make testing easier -- sorry, reading is worse, but it may be interesting to see that this technique, which is well known from the shell, works in SQL as well):
@@ -744,7 +744,7 @@ Maybe it is time now to write a bug report.
 
 Better not. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. That's why! I never hit that number before. 
 
-Table type: MyISAM vs. InnoDB -- digression
+Digression: Table type: MyISAM vs. InnoDB
 ----------
 
 The data collected so far is just the beginning. Eventually all the partitions will be filled up quite evenly. Also, the overall size will grow accordingly, so we might have to introduce partitions by 10,000 - well, this is not possible at the moment, the limit is 8192, which, for a human only, makes it more difficult to compute the partition a particular id is to be found.
@@ -932,7 +932,7 @@ At least I hope so. Maybe there is some more work to be done. The master has bee
 
 The script `/path_to_your_script/mysql_repl_monitor.sh` polls every minute, as you see from the replication log and `crontab -l`, which is as frequent as cron allows. The call is cheap on the respective database engines, so there is no performance problem to be expected.
 
-Docker and mysqlbinlog -- digression
+Digression: Docker and mysqlbinlog
 ----------
 
 Another example: We use docker to get information from the slave which relay log it is working on:
@@ -1010,7 +1010,7 @@ In order to be able to inspect the protocol file from the host, you have to map 
 
 As you see here, we also use the [Sphinx database search engine](http://sphinxsearch.com/).
 
-Partitioning by RANGE -- digression
+Digression: Partitioning by RANGE
 ----------
 
 In my opinion, due to the encryption, the log file isn't really useful. If you want to see what your database engine really does, you better record every data changing operation in a separate table, much like [Adminer](https://www.adminer.org/) does with it's history (`...&sql=&history=all`). 
@@ -1032,7 +1032,7 @@ This is another example for a good use of partitioning a table, this time by `RA
 
 This regular dropping of the oldest partition and creating a new partition instead can be realized via stored procedure (you will find examples via Google, e.g. [MySQL Stored Procedure for Table Partitioning](https://gist.github.com/CodMonk/4b89294bbb48eb1edb31)) or conventionally via crontab, shell script and docker. Take your pick. 
 
-Reorganizing sql logging -- digression
+Digression: Reorganizing sql logging
 ----------
 
 While I was reorganizing my tmp.sql_log table, I dropped the idea of using `RANGE`. You can drop a table or a partition very fast, that's true, but you can truncate a table just as fast. That's even better. You don't have to create a new partition regularly. You just recycle the partitions you have.
@@ -1096,7 +1096,7 @@ Everything okay now? Test it.
 
 The code is pretty much self-explanatory. May I point you to the comments in this SQL statement?
 
-Comments and editors -- digression
+Digression: Comments and editors
 ----------
 
 If you have fairly complex application, you want to know where to look when an error occurs. That's why I made it a habit to add this kind of debug information to every single SQL query in my code. I want to see the line, the file and the method which has called this database query. 
@@ -1131,7 +1131,7 @@ Apart from that, I can always add the term
 
 to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated, actually all of them. That's why although I do have a shortcut for this snippet, I simply don't need it.
 
-Other tools -- digression
+Digression: Other tools
 ----------
 
 So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too long a time with more or less trouble): My workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
@@ -1210,7 +1210,7 @@ Your creativity will find lots of situations where you can ease your workload. O
 
 I have defined `F1` as the hotkey to the clipboard list and defined a second tab which copies all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. Highly recommended as well.
 
-Speech recognition -- digression
+Digression: Speech recognition
 ----------
 
 I can't resist. The sentence above "Great. All that with just a few keystrokes you have to remember." brought back to memory an incident of about 1995. Dragon's first product hit the market. I guess it was called something like 35k because it could remember 35,000 words. It worked on MS DOS, needed some piece of hardware, and was quite expensive, but for professionals like lawyers, who have to dictate lots of text every day, this investment might have made sense.
@@ -1235,7 +1235,7 @@ Every once in a while, when I met colleagues complaining about stress injury syn
 
 Of course, there are lots of people online using these products and chatting about it in their forums, but they are a totally different kind of people and professionally producing huge amounts of text. The industry has concentrated on lawyers and physicians, obviously successfully. Although back then everybody was dreaming of talking with a machine (see Star Trek IV: ["hello computer"](https://www.youtube.com/watch?v=v9kTVZiJ3Uc), 32 secs), not much has happened in the private realm. Nowadays we have Siri and Cortana, but sorry, I don't use that.
 
-Partitioning by day of week -- digression
+Digression: Partitioning by day of week
 ----------
 
 Back to partitioning. I don't need that old data anymore. To save time testing partitioning, I just `truncate` that table.
@@ -1411,7 +1411,7 @@ The shell script for regularly truncating the oldest partition now reads
 
     p_no=$(($(($(date "+%w") + 1)) % 7)) && docker exec m1 mysql -e "ALTER TABLE tmp.sql_log TRUNCATE PARTITION p$p_no"
 
-Inspecting the SQL log -- digression
+Digression: Inspecting the SQL log
 ----------
 
 The function `_sql_log_record` responsible for logging data changing actions must filter several commands which, although not changing any data, have to be sent to the master but should not be logged nevertheless because they don't add anything to our understanding. These are `USE`, `SHOW`, `SET`.
@@ -1556,7 +1556,7 @@ for a totally different directory: `path_to_your_script`. Numerous times I have 
 
 I don't find anything. Now I remember. `diff` was one of the candidates which were not good. It was something with `md5`. 
 
-Comparing files -- digression
+Digression: Comparing files
 ----------
 
 And here I have it: `md5sum`, and it is contained in a script named `mysql_cmp.sh`.  I have written the script a couple of days ago and I can't remember. I guess this is the result of having done something with utmost satisfaction, when as a result the mind puts things at rest.
@@ -1607,7 +1607,7 @@ Or ask Google: [MariaDB Error Codes](https://mariadb.com/kb/en/library/mariadb-e
 
 It shouldn't be too hard to get the table name from this information. 
 
-Why are data files different -- digression
+Digression: Why are data files different
 ----------
 
 Still, I feel uneasy about the situation. In my understanding those files should be identical. Of course, depending on the structure of the disc, this data could be spread out over totally different sectors and whatnot, but byte-wise they should be equal.
@@ -1636,7 +1636,7 @@ But even thorough inspection reveals that they are indeed identical.
 
 Any explanation why the data files are different? No idea.
 
-Automatic git checkout -- digression
+Digression: Automatic git checkout
 ----------
 
 Looking at my crontab file, I notice a nice service running every minute which not only saves my work but eases my life as well. I let this script checkout all my work every minute. 
@@ -1724,7 +1724,7 @@ Interesting enough, you can see when I was asleep or at least didn't change any 
 
 In case I have to find a clean checkout, I simply check out different revisions by jumping in this list and picking the one in the middle until I have what I want. This procedure is very fast and guaranteed to succeed.
 
-Automatic boot2docker setup -- digression
+Digression: Automatic boot2docker setup
 ----------
 
 One more thing that I had been struggling with very long until I found a good solution: If you work with boot2docker, at reboot you will lose all data which is not saved at some safe place. In particular, crontab data is lost. Of course, data in the `tmp` directory is lost as well, but that's to be expected and rather nice.
