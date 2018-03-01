@@ -1851,7 +1851,7 @@ The contributions to this page so far are nearly 5 years old now. They have show
 
 Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
 
-As people in times of Docker containers tend to use minimal Linux systems like `Boot2Docker`, `CoreOS` or `Alpine Linux` using `ash` instead of `bash`, most probably there will be more need for a substitute for LINENO. That's the path I have taken. Those 2 MySQL (or rather MariaDB) replication engines run in Docker containers as does the master. The OS is `Boot2Docker` which is based on `Tiny Linux` which in turn is based on `Busybox`.
+As people in times of Docker containers tend to use minimal Linux systems like `Boot2Docker`, `CoreOS` or `Alpine Linux` using `ash` instead of `bash`, most probably there will be more need for a substitute for LINENO. That's the path I have taken. Those 2 MySQL (or rather MariaDB) replication engines run in Docker containers as does the master. The OS is `Boot2Docker` which is based on `Tiny Linux` which in turn is based on `Busybox`. No `bash`, only `ash`.
 
 Hopefully, this text will give somebody else some insight in the future as well. Furthermore, I hope that you, having read so far, did enjoy the article and don't regret having spent your time.
 
