@@ -32,7 +32,7 @@ published: true
 > - [Digression: Comments and editors](#digression-comments-and-editors-table-of-content)
 > - [Digression: Other tools](#digression-other-tools-table-of-content)
 > - [Digression: Speech recognition](#digression-speech-recognition-table-of-content)
-> - [Digression: Windows Speech Recognition vs. DragonDictate](#digression-windows-speech-recognition-vs-dragondictate-table-of-content)
+> - [Digression: WSR vs. DragonDictate](#digression-wsr-vs-dragondictate-table-of-content)
 > - [Digression: Partitioning by day of week](#digression-partitioning-by-day-of-week-table-of-content)
 > - [Digression: Comparing files](#digression-comparing-files-table-of-content)
 > - [Digression: Why are data files different](#digression-why-are-data-files-different-table-of-content)
@@ -1235,7 +1235,7 @@ With a computer and the dictation system, the lawyer would be able to produce th
 
 The argument was not that he didn't need a secretary anymore. He probably would dictate into his dictation machine faster and with more ease than into the new speech recognition engine. But he could have been productive even in non-office times, when there was no secretary around. And this did happen.
 
-Digression: Windows Speech Recognition vs. DragonDictate <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: WSR vs. DragonDictate <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I did work with Windows Speech Recognition (WSR) for a long time as well, using Windows for my mother tongue and DragonDictate for English, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
