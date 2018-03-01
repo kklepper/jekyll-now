@@ -1638,7 +1638,7 @@ But even thorough inspection reveals that they are indeed identical.
 
 Any explanation why the data files are different? No idea.
 
-Digression: Automatic git checkout <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Automatic git checkout <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Looking at my crontab file, I notice a nice service running every minute which not only saves my work but eases my life as well. I let this script checkout all my work every minute. 
@@ -1728,7 +1728,7 @@ At the end you see the message from pushing the whole stuff to origin or rather 
 
 In case I have screwed things up somewhere along the lines without noticing and have to find the last clean checkout, I simply check out different revisions by jumping in this list and picking the one in the middle until I have what I want. This procedure is very fast and guaranteed to succeed.
 
-Digression: Automatic boot2docker setup <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Automatic boot2docker setup <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 One more thing that I had been struggling with very long until I found a good solution: If you work with boot2docker, at reboot you will lose all data which is not saved at some safe place. In particular, crontab data is lost. Of course, data in the `tmp` directory is lost as well, but that's to be expected and rather nice.
@@ -1767,7 +1767,7 @@ So whenever I change something in my crontab, in order to make it permanent, I h
 
 End of digression.
 
-Why roll your own, revisited <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Why roll your own, revisited <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Some more considerations might be helpful. Let's again learn by example.
@@ -1796,7 +1796,7 @@ Summarizing, if you roll your own solution,
 
 Again you will be glad to have a handy debugging tool like `echo_line_no` with complex tasks like database replication repair on platforms without LINENO. You will need it even more so as your solution cannot claim to be tested by a plethora of experts with all kinds of field experience.
 
-Have fun <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Have fun <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Finally, if you want to repeat the above given tests, don't forget to replace `path_to_your_script` with your own path (or create a symbolic link, whichever is easier for you). Take this sample as a starting point for your own creativity. Maybe there are other exciting things you can do with this approach I couldn't come up with (yet). 
@@ -1813,7 +1813,7 @@ As people in times of Docker containers tend to use minimal Linux systems like `
 
 Hopefully, this text will give somebody else some insight in the future as well. Furthermore, I hope that you, having read so far, did enjoy the article and don't regret having spent your time.
 
-A big thank you to you all <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span> <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+A big thank you to you all <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Last but not least I want to thank all those experts out there emphatically for all their excellent work. There are very many fine solutions I've found for my problems which have been incorporated in my setup without a note.
