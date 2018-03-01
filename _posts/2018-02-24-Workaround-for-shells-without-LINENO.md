@@ -36,6 +36,7 @@ Why are data files different -- digression
 > - [Partitioning by day of week -- digression](#partitioning-by-day-of-week--digression)
 > - [Comparing files -- digression](#comparing-files----digression)
 > - [Why are data files different -- digression](#why-are-data-files-different--digression)
+> - [Automatic checkout -- digression](#automatic-checkout--digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
@@ -1589,7 +1590,12 @@ What about using this mechanism to shed light on this enigmatic situation?
     $ sudo md5sum /d/data/slave1/ci4/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
     896cffca7c7252ef1b043ecfa1137a5e
 
-Well, it looks like these files are indeed different. So the conclusion here should be to start with a clean setup which can be achieved either way. The slaves take care of errors. Monitor this action and write a trigger file in case of an error. Then regularly check if there are triggers, and if so, take action.
+Well, it looks like these files are indeed different. So the conclusion here should be to start with a clean setup which can be achieved either way by `mysql_rsync_lock.sh` or `mysql_cmp.sh`. The slaves take care of errors. Monitor this action with `mysql_repl_monitor.sh` and write a trigger file in case of an error. Then let cron regularly check if there are triggers, and if so, take action.
+
+As I have a script which is run every 30 minutes anyway, I just integrated the call here:
+
+    # will check slaves for integrity and rsync -- triggered by /tmp/repl_cmp.trigger set by /path_to_your_script/mysql_repl_monitor.sh
+    /path_to_your_script/mysql_cmp.sh            
 
 I think there is room for one improvement here. In case the next error occurs, I will have a closer look to the error message. If the error message tells me which table has problems, I could immediately take action on this table without checking all the others. To this end I have to see the error message because I have to extract the table name from that string.
 
@@ -1627,7 +1633,95 @@ But even thorough inspection reveals that they are indeed identical.
     $ md5sum /tmp/cmp_ex_sm_s2.sql | awk -F" " '{print $1}'
     42d3702f3e0e7f2f6956d9a722f1eb88
 
-Any explanation why the data files are different? No idea. 
+Any explanation why the data files are different? No idea.
+
+Automatic checkout -- digression
+----------
+
+Looking at my crontab file, I notice a nice service running every minute which not only saves my work but eases my life as well. I let this script checkout all my work every minute. 
+
+    # will do automatic git entries
+    * * * * * /path_to_your_script/git_auto.sh
+
+This script has another interesting feature. In regular intervals I run a PHP script which produces create table statements for all tables in the database. This file is called _show_create_table.sql and is under revision control. Table definitions do change from time to time, and it is error prone to rely on manually taking notes.
+
+    # path_to_your_script/git_auto.sh
+    #!/bin/sh
+    
+    TIMEDIFF=7200
+    #TIMEDIFF=0
+    
+    DATE=$(date -u --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%Y-%m-%d %H:%M:%S")
+    
+    echo --- $DATE
+    
+    cp /tmp/_show_create_table.sql /c/wp/ci/
+    
+    cd /c/wp/ci
+    /usr/local/bin/git commit -am "$DATE"
+
+The last line shows the recipe. You change to whatever directory you have under revision control, and then simply call that statement. In case I have to switch back and look for a clean situation, with the shortcut `ggl` the git log is called, made pretty:
+
+    $ git log --oneline | tr '\\n' | more
+    775fb82 2018-02-28 23:20:00
+    eb7b36a 2018-02-28 23:01:00
+    26618e6 2018-02-28 13:10:00
+    3b684a7 2018-02-28 13:09:00
+    ed87027 2018-02-28 13:08:00
+    6eed4ae 2018-02-28 13:01:01
+    2443766 2018-02-27 18:04:00
+    61135a3 2018-02-27 18:02:00
+    f38f4ca 2018-02-27 16:44:00
+    8de7f38 2018-02-27 16:43:00
+    1bad3ed 2018-02-27 16:42:00
+    0856873 2018-02-27 16:41:00
+    f127310 2018-02-27 16:40:00
+    a1a6ada 2018-02-27 16:39:00
+    090f11f 2018-02-27 16:38:00
+    5cc2ae1 2018-02-27 14:55:00
+    5a04eb0 2018-02-27 14:54:00
+    4907dae 2018-02-27 11:44:00
+    cffb662 2018-02-27 11:43:00
+    4b65372 2018-02-27 11:42:00
+    9fb094e 2018-02-26 22:58:00
+    53b5467 2018-02-26 22:56:00
+    4214095 2018-02-26 22:50:00
+    3106130 2018-02-26 19:52:00
+    b60a14d 2018-02-26 19:51:00
+    01e9672 2018-02-26 18:51:00
+    47859fa 2018-02-26 18:46:01
+    f792085 2018-02-26 18:45:00
+    8a5cabf 2018-02-26 18:44:00
+    5c57c31 2018-02-26 18:37:00
+    49d6bba 2018-02-26 18:33:00
+    82ba3fa 2018-02-26 18:32:00
+    74c2eb6 2018-02-26 18:31:00
+    a6f84fc 2018-02-26 18:30:00
+    4a75434 2018-02-26 18:29:00
+    c49a3fe 2018-02-26 18:28:00
+    262270c 2018-02-26 18:23:00
+    1d9fef5 2018-02-26 18:22:00
+    dbff348 2018-02-26 18:18:00
+    2313708 2018-02-26 18:12:00
+    62edf55 2018-02-26 18:11:00
+    c57a861 2018-02-26 18:10:00
+    7ef61a6 2018-02-26 18:08:00
+    4e455b6 2018-02-26 18:07:00
+    05f63da 2018-02-26 18:06:00
+    6d5d1f7 Merge branch 'master' into temp4
+    d99f57e 2018-02-26 17:58:00
+    3aac429 2018-02-26 17:37:00
+    46680a3 2018-02-26 17:36:00
+    d3e7c20 2018-02-26 17:35:00
+    24bad4f 2018-02-26 17:26:00
+    b74e7cb 2018-02-26 17:23:00
+    d41b8ac 2018-02-26 17:19:00
+    8fcc547 2018-02-26 17:18:00
+    --More--
+
+Interesting enough, you can see when I was asleep or at least didn't change any of the files under control. At the end you see the message from pushing the whole stuff to origin or rather master back to the working branch. Maybe this is the answer I was looking for: by merging back I get an automatic label.
+
+In case I have find a clean checkout, I simply check out different revisions by jumping in this list and picking the one in the middle until I have what I want. This procedure is very fast and guaranteed to succeed.
 
 End of digression.
 
