@@ -1199,7 +1199,7 @@ Here are some other snippets I use often:
 
 You see it costs me next to nothing to call `SHOW WARNINGS;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I use AHK to define something new.
 
-The best are more complex commands which really do good work. For example, I placed a command to the Windows key plus o (denoted in AHL lingo: #o) to immediately jump to the function definition in my file, when the cursor is placed on the function name. 
+The best are more complex commands which really do good work. For example, I placed a command to the Windows key plus o (denoted in AHK lingo: #o) to immediately jump to the function definition in my file, when the cursor is placed on the function name. 
 
 Likewise, #k will produce a list of all the function calls of that function. #j will produce a list with all the lines containing the word the cursor happens to be placed on. And so on. The limit is only your imagination. These are real productivity boosts; to achieve this by typing you would have to type a couple of keystrokes and combinations of those again and again. 
 
