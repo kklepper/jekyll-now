@@ -4,7 +4,7 @@ title: Workaround for shells without LINENO
 published: true
 ---
 
-## Table of Contents <span id="toc"></span>
+## Table of Content <span id="toc"></span>
 
 - [Workaround for shells without LINENO](#workaround-for-shells-without-lineno)
 - [Debugging](#debugging)
