@@ -1823,4 +1823,4 @@ The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/F
 
 My next encounter with computers was in the 80s, when personal computers hit the market. I was in sales and services then. 10 years later, I developed a professional program for windows with VC++ which was later rewritten in Delphi. At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists.
 
-    Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game considerably again. The whole open source movement is something nobody could have ever dreamed of. But it is reality. Amazing.
+Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game considerably again. The whole open source movement is something nobody could have ever dreamed of. But it is reality. Amazing.
