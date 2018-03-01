@@ -1163,11 +1163,11 @@ This script reads:
 
 Mind the parameter `-it` in the second call to `docker exec` here. It makes sure that you get a window (**i**nteractive **t**erminal) to work with.
 
-Once in that mysql session, you might want to see the process list because some processes hang which indicates that there is another process with a lock on a table the other processes want to use and can not until that first process ends and releases this lock. You want to see what kind of long-running process that is in order to get things.
+Once in that mysql session, you might want to see the process list because some processes hang which indicates that there is another process with a lock on a table the other processes want to use and can not until that first process ends and releases this lock. You want to see what kind of long-running process that is in order to get things right, maybe by killing this process.
 
-You may then utilize your keyboard and type bravely `SHOW processlist;` -- until one of these days you say "I don't want to type this anymore" and define an AHK hotkey:
+You may then utilize your keyboard and type bravely `SHOW PROCESSLIST;` -- until one of these days you say "I don't want to type this anymore" and define an AHK hotkey:
 
-    ::spl::SHOW processlist;
+    ::spl::SHOW PROCESSLIST;
 
 Here are some other snippets I use often:
 
