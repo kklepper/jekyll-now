@@ -99,7 +99,7 @@ Another caveat: As I took my notes while developing my ideas, I recorded all det
 
 Contemplating about it, I decided to leave all that in place. It makes you look much smarter if you present a solution in a way that nobody can understand how you ever could reach it. This attitude is well known. But if you want to learn how to get to a solution, you have to study how this can be done from scratch.
 
-
+Not those are smart who nod and pretend to understand, but those who dare to ask if they don't understand. That's the only chance to grow and become smarter. As a teacher, I like the latter type.
 
 More complex cases <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -328,15 +328,15 @@ The resulting output of this script is logged to `/tmp/repl_monitor.log`, so you
 
 An example output with those 2 replication slaves might look like
 
-    240 /path_to_your_script/mysql_repl_monitor.sh ---------------------------------------------- 2018-02-27_12:23:00 
+    240 /path_to_your_script/mysql_repl_monitor.sh ------------------------------- 2018-02-27_12:23:00 
     175 =====> s1 2018-02-27_12:23:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82352145
     175 =====> s2 2018-02-27_12:23:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82352145
     
-    240 ----------------------------------------------------------------------- 2018-02-27_12:24:00 ---
+    240 /path_to_your_script/mysql_repl_monitor.sh ------------------------------- 2018-02-27_12:24:00 
     175 =====> s1 2018-02-27_12:24:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82424522
     175 =====> s2 2018-02-27_12:24:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82424522
     
-    240 ----------------------------------------------------------------------- 2018-02-27_12:25:00 ---
+    240 /path_to_your_script/mysql_repl_monitor.sh ------------------------------- 2018-02-27_12:25:00 
     175 =====> s1 2018-02-27_12:25:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82496899
     175 =====> s2 2018-02-27_12:25:00 OK Master_Log_File mysql-bin.000006 Read_Master_Log_Pos 82496899
 
@@ -1436,7 +1436,7 @@ Why did I take the pain in the first place? Well, unfortunately things don't wor
 
 The replication monitor (to which I added `Seconds_Behind_Master`) tells me everything is okay. 
 
-    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------ 2018-02-28_22:49:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ---------------------------------------------------- 2018-02-28_22:49:00
     175 =====> s1 OK 2018-02-28_22:49:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000001 Read_Master_Log_Pos 437588
     175 =====> s2 OK 2018-02-28_22:49:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000001 Read_Master_Log_Pos 437588
 
