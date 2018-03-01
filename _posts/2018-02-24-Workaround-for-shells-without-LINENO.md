@@ -95,6 +95,8 @@ It's for people like me I take the pain to write this all up, those who are new 
 
 Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on it, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. And still I don't now what I'm heading for in the end.
 
+Another caveat: As I took my notes while developing my ideas, I recorded all detours as well. It is a question if they should have been cleared later. Even if you pursue the wrong way, you do learn a lot nevertheless. Contemplating about it, I decided to leave it in place.
+
 More complex cases <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
@@ -768,7 +770,7 @@ Regular health checking <span style="font-size: 11px;float: right;"><a href="#to
 
 One more consideration here. The monitoring script can only detect errors which occur during operation. If at startup the table setup on the slave is different from the master for some reason or the slave database engine produces an error maybe due to some hardware failure, the slave will never find out and the monitoring script is of no use in this case. Comparing the files directly however will find out and the copy process will successfully synchronize any files that are not in sync.
 
-To show you how this could be utilized by way of precaution in a running [Docker](https://de.wikipedia.org/wiki/Docker_(Software)) system, later on I show a little script `mysql_rsync_lock.sh` which takes next to no time (in test mode) reading and writing to spinning disks if everything is okay (1-2 secs for 64 tables, about 5 GB disk space, 2 slaves), so it even might be run regularly. 
+To show you how this could be utilized by way of precaution in a running [Docker](https://de.wikipedia.org/wiki/Docker_(Software)) system, later on I show a little script `mysql_rsync_lock.sh` which takes next to no time (in test mode) reading and writing to spinning disks if everything is okay (1-2 secs for 64 tables, about 5 GB disk space, 2 slaves), so it even might be run regularly. (As we'll see later, this is a bad idea in general because data files may be different although the table data is identical.) 
 
 Well, this is not based on actual production data. In case your data moves quickly and indices are changed considerably in the process, the command `FLUSH TABLES` alone may take minutes. In production mode, we will use SSD and much more RAM, so those processes will be much faster. As far as we can see now, the whole database can be held in RAM.
 
@@ -791,7 +793,7 @@ Automatic failover <span style="font-size: 11px;float: right;"><a href="#toc">Ta
 
 Having a solution for occasional errors on slave machines doesn't mean your done. What happens when the master has a problem and this problem is propagated to the slaves? Well, I'm afraid there is no automatic solution for that problem.
 
-But if the master stops or a problem can be detected on the master and the slaves are not affected, one of those may be elevated to be a master for the other slaves. There are 2 questions here. Which of the slaves should be the new master? How to realize the failover?
+But if the master stops or a problem can be detected on the master and the slaves are not affected, one of those may be elevated to be a master for the other slaves. There are 2 questions here. Which of the slaves should be the new master? How to realize the failover, that is how to tell the other slaves which is their new master?
 
 Here you may feel that this whole scenario isn't just something for individual solutions crafted with shell scripts. It is a generic problem not depending on the operation system or the nature of the database.
 
@@ -806,7 +808,7 @@ As I wanted to prove my claim with respect to the time taken, I noticed my chanc
 
 Remember, `echo_line_no` takes exactly one parameter. If we add a second parameter and this parameter is "DATE", then we take the time and show it.
 
-The property of `echo_line_no` not showing anything if a variable is part of the first parameter, which looks like a flaw, now turns into a feature. We use the variable to suppress the output and only show the datetime. 
+The property of `echo_line_no` not showing anything if a variable is part of the first parameter, which looks like a design flaw, now turns into a feature. We use the variable to suppress the output and only show the datetime. 
 
 In the snippet below you see the 2 calls to rsync plus the time but no line number.
 
@@ -1017,12 +1019,12 @@ Digression: Partitioning by RANGE <span style="font-size: 11px;float: right;"><a
 
 In my opinion, due to the encryption, the log file isn't really useful. If you want to see what your database engine really does, you better record every data changing operation in a separate table, much like [Adminer](https://www.adminer.org/) does with it's history (`...&sql=&history=all`). 
 
-As we don't utilize MaxScale (yet), we had to implement a master/slave-switch in our application to send all data changing operations to the master and the rest to the slaves. 
+As we don't utilize MaxScale (yet), we had to implement a master/slave-switch in our application anyway to send all data changing operations to the master and the rest to the slaves. 
 
 That's where the logging mechanism belongs:
 
     $this->_connection_type = 'db_master';
-    $this->_tmp.sql_log_record($sql);
+    $this->_sql_log_record($sql);
 
 The SQL term is compressed to save space, so searching for or looking at specific queries requires uncompressing. You cannot see the queries in your conventional Adminer interface.
 
