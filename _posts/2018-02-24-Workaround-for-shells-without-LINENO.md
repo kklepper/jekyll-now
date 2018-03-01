@@ -245,7 +245,7 @@ Caveats
 
    a. If the function argument does not contain a variable, the function shows the line number of the function call, like with variables. That's kind of a trace function, you see which line has called your function -- again something most valuable and hard to get otherwise. The line of the call within the function would be useless anyway.
 
-   b. If it does contain a variable and this variable is not masked by `VARTOKEN`, the whole line is not shown at all as as seen in the 2nd function example, as `grep` must fail due to variable substitution; in order to compensate this, call `echo_line_no` also for the variable itself to get the line number, as demonstrated.
+   b. If it does contain a variable and this variable is not masked by `VARTOKEN`, the whole line is not shown at all as as seen in the second function example, as `grep` must fail due to variable substitution; in order to compensate this, call `echo_line_no` also for the variable itself to get the line number, as demonstrated.
 
    c. If you use `VARTOKEN`, the line number is shown as in the 3rd function example; this example also shows that inside the function quotes are crucial as well due to the same reason, but in special cases you may even be interested in other places your first word appears (try it without quotes to see the result). Also, if a comment repeats the trigger, it will be shown, too, that's why the comment inside this function has been crafted carefully to not fall into this trap. You will notice anyway and know what to do, if it happens by chance.
 
@@ -796,14 +796,14 @@ Here you may feel that this whole scenario isn't just something for individual s
 
 The problem is as general as load-balancing. You wouldn't want to write a load balancer yourself. That's why I included [haproxy](http://www.haproxy.org/) as a docker container and let this container do the load-balancing work for the 3 database containers.
 
-Just as well I could have used [MaxScale](https://mariadb.com/resources/blog/mariadb-maxscale-22-introducing-failover-switchover-and-automatic-rejoin) for this purpose, and indeed I have experimented with it at times when it was not yet mature. It's time to switch, I guess, so I will have a 2nd look soon, because in addition to load balancing, MaxScale has some more features, one of them being automatic failover. And this is something you definitely want to have if you can get it. Of course there are alternatives, too, like [Master High Availability Manager](https://www.percona.com/blog/2016/09/02/mha-quickstart-guide/).
+Just as well I could have used [MaxScale](https://mariadb.com/resources/blog/mariadb-maxscale-22-introducing-failover-switchover-and-automatic-rejoin) for this purpose, and indeed I have experimented with it at times when it was not yet mature. It's time to switch, I guess, so I will have a second look soon, because in addition to load balancing, MaxScale has some more features, one of them being automatic failover. And this is something you definitely want to have if you can get it. Of course there are alternatives, too, like [Master High Availability Manager](https://www.percona.com/blog/2016/09/02/mha-quickstart-guide/).
 
 Adding a stopwatch
 ----------
 
 As I wanted to prove my claim with respect to the time taken, I noticed my chance to show you the power and elegance of Docker and improve the original debugging mechanism by adding a kind of stopwatch. 
 
-Remember, `echo_line_no` takes exactly one parameter. If we add a 2nd parameter and this parameter is "DATE", then we take the time and show it.
+Remember, `echo_line_no` takes exactly one parameter. If we add a second parameter and this parameter is "DATE", then we take the time and show it.
 
 The property of `echo_line_no` not showing anything if a variable is part of the first parameter, which looks like a flaw, now turns into a feature. We use the variable to suppress the output and only show the datetime. 
 
@@ -839,7 +839,7 @@ To implement this, add the first snippet to the top of `/path_to_your_script/ech
         DATETAKEN=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%Y-%m-%d_%H:%M:%S")
     } # get_date 
 
-the 2nd snippet has to be put inside the function `echo_line_no`.
+the second snippet has to be put inside the function `echo_line_no`.
 
     if [[ ! -z "$2" && "$2" == "DATE" ]] 
     then
@@ -1158,7 +1158,7 @@ This script reads:
     
     docker exec m1 mysql -e "SET GLOBAL max_binlog_stmt_cache_size = 2097152000;" && docker exec -it m1 mysql $DB 
 
-Mind the parameter `-it` in the 2nd call to `docker exec` here. It makes sure that you get a window (**i**nteractive **t**erminal) to work with.
+Mind the parameter `-it` in the second call to `docker exec` here. It makes sure that you get a window (**i**nteractive **t**erminal) to work with.
 
 Once in that mysql session, you might want to see the process list because some processes hang which indicates that there is another process with a lock on a table the other processes want to use and can not until that first process ends and releases this lock. You want to see what kind of long-running process that is in order to get things.
 
@@ -1209,7 +1209,7 @@ I'm sorry, I cannot explain why it merges the temp branch back -- I didn't const
 
 Your creativity will find lots of situations where you can ease your workload. One more tip: for the task of recording clipboard snippets I also used a number of other tools, but the Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/) is excellent. 
 
-I have defined `F1` as the hotkey to the clipboard list and defined a 2nd tab which copies all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. Highly recommended as well.
+I have defined `F1` as the hotkey to the clipboard list and defined a second tab which copies all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. Highly recommended as well.
 
 Speech recognition -- digression
 ----------
@@ -1290,7 +1290,7 @@ We have 2 warnings here; the first one is easily taken care for:
     CHANGE `id_ex` `id_ex` bigint(20) unsigned NOT NULL DEFAULT '0' AFTER `tmstmp`
     PARTITION BY HASH(DAY(tmstmp) % 7) PARTITIONS 7;
 
-The 2nd one is equally easily avoided by providing an empty value:
+The second one is equally easily avoided by providing an empty value:
 
     M:7727678 [tmp]>insert into tmp.sql_log (tmstmp, sql_compressed) values ('2018-02-26 12:59:00', '');
     Query OK, 1 row affected (0.00 sec)
@@ -1312,7 +1312,7 @@ Again, a stored procedure or a cron job could take care of table maintenance.
 
     p_no=$(($(($(date "+%d") + 1)) % 7)) && docker exec m1 mysql -e "ALTER TABLE tmp.sql_log TRUNCATE PARTITION p$p_no"
 
-Let me explain. The 2nd part is self-explanatory:
+Let me explain. The second part is self-explanatory:
 
     docker exec m1 mysql -e "ALTER TABLE tmp.sql_log TRUNCATE PARTITION p$p_no"
 
@@ -1775,7 +1775,7 @@ But there is another reason why to step back here. I concede that, at first glan
 
 A second example: The shell script of Giuseppe Maxia mentioned above didn't record the complete error message, but only the first word, hence his e-mail doesn't have any information about the nature of the error, as the first word in the error message is "Error", which doesn't help at all. 
 
-Too bad and easily fixed by adding a 2nd function especially for use in the e-mail or the log file extracting not only a single value from the response of the server but the complete sentence to be used for those error messages. 
+Too bad and easily fixed by adding a second function especially for use in the e-mail or the log file extracting not only a single value from the response of the server but the complete sentence to be used for those error messages. 
 
 But he also uses arrays, which are handy in bash, albeit not implemented in ash. So for this reason alone his code is not usable out-of-the-box and has to be rewritten for platforms not having bash.
 
@@ -1819,7 +1819,7 @@ Nowadays, whenever I have a problem, I call Google, and if there is a solution, 
 
 It's hard to look into the future, but we can look back. My first encounter with computers was in the 60s, when [ALGOL 60](https://en.wikipedia.org/wiki/Algol_60) had just been invented. We punched cards a deck of which was transferred to an operator, and a week later the result was handed back, maybe with a typo.
 
-The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/Fortran), so that was my 2nd language. The Department of theoretical physics had a [Zuse Z25](https://en.wikipedia.org/wiki/Z25_(computer)) which was fed with telex ticker tape. Here I learned my first and only machine language.
+The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/Fortran), so that was my second language. The Department of Theoretical Physics owned the second computer of the whole university, a [Zuse Z25](https://en.wikipedia.org/wiki/Z25_(computer)), which was fed with telex ticker tape. Here I learned my first and only machine language.
 
 My next encounter with computers was in the 80s, when personal computers hit the market. I was in sales and services then. 10 years later, I developed a professional program for windows with VC++ which was later rewritten in Delphi. At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists.
 
