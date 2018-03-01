@@ -1591,7 +1591,9 @@ What about using this mechanism to shed light on this enigmatic situation?
     $ sudo md5sum /d/data/slave1/ci4/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
     896cffca7c7252ef1b043ecfa1137a5e
 
-Well, it looks like these files are indeed different. So the conclusion here should be to start with a clean setup which can be achieved either way by `mysql_rsync_lock.sh` or `mysql_cmp.sh`. The slaves take care of errors. Monitor this action with `mysql_repl_monitor.sh` and write a trigger file in case of an error. Then let cron regularly check if there are triggers, and if so, take action.
+Well, it looks like these files are indeed different. 
+
+So the conclusion here should be to start with a clean setup which can be achieved either way by `mysql_rsync_lock.sh` or `mysql_cmp.sh`. The slaves take care of errors. Monitor this action with `mysql_repl_monitor.sh` and write a trigger file in case of an error. Then let cron regularly check if there are triggers, and if so, take action.
 
 As I have a script which is run every 30 minutes anyway, I just integrated the call here:
 
