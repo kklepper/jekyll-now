@@ -1868,7 +1868,7 @@ The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/F
 
 My next encounter with computers was in the 80s, when personal computers hit the market. I was in sales and services then. 10 years later, I led a team which developed a professional program for Windows with VC++ which was later rewritten in Delphi. At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists, at least.
 
-I remember, on the MySQL mailing list, a guy who replied nearly every question in a very terse style. He signed as engineer at TCX AB, and I was wondering what his boss may say to his spending his time on the mailing list. His name was [Monty Widenius](https://de.wikipedia.org/wiki/Michael_Widenius).
+I remember, on the MySQL mailing list in 1998, a guy who replied nearly every question in a very terse style. He signed as engineer at TCX AB, and I was wondering what his boss may say to his spending his time on the mailing list. His name was [Monty Widenius](https://de.wikipedia.org/wiki/Michael_Widenius).
 
 Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game considerably again. The whole open source movement is something nobody could have ever dreamed of. But it is reality. 
 
