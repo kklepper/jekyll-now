@@ -1246,7 +1246,11 @@ DragonDictate, for instance, if you say one word only, because you're still thin
 
 At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than a few characters, I'll switch to DragonDictate. 
 
-If I don't have speech recognition to my disposition, I feel like crippled. I use speech recognition on my notebook just the same when travelling. That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. 
+That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. 
+
+If I don't have speech recognition to my disposition, I feel like crippled. I use speech recognition on my notebook just the same when travelling. Traveling kills lots of time for nothing. 
+
+When I was traveling a lot, I used to dictate into my notebook on the plane, on the train, on the bus, waiting in the lobby, just about everywhere when I had some time to do some work. Nowadays nobody cares if somebody is talking to his smartphone, but even then people hardly took notice. Never anybody asked me what I was doing. 
 
 I don't use the latest edition of DragonDictate as I don't see the need to buy this product again and again. It's excellent, at least for my purposes, and I don't even have the professional edition, so I can't use any macros (preferred 10.10, must be 10 or rather 15 years old now).
 
