@@ -1522,6 +1522,17 @@ Same procedure for the second slave:
     +-------+---------------------+
     1 row in set (0.00 sec)
 
+or, cmore compact:
+
+    docker@boot2docker:/mnt/sda1/tmp$ docker exec m1 mysql -e 'SELECT id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6' && docker exec s1 mysql -e 'SELECT id_ex, ca_tmstmp FROM
+    ci4.cmp_ex_sitemap WHERE id_ex = 6' && docker exec s2 mysql -e 'SELECT id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6'
+    id_ex   ca_tmstmp
+    6       2018-03-01 00:10:56
+    id_ex   ca_tmstmp
+    6       2018-03-01 00:10:56
+    id_ex   ca_tmstmp
+    6       2018-03-01 00:10:56
+
 Well, this is perfect, isn't it? Why does rsync think otherwise? 
 
 Here my memory fails me. Somewhere in one of my scripts I used the term `diff`. I remember I investigated the question of the best methods to find if 2 files are identical a couple of days ago. And I remember that this question had no easy answer, and I chose `diff` as being the most reliable.
