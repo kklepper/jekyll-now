@@ -1293,7 +1293,7 @@ As the day number of today is 28, the modulus by 7 of which is 0, partition 0 sh
     +---------+------+-----------------------------------------------------+
     2 rows in set (0.00 sec)
 
-We have 2 warnings here; the first one is easily taken care for:
+We have 2 warnings here; the first one is easily taken care for by providing a default value:
 
     ALTER TABLE `tmp.sql_log`
     CHANGE `id_ex` `id_ex` bigint(20) unsigned NOT NULL DEFAULT '0' AFTER `tmstmp`
