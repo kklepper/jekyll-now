@@ -23,7 +23,6 @@ published: true
 > - [Experimenting with CONV -- digression](#experimenting-with-conv--digression)
 > - [Max value of bigint datatype -- digression](#max-value-of-bigint-datatype--digression)
 > - [Table type: MyISAM vs. InnoDB -- digression](#table-type-myisam-vs-innodb--digression)
-> - [Why are data files different -- digression](#why-are-data-files-different--digression)
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
 - [Adding a stopwatch](#adding-a-stopwatch)
