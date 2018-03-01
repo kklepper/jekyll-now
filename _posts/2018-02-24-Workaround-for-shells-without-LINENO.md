@@ -1870,6 +1870,6 @@ My next encounter with computers was in the 80s, when personal computers hit the
 
 I remember, on the MySQL mailing list in 1998, a guy who replied nearly every question in a very terse style. He signed as engineer at TCX AB, and I was wondering what his boss may say to his spending his time on the mailing list. His name was [Monty Widenius](https://de.wikipedia.org/wiki/Michael_Widenius).
 
-Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game considerably again. The whole open source movement is something nobody could have ever dreamed of. But it is reality. 
+The whole open source movement is something nobody could have ever dreamed of. Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game considerably again. But all this is reality. 
 
 Absolutely amazing.
