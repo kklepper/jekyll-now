@@ -23,6 +23,7 @@ published: true
 > - [Experimenting with CONV -- digression](#experimenting-with-conv--digression)
 > - [Max value of bigint datatype -- digression](#max-value-of-bigint-datatype--digression)
 > - [Table type: MyISAM vs. InnoDB -- digression](#table-type-myisam-vs-innodb--digression)
+Why are data files different -- digression
 - [Regular health checking](#regular-health-checking)
 - [Automatic failover](#automatic-failover)
 - [Adding a stopwatch](#adding-a-stopwatch)
@@ -34,6 +35,7 @@ published: true
 > - [Speech recognition -- digression](#speech-recognition--digression)
 > - [Partitioning by day of week -- digression](#partitioning-by-day-of-week--digression)
 > - [Comparing files -- digression](#comparing-files----digression)
+> - [Why are data files different -- digression](#why-are-data-files-different--digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
@@ -379,7 +381,7 @@ As these are the only errors I ever experienced apart from those induced by faul
 
 Consider for example the case that both master and slave tables differ because the slave table is corrupt for some reason (this may happen and usually nobody knows why -- could be hardware failure). 
 
-There are 2 strategies here. Either you let the database engine of the slave repair the slave table (which you have to do anyway even if this error is not detected by sync checking). This still doesn't give you the guarantee that both tables are identical bytewise. Or you copy the master table to the slave right away.
+There are 2 strategies here. Either you let the database engine of the slave repair the slave table (which you have to do anyway even if this error is not detected by sync checking). This still doesn't give you the guarantee that both tables are identical byte-wise. Or you copy the master table to the slave right away.
 
 This (repair or copy) may take a lot of time depending on the size of your tables. For this reason, you may contemplate to partition big tables into sizable chunks. 
 
@@ -753,7 +755,9 @@ In case of MyISAM you can even choose which method to apply if things go wrong, 
 
 If the index file `MYI` is different, you best use `REPAIR TABLE`. Chances are, the repair is immediate, because very often it is just the number of records which is wrong being zero or any other number different from the correct number.
 
-Of course you have to make sure that the master table is not changed during these procedures. And if the process succeeded, you restart the slave reporting that problem and check if everything is okay now. End of digression.
+Of course you have to make sure that the master table is not changed during these procedures. And if the process succeeded, you restart the slave reporting that problem and check if everything is okay now. 
+
+End of digression.
 
 Regular health checking
 ----------
@@ -1580,27 +1584,57 @@ In case these 2 expressions are different, the master file is copied to the slav
 
 What about using this mechanism to shed light on this enigmatic situation?
 
-    docker@boot2docker:/mnt/sda1/tmp$ sudo md5sum /d/data/master/ci4/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
+    $ sudo md5sum /d/data/master/ci4/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
     1e17b1d93fb117bc8f0408259e4433e3
-    docker@boot2docker:/mnt/sda1/tmp$ sudo md5sum /d/data/slave1/ci4/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
+    $ sudo md5sum /d/data/slave1/ci4/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
     896cffca7c7252ef1b043ecfa1137a5e
 
-Well, it looks like these files are indeed different. So the conclusion here should be to start with a clean setup which can be achieved either way. The slaves take care of errors. Monitor this action and write a trigger file in case of an error. Then regularly check if there are triggers, and take action.
+Well, it looks like these files are indeed different. So the conclusion here should be to start with a clean setup which can be achieved either way. The slaves take care of errors. Monitor this action and write a trigger file in case of an error. Then regularly check if there are triggers, and if so, take action.
 
-I think there is room for one improvement. In case the next error occurs, I will have a closer look to the error message. If the error message tells me which table has problems, I could immediately take action on this table without checking all the others. To this end I have to see the error message because I have to extract the table name from that string.
+I think there is room for one improvement here. In case the next error occurs, I will have a closer look to the error message. If the error message tells me which table has problems, I could immediately take action on this table without checking all the others. To this end I have to see the error message because I have to extract the table name from that string.
 
 Or ask Google: [MariaDB Error Codes](https://mariadb.com/kb/en/library/mariadb-error-codes/). There are seem to be 2 types of error messages which may apply here:
 
     1004	HY000	ER_CANT_CREATE_FILE	Can't create file '%s' (errno: %d)
     1005	HY000	ER_CANT_CREATE_TABLE	Can't create table '%s' (errno: %d)
 
-It shouldn't be too hard to get the table name from this information. End of digression.
+It shouldn't be too hard to get the table name from this information. 
+
+Why are data files different -- digression
+----------
+
+Still, I feel uneasy about the situation. In my understanding those files should be identical. Of course, depending on the structure of the disc, this data could be spread out over totally different sectors and whatnot, but byte-wise they should be equal.
+
+Are they equal database-wise? That question should be easy to answer by mysqldump.
+
+    $ docker exec m1 /bin/ash -c 'mysqldump --opt --compact ci4 cmp_ex_sm > /tmp/cmp_ex_sm_m1.sql'
+    $ docker exec s1 /bin/ash -c 'mysqldump --opt --compact ci4 cmp_ex_sm > /tmp/cmp_ex_sm_s1.sql'
+    $ docker exec s2 /bin/ash -c 'mysqldump --opt --compact ci4 cmp_ex_sm > /tmp/cmp_ex_sm_s2.sql'
+
+At first glance, it looks good.
+
+    $ ls -latr /tmp/cmp_ex*
+    -rw-r--r--    1 root     root      15959336 Mar  1 10:29 cmp_ex_sm_m1.sql
+    -rw-r--r--    1 root     root      15959336 Mar  1 10:30 cmp_ex_sm_s1.sql
+    -rw-r--r--    1 root     root      15959336 Mar  1 10:30 cmp_ex_sm_s2.sql
+
+But even thorough inspection reveals that they are indeed identical.
+
+    $ md5sum /tmp/cmp_ex_sm_m1.sql | awk -F" " '{print $1}'
+    42d3702f3e0e7f2f6956d9a722f1eb88
+    $ md5sum /tmp/cmp_ex_sm_s1.sql | awk -F" " '{print $1}'
+    42d3702f3e0e7f2f6956d9a722f1eb88
+    $ md5sum /tmp/cmp_ex_sm_s2.sql | awk -F" " '{print $1}'
+    42d3702f3e0e7f2f6956d9a722f1eb88
+
+Any explanation why the data files are different? No idea. 
+
+End of digression.
 
 Why roll your own, revisited
 ----------
 
 Some more considerations might be helpful. Let's again learn by example.
-
  
 For the problem of slaves running out of sync, I already mentioned the ready-to-use solutions by "Experts in Database Performance Management" Percona ([pt-table-checksum](https://www.percona.com/doc/percona-toolkit/LATEST/pt-table-checksum.html), [pt-table-sync](https://www.percona.com/doc/percona-toolkit/LATEST/pt-table-sync.html)), but those make heavy use of Perl which may not be at your disposal and you may not be willing to install a big software packet just to connect to your database engine to begin with. So this is of no use for you. 
 
