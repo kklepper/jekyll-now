@@ -1283,7 +1283,7 @@ Also, I decided to add a new column to my logging table. Many queries target a s
     ALTER TABLE `tmp.sql_log` 
     ADD `id_ex` bigint(20) unsigned NOT NULL AFTER `id_sql`;
 
-As I want to partition with respect to this`tmstmp` column, I have to make sure that this is part of the primary key -- or more correctly -- of every unique key.
+As I want to partition with respect to this`tmstmp` column, I have to make sure that this column is part of the primary key -- or more correctly -- of every unique key.
 
     ALTER TABLE `tmp.sql_log` 
     ADD PRIMARY KEY `id_sql_tmstmp` (`id_sql`, `tmstmp`), DROP INDEX `PRIMARY`;
@@ -1344,14 +1344,14 @@ p_no=$(($(($(date "+%d") + 1)) % 7))
 
 `$(date "+%d")` gives the date number. We add 1 by the expression `$(($(date "+%d") + 1))` and then we calculate the modulus by the expression `$(($(($(date "+%d") + 1)) % 7))`. That's fine.
 
-But now it is obvious that the whole construction is screwed up. We work by the day number and have to take the modulus, so we will not cycle evenly to all of the partitions. We should not take the `day number` but the `day of week` number:
+But now it is obvious that the whole construction is screwed up. We work by the `day of month` number and have to take the modulus, so we will not cycle evenly to all of the partitions. We should not take the `day of month number` but the `day of week` number:
 
-    M:7727678 [tmp]>SELECT DAY(NOW());
-    +------------+
-    | DAY(NOW()) |
-    +------------+
-    |         28 |
-    +------------+
+    M:7727678 [tmp]>>SELECT @dom:=DAY(NOW()),  @dom % 7;
+    +------------------+----------+
+    | @dom:=DAY(NOW()) | @dom % 7 |
+    +------------------+----------+
+    |               28 |        0 |
+    +------------------+----------+
     1 row in set (0.00 sec)
     
     M:7727678 [tmp]>SELECT DAYOFWEEK(NOW());
