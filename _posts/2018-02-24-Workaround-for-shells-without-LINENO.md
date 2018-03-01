@@ -1142,7 +1142,7 @@ So for this shortcut expansion in PSPad I don't have to clutter the AHK namespac
 
 WinSCP is my window to my Linux workhorse on the same network, which is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant, but rather more production-like on a separate machine. 
 
-For example, this might be the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine and main database: 
+For example, this might be the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine `m1` and main database `ci4`: 
 
     docker@boot2docker:~$ /path_to_your_script/mysql_start.sh ci4
 
