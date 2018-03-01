@@ -1163,7 +1163,8 @@ This script reads:
       DB=tmp
     fi
     
-    docker exec m1 mysql -e "SET GLOBAL max_binlog_stmt_cache_size = 2097152000;" && docker exec -it m1 mysql $DB 
+    docker exec m1 mysql -e "SET GLOBAL max_binlog_stmt_cache_size = 2097152000;"  
+    docker exec -it m1 mysql $DB 
 
 Mind the parameter `-it` in the second call to `docker exec` here. It makes sure that you get a window (**i**nteractive **t**erminal) to work with.
 
