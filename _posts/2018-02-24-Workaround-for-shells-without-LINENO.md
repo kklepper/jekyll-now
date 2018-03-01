@@ -1383,7 +1383,18 @@ So we have to reorganize our partitions. But before doing that, let's have a loo
 
 From here we see easily which partition is the oldest and should be truncated. 
 
-You may wonder about the group and the owner of these files. We manipulate these files from inside the docker container via group and owner `mysql`. If you look at these files from inside the container, you will see `mysql mysql`. 
+You may wonder about the group and the owner of these files. In order to have permanent data, we map a directory structure from the host to the container `/d/data/master:/var/lib/mysql` (see < hef="#digression-docker-and-mysqlbinlog-table-of-content">above</a>), so we look at the same data from 2 different positions. 
+
+We manipulate these files from inside the docker container via group and owner `mysql`. If you look at these files from inside the container, you will see `mysql mysql`. 
+
+    / # ls -latr  /var/lib/mysql/tmp/sql_log#*.MYD
+    -rw-rw----    1 mysql mysql         0 Feb 22 12:11 /d/data/master/tmp/sql_log#P#p1.MYD
+    -rw-rw----    1 mysql mysql         0 Feb 23 12:11 /d/data/master/tmp/sql_log#P#p2.MYD
+    -rw-rw----    1 mysql mysql         0 Feb 24 12:11 /d/data/master/tmp/sql_log#P#p3.MYD
+    -rw-rw----    1 mysql mysql         0 Feb 25 12:11 /d/data/master/tmp/sql_log#P#p4.MYD
+    -rw-rw----    1 mysql mysql        20 Feb 26 12:11 /d/data/master/tmp/sql_log#P#p5.MYD
+    -rw-rw----    1 mysql mysql        20 Feb 27 12:11 /d/data/master/tmp/sql_log#P#p6.MYD
+    -rw-rw----    1 mysql mysql    112920 Feb 28 14:58 /d/data/master/tmp/sql_log#P#p0.MYD
 
 But here I am looking from the host, and docker somehow introduces a group and a user to cope with this inside outside view. That's all I know. Most probably there will be some more to explain and understand, but that's enough for me.
 
