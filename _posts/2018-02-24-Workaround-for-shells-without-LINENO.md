@@ -1629,7 +1629,9 @@ What about using this mechanism to shed light on this enigmatic situation?
 
 Well, it looks like these files are indeed different. 
 
-So the conclusion here should be to start with a clean setup which can be achieved either way by `mysql_rsync_lock.sh` or `mysql_cmp.sh`. The slaves take care of errors. Monitor this action with `mysql_repl_monitor.sh` and write a trigger file in case of an error. Then let cron regularly check if there are triggers, and if so, take action.
+So the conclusion here should be to start with a clean setup which can be achieved either way by `mysql_rsync_lock.sh` or `mysql_cmp.sh`. The slaves take care of errors. We rely on and trust the slave status information. 
+
+Monitor this action with `mysql_repl_monitor.sh` and write a trigger file in case of an error. Then let cron regularly check if there are triggers, and if so, take action.
 
 As I already have a script which is run every 30 minutes anyway, I integrated the call here:
 
@@ -1682,7 +1684,7 @@ Looking at my crontab file, I notice a nice service running every minute which n
     # will do automatic git entries
     * * * * * /path_to_your_script/git_auto.sh
 
-This script has another interesting feature. In regular intervals I run a PHP script which produces create table statements for all tables in the database. This file is called _show_create_table.sql and is under revision control. Table definitions do change from time to time, and it is error prone to rely on manually taking notes.
+This script has another interesting feature. In regular intervals I run a PHP script which produces `CREATE TABLE` statements for all tables in the database. This file is called `_show_create_table.sql` and is put under revision control. Table definitions do change from time to time, and it is error prone to rely on manually taking notes.
 
     # path_to_your_script/git_auto.sh
     #!/bin/sh
