@@ -93,7 +93,7 @@ In particular I don't want to insult all you experts who are better than I, have
 
 It's for people like me I take the pain to write this all up, those who are new to the subject and have to fight their way more or less alone. Kind of paying back my debt according to the old mailing list ethics. In addition it turned out that this study revealed a lot of insight for myself as well.
 
-Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on this text, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. And still I don't now what I'm heading for in the end.
+Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on it, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. And still I don't now what I'm heading for in the end.
 
 More complex cases <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
