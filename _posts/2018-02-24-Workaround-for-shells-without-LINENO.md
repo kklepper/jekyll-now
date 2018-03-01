@@ -1010,7 +1010,7 @@ The correct syntax for the docker instruction is for example
     docker exec s2 /bin/ash -c 'mysqlbinlog -r /tmp/s2.mysql-relay.000002.sql /var/lib/mysql/mysql-relay.000002'
 
 In order to be able to inspect the protocol file from the host, you have to map your tmp directory accordingly. This you do in the docker-compose yml file for master and slaves in case you use docker compose, for example:
-
+<span id="volumes"></span>
     volumes:
       - /c/tmp:/tmp
       - /d/data/master:/var/lib/mysql
@@ -1383,7 +1383,7 @@ So we have to reorganize our partitions. But before doing that, let's have a loo
 
 From here we see easily which partition is the oldest and should be truncated. 
 
-You may wonder about the group and the owner of these files. In order to have permanent data, we map a directory structure from the host to the container `/d/data/master:/var/lib/mysql` (see <a href="#digression-docker-and-mysqlbinlog-table-of-content">above</a>), so we look at the same data from 2 different positions. 
+You may wonder about the group and the owner of these files. In order to have permanent data, we map a directory structure from the host to the container `/d/data/master:/var/lib/mysql` (see <a href="#volumes">above</a>), so we look at the same data from 2 different positions. 
 
 We manipulate these files from inside the docker container via group and owner `mysql`. If you look at these files from inside the container, you will see `mysql mysql`. 
 
