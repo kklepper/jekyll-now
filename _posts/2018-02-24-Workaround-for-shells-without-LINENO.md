@@ -1498,7 +1498,7 @@ We have a timestamp here. That's another habit of mine. Most every table has an 
     +-------+---------------------+
     1 row in set (0.00 sec)
 
-Now let us start the mysql client for the slave:
+Now let us start the mysql client for the first slave:
 
      docker exec -it s1 mysql ci4
 
@@ -1512,7 +1512,7 @@ and issue the same command here:
     +-------+---------------------+
     1 row in set (0.00 sec)
 
-Same procedure for the other slave:
+Same procedure for the second slave:
 
     S:8715945 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sitemap WHERE id_ex = 6;
     +-------+---------------------+
@@ -1528,11 +1528,11 @@ Here my memory fails me. Somewhere in one of my scripts I used the term `diff`. 
 
 Now I need something like
 
-grep -rn '/mnt/sda1/wp/ci/application/' -e '' 
+    grep -rn '/mnt/sda1/wp/ci/application/' -e '' 
 
 for a totally different directory: `path_to_your_script`. Numerous times I have overwritten the template by typing, but now I will define a new hotkey or rather shortcut.
 
-::ggrp::grep -rn '/path_to_your_script/' -e ''
+    ::ggrp::grep -rn '/path_to_your_script/' -e ''
 
 I don't find anything. Now I remember. `diff` was one of the candidates which were not good. It was something with `md5`. 
 
