@@ -1597,7 +1597,7 @@ So the conclusion here should be to start with a clean setup which can be achiev
 
 As I have a script which is run every 30 minutes anyway, I just integrated the call here:
 
-    # will check slaves for integrity and rsync -- triggered by /tmp/repl_cmp.trigger set by /path_to_your_script/mysql_repl_monitor.sh
+    # will check slaves for integrity and copy -- triggered by /tmp/repl_cmp.trigger set by /path_to_your_script/mysql_repl_monitor.sh
     /path_to_your_script/mysql_cmp.sh            
 
 I think there is room for one improvement here. In case the next error occurs, I will have a closer look to the error message. If the error message tells me which table has problems, I could immediately take action on this table without checking all the others. To this end I have to see the error message because I have to extract the table name from that string.
