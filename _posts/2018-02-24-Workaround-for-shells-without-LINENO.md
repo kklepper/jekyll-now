@@ -1813,7 +1813,7 @@ Hopefully, this text will give somebody else some insight in the future as well.
 A big thank you to you all
 ----------
 
-Last but not least I want to thank all those experts out there emphatically for all their excellent work. There are very many fine solutions I've found for my problems which have incorporated in my setup without a note.
+Last but not least I want to thank all those experts out there emphatically for all their excellent work. There are very many fine solutions I've found for my problems which have been incorporated in my setup without a note.
 
 Nowadays, whenever I have a problem, I call Google, and if there is a solution, most probably I find it this way. If nobody had this kind of problem, there is a good chance that the problem isn't where I think it is.
 
