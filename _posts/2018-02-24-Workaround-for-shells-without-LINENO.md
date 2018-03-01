@@ -1586,7 +1586,7 @@ Now I need something like
 
     grep -rn '/mnt/sda1/wp/ci/application/' -e '' 
 
-for a totally different directory: `path_to_your_script`. Numerous times I have overwritten the template by typing, but now I will define a new hotkey or rather shortcut.
+for a totally different directory: `path_to_your_script`. Numerous times I have overwritten this template by typing, but now I will define a new hotkey or rather shortcut.
 
     ::ggrp::grep -rn '/path_to_your_script/' -e ''
 
@@ -1597,17 +1597,17 @@ Digression: Comparing files <span style="font-size: 11px;float: right;"><a href=
 
 And here I have it: `md5sum`, and it is contained in a script named `mysql_cmp.sh`.  I have written the script a couple of days ago and I can't remember. I guess this is the result of having done something with utmost satisfaction, when as a result the mind puts things at rest.
 
-This script compares all the files and takes action if the `md5sum` of files which should be equal is different. 
+This script compares all the files and takes action if the `md5sum` of files -- which should be equal -- is different. 
 
 Looking at the script, the first thing I see is that it is triggered by a file. This file should have been written to by another script which adds the name of the slave having problems. This file is read and reset, the list of lines is made unique, so the script is fed with the names of the slaves to take action on.
 
-Obviously, the supervising script writing the trigger file will be called much more often than this script. Or the other way around: I don't take action the moment I notice a problem, but only in much bigger intervals as the repair action may take much longer. Otherwise I might call the repair script again and again while it is still running with unknown consequences. 
+Obviously, the supervising script writing the trigger file will be called much more often than this script. Or the other way around: I don't take action the moment I notice a problem, but only in much bigger intervals because the repair action may take much longer. Otherwise I might call the repair script again and again while it is still running with unknown consequences. 
 
 If the trigger file is empty, no action is taken at all. So this script only knows about slaves, not about files which are different. This is what the script tries to find out.
 
 To this end, the script takes all data files one by one. For each file, the master is called to flush that table and lock it for write. Then the same is done with each slave, so that we should have comparable conditions. And then the data files of the master and the slave in question are compared.
 
-Then the lock on the slave is relieved, the next slave is done the same way, and then the master releases the lock on this table to repeat the whole process for the next table.
+Then the lock on the slave is relieved, the next slave is done the same way, and when all slaves are done the master releases the lock on this table to repeat the whole process for the next table.
 
 This way, write table locks are minimized in contrast to the rsync method, where all tables are locked for writing on the master as long as the whole process takes.
 
