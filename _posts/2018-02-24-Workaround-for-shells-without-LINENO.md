@@ -4,7 +4,7 @@ title: Workaround for shells without LINENO
 published: true
 ---
 
-## Table of Contents
+## Table of Contents <span id="digression-speech-recognition"></span>
 
 - [Workaround for shells without LINENO](#workaround-for-shells-without-lineno)
 - [Debugging](#debugging)
