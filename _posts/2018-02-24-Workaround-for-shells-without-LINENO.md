@@ -40,6 +40,7 @@ Why are data files different -- digression
 > - [Automatic boot2docker setup -- digression ](#automatic-boot2docker-setup--digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
+- [A big thank you to you all](#a-big-thank-you-to-you-all)
 
 Workaround for shells without LINENO
 ----------
@@ -1809,4 +1810,17 @@ As people in times of Docker containers tend to use minimal Linux systems like B
 
 Hopefully, this text will give somebody else some insight in the future as well. Furthermore, I hope that you, having read so far, did enjoy the article and don't regret having spent your time.
 
-Last but not least I hope I didn't make a fool out of myself.
+A big thank you to you all
+----------
+
+Last but not least I want to thank all those experts out there emphatically for all their excellent work. There are very many fine solutions I've found for my problems which have been incorporated in my setup.
+
+Nowadays, whenever I have a problem, I call Google, and if there is a solution, most probably I find it this way. If nobody had this kind of problem, there is a good chance that the problem isn't where I think it is.
+
+It's hard to look into the future, but we can look back. My first encounter with computers was in the 60s, when [ALGOL 60](https://en.wikipedia.org/wiki/Algol_60) had just been invented. We punched cards a deck of which was transferred to an operator, and a week later the result was handed back, maybe with a typo.
+
+The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/Fortran), so that was my 2nd language. The Department of theoretical physics had a [Zuse Z25](https://en.wikipedia.org/wiki/Z25_(computer)) which was fed with telex ticker tape. Here I learned my first machine language.
+
+My next encounter with computers was in the 80s, when personal computers hit the market. I was in sales then. 10 years later, I developed a professional program for windows with VC++ which was later transferred to Delphi. At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists.
+
+Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game one more time considerably. The whole open source movement is something nobody could have dreamed of. But it is reality. Amazing.
