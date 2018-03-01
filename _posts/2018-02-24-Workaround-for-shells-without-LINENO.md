@@ -1841,7 +1841,7 @@ Again you will be glad to have a handy debugging tool like `echo_line_no` with c
 Have fun <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Finally, if you want to repeat the above given tests, don't forget to replace `path_to_your_script` with your own path (or create a symbolic link, whichever is easier for you). Take this sample as a starting point for your own creativity. Maybe there are other exciting things you can do with this approach I couldn't come up with (yet). 
+Finally, if you want to repeat the above given test `test_echo_line_no.sh`, don't forget to replace `path_to_your_script` with your own path (or create a symbolic link, whichever is easier for you). Take this sample as a starting point for your own creativity. Maybe there are other exciting things you can do with this approach I couldn't come up with (yet). 
 
 You see, I haven't tested this approach under heavy conditions because unfortunately I already had developed these database repair scripts mentioned above without making use of `echo_line_no` -- in fact the deficiencies in debugging these programs finally made me look for a solution. I reckoned with lots of people having the same problem and some who not only know what to do, but published solutions on StackOverflow, for example.
 
