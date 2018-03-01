@@ -1010,7 +1010,7 @@ The correct syntax for the docker instruction is for example
     docker exec s2 /bin/ash -c 'mysqlbinlog -r /tmp/s2.mysql-relay.000002.sql /var/lib/mysql/mysql-relay.000002'
 
 In order to be able to inspect the protocol file from the host, you have to map your tmp directory accordingly. This you do in the docker-compose yml file for master and slaves in case you use docker compose, for example:
-<span id="volumes"><-- --></span>
+<span id="volumes"></span>
     volumes:
       - /c/tmp:/tmp
       - /d/data/master:/var/lib/mysql
