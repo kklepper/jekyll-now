@@ -1226,7 +1226,7 @@ I can't resist. The sentence above "Great. All that with just a few keystrokes y
 
 Back then we were serving this profession and we offered them this product. Of course, I had to prove that it worked, and the climax of the show was when I demonstrated the capability of defining complex macros triggered by just a few words. Those words could have been made up. The machine would learn this "word".
 
-A lawyer, after having produced his text, usually by normal dictation, would give this to his secretary who would listen to dictation and type the text to whatever machine she has at hand. Back then it was the time when many offices still had electric or electronic typewriters, no computer. Sometimes they had dictation machines which looked like being 50 years old or more. Hey, they worked.
+A lawyer, after having produced his text, usually by normal dictation, would give this to his secretary who would listen to this dictation and type the text to whatever machine she has at hand. Back then it was the time when many offices still had electric or electronic typewriters, no computer. Sometimes they had dictation machines which looked like being 50 years old or more. Hey, they worked.
 
 The secretary would then have to save this legal document, print it for the client, the opposing party, the attorney, the court, maybe several consultants and witnesses. And maybe she will also use his new acquisition, the fax machine, which was the latest technical equipment of the time. 
 
