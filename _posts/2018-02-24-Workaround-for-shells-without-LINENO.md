@@ -1135,7 +1135,7 @@ Apart from that, I can always add the term
 
     "# L: ".__LINE__.". F: ".__FILE__.". M: ".__METHOD__;
 
-to whatever code I have in place. Of course, many more complex ready to use SQL statements already have this line integrated, actually all of them. That's why although I do have a shortcut for this snippet, I simply don't need it.
+to whatever code I have in place. Of course, many more complex ready-to-use SQL statements already have this line integrated, actually all of them. That's why although I do have a shortcut for this snippet, I simply don't need it.
 
 Digression: Other tools <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
