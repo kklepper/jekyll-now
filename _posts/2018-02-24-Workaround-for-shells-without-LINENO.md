@@ -1746,7 +1746,7 @@ It is inconvenient to manipulate this file directly (remember this path and be r
         /bin/sh /path_to_your_script/docker_stop.sh
     fi
 
-This script is called at shutdown also and will make sure that the whole setup is shut down cleanly. In particular the database engine may not like to be suddenly killed. This way you're safe.
+This script is called at shutdown also and the `else` part will make sure that the whole setup is shut down cleanly. In particular the database engine may not like to be suddenly killed. This way you're safe.
 
 In starting, the script `up.sh` will call the script `cron_build.sh` which populates the crontab file based on the template `cron.sh`. 
 
@@ -1759,7 +1759,7 @@ In starting, the script `up.sh` will call the script `cron_build.sh` which popul
         (crontab -l 2>/dev/null; echo "$LINE")| crontab -
     done < /path_to_your_script/cron.sh                                          
 
-So whenever I change something in my crontab, in order to make it permanent, I have to change the crontab template accordingly. But that's it.
+So whenever I change something in my crontab, in order to make it permanent, I have to change the crontab template `cron.sh` accordingly. But that's it.
 
 End of digression.
 
