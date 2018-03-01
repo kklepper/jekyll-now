@@ -1684,7 +1684,9 @@ Looking at my crontab file, I notice a nice service running every minute which n
     # will do automatic git entries
     * * * * * /path_to_your_script/git_auto.sh
 
-This script has another interesting feature. In regular intervals I run a PHP script which produces `CREATE TABLE` statements for all tables in the database. This file is called `_show_create_table.sql` and is put under revision control. Table definitions do change from time to time, and it is error prone to rely on manually taking notes.
+This script has another interesting feature. In regular intervals I run a PHP script which produces `CREATE TABLE` statements for all tables in the database. This file is called `_show_create_table.sql` and is put under revision control. 
+
+Table definitions do change from time to time, and it is error prone to rely on manually taking notes.
 
     # path_to_your_script/git_auto.sh
     #!/bin/sh
@@ -1701,7 +1703,9 @@ This script has another interesting feature. In regular intervals I run a PHP sc
     cd /c/wp/ci
     /usr/local/bin/git commit -am "$DATE"
 
-The last line shows the recipe. You change to whatever directory you have under revision control, and then simply call that statement. In case I have to switch back and look for a clean situation, with the shortcut `ggl` the git log is called, made pretty:
+The last line shows the recipe. You change to whatever directory you have under revision control, and then simply call that statement. 
+
+In case I have to switch back and look for a clean situation, with the shortcut `ggl` the git log is called, made pretty:
 
     $ git log --oneline | tr '\\n' | more
     775fb82 2018-02-28 23:20:00
