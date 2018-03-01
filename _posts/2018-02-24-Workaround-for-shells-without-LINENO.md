@@ -1422,7 +1422,7 @@ Why did I take the pain in the first place? Well, unfortunately things don't wor
 
 The replication Monitor tells me everything is okay. 
 
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------ 2018-02-28_22:49:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------ 2018-02-28_22:49:00
     175 =====> s1 OK 2018-02-28_22:49:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000001 Read_Master_Log_Pos 437588
     175 =====> s2 OK 2018-02-28_22:49:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000001 Read_Master_Log_Pos 437588
 
@@ -1511,7 +1511,7 @@ Now let us start the mysql client for the first slave:
 
 and issue the same command here:
 
-    S:8728244 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sitemap WHERE id_ex = 6;
+    S:8728244 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
     +-------+---------------------+
     | id_ex | ca_tmstmp           |
     +-------+---------------------+
@@ -1521,7 +1521,7 @@ and issue the same command here:
 
 Same procedure for the second slave:
 
-    S:8715945 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sitemap WHERE id_ex = 6;
+    S:8715945 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
     +-------+---------------------+
     | id_ex | ca_tmstmp           |
     +-------+---------------------+
@@ -1532,9 +1532,9 @@ Same procedure for the second slave:
 or, more compact:
 
 
-    $ docker exec m1 mysql -e "SELECT 'm1', id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6" && \
-      docker exec s1 mysql -e "SELECT 's1', id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6" && \
-      docker exec s2 mysql -e "SELECT 's2', id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6"
+    $ docker exec m1 mysql -e "SELECT 'm1', id_ex, ca_tmstmp FROM ci4.cmp_ex_sm WHERE id_ex = 6" && \
+      docker exec s1 mysql -e "SELECT 's1', id_ex, ca_tmstmp FROM ci4.cmp_ex_sm WHERE id_ex = 6" && \
+      docker exec s2 mysql -e "SELECT 's2', id_ex, ca_tmstmp FROM ci4.cmp_ex_sm WHERE id_ex = 6"
     m1      id_ex   ca_tmstmp
     m1      6       2018-03-01 00:10:56
     s1      id_ex   ca_tmstmp
