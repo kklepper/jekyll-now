@@ -1819,8 +1819,8 @@ Nowadays, whenever I have a problem, I call Google, and if there is a solution, 
 
 It's hard to look into the future, but we can look back. My first encounter with computers was in the 60s, when [ALGOL 60](https://en.wikipedia.org/wiki/Algol_60) had just been invented. We punched cards a deck of which was transferred to an operator, and a week later the result was handed back, maybe with a typo.
 
-The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/Fortran), so that was my 2nd language. The Department of theoretical physics had a [Zuse Z25](https://en.wikipedia.org/wiki/Z25_(computer)) which was fed with telex ticker tape. Here I learned my first machine language.
+The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/Fortran), so that was my 2nd language. The Department of theoretical physics had a [Zuse Z25](https://en.wikipedia.org/wiki/Z25_(computer)) which was fed with telex ticker tape. Here I learned my first and only machine language.
 
-My next encounter with computers was in the 80s, when personal computers hit the market. I was in sales then. 10 years later, I developed a professional program for windows with VC++ which was later transferred to Delphi. At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists.
+My next encounter with computers was in the 80s, when personal computers hit the market. I was in sales and services then. 10 years later, I developed a professional program for windows with VC++ which was later transferred to Delphi. At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists.
 
-Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game one more time considerably. The whole open source movement is something nobody could have dreamed of. But it is reality. Amazing.
+Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game one more time considerably. The whole open source movement is something nobody could have ever dreamed of. But it is reality. Amazing.
