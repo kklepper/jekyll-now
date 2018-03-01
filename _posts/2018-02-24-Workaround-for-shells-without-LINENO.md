@@ -1821,6 +1821,6 @@ It's hard to look into the future, but we can look back. My first encounter with
 
 The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/Fortran), so that was my second language. The Department of Theoretical Physics owned the second computer of the whole university, a [Zuse Z25](https://en.wikipedia.org/wiki/Z25_(computer)), which was fed with telex ticker tape. Here I learned my first and only machine language.
 
-My next encounter with computers was in the 80s, when personal computers hit the market. I was in sales and services then. 10 years later, I developed a professional program for windows with VC++ which was later rewritten in Delphi. At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists.
+My next encounter with computers was in the 80s, when personal computers hit the market. I was in sales and services then. 10 years later, I developed a professional program for windows with VC++ which was later rewritten in Delphi. At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists, at least.
 
 Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game considerably again. The whole open source movement is something nobody could have ever dreamed of. But it is reality. Amazing.
