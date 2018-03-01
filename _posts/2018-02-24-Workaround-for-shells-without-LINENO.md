@@ -1872,4 +1872,4 @@ I remember, on the MySQL mailing list in 1998, a guy who replied nearly every qu
 
 The whole open source movement is something nobody could have ever dreamed of. Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game considerably again. 
 
-All this is reality. Absolutely amazing.
+All this is reality and somehow I am part of this. Absolutely amazing.
