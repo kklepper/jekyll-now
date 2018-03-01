@@ -1813,7 +1813,7 @@ As people in times of Docker containers tend to use minimal Linux systems like `
 
 Hopefully, this text will give somebody else some insight in the future as well. Furthermore, I hope that you, having read so far, did enjoy the article and don't regret having spent your time.
 
-A big thank you to you all <span style="font-size:11 px"><a href="#toc">Table of Content</a></span>
+A big thank you to you all <span style="font-size: 11px"><a href="#toc">Table of Content</a></span>
 ----------
 
 Last but not least I want to thank all those experts out there emphatically for all their excellent work. There are very many fine solutions I've found for my problems which have been incorporated in my setup without a note.
