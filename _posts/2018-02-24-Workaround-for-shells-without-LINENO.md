@@ -37,6 +37,7 @@ Why are data files different -- digression
 > - [Comparing files -- digression](#comparing-files----digression)
 > - [Why are data files different -- digression](#why-are-data-files-different--digression)
 > - [Automatic git checkout -- digression](#automatic-git-checkout--digression)
+> - [Automatic boot2docker setup -- digression ](#automatic-boot2docker-setup--digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
