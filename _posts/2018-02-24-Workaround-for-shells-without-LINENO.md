@@ -1726,7 +1726,7 @@ Interesting enough, you can see when I was asleep or at least didn't change any 
 
 At the end you see the message from pushing the whole stuff to origin or rather master back to the working branch. Maybe this is the answer I was looking for: by merging back I get an automatic label.
 
-In case I have to find a clean checkout, I simply check out different revisions by jumping in this list and picking the one in the middle until I have what I want. This procedure is very fast and guaranteed to succeed.
+In case I have screwed things up somewhere along the lines without noticing and have to find the last clean checkout, I simply check out different revisions by jumping in this list and picking the one in the middle until I have what I want. This procedure is very fast and guaranteed to succeed.
 
 Digression: Automatic boot2docker setup
 ----------
