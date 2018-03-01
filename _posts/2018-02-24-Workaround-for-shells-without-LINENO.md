@@ -33,7 +33,7 @@ published: true
 > - [Digression: Other tools](#digression-other-tools)
 > - [Digression: Speech recognition](#digression-speech-recognition)
 > - [Digression: Partitioning by day of week](#digression-partitioning-by-day-of-week)
-> - [Digression: Comparing files](#digression-comparing-files--)
+> - [Digression: Comparing files](#digression-comparing-files)
 > - [Digression: Why are data files different](#digression-why-are-data-files-different)
 > - [Digression: Automatic git checkout](#digression-automatic-git-checkout)
 > - [Digression: Automatic boot2docker setup](#digression-automatic-boot2docker-setup)
