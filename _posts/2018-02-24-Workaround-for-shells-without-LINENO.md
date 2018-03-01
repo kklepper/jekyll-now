@@ -1430,7 +1430,7 @@ The result is a very nice list of all the actions the program performs on the da
 
 Why did I take the pain in the first place? Well, unfortunately things don't work as I thought. When I start with a clean system and I launch this relatively simple action, my system is out of sync immediately.
 
-The replication Monitor tells me everything is okay. 
+The replication monitor (to which I added `Seconds_Behind_Master`) tells me everything is okay. 
 
     /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------ 2018-02-28_22:49:00
     175 =====> s1 OK 2018-02-28_22:49:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000001 Read_Master_Log_Pos 437588
