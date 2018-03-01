@@ -1396,7 +1396,7 @@ We manipulate these files from inside the docker container via group and owner `
     -rw-rw----    1 mysql mysql        20 Feb 27 12:11 /d/data/master/tmp/sql_log#P#p6.MYD
     -rw-rw----    1 mysql mysql    112920 Feb 28 14:58 /d/data/master/tmp/sql_log#P#p0.MYD
 
-But here I am looking from the host, and docker somehow introduces a group and a user to cope with this inside-outside view. That's all I know. Most probably there will be some more to explain and understand, but that's enough for me.
+But here I am looking from the host, and docker somehow introduces a group and a user `dockrema` to cope with this inside-outside view. That's all I know. Most probably there will be some more to explain and understand, but that's enough for me.
 
 We need a similar function given by the shell.
 
