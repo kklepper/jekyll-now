@@ -1522,7 +1522,7 @@ Same procedure for the second slave:
     +-------+---------------------+
     1 row in set (0.00 sec)
 
-or, cmore compact:
+or, more compact:
 
     docker@boot2docker:/mnt/sda1/tmp$ docker exec m1 mysql -e 'SELECT id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6' && docker exec s1 mysql -e 'SELECT id_ex, ca_tmstmp FROM
     ci4.cmp_ex_sitemap WHERE id_ex = 6' && docker exec s2 mysql -e 'SELECT id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6'
