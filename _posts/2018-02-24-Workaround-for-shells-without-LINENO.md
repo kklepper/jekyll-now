@@ -1098,7 +1098,7 @@ Everything okay now? Test it.
     # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sm
     1 row in set (0.00 sec)
 
-The code is pretty much self-explanatory. May I point you to the comments in this SQL statement?
+The code is pretty much self-explanatory. May I point you to the comment in this SQL statement?
 
 Digression: Comments and editors <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
