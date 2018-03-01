@@ -83,11 +83,11 @@ which does not work with e.g. `Busybox` or `Boot2Docker` or `Tiny Linux`, introd
 
 Line numbers are not just for fun, they are badly needed for debugging, and that's where things get more complicated. 
 
-I could just leave all of that as an exercise to you, but this is not the intention of Stack Overflow as I understand it. Hence I elaborate on the subject to give you as complete an insight as is possible for me. 
+I could leave all of that as an exercise to you, but this is not the intention of Stack Overflow as I understand it. Hence I elaborate on the subject to give you as complete an insight as is possible for me. 
 
 Sorry, it gets a bit lengthy for that reason. While I was developing my ideas, I digressed a bit into database specifics new to me. If you are not interested, please simply skip those sections.
 
-In case you fear I get talkative or be prating, just stop reading. 
+In case you fear I get talkative or be prating, please stop reading. 
 
 In particular I don't want to insult all you experts who are better than I, have far more experience and can do all of this on their own. 
 
@@ -240,11 +240,11 @@ Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Cont
 
 2. Examples 2 and 3 show how important quotes are for the argument to the function -- try it without quotes to see the effect (`echo_line_no "$1"`). Without quotes, only the first word is the trigger which will find 2 lines on each call here, so you get 4 results instead of 2, which will most likely be confusing.
 
-3. For multi-line strings, this constraint of uniqueness applies to the first line only as `grep` is line oriented -- the argument however has more than just one line, so grep will fail and you see nothing unless we cut off everything after the first line. Consequently you will not see the other lines in the output, but that may not be really bad unless you need the information therein; if this is a problem, consider putting the information you need into the first line.
+3. For multi-line strings, this constraint of uniqueness applies to the first line only as `grep` is line oriented -- the argument however has more than one line, so grep will fail and you see nothing unless we cut off everything after the first line. Consequently you will not see the other lines in the output, but that may not be really bad unless you need the information therein; if this is a problem, consider putting the information you need into the first line.
 
 4. For the use of variables, this constraint of uniqueness applies to the part up to the token character `VARTOKEN` (here `:`) used to enclose these (which is a good idea anyway to see if a variable is empty, see example) -- reason: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the code has to stop here as well. This is no real problem as you can always use `echo_line_no` on the variable itself to get the line number where it is called (see next example). 
 
-5. For the next 3 examples, you will not get the line number of the comment, but the line number of the definition of the variable instead -- which may be just what you want as this information is hard to find otherwise. The first one shows said variable missing from the function call (example 4), the next 2 assignments show the lines of definition of the same variable defined at different places with different values.
+5. For the next 3 examples, you will not get the line number of the comment, but the line number of the definition of the variable instead -- which may be exactly what you want as this information is hard to find otherwise. The first one shows said variable missing from the function call (example 4), the next 2 assignments show the lines of definition of the same variable defined at different places with different values.
 
 6. You can use `echo_line_no` from inside a function, but in contrast to bash there is no way to get the function name via system variable due to the same restrictions. No problem, you can always hardcode, as demonstrated here; you have to hardcode the call to `echo_line_no` there anyway. But there is more to the use within functions:
 
@@ -378,7 +378,7 @@ Giuseppe Maxia does not have a proposal of how to handle this problem. The class
 
 This is a good approach if you don't know what may happen. Maybe there is a logical or technical flaw in the application code causing this trouble. In this case it doesn't make sense to reset the slave and start again, because this error will undoubtedly appear again and again. You have to inspect your application code and make sure that no database error is induced by intention or carelessness.
 
-But if you are sure that this doesn't happen and the error is not triggered and cannot be tackled by code, it may be a viable solution to apply brute force. If I understand the approach of database specialist company Percona correctly, this is what they do. They check at the level of the operation system if the corresponding tables are in sync, and if not, they just copy the original master table to the slave. 
+But if you are sure that this doesn't happen and the error is not triggered and cannot be tackled by code, it may be a viable solution to apply brute force. If I understand the approach of database specialist company Percona correctly, this is what they do. They check at the level of the operation system if the corresponding tables are in sync, and if not, they copy the original master table to the slave. 
 
 Here I don't write about fancy scenarios. I have experienced replication errors which obviously stem from the database engines involved and which I could not explain. Google of course knows about these errors. They are discussed in the MySQL forum, but none of these cases has found a solution. So there is nothing I can conclude here. Brute force is the only remedy.
 
@@ -465,7 +465,7 @@ Digression: PRIMARY KEY clause <span style="font-size: 11px;float: right;"><a hr
 
 Oh yes, of course. 
 
-When I encountered this error the first time it took quite a while for me to understand. Google was my first reach for help as usual, but everybody just said: the error message tells it all. This didn't help me much.
+When I encountered this error the first time it took quite a while for me to understand. Google was my first reach for help as usual, but everybody said: the error message tells it all. This didn't help me much.
 
 With a primary key as the only unique key, things may be easier to understand, but I happened to tackle a table with an additional unique key and had to comprehend that every unique key has to be changed accordingly. 
 
@@ -533,7 +533,7 @@ No surprise here. We should expect the whole spectrum the other end of which we 
     +----------------------+----------------------+
     1 row in set (0.00 sec)
 
-This is funny. It shouldn't be. In my understanding a hex value should just be a number. Let's start simple.
+This is funny. It shouldn't be. In my understanding a hex value should be a number. Let's start simple.
 
     >SELECT CONV('f', 16, 10);
     +-------------------+
@@ -748,7 +748,7 @@ To see where things get wrong, I issued the following (concatenating 2 simple SQ
 
 Maybe it is time now to write a bug report. 
 
-Better not. The magical number 18446744073709551615 is just 2^64-1 and the maximum of an unsigned big int. That's why! 
+Better not. The magical number 18446744073709551615 is 2^64-1 and the maximum of an unsigned big int. That's why! 
 
 I never hit that number before. 
 
@@ -763,7 +763,7 @@ With partitioned InnoDB tables, things are more complicated, as usual, but movin
 
 In case of MyISAM you can even choose which method to apply if things go wrong, `repair` or `copy`. The `frm` file is not touched as a rule, so there is nothing to do. If only the data file `MYD` is different between master and slave, you best copy. `REPAIR TABLE` must copy as well, so this doesn't cost you any more time. 
 
-If only the index file `MYI` is different, you best use `REPAIR TABLE`. Chances are, the repair is immediate, because very often it is just the number of records which is wrong being zero or any other number different from the correct number.
+If only the index file `MYI` is different, you best use `REPAIR TABLE`. Chances are, the repair is immediate, because very often it is simply the number of records which is wrong being zero or any other number different from the correct number.
 
 Of course, if you copy, you have to make sure that the master table is not changed during these procedures. And if the process succeeded, you restart the slave reporting that problem and check if everything is okay now. 
 
@@ -1091,7 +1091,7 @@ No choice of what to do:
     Msg_text: OK
     1 row in set (49.02 sec)
 
-Well, the table had about 1.2 GB data, so it took some time. Here I chose the delimiter `\G` just to show you the difference. This feature is particularly interesting with extremely long rows. 
+Well, the table had about 1.2 GB data, so it took some time. Here I chose the delimiter `\G` to show you the difference. This feature is particularly interesting with extremely long rows. 
 
 Everything okay now? Test it.
 
@@ -1115,7 +1115,7 @@ Maybe there are even more calls in between, so I get something like a trace. I h
 
         $this->dba->comment = "# L: ".__LINE__.". F: ".__FILE__.". M: ".__METHOD__;
 
-just before the query. That's obviously PHP, and in order to understand this line, I have to tell you more.
+right before the query. That's obviously PHP, and in order to understand this line, I have to tell you more.
 
 I use [CodeIgniter](https://codeigniter.com/), and as far as I remember, in the earlier days they had a module named `Active_record`. Anyway, I wrote an `Active Record Class` which takes care of everything I like. This is what the `dba` stands for. So this class has a member `comment`.
 
@@ -1131,7 +1131,7 @@ Every once in a while I look for other editors in case the technical development
 
 One of them was that one property was not usable, so I contacted the person in charge to discuss things with him. He answered that he actually did have implemented it the way I wanted to, but the community had decided otherwise. And that was that. 
 
-Sorry. I don't want to hack my own editor. I just want to be productive. And I'm happy and very productive with PSPad. By the way the shortcut for the comment line is `tdc`, for $**t**his->**d**ba->**c**omment.
+Sorry. I don't want to hack my own editor. I only want to be productive. And I'm happy and very productive with PSPad. By the way the shortcut for the comment line is `tdc`, for $**t**his->**d**ba->**c**omment.
 
 Apart from that, I can always add the term
 
@@ -1144,7 +1144,7 @@ Digression: Other tools <span style="font-size: 11px;float: right;"><a href="#to
 
 So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too long a time with more or less trouble): My workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
 
-WinSCP is my window to my Linux workhorse on the same network, which is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant, but rather more production-like on a separate machine. 
+WinSCP is my window to my Linux workhorse on the same network, which is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant, but rather more production-like on this separate machine. 
 
 For example, this might be the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine `m1` and main database `ci4`: 
 
@@ -1196,13 +1196,13 @@ Here are some other snippets I use often:
     ::mms1::docker exec -it s1 mysql ci4                  ; start mysql session on slave 1
     ::mms2::docker exec -it s2 mysql ci4                  ; start mysql session on slave 2 
 
-You see it cost me next to nothing to call `SHOW WARNINGS;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I just use AHK to define something new.
+You see it cost me next to nothing to call `SHOW WARNINGS;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I use AHK to define something new.
 
 The best are more complex commands which really do good work. For example, I placed a command to the Windows key plus o (denoted in AHL lingo: #o) to immediately jump to the function definition in my file, when the cursor is placed on the function name. 
 
 Likewise, #k will produce a list of all the function calls of that function. #j will produce a list with all the lines containing the word the cursor happens to be placed on. And so on. The limit is only your imagination. These are real productivity boosts; to achieve this by typing you would have to type a couple of keystrokes and combinations of those again and again. 
 
-Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I just have to look up what the right shortcut is. It's important to define shortcuts you can easily remember under all circumstances.
+Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I have to look up what the right shortcut is as I forgot. It's important to define shortcuts you can easily remember under all circumstances.
 
 Another nifty command I use regularly reads like this:
 
@@ -1239,7 +1239,7 @@ Windows Speech Recognition works equally fine, although it uses other terms to n
 
 DragonDictate, for instance, if you say one word only, because you're still thinking about the rest of the sentence, will search all tabs in your application for this word in order to switch to that tab. It took me a long time to understand what's happening here. It's really annoying if your machine all of a sudden does something which you didn't expect and cannot understand.
 
-At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than just a few characters, I'll switch to DragonDictate. 
+At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than a few characters, I'll switch to DragonDictate. 
 
 If I don't have speech recognition to my disposition, I feel like crippled. I use speech recognition on my notebook just the same when travelling. That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. 
 
@@ -1252,7 +1252,7 @@ Of course, there are lots of people online using these products and chatting abo
 Digression: Partitioning by day of week <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Back to partitioning. I don't need that old data anymore. To save time testing partitioning, I just `truncate` that table.
+Back to partitioning. I don't need that old data anymore. So to save time testing partitioning, I `truncate` that table.
 
     M:7727678 [tmp]>TRUNCATE TABLE tmp.sql_log;
     Query OK, 0 rows affected (0.16 sec)
@@ -1577,7 +1577,7 @@ And here I have it: `md5sum`, and it is contained in a script named `mysql_cmp.s
 
 This script compares all the files and takes action if the `md5sum` of files which should be equal is different. 
 
-Looking at the script, the first thing I see is that it is triggered by a file. This file should have been written to by another script which just adds the name of the slave having problems. This file is read and reset, the list of lines is made unique, so the script is fed with the names of the slaves to take action on.
+Looking at the script, the first thing I see is that it is triggered by a file. This file should have been written to by another script which adds the name of the slave having problems. This file is read and reset, the list of lines is made unique, so the script is fed with the names of the slaves to take action on.
 
 Obviously, the supervising script writing the trigger file will be called much more often than this script. Or the other way around: I don't take action the moment I notice a problem, but only in much bigger intervals as the repair action may take much longer. Otherwise I might call the repair script again and again while it is still running with unknown consequences. 
 
@@ -1609,7 +1609,7 @@ Well, it looks like these files are indeed different.
 
 So the conclusion here should be to start with a clean setup which can be achieved either way by `mysql_rsync_lock.sh` or `mysql_cmp.sh`. The slaves take care of errors. Monitor this action with `mysql_repl_monitor.sh` and write a trigger file in case of an error. Then let cron regularly check if there are triggers, and if so, take action.
 
-As I have a script which is run every 30 minutes anyway, I just integrated the call here:
+As I already have a script which is run every 30 minutes anyway, I integrated the call here:
 
     # will check slaves for integrity and copy -- triggered by /tmp/repl_cmp.trigger set by /path_to_your_script/mysql_repl_monitor.sh
     /path_to_your_script/mysql_cmp.sh            
