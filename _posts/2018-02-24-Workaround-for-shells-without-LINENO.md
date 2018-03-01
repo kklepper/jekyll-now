@@ -33,6 +33,7 @@ published: true
 > - [Other tools -- digression](#comments-other-tools--digression)
 > - [Speech recognition -- digression](#speech-recognition--digression)
 > - [Partitioning by day of week -- digression](#partitioning-by-day-of-week--digression)
+> - [Comparing files -- digression](#comparing-files----digression)
 - [Why roll your own, revisited](#why-roll-your-own-revisited)
 - [Have fun](#have-fun)
 
@@ -803,7 +804,7 @@ In the snippet below you see the 2 calls to rsync plus the time but no line numb
 
     docker@boot2docker:/tmp$ /path_to_your_script/mysql_rsync_lock.sh
         =========================================== 2018-02-27_00:12:57
-    41: " -------- flush tables lock tables" DATE
+    41: " -------- FLUSH TABLES LOCK TABLES WRITE" DATE
     48: " -------- rsync datm dat1"
     sending incremental file list
     
@@ -816,7 +817,7 @@ In the snippet below you see the 2 calls to rsync plus the time but no line numb
     total size is 4,125,301,375  speedup is 14,003.58
         =========================================== 2018-02-27_00:12:58
     59: " -------- SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1"
-    66: " unlock tables flush tables"
+    66: " UNLOCK TABLES FLUSH TABLES"
         =========================================== 2018-02-27_00:12:59
     75: " -------- done" DATE
     ---------------------------------------------- time taken 2 seconds
@@ -876,10 +877,10 @@ This is the `rsync` synchronizing script:
     BEGIN=$(date +%s)
 
     # take the datetime here
-    echo_line_no " -------- flush tables lock tables" DATE
+    echo_line_no " -------- FLUSH TABLES LOCK TABLES WRITE" DATE
     for db_server in m1 s1 s2 
     do
-        docker exec $db_server mysql -e "use $db; flush tables; lock tables;"  
+        docker exec $db_server mysql -e "use $db; FLUSH TABLES; LOCK TABLES WRITE;"  
     done
     
     echo_line_no " -------- dat_master dat_slaves"
@@ -897,10 +898,10 @@ This is the `rsync` synchronizing script:
         docker exec $db_slave mysql -e "STOP SLAVE; SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1; START SLAVE;" 
     done
     
-    echo_line_no " unlock tables flush tables"
+    echo_line_no " UNLOCK TABLES FLUSH TABLES"
     for db_server in m1 s1 s2 
     do
-        docker exec $db_server mysql -e "use $db; unlock tables; flush tables;"  
+        docker exec $db_server mysql -e "use $db; UNLOCK TABLES; FLUSH TABLES WRITE;"  
     done
     
     echo_line_no " -------- done" DATE
@@ -1210,7 +1211,7 @@ I can't resist. The sentence above "Great. All that with just a few keystrokes y
 
 Back then we were serving this profession and we offered them this product. Of course, I had to prove that it worked, and the climax of the show was when I demonstrated the capability of defining complex macros triggered by just a few words. Those words could have been made up. The machine would learn this "word".
 
-A lawyer, after having produced his text, will have to save his legal document, printed for his client, the opposing party, the attorney, the court, maybe several consultants and witnesses. And maybe he will also use his new acquisition, the fax machine, which was the latest technical equipment of the time. So the term I coined for this complex operation was "fax it up". And of course, it worked.
+A lawyer, after having produced his text, will have to save his legal document, printed for his client, the opposing party, the attorney, the court, maybe several consultants and witnesses. And maybe he will also use his new acquisition, the fax machine, which was the latest technical equipment of the time. So the term I coined for this complex operation was "fax it off". And of course, it worked.
 
 I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I did work with Windows Speech Recognition for a long time as well, using Windows for my mother tongue and DragonDictate for English, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
 
@@ -1423,7 +1424,7 @@ But the synchronizing script tells me otherwise:
 
     docker@boot2docker:/path_to_your_script$ ./mysql_rsync_yaws.sh
         =========================================== 2018-02-28_22:50:23
-    41: " -------- flush tables lock tables" DATE
+    41: " -------- FLUSH TABLES LOCK TABLES WRITE" DATE
     48: " -------- rsync datm dat1"
     sending incremental file list
     cmp_ex_sm#P#p6.MYD
@@ -1452,7 +1453,7 @@ But the synchronizing script tells me otherwise:
     total size is 4,469,961,199  speedup is 23.24
         =========================================== 2018-02-28_22:50:32
     59: " -------- SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1"
-    66: " unlock tables flush tables"
+    66: " UNLOCK TABLES FLUSH TABLES"
         =========================================== 2018-02-28_22:50:35
     75: " -------- done" DATE
     ---------------------------------------------- time taken 12 seconds
@@ -1549,6 +1550,9 @@ for a totally different directory: `path_to_your_script`. Numerous times I have 
 
 I don't find anything. Now I remember. `diff` was one of the candidates which were not good. It was something with `md5`. 
 
+Comparing files -- digression
+----------
+
 And here I have it: `md5sum`, and it is contained in a script named `mysql_cmp.sh`.  I have written the script a couple of days ago and I can't remember. I guess this is the result of having done something with utmost satisfaction, when as a result the mind puts things at rest.
 
 This script compares all the files and takes action if the `md5sum` of files which should be equal is different. 
@@ -1559,12 +1563,38 @@ Obviously, the supervising script writing the trigger file will be called much m
 
 If the trigger file is empty, no action is taken at all. So this script only knows about slaves, not about files which are different. This is what the script tries to find out.
 
- 
+To this end, the script takes all data files one by one. For each file, the master is called to flush that table and lock it for write. Then the same is done with each slave, so that we should have comparable conditions. And then the data files of the master and the slave in question are compared.
 
+Then the lock on the slave is relieved, the next slave is done the same way, and then the master releases the lock on this table to repeat the whole process for the next table.
 
+This way, write table locks are minimized in contrast to the rsync method, where all tables are locked for writing on the master as long as the whole process takes.
 
+The function doing the actual compare job is defined like this:
 
-End of digression.
+    # we check master file
+    chk_master=$(sudo md5sum $datm/ci4/$2.MYD | awk -F" " '{print $1}')
+    # we check slave file
+    chk_slave=$(sudo md5sum /d/data/slave$no/ci4/$2.MYD | awk -F" " '{print $1}')
+
+In case these 2 expressions are different, the master file is copied to the slave file.
+
+What about using this mechanism to shed light on this enigmatic situation?
+
+    docker@boot2docker:/mnt/sda1/tmp$ sudo md5sum /d/data/master/ci4/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
+    1e17b1d93fb117bc8f0408259e4433e3
+    docker@boot2docker:/mnt/sda1/tmp$ sudo md5sum /d/data/slave1/ci4/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
+    896cffca7c7252ef1b043ecfa1137a5e
+
+Well, it looks like these files are indeed different. So the conclusion here should be to start with a clean setup which can be achieved either way. The slaves take care of errors. Monitor this action and write a trigger file in case of an error. Then regularly check if there are triggers, and take action.
+
+I think there is room for one improvement. In case the next error occurs, I will have a closer look to the error message. If the error message tells me which table has problems, I could immediately take action on this table without checking all the others. To this end I have to see the error message because I have to extract the table name from that string.
+
+Or ask Google: [MariaDB Error Codes](https://mariadb.com/kb/en/library/mariadb-error-codes/). There are seem to be 2 types of error messages which may apply here:
+
+    1004	HY000	ER_CANT_CREATE_FILE	Can't create file '%s' (errno: %d)
+    1005	HY000	ER_CANT_CREATE_TABLE	Can't create table '%s' (errno: %d)
+
+It shouldn't be too hard to get the table name from this information. End of digression.
 
 Why roll your own, revisited
 ----------
