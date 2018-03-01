@@ -1723,6 +1723,32 @@ Interesting enough, you can see when I was asleep or at least didn't change any 
 
 In case I have to find a clean checkout, I simply check out different revisions by jumping in this list and picking the one in the middle until I have what I want. This procedure is very fast and guaranteed to succeed.
 
+Automatic boot2docker setup -- digression
+----------
+
+One more thing that I had been struggling with very long until I found a good solution. If you work with boot2docker, you will lose all data which is not saved at some safe place. In particular, crontab data is lost. Of course, data in the `tmp` directory is lost as well, but that's to be expected.
+
+There is one place where you can manipulate the startup behavior:
+
+    /var/lib/boot2docker/profile
+
+It is very inconvenient to manipulate this file directly, so I just call another script from my `path_to_your_script` directory called `up.sh` where I put all my instructions.
+
+    # /var/lib/boot2docker/profile
+    #!/bin/sh
+    
+    if [ ! -d "/c" ]; then
+        mkdir /c
+        mount /dev/sda1 /c
+        /bin/sh /path_to_your_script/up.sh
+    else
+        /bin/sh /path_to_your_script/docker_stop.sh
+    fi
+
+This script is called at shutdown also and will make sure that the whole setup is shutdown cleanly. In particular the database engine may not like to be suddenly killed. This way you're safe.
+
+In starting, the script `up.sh` will call another script which populates the crontab file based on a template. So whenever I change something on my crontab, in order to make it permanent, I have to change the crontab template accordingly. But that's it.
+
 End of digression.
 
 Why roll your own, revisited
