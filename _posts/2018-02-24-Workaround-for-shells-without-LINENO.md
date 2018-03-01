@@ -97,7 +97,9 @@ Always bear in mind that I can only talk from my own experience, which is limite
 
 Another caveat: As I took my notes while developing my ideas, I recorded all detours as well and didn't hesitate to document my stupidity. It is a question if all of these dumb attempts should have been cleared later. But even if you pursue the wrong way, you do learn a lot nevertheless. 
 
-Contemplating about it, I decided to leave all that in place.
+Contemplating about it, I decided to leave all that in place. It makes you look much smarter if you present a solution in a way that nobody can understand how you ever could reach it. This attitude is well known. But if you want to learn how to get to a solution, you have to study how this can be done from scratch.
+
+
 
 More complex cases <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
