@@ -1524,14 +1524,16 @@ Same procedure for the second slave:
 
 or, more compact:
 
-    docker@boot2docker:/mnt/sda1/tmp$ docker exec m1 mysql -e 'SELECT id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6' && docker exec s1 mysql -e 'SELECT id_ex, ca_tmstmp FROM
-    ci4.cmp_ex_sitemap WHERE id_ex = 6' && docker exec s2 mysql -e 'SELECT id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6'
-    id_ex   ca_tmstmp
-    6       2018-03-01 00:10:56
-    id_ex   ca_tmstmp
-    6       2018-03-01 00:10:56
-    id_ex   ca_tmstmp
-    6       2018-03-01 00:10:56
+
+    $ docker exec m1 mysql -e "SELECT 'm1', id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6" && \
+      docker exec s1 mysql -e "SELECT 's1', id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6" && \
+      docker exec s2 mysql -e "SELECT 's2', id_ex, ca_tmstmp FROM ci4.cmp_ex_sitemap WHERE id_ex = 6"
+    m1      id_ex   ca_tmstmp
+    m1      6       2018-03-01 00:10:56
+    s1      id_ex   ca_tmstmp
+    s1      6       2018-03-01 00:10:56
+    s2      id_ex   ca_tmstmp
+    s2      6       2018-03-01 00:10:56
 
 Well, this is perfect, isn't it? Why does rsync think otherwise? 
 
