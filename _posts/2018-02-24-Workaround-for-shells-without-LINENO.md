@@ -900,7 +900,7 @@ A line like this
 
     echo_line_no ": log_echo_line_no :$log_echo_line_no:" 
 
-will trigger this error (Caveat No. 1). Change to
+will trigger this error (<a href="#caveats-table-of-content">Caveat No. 1</a>). Change to
 
     echo_line_no "something very unique: log_echo_line_no :$log_echo_line_no:" 
 
