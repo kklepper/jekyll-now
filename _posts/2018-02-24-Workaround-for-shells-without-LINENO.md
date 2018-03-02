@@ -498,7 +498,7 @@ Oh yes, of course.
 
 When I encountered this error the first time it took quite a while for me to understand. Google was my first reach for help as usual, but everybody said: the error message tells it all. This didn't help me much.
 
-With a primary key as the only unique key, things may be easier to understand, but I happened to tackle a table with an additional unique key and had to comprehend that every unique key has to be changed accordingly. 
+With a primary key as the only unique key, things may be easier to understand, but I happened to tackle a table with an additional unique key and had to comprehend that **every unique key** has to be changed accordingly. 
 
 The fix is easily done in any case:
 
