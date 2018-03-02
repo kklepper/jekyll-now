@@ -193,7 +193,7 @@ Create a script defining the function only. This script is to be included in the
         # for variables, test only for stuff before $VARTOKEN 
     
         case "$1" in
-            *:* ) echo $1 | awk -F':'  '{print "     >>>>>> variable substitution (at most 4):" $2 ":"$3 ":" $4 ":"$5 ":" $6 ":"$7 ":" $8 ":"$9 ":"}' | tee -a $log_echo_line_no ;;
+            *:* ) echo $1 | awk -F':'  '{print "    >>>>>> variable substitution (at most 4):" $2 ":"$3 ":" $4 ":"$5 ":" $6 ":"$7 ":" $8 ":"$9 ":"}' | tee -a $log_echo_line_no ;;
             # that's really primitive -- most probably there is a much more elegant solution without any restriction         
             * )  ;;
         esac
@@ -302,66 +302,28 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
 Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-1. Example 1: Remember, all the magic stems from `grep`. Make sure each input string is significantly different to any other line in the script, as this is the token for `grep` -- otherwise you get more than that single line you want to see.
+1. **Example 1**: Remember, all the magic stems from `grep`. Make sure each input string is significantly different to any other line in the script, as this is the token for `grep` -- otherwise you get more than that single line you want to see.
 
-2. Example 2 shows how important quotes are for the argument to the function -- try it without quotes to see the effect (`echo_line_no "$1"` vs. `echo_line_no $1`). Without quotes, only the first word is the trigger which will find 2 lines on each call here, so you get 4 results instead of 2, which will most likely be confusing.
+2. **Example 2** shows how important quotes are for the argument to the function -- try it without quotes to see the effect (`echo_line_no "$1"` vs. `echo_line_no $1`). Without quotes, only the first word is the trigger which will find 2 lines on each call here, so you get 4 results instead of 2, which will most likely be confusing.
 
-3. Example 3: For multi-line strings, this constraint of uniqueness applies to the first line only as `grep` is line oriented -- the argument however has more than one line, so grep will fail and you see nothing unless we cut off everything after the first line. Consequently you will not see the other lines in the output, but that may not be really bad unless you need the information therein; if this is a problem, consider putting the information you need into the first line.
+3. **Example 3**: For multi-line strings, this constraint of uniqueness applies to the first line only as `grep` is line oriented -- the argument however has more than one line, so grep will fail and you see nothing unless we cut off everything after the first line. Consequently you will not see the other lines in the output, but that may not be really bad unless you need the information therein; if this is a problem, consider putting the information you need into the first line.
 
-4. Examples 4 and 5: For the use of variables, this constraint of uniqueness applies to the part up to the token character `VARTOKEN` (here `:`) used to enclose these (which is a good idea anyway to see if a variable is empty, see example) -- reason: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the code has to stop here as well. Add another `VARTOKEN` just before the variables, then we can list them correctly with name and value. The implementation it is absolutely primitive and restricts the number of variables to 4; rewrite as desired. In bash, we could use arrays, but we don't have them, sorry. 
+4. **Examples 4 and 5**: For the use of variables, this constraint of uniqueness applies to the part up to the token character `VARTOKEN` (here `:`) used to enclose these (which is a good idea anyway to see if a variable is empty, see example) -- reason: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the code has to stop here as well. Add another `VARTOKEN` just before the variables, then we can list them correctly with name and value. The implementation it is absolutely primitive and restricts the number of variables to 4; rewrite as desired. In bash, we could use arrays, but we don't have them, sorry. 
 
-5. Example 6: If you only give a quoted variable as argument, you will not get the line number of the "comment" but the line number of the `definition of the variable` instead -- which may be exactly what you want as this information is hard to find otherwise. The first two show said variables `FOO` and `BAZ´ from examples 4 and 5, the next 2 assignments show the lines of definition of the same variable `msg` defined at different places with different values.
+5. **Example 6**: If you only give a quoted variable as argument, you will not get the line number of the "comment" but the line number of the `definition of the variable` instead -- which may be exactly what you want as this information is hard to find otherwise. The first two show said variables `FOO` and `BAZ´ from examples 4 and 5, the next 2 assignments show the lines of definition of the same variable `msg` defined at different places with different values.
 
 6. You can use `echo_line_no` from inside a function. In contrast to bash there is no way to get the function name via system variable due to the same restrictions. No problem, you can always hardcode, as demonstrated here; you have to hardcode the call to `echo_line_no` there anyway. But there is more to the use within functions:
 
-   a. Example 7: If the function argument does not contain a variable, the function shows the line number of the function call, like with variables. That's kind of a trace function, you see which line has called your function -- again something most valuable and hard to get otherwise. The line of the call within the function would be useless anyway.
+   a. **Example 7**: If the function argument does not contain a variable, the function shows the line number of the function call, like with variables. That's kind of a trace function, you see which line has called your function -- again something most valuable and hard to get otherwise. The line of the call within the function would be useless anyway.
 
-   b. Example 8: If it does contain a variable and this variable is not masked by `VARTOKEN`, the whole line is not shown at all, as `grep` must fail due to variable substitution; in order to compensate this, call `echo_line_no` also for the variable itself to get the line number, as demonstrated.
+   b. **Example 8**: If it does contain a variable and this variable is not masked by `VARTOKEN`, the whole line is not shown at all, as `grep` must fail due to variable substitution; in order to compensate this, call `echo_line_no` also for the variable itself to get the line number, as demonstrated.
 
-   c. Example 9: If you do use `VARTOKEN`, the line number is shown as in the 3rd function example; this example also shows that inside the function quotes are crucial as well due to the same reason (`echo_line_no "$1"`), but in special cases you may even be interested in other places your first word appears (try it without quotes to see the result). Also, if a comment repeats the trigger, it will be shown, too, that's why the comment inside this function has been crafted carefully to not fall into this trap. You will notice anyway and know what to do, if it happens by chance. In order to get everything formatted nicely, add an additional `$VARTOKEN` before the first usage as shown in examples 4 and 5.
+   c. **Example 9**: If you do use `VARTOKEN`, the line number is shown as in the 3rd function example; this example also shows that inside the function quotes are crucial as well due to the same reason (`echo_line_no "$1"`), but in special cases you may even be interested in other places your first word appears (try it without quotes to see the result). Also, if a comment repeats the trigger, it will be shown, too, that's why the comment inside this function has been crafted carefully to not fall into this trap. You will notice anyway and know what to do, if it happens by chance. In order to get everything formatted nicely, add an additional `$VARTOKEN` before the first usage as shown in examples 4 and 5.
 
 Logging <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-You may even write a protocol for later inspection or tracking the performance of the working script. To this end simply add the appropriate instruction to your function, e.g. 
-
-    | tee -a /tmp/echo_line_no.log
-
-like so:
-
-    grep -n "$input" $0 |  sed "s/echo_line_no//g" | tee -a /tmp/echo_line_no.log
-
-The log file in this case -- no surprise -- looks like
-
-    $ tail -f -n 60 /tmp/echo_line_no.log
-    16   "this is a simple comment with a line number"
-    18   "ok for me"
-    20   "ok for you"
-    24   "this is a multiline comment, will be cut off at new line
-    29   "this is another simple comment with line number and variable FOO enclosed :$FOO:"
-    27  FOO=bar
-    14  msg='a simple message'
-    37  msg='another simple message'
-    43  whatsup "hey"
-    11       "this was from inside function whatsup, argument :$1:, line number is call line"
-    11       "this was from inside function whatsup, argument :$1:, line number is call line"
-    45  buddy=joe
-    53  whatsup "hi my dear buddy :$buddy:"
-    11       "this was from inside function whatsup, argument :$1:, line number is call line"
-
-This approach is quick and easy, but not good enough. I need to log to different log files, so I'd like to add a switch to define the log file name -- if given -- instead of a fixed log file for all use cases no matter what. 
-
-To implement this feature, first change the function script as follows:
-
-    if [ -n $log_echo_line_no ]
-    then
-        grep -n "$input" $0 |  sed "s/echo_line_no//g"  | tee -a $log_echo_line_no 
-    else
-        grep -n "$input" $0 |  sed "s/echo_line_no//g" 
-    fi
-    # log_echo_line_no may be defined in calling script 
-
-Next in your file to be debugged (here `test_echo_line_no.sh`), add the instruction
+You may even write a protocol for later inspection or tracking the performance of the working script. You simply define a variable `log_echo_line_no` in your script which holds the name of the log file 
 
     log_echo_line_no=/tmp/test_echo_line_no.log 
 
