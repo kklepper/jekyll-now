@@ -126,27 +126,40 @@ Use the enhanced version instead:
 The result for the enhanced version using the test script `test_echo_line_no.sh` (see below) is:
 
     $ /path_to_your_script/test_echo_line_no.sh
-    16   "this is a simple comment with a line number"
-    18   "ok for me"
-    20   "ok for you"
-    -- without quotes (grep "$1") will filter for "ok" only, giving too many (multiple) results
-    24   "this is a multiline comment, will be cut off at new line
-    29   "this is another simple comment with line number and variable FOO enclosed :$FOO:"
-    27  FOO=bar
-    -- you can always show the value of a variable and the line it is defined
-    14  msg='a simple message'
-    37  msg='another simple message'
-    -- simple call inside function will try to filter for the argument
-    ==:hey:====== argument given to function whatsup ========
-    43  whatsup "hey"
-    11       "this was from inside function whatsup, argument :$1:, line number is call line"
-    -- without VARTOKEN results in not showing anything
-    ==:howdy joe:====== argument given to function whatsup ========
-    11       "this was from inside function whatsup, argument :$1:, line number is call line"
-    45  buddy=joe
-    ==:hi my dear buddy :joe::====== argument given to function whatsup ========
-    53  whatsup "hi my dear buddy :$buddy:"
-    11       "this was from inside function whatsup, argument :$1:, line number is call line"
+
+
+        -- simple comment
+    24: "this is a simple comment with a line number"
+    
+        -- without quotes (grep "$1") will filter for "ok" only, giving too many (multiple) results
+    29: "ok for me"
+    31: "ok for you"
+    
+        -- multiline comment
+    36: "this is a multiline comment, will be cut off at new line
+    
+        -- variable substitution
+         >>>>>> variable substitution (at most 4): FOO :bar:::::::
+    46: "this is another simple comment with line number and variable: FOO :$FOO:"
+    
+        -- variable substitution, 2 variables
+         >>>>>> variable substitution (at most 4): FOO :bar: BAZ :42:::::
+    51: "this is another simple comment with line number and 2 variables: FOO :$FOO: BAZ :$BAZ:"
+    
+        -- show the value of a variable plus the line it is defined
+    39:FOO=bar
+    41:BAZ=42
+    18:msg='a simple message'
+    62:msg='another simple message'
+    
+        -- simple call inside function without variable
+    69:whatsup "hey"
+    
+        -- with variable and without VARTOKEN results in not showing at all
+    
+        -- with variable and with VARTOKEN
+         >>>>>> variable substitution (at most 4): buddy :joe:::::::
+    81:whatsup "hi my dear: buddy :$buddy:"
 
 How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -154,18 +167,30 @@ How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of C
 Create a script defining the function only. This script is to be included in the real script to be debugged:
 
     #!/bin/ash
-    #FILE=/path_to_your_script/echo_line_no.sh  
+    #FILE=echo_line_no.sh  
     
-    echo_line_no () {
-    #echo "--echo_line_no input :$1:--"
+    function echo_line_no () {
+    #echo "--echo_line_no input -0- :$0: -1- :$1: -2- :$2:"
     # to see what is coming in
         input=$1
         NL='
     '
         input=${input%%"$NL"*}
+        # for multiline strings cut off rest
         VARTOKEN=:
         input=${input%%$VARTOKEN*}
-        grep -n "$input" $0 |  sed "s/echo_line_no//g" 
+        # for variables, test only for stuff before $VARTOKEN 
+    
+        case "$1" in
+            *:* ) echo $1 | awk -F':'  '{print "     >>>>>> variable substitution (at most 4):" $2 ":"$3 ":" $4 ":"$5 ":" $6 ":"$7 ":" $8 ":"$9 ":"}' | tee -a $log_echo_line_no ;;
+            # that's really primitive -- most probably there is a much more elegant solution without any restriction         
+            * )  ;;
+        esac
+        
+    #    grep -n "$input" $0 | sed "s/echo_line_no//g" | tee -a $log_echo_line_no
+    # can be done with grep alone, but cat adds spaces after line numbers, looks much nicer 
+        cat -n $0 | grep "$input" | sed "s/echo_line_no//g" | tee -a $log_echo_line_no
+        # if $log_echo_line_no is not defined, there is no error here
     } # echo_line_no
 
 Include this script into your working script (which you want to debug) via `source` call 
@@ -177,75 +202,99 @@ In consequence, you can use the function `echo_line_no` in your testing script a
 Here is the script used for testing the functionality of `echo_line_no` whose output was shown above:
 
     #!/bin/ash
-    #FILE=/path_to_your_script/test_echo_line_no.sh  
+    #FILE=test_echo_line_no.sh   
     
-    source /path_to_your_script/echo_line_no.sh
+    log_echo_line_no=/tmp/test_echo_line_no.log 
+    echo > $log_echo_line_no
+    
+    source /c/bak/echo_line_no.sh
     
     function whatsup {
-    echo "    ==:$1:====== argument given to function whatsup ========"
+    #echo "    debug ==:$1:====== argument given to function whatsup ========"
+    # to see what we get
         echo_line_no "$1"
         # quotes are crucial -- otherwise 'hi my ...' 
         # would give all lines with "hi" like "this is...."  
-        echo_line_no "this was from inside function whatsup, argument :$1:, line number is call line"
+    #    echo_line_no "this was from inside function whatsup, argument $1, line number is call line"
     } # whatsup 
     
     msg='a simple message'
     
-    echo_line_no "this is a simple comment with a line number"
+    echo '
+    
+        -- simple comment'
+    
+    echo_line_no "this is a simple comment with a line number" 
+    
+    echo '
+        -- without quotes (grep "$1") will filter for "ok" only, giving too many (multiple) results'
     
     echo_line_no "ok for me"
     
     echo_line_no "ok for you"
     
-    echo '    -- without quotes (grep "$1") will filter for "ok" only, giving too many (multiple) results'
+    echo '
+        -- multiline comment'
     
     echo_line_no "this is a multiline comment, will be cut off at new line
     second line of comment with a line number"
     
     FOO=bar
     
-    echo_line_no "this is another simple comment with line number and variable FOO enclosed :$FOO:"
+    BAZ=42
     
-    echo_line_no "$FOO"
+    echo '
+        -- variable substitution'
     
-    # you might omit the quotes here because the variable contains no blanks
-
-    echo '    -- you can always show the value of a variable and the line it is defined'
+    echo_line_no "this is another simple comment with line number and variable: FOO :$FOO:"
+    
+    echo '
+        -- variable substitution, 2 variables'
+    
+    echo_line_no "this is another simple comment with line number and 2 variables: FOO :$FOO: BAZ :$BAZ:"
+    
+    echo '
+        -- show the value of a variable plus the line it is defined'
+    
+    echo_line_no $FOO
+    
+    echo_line_no $BAZ
     
     echo_line_no "$msg"
     
-    # mind the quotes -- the variable contains blanks
-    
     msg='another simple message'
     
-    # mind the quotes -- the variable contains blanks
+    echo_line_no "$msg"
     
-    echo "    -- simple call inside function will try to filter for the argument"
+    echo '
+        -- simple call inside function without variable'  
     
     whatsup "hey"
     
     buddy=joe
     
-    echo "    -- without VARTOKEN results in not showing at all"
+    echo '
+        -- with variable and without VARTOKEN results in not showing at all'
     
     whatsup "howdy $buddy"
     
-    echo_line_no "$buddy"
+    echo '
+        -- with variable and with VARTOKEN'
     
-    whatsup "hi my dear buddy :$buddy:"
+    whatsup "hi my dear: buddy :$buddy:"
 
 Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 1. Remember, all the magic stems from `grep`. Make sure each input string is significantly different to any other line in the script, as this is the token for `grep` -- otherwise you get more than that single line you want to see.
 
-2. Examples 2 and 3 show how important quotes are for the argument to the function -- try it without quotes to see the effect (`echo_line_no "$1"`). Without quotes, only the first word is the trigger which will find 2 lines on each call here, so you get 4 results instead of 2, which will most likely be confusing.
+2. Examples 2 and 3 show how important quotes are for the argument to the function -- try it without quotes to see the effect (`echo_line_no "$1"` vs. `echo_line_no $1`). Without quotes, only the first word is the trigger which will find 2 lines on each call here, so you get 4 results instead of 2, which will most likely be confusing.
 
 3. For multi-line strings, this constraint of uniqueness applies to the first line only as `grep` is line oriented -- the argument however has more than one line, so grep will fail and you see nothing unless we cut off everything after the first line. Consequently you will not see the other lines in the output, but that may not be really bad unless you need the information therein; if this is a problem, consider putting the information you need into the first line.
 
-4. For the use of variables, this constraint of uniqueness applies to the part up to the token character `VARTOKEN` (here `:`) used to enclose these (which is a good idea anyway to see if a variable is empty, see example) -- reason: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the code has to stop here as well. This is no real problem as you can always use `echo_line_no` on the variable itself to get the line number where it is called (see next example). 
+4. For the use of variables, this constraint of uniqueness applies to the part up to the token character `VARTOKEN` (here `:`) used to enclose these (which is a good idea anyway to see if a variable is empty, see example) -- reason: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the code has to stop here as well. Add another `VARTOKEN` just before the variables, then we can list them. 
 
-5. For the next 3 examples, you will not get the line number of the comment, but the line number of the definition of the variable instead -- which may be exactly what you want as this information is hard to find otherwise. The first one shows said variable missing from the function call (example 4), the next 2 assignments show the lines of definition of the same variable defined at different places with different values.
+5. For the next 4 examples, you will not get the line number of the comment, but the line number of the definition of the variable instead -- which may be exactly what you want as this information is hard to find otherwise. The first one shows said variable missing from the function call (example 4), the next 2 assignments show the lines of definition of the same variable defined at different places with different values.
 
 6. You can use `echo_line_no` from inside a function, but in contrast to bash there is no way to get the function name via system variable due to the same restrictions. No problem, you can always hardcode, as demonstrated here; you have to hardcode the call to `echo_line_no` there anyway. But there is more to the use within functions:
 
@@ -1774,7 +1823,7 @@ In case I have screwed things up somewhere along the lines without noticing and 
 Digression: Automatic boot2docker setup <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-One more thing that I had been struggling with very long until I found a good solution: If you work with boot2docker, at reboot you will lose all data which is not saved at some safe place. In particular, crontab data is lost. Of course, data in the `tmp` directory is lost as well, but that's to be expected and rather nice.
+One more thing that I had been struggling with very long until I found a good solution: If you work with boot2docker, at reboot you will lose all data which is not saved at some safe place. In particular, crontab data and the home directory `/home/docker` is lost. Of course, data in the `tmp` directory is lost as well, but that's to be expected and rather nice.
 
 There is one place where you can manipulate the startup behavior:
 
