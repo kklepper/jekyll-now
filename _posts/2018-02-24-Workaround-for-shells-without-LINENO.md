@@ -1198,7 +1198,9 @@ Here are some other snippets I use often:
     ::mms1::docker exec -it s1 mysql ci4                  ; start mysql session on slave 1
     ::mms2::docker exec -it s2 mysql ci4                  ; start mysql session on slave 2 
 
-You see it costs me next to nothing to call `SHOW WARNINGS;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I use AHK to define something new.
+You see it costs me next to nothing to call `SHOW WARNINGS;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I use AHK to define something new. My latest addition is
+
+    ::ell::echo_line_no ""
 
 The best are more complex commands which really do good work. For example, I placed a command to the Windows key plus o (denoted in AHK lingo: #o) to immediately jump to the function definition in my file, when the cursor is placed on the function name. 
 
