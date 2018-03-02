@@ -877,7 +877,7 @@ To implement this, add the first snippet to the top of `echo_line_no.sh`,
         DATETAKEN=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%Y-%m-%d_%H:%M:%S")
     } # get_date 
 
-the second snippet has to be put inside the function `echo_line_no`.
+The second snippet has to be put inside the function `echo_line_no`.
 
     if [[ ! -z "$2" && "$2" == "DATE" ]] 
     then
