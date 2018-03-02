@@ -120,7 +120,9 @@ Use the enhanced version instead:
         VARTOKEN=:
         input=${input%%$VARTOKEN*}
         # for variables: cut off everything before $VARTOKEN
-        grep -n "$input" $0 |  sed "s/echo_line_no//g" 
+    #    grep -n "$input" $0 | sed "s/echo_line_no//g" 
+    # can be done with grep alone, but cat adds spaces after line numbers, looks much nicer 
+        cat -n $0 | grep "$input" | sed "s/echo_line_no//g"
     } # echo_line_no
 
 The result for the enhanced version using the test script `test_echo_line_no.sh` (see below) is:
@@ -214,9 +216,6 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     #!/bin/ash
     #FILE=test_echo_line_no.sh   
     
-    log_echo_line_no=/tmp/test_echo_line_no.log 
-    echo > $log_echo_line_no
-    
     source /c/bak/echo_line_no.sh
     
     function whatsup {
@@ -231,12 +230,13 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     msg='a simple message'
     
     echo '
-    
+    example 1:
         -- simple comment'
     
     echo_line_no "this is a simple comment with a line number" 
     
     echo '
+    example 2:
         -- without quotes (grep "$1") will filter for "ok" only, giving too many (multiple) results'
     
     echo_line_no "ok for me"
@@ -244,6 +244,7 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     echo_line_no "ok for you"
     
     echo '
+    example 3:
         -- multiline comment'
     
     echo_line_no "this is a multiline comment, will be cut off at new line
@@ -254,21 +255,24 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     BAZ=42
     
     echo '
+    example 4:
         -- variable substitution'
     
     echo_line_no "this is another simple comment with line number and variable: FOO :$FOO:"
     
     echo '
+    example 5:
         -- variable substitution, 2 variables'
     
     echo_line_no "this is another simple comment with line number and 2 variables: FOO :$FOO: BAZ :$BAZ:"
     
     echo '
+    example 6:
         -- show the value of a variable plus the line it is defined'
     
-    echo_line_no $FOO
+    echo_line_no "$FOO"
     
-    echo_line_no $BAZ
+    echo_line_no "$BAZ"
     
     echo_line_no "$msg"
     
@@ -277,6 +281,7 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     echo_line_no "$msg"
     
     echo '
+    example 7:
         -- simple call inside function without variable'  
     
     whatsup "hey"
@@ -284,11 +289,13 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     buddy=joe
     
     echo '
+    example 8:
         -- with variable and without VARTOKEN results in not showing at all'
     
     whatsup "howdy $buddy"
     
     echo '
+    example 9:
         -- with variable and with VARTOKEN'
     
     whatsup "hi my dear: buddy :$buddy:"
