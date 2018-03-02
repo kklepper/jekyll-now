@@ -882,14 +882,14 @@ the second snippet has to be put inside the function `echo_line_no`.
     if [[ ! -z "$2" && "$2" == "DATE" ]] 
     then
         get_date
-        echo "    =========================================== $DATETAKEN "
+        echo "    =========================================== $DATETAKEN " | tee -a $log_echo_line_no
     fi
 
 And while we are at it, please insert the following snippet as well which guards you from showing the whole source file:
 
     if [[ -z $input ]]
     then
-        echo "!!!!!!!!!!!! no input :$input: parameter given :$1:" 
+        echo "!!!!!!!!!!!! no input :$input: parameter given :$1:" | tee -a $log_echo_line_no
         exit
     fi 
 
