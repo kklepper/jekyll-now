@@ -179,7 +179,7 @@ How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of C
 Create a script defining the function only. This script is to be included in the real script to be debugged:
 
     #!/bin/ash
-    #FILE=echo_line_no.sh  
+    FILE=echo_line_no.sh  
     
     function echo_line_no () {
     #echo "--echo_line_no input -0- :$0: -1- :$1: -2- :$2:"
@@ -214,7 +214,7 @@ In consequence, you can use the function `echo_line_no` in your testing script a
 Here is the script used for testing the functionality of `echo_line_no` whose output was shown above:
 
     #!/bin/ash
-    #FILE=test_echo_line_no.sh   
+    FILE=test_echo_line_no.sh   
     
     source /c/bak/echo_line_no.sh
     
@@ -1844,7 +1844,7 @@ This script is called at shutdown also and the `else` part will make sure that t
 In starting, the script `up.sh` will call the script `cron_build.sh` which populates the crontab file based on the template `cron.sh`. 
 
     #!/bin/ash
-    #FILE=/path_to_your_script/cron_build.sh
+    FILE=/path_to_your_script/cron_build.sh
     # we call this at startup via /mnt/sda1/var/lib/boot2docker/profile & /path_to_your_script/up.sh
     
     while read LINE
@@ -1923,7 +1923,7 @@ The output is even readable when those processes are intertwined:
         >>>>>>> : == GOOD!!! ID_EX :359: =================== used :29: secs
         =========DATE======== :2018-03-02_22:02:11:
     
-You also see that it is important to know which script is doing what; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`.
+You also see that it is important to know which script is doing what; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`, given by the variable `FILE` defined by habit at the top of the script.
 
 Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
 
