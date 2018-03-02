@@ -1204,7 +1204,7 @@ The best are more complex commands which really do good work. For example, I pla
 
 Likewise, #k will produce a list of all the function calls of that function. #j will produce a list with all the lines containing the word the cursor happens to be placed on. And so on. The limit is only your imagination. These are real productivity boosts; to achieve this by typing you would have to type a couple of keystrokes and combinations of those again and again. 
 
-Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I have to look up what the right shortcut is as I forgot. It's important to define shortcuts you can easily remember under all circumstances.
+Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I have to look up what the right shortcut is as I forgot due to scarce usage. It's important to define shortcuts you can easily remember under all circumstances.
 
 Another nifty command I use regularly reads like this:
 
