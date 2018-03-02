@@ -1898,7 +1898,7 @@ The contributions to this page so far are nearly 5 years old now. They have show
 
 I reorganized one of my old scripts to see if everything works as expected. The result is beautiful, much better than all of these echoes I used before.
 
-    docker@boot2docker:/mnt/sda1/tmp$ nohup /path_to_your_script/tsm3.sh "6" &
+    docker@boot2docker:/mnt/sda1/tmp$ nohup /path_to_your_script/tsm3.sh "6" </dev/null &>/dev/null &
         78       "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:
         >>>>>>> : ==do== ID_EX :6: FILE :tsmst.sh: Date :2018-03-02_22:00:51:
         >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/paggen/6?srt=1&d=1&bak=1&lg=en":
@@ -1908,7 +1908,7 @@ I reorganized one of my old scripts to see if everything works as expected. The 
         
 The output is even readable when those processes are intertwined:
 
-    docker@boot2docker:/mnt/sda1/tmp$ nohup /path_to_your_script/tsm3.sh "6 359" &
+    docker@boot2docker:/mnt/sda1/tmp$ nohup /path_to_your_script/tsm3.sh "6 359" </dev/null &>/dev/null &
         78       "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:
         >>>>>>> : ==do== ID_EX :6: FILE :tsmst.sh: Date :2018-03-02_22:01:37:
         >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/paggen/6?srt=1&d=1&bak=1&lg=en":
