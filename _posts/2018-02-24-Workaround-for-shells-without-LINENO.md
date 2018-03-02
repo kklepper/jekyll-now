@@ -1925,8 +1925,6 @@ The output is even readable when those processes are intertwined:
         97           "== GOOD!!! :$ID_EX: ID_EX =================== used :$USED: secs " DATE
         >>>>>>> : == GOOD!!! :359: ID_EX =================== used :33: secs
         =========DATE======== :2018-03-02_21:34:13:
-        >>>>>>> : == GOOD!!! =================== used :1102: secs
-        =========DATE======== :2018-03-02_21:39:24:
 
 You also see that it is important to know which script is doing the work; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`.
 
