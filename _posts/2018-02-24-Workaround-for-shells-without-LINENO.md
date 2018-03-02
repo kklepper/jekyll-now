@@ -321,7 +321,7 @@ Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Cont
 
    6.3. **Example 9**: If you do use `VARTOKEN`, the line number is shown as in the 3rd function example; this example also shows that inside the function quotes are crucial as well due to the same reason (`echo_line_no "$1"`), but in special cases you may even be interested in other places your first word appears (try it without quotes to see the result). Also, if a comment repeats the trigger, it will be shown, too, that's why the comment inside this function has been crafted carefully to not fall into this trap. You will notice anyway and know what to do, if it happens by chance. 
 
-7. If you like to use -- as I do -- `-` or `--` or `---------` as part of your parameter, you will have a problem, as grep will interpret this `-` as token for a parameter for grep and will fail and complain. Take something else.
+7. If you are like me and like to use `-` or `--` or `---------` as part of your parameter, you will have a problem, as grep will interpret this `-` as token for a parameter for grep and will fail and complain. Take something else.
 
 Logging <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
