@@ -154,7 +154,7 @@ How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of C
 Create a script defining the function only. This script is to be included in the real script to be debugged:
 
     #!/bin/ash
-    #/path_to_your_script/echo_line_no.sh  
+    #FILE=/path_to_your_script/echo_line_no.sh  
     
     echo_line_no () {
     #echo "--echo_line_no input :$1:--"
@@ -177,7 +177,7 @@ In consequence, you can use the function `echo_line_no` in your testing script a
 Here is the script used for testing the functionality of `echo_line_no` whose output was shown above:
 
     #!/bin/ash
-    #/path_to_your_script/test_echo_line_no.sh  
+    #FILE=/path_to_your_script/test_echo_line_no.sh  
     
     source /path_to_your_script/echo_line_no.sh
     
@@ -1153,9 +1153,8 @@ For example, this is the command which is executed automatically via PuTTY Confi
 
 This script reads:
 
-    #/path_to_your_script/mysql_start.sh
-    
     #!/bin/sh
+    #FILE=/path_to_your_script/mysql_start.sh
     
     DB=$1
     
@@ -1799,7 +1798,7 @@ This script is called at shutdown also and the `else` part will make sure that t
 In starting, the script `up.sh` will call the script `cron_build.sh` which populates the crontab file based on the template `cron.sh`. 
 
     #!/bin/ash
-    # /path_to_your_script/cron_build.sh
+    #FILE=/path_to_your_script/cron_build.sh
     # we call this at startup via /mnt/sda1/var/lib/boot2docker/profile & /path_to_your_script/up.sh
     
     while read LINE
