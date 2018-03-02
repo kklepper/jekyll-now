@@ -48,7 +48,7 @@ Workaround for shells without LINENO <span style="font-size: 11px;float: right;"
 Define a function
 
     echo_line_no () {
-        grep -n "$1" $0 |  sed "s/echo_line_no//g" 
+        grep -n "$1" $0 |  sed "s/echo_line_no//" 
         # grep the line(s) containing input $1 with line numbers
         # replace the function name with nothing 
     } # echo_line_no
@@ -120,9 +120,9 @@ Use the enhanced version instead:
         VARTOKEN=:
         input=${input%%$VARTOKEN*}
         # for variables: cut off everything before $VARTOKEN
-    #    grep -n "$input" $0 | sed "s/echo_line_no//g" 
+    #    grep -n "$input" $0 | sed "s/echo_line_no//" 
     # can be done with grep alone, but cat adds spaces after line numbers, looks much nicer 
-        cat -n $0 | grep "$input" | sed "s/echo_line_no//g"
+        cat -n $0 | grep "$input" | sed "s/echo_line_no//"
     } # echo_line_no
 
 The result for the enhanced version using the test script `test_echo_line_no.sh` (see below) is:
@@ -202,9 +202,9 @@ Create a script defining the function only. This script is to be included in the
             * )  ;;
         esac
         
-    #    grep -n "$input" $0 | sed "s/echo_line_no//g" | tee -a $log_echo_line_no
+    #    grep -n "$input" $0 | sed "s/echo_line_no//" | tee -a $log_echo_line_no
     # can be done with grep alone, but cat adds spaces after line numbers, looks much nicer 
-        cat -n $0 | grep "$input" | sed "s/echo_line_no//g" | tee -a $log_echo_line_no
+        cat -n $0 | grep "$input" | sed "s/echo_line_no//" | tee -a $log_echo_line_no
         # if $log_echo_line_no is not defined, there is no error here
     } # echo_line_no
 
