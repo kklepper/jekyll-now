@@ -779,7 +779,9 @@ To see where things get wrong, I issued the following (concatenating 2 simple SQ
 
 Maybe it is time now to write a bug report. 
 
-Better not. The magical number 18446744073709551615 is 2^64-1 and the maximum of an unsigned big int. That's why! 
+Better not. 
+
+The magical number 18446744073709551615 is 2^64-1 and the maximum of an unsigned big int. That's why! 
 
 I never hit that number before. 
 
