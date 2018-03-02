@@ -170,8 +170,8 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     
     example 9:
         -- with variable and with VARTOKEN
-        86  whatsup "hi my dear: buddy :$buddy:"
-        >>>>>> variable substitution: hi my dear: buddy :joe:
+        86  whatsup "hi my dear buddy :$buddy:"
+        >>>>>> variable substitution: hi my dear buddy :joe:
 
 How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -298,7 +298,7 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     example 9:
         -- with variable and with VARTOKEN'
     
-    whatsup "hi my dear: buddy :$buddy:"
+    whatsup "hi my dear buddy :$buddy:"
 
 Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -1895,6 +1895,15 @@ You see, I haven't tested this approach under heavy conditions because unfortuna
 I finally found this page via Google "shell script display line numbers -diff -tail"; the term "shell script display line numbers -bash -diff -tail" which I used before obviously missed this entry. 
 
 The contributions to this page so far are nearly 5 years old now. They have shown me that there is no solution for my problem except I create one myself, which I did.
+
+I reorganized one of my old scripts to see if everything works as expected. The result is beautiful, much better than all of these echoes I used before.
+
+    docker@boot2docker:/mnt/sda1/tmp$ /path_to_your_script/tsmst.sh 6 en 1
+        78       "==do== Date :$DATE: = ID_EX :$ID_EX: FILE :$FILE: CMD :curl -N -s \"$CMD\":"
+        >>>>>>> : ==do== Date :2018-03-02_18:26:03: = ID_EX :6: FILE :tsmst.sh: CMD :curl -N -s "localhost:8010/pages/generate/6?rrr=1&del=1&bak=1&lg=en":
+        96           "== GOOD!!! =================== used :$USED: secs " DATE
+        >>>>>>> : == GOOD!!! =================== used :18: secs
+        =========DATE======== :2018-03-02_18:26:21:
 
 Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
 
