@@ -896,6 +896,14 @@ And while we are at it, please insert the following snippet as well which guards
         exit
     fi 
 
+A line like this 
+
+    echo_line_no ": log_echo_line_no :$log_echo_line_no:" 
+
+will trigger this error. Change to
+
+    echo_line_no "var : log_echo_line_no :$log_echo_line_no:" 
+
 This is the `rsync` synchronizing script:
 
     #!/bin/sh
