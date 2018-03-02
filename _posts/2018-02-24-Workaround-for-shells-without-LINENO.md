@@ -1923,7 +1923,7 @@ The output is even readable when those processes are intertwined:
         >>>>>>> : == GOOD!!! ID_EX :359: =================== used :29: secs
         =========DATE======== :2018-03-02_22:02:11:
     
-You also see that it is important to know which script is doing the work; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`.
+You also see that it is important to know which script is doing what; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`.
 
 Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
 
