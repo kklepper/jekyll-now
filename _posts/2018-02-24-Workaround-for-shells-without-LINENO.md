@@ -307,9 +307,9 @@ Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Cont
 
 2. **Example 2** shows how important quotes are for the argument to the function -- try it without quotes to see the effect (`echo_line_no "$1"` vs. `echo_line_no $1`). Without quotes, only the first word is the trigger which will find 2 lines on each call here, so you get 4 results instead of 2, which will most likely be confusing.
 
-3. **Example 3**: For multi-line strings, this constraint of uniqueness applies to the first line only as `grep` is line oriented -- the argument however has more than one line, so grep will fail and you see nothing unless we cut off everything after the first line. Consequently you will not see the other lines in the output, but that may not be really bad unless you need the information therein; if this is a problem, consider putting the information you need into the first line.
+3. **Example 3**: For multi-line strings, this constraint of uniqueness applies to the first line only as `grep` is line oriented -- the argument however has more than one line, so grep will fail and you see nothing unless we cut off everything after the first line. Consequently you will not see the other lines in the output, but that may not be really bad unless you need the information therein; if this is a problem, consider putting the information you need into the first line or add the token character for variables `VARTOKEN` (I prefer `:`) here.
 
-4. **Examples 4 and 5**: For the use of variables, this constraint of uniqueness applies to the part up to the token character `VARTOKEN` (here `:`) used to enclose these (which is a good idea anyway to see if a variable is empty, see example) -- reason: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the code has to stop here as well. Instead, we show the variables in the next line with the prefix `>>>>>> variable substitution`. 
+4. **Examples 4 and 5**: For the use of variables, this constraint of uniqueness applies to the part up to `VARTOKEN` used to enclose these (which is a good idea anyway to see if a variable is empty, see example) -- reason: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the code has to stop here as well. Instead, we show the variables in the next line with the prefix `>>>>>> variable substitution`. 
 
 5. **Example 6**: If you only give a quoted variable as argument, you will not get the line number of the "comment" but the line number of the `definition of the variable` instead -- which may be exactly what you want as this information is hard to find otherwise. The first two show said variables `FOO` and `BAZ´ from examples 4 and 5, the next 2 assignments show the lines of definition of the same variable `msg` defined at different places with different values.
 
@@ -1899,11 +1899,11 @@ The contributions to this page so far are nearly 5 years old now. They have show
 I reorganized one of my old scripts to see if everything works as expected. The result is beautiful, much better than all of these echoes I used before.
 
     docker@boot2docker:/mnt/sda1/tmp$ /path_to_your_script/tsmst.sh 6 en 1
-        78       "==do== Date :$DATE: = ID_EX :$ID_EX: FILE :$FILE: CMD :curl -N -s \"$CMD\":"
-        >>>>>>> : ==do== Date :2018-03-02_18:26:03: = ID_EX :6: FILE :tsmst.sh: CMD :curl -N -s "localhost:8010/pages/generate/6?rrr=1&del=1&bak=1&lg=en":
-        96           "== GOOD!!! =================== used :$USED: secs " DATE
-        >>>>>>> : == GOOD!!! =================== used :18: secs
-        =========DATE======== :2018-03-02_18:26:21:
+        78       "==do== Date :$DATE: = ID_EX :$ID_EX: FILE :$FILE:
+        >>>>>>> : ==do== Date :2018-03-02_18:44:44: = ID_EX :6: FILE :tsmst.sh:
+        >>>>>>> : ==do== CMD :curl -N -s "localhost:8010/pages/generate/6?rrr=1&del=1&bak=1&lg=en":
+        97           "== GOOD!!! =================== used :$USED: secs " DATE
+        >>>>>>> : == GOOD!!! =================== used :19: secs
 
 Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
 
