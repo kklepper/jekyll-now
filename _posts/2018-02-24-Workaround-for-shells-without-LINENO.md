@@ -193,7 +193,10 @@ Create a script defining the function only. This script is to be included in the
         # for variables, test only for stuff before $VARTOKEN 
     
         case "$1" in
-            *:* ) echo $1 | awk -F':'  '{print "    >>>>>> variable substitution (at most 4):" $2 ":"$3 ":" $4 ":"$5 ":" $6 ":"$7 ":" $8 ":"$9 ":"}' | tee -a $log_echo_line_no ;;
+            *:* ) echo $1 | awk -F':'  '{print "    >>>>>> variable substitution (at most 8):"\
+            $2 ":"$3 ":" $4 ":"$5 ":" $6 ":"$7 ":" $8 ":"$9 ":"\
+            $10 ":"$11 ":" $12 ":"$13 ":" $14 ":"$15 ":" $16 ":"$17 ":"\
+            }' | tee -a $log_echo_line_no ;;
             # that's really primitive -- most probably there is a much more elegant solution without any restriction         
             * )  ;;
         esac
