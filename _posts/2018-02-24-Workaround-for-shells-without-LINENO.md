@@ -1900,10 +1900,11 @@ I reorganized one of my old scripts to see if everything works as expected. The 
 
     docker@boot2docker:/mnt/sda1/tmp$ /path_to_your_script/tsmst.sh 6 en 1
         78       "==do== Date :$DATE: = ID_EX :$ID_EX: FILE :$FILE:
-        >>>>>>> : ==do== Date :2018-03-02_18:44:44: = ID_EX :6: FILE :tsmst.sh:
+        >>>>>>> : ==do== Date :2018-03-02_19:10:03: = ID_EX :6: FILE :tsmst.sh:
         >>>>>>> : ==do== CMD :curl -N -s "localhost:8010/pages/generate/6?rrr=1&del=1&bak=1&lg=en":
         97           "== GOOD!!! =================== used :$USED: secs " DATE
-        >>>>>>> : == GOOD!!! =================== used :19: secs
+        >>>>>>> : == GOOD!!! =================== used :20: secs
+        =========DATE======== :2018-03-02_19:10:23:
 
 Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
 
