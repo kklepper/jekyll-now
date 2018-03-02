@@ -126,40 +126,50 @@ Use the enhanced version instead:
 The result for the enhanced version using the test script `test_echo_line_no.sh` (see below) is:
 
     $ /path_to_your_script/test_echo_line_no.sh
-
-
+    
+    
+    example 1:
         -- simple comment
-    24: "this is a simple comment with a line number"
+        24   "this is a simple comment with a line number"
     
+    example 2:
         -- without quotes (grep "$1") will filter for "ok" only, giving too many (multiple) results
-    29: "ok for me"
-    31: "ok for you"
+        30   "ok for me"
+        32   "ok for you"
     
+    example 3:
         -- multiline comment
-    36: "this is a multiline comment, will be cut off at new line
+        38   "this is a multiline comment, will be cut off at new line
     
+    example 4:
         -- variable substitution
          >>>>>> variable substitution (at most 4): FOO :bar:::::::
-    46: "this is another simple comment with line number and variable: FOO :$FOO:"
+        49   "this is another simple comment with line number and variable: FOO :$FOO:"
     
+    example 5:
         -- variable substitution, 2 variables
          >>>>>> variable substitution (at most 4): FOO :bar: BAZ :42:::::
-    51: "this is another simple comment with line number and 2 variables: FOO :$FOO: BAZ :$BAZ:"
+        55   "this is another simple comment with line number and 2 variables: FOO :$FOO: BAZ :$BAZ:"
     
+    example 6:
         -- show the value of a variable plus the line it is defined
-    39:FOO=bar
-    41:BAZ=42
-    18:msg='a simple message'
-    62:msg='another simple message'
+        41  FOO=bar
+        42
+        43  BAZ=42
+        18  msg='a simple message'
+        67  msg='another simple message'
     
+    example 7:
         -- simple call inside function without variable
-    69:whatsup "hey"
+        75  whatsup "hey"
     
+    example 8:
         -- with variable and without VARTOKEN results in not showing at all
     
+    example 9:
         -- with variable and with VARTOKEN
          >>>>>> variable substitution (at most 4): buddy :joe:::::::
-    81:whatsup "hi my dear: buddy :$buddy:"
+        89  whatsup "hi my dear: buddy :$buddy:"
 
 How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
