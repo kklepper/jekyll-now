@@ -1899,12 +1899,13 @@ The contributions to this page so far are nearly 5 years old now. They have show
 I reorganized one of my old scripts to see if everything works as expected. The result is beautiful, much better than all of these echoes I used before.
 
     docker@boot2docker:/mnt/sda1/tmp$ /path_to_your_script/tsmst.sh 6 en 1
-        78       "==do== Date :$DATE: = ID_EX :$ID_EX: FILE :$FILE:
-        >>>>>>> : ==do== Date :2018-03-02_19:10:03: = ID_EX :6: FILE :tsmst.sh:
-        >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/pag_gen/6?rst=1&dl=1&bak=1&lg=en":
-        97           "== GOOD!!! =================== used :$USED: secs " DATE
-        >>>>>>> : == GOOD!!! =================== used :20: secs
-        =========DATE======== :2018-03-02_19:10:23:
+    78       "==do== :$ID_EX: ID_EX :$FILE: FILE :$DATE:
+    79      >>>>>>> : ==do== CMD :curl -N -s \"$CMD\":"
+    >>>>>>> : ==do== :6: ID_EX :tsmst.sh: FILE :2018-03-02_21:33:35:
+    >>>>>>> : ==do== CMD :curl -N -s "localhost:8010/pages/generate/6?rrr=1&del=1&bak=1&lg=en":
+    97           "== GOOD!!! :$ID_EX: ID_EX =================== used :$USED: secs " DATE
+    >>>>>>> : == GOOD!!! :6: ID_EX =================== used :21: secs
+    =========DATE======== :2018-03-02_21:33:56:
 
 Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
 
