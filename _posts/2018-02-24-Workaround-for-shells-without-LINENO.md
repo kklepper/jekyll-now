@@ -196,13 +196,13 @@ Create a script defining the function only. This script is to be included in the
         #    grep -n "$input" $0 | sed "s/echo_line_no//" | tee -a $log_echo_line_no
         # can be done with grep alone, but cat adds spaces after line numbers, looks much nicer 
         
-            cat -n $0 | grep "$input" | sed "s/echo_line_no//" | tee -a $log_echo_line_no
-            # if $log_echo_line_no is not defined, there is no error here
+        cat -n $0 | grep "$input" | sed "s/echo_line_no//" | tee -a $log_echo_line_no
+        # if $log_echo_line_no is not defined, there is no error here
         
-            case "$1" in
-                *$VARTOKEN* ) echo "    >>>>>> variable substitution$VARTOKEN $1" | tee -a $log_echo_line_no ;;
-                * )  ;;
-            esac
+        case "$1" in
+            *$VARTOKEN* ) echo "    >>>>>> variable substitution$VARTOKEN $1" | tee -a $log_echo_line_no ;;
+            * )  ;;
+        esac
     } # echo_line_no
 
 Include this script into your working script (which you want to debug) via `source` call 
