@@ -129,6 +129,7 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
 
     $ /path_to_your_script/test_echo_line_no.sh
     
+    
     example 1:
         -- simple comment
         21   "this is a simple comment with a line number"
@@ -144,13 +145,13 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     
     example 4:
         -- variable substitution
-         >>>>>> variable substitution (at most 8): FOO :bar:::::::::::::::
         46   "this is another simple comment with line number and variable: FOO :$FOO:"
+        >>>>>> variable substitution: this is another simple comment with line number and variable: FOO :bar:
     
     example 5:
         -- variable substitution, 2 variables
-         >>>>>> variable substitution (at most 8): FOO :bar: BAZ :42:::::::::::::
         52   "this is another simple comment with line number and 2 variables: FOO :$FOO: BAZ :$BAZ:"
+        >>>>>> variable substitution: this is another simple comment with line number and 2 variables: FOO :bar: BAZ :42:
     
     example 6:
         -- show the value of a variable plus the line it is defined
@@ -169,8 +170,8 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     
     example 9:
         -- with variable and with VARTOKEN
-         >>>>>> variable substitution (at most 8): buddy :joe:::::::::::::::
         86  whatsup "hi my dear: buddy :$buddy:"
+        >>>>>> variable substitution: hi my dear: buddy :joe:
 
 How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -191,21 +192,17 @@ Create a script defining the function only. This script is to be included in the
         VARTOKEN=:
         input=${input%%$VARTOKEN*}
         # for variables, test only for stuff before $VARTOKEN 
-    
-        case "$1" in
-            *:* ) echo $1 | awk -F':'  '{print "    >>>>>> variable substitution (at most 8):"\
-            $2 ":"$3 ":" $4 ":"$5 ":" $6 ":"$7 ":" $8 ":"$9 ":"\
-            $10 ":"$11 ":" $12 ":"$13 ":" $14 ":"$15 ":" $16 ":"$17 ":"\
-            }' | tee -a $log_echo_line_no ;;
-            # that's really primitive -- most probably there is a much more elegant solution
-            # without any restriction and maybe nicer formatting         
-            * )  ;;
-        esac
+       
+        #    grep -n "$input" $0 | sed "s/echo_line_no//" | tee -a $log_echo_line_no
+        # can be done with grep alone, but cat adds spaces after line numbers, looks much nicer 
         
-    #    grep -n "$input" $0 | sed "s/echo_line_no//" | tee -a $log_echo_line_no
-    # can be done with grep alone, but cat adds spaces after line numbers, looks much nicer 
-        cat -n $0 | grep "$input" | sed "s/echo_line_no//" | tee -a $log_echo_line_no
-        # if $log_echo_line_no is not defined, there is no error here
+            cat -n $0 | grep "$input" | sed "s/echo_line_no//" | tee -a $log_echo_line_no
+            # if $log_echo_line_no is not defined, there is no error here
+        
+            case "$1" in
+                *$VARTOKEN* ) echo "    >>>>>> variable substitution$VARTOKEN $1" | tee -a $log_echo_line_no ;;
+                * )  ;;
+            esac
     } # echo_line_no
 
 Include this script into your working script (which you want to debug) via `source` call 
@@ -312,7 +309,7 @@ Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Cont
 
 3. **Example 3**: For multi-line strings, this constraint of uniqueness applies to the first line only as `grep` is line oriented -- the argument however has more than one line, so grep will fail and you see nothing unless we cut off everything after the first line. Consequently you will not see the other lines in the output, but that may not be really bad unless you need the information therein; if this is a problem, consider putting the information you need into the first line.
 
-4. **Examples 4 and 5**: For the use of variables, this constraint of uniqueness applies to the part up to the token character `VARTOKEN` (here `:`) used to enclose these (which is a good idea anyway to see if a variable is empty, see example) -- reason: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the code has to stop here as well. Add another `VARTOKEN` just before the variables, then we can list them correctly with name and value. The implementation it is absolutely primitive and restricts the number of variables to 4; rewrite as desired. In bash, we could use arrays, but we don't have them, sorry. 
+4. **Examples 4 and 5**: For the use of variables, this constraint of uniqueness applies to the part up to the token character `VARTOKEN` (here `:`) used to enclose these (which is a good idea anyway to see if a variable is empty, see example) -- reason: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the code has to stop here as well. Instead, we show the variables in the next line with the prefix `>>>>>> variable substitution`. 
 
 5. **Example 6**: If you only give a quoted variable as argument, you will not get the line number of the "comment" but the line number of the `definition of the variable` instead -- which may be exactly what you want as this information is hard to find otherwise. The first two show said variables `FOO` and `BAZ´ from examples 4 and 5, the next 2 assignments show the lines of definition of the same variable `msg` defined at different places with different values.
 
