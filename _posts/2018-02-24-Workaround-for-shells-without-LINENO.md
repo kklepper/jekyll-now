@@ -144,12 +144,12 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     
     example 4:
         -- variable substitution
-         >>>>>> variable substitution (at most 4): FOO :bar:::::::
+         >>>>>> variable substitution (at most 8): FOO :bar:::::::::::::::
         46   "this is another simple comment with line number and variable: FOO :$FOO:"
     
     example 5:
         -- variable substitution, 2 variables
-         >>>>>> variable substitution (at most 4): FOO :bar: BAZ :42:::::
+         >>>>>> variable substitution (at most 8): FOO :bar: BAZ :42:::::::::::::
         52   "this is another simple comment with line number and 2 variables: FOO :$FOO: BAZ :$BAZ:"
     
     example 6:
@@ -169,7 +169,7 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     
     example 9:
         -- with variable and with VARTOKEN
-         >>>>>> variable substitution (at most 4): buddy :joe:::::::
+         >>>>>> variable substitution (at most 8): buddy :joe:::::::::::::::
         86  whatsup "hi my dear: buddy :$buddy:"
 
 How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
@@ -197,7 +197,8 @@ Create a script defining the function only. This script is to be included in the
             $2 ":"$3 ":" $4 ":"$5 ":" $6 ":"$7 ":" $8 ":"$9 ":"\
             $10 ":"$11 ":" $12 ":"$13 ":" $14 ":"$15 ":" $16 ":"$17 ":"\
             }' | tee -a $log_echo_line_no ;;
-            # that's really primitive -- most probably there is a much more elegant solution without any restriction         
+            # that's really primitive -- most probably there is a much more elegant solution
+            # without any restriction and maybe nicer formatting         
             * )  ;;
         esac
         
@@ -886,6 +887,14 @@ the second snippet has to be put inside the function `echo_line_no`.
         get_date
         echo "    =========================================== $DATETAKEN "
     fi
+
+And while we are at it, please insert the following snippet as well which guards you from showing the whole source file:
+
+    if [[ -z $input ]]
+    then
+        echo "!!!!!!!!!!!! no input :$input: parameter given :$1:" 
+        exit
+    fi 
 
 This is the `rsync` synchronizing script:
 
