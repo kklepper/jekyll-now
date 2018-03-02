@@ -1899,33 +1899,30 @@ The contributions to this page so far are nearly 5 years old now. They have show
 I reorganized one of my old scripts to see if everything works as expected. The result is beautiful, much better than all of these echoes I used before.
 
     docker@boot2docker:/mnt/sda1/tmp$ nohup /path_to_your_script/tsm3.sh "6" &
-        78       "==do== :$ID_EX: ID_EX :$FILE: FILE :$DATE:
-        79      >>>>>>> : ==do== CMD :curl -N -s \"$CMD\":"
-        >>>>>>> : ==do== :6: ID_EX :tsmst.sh: FILE :2018-03-02_21:33:35:
+        78       "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:
+        >>>>>>> : ==do== ID_EX :6: FILE :tsmst.sh: Date :2018-03-02_22:00:51:
         >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/paggen/6?srt=1&d=1&bak=1&lg=en":
-        97           "== GOOD!!! :$ID_EX: ID_EX =================== used :$USED: secs " DATE
-        >>>>>>> : == GOOD!!! :6: ID_EX =================== used :21: secs
-        =========DATE======== :2018-03-02_21:33:56:
-    
+        97           "== GOOD!!! ID_EX :$ID_EX: =================== used :$USED: secs " DATE
+        >>>>>>> : == GOOD!!! ID_EX :6: =================== used :19: secs
+        =========DATE======== :2018-03-02_22:01:10:
+        
 The output is even readable when those processes are intertwined:
 
     docker@boot2docker:/mnt/sda1/tmp$ nohup /path_to_your_script/tsm3.sh "6 359" &
-        78       "==do== :$ID_EX: ID_EX :$FILE: FILE :$DATE:
-        79      >>>>>>> : ==do== CMD :curl -N -s \"$CMD\":"
-        >>>>>>> : ==do== :6: ID_EX :tsmst.sh: FILE :2018-03-02_21:33:35:
+        78       "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:
+        >>>>>>> : ==do== ID_EX :6: FILE :tsmst.sh: Date :2018-03-02_22:01:37:
         >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/paggen/6?srt=1&d=1&bak=1&lg=en":
     
-        78       "==do== :$ID_EX: ID_EX :$FILE: FILE :$DATE:
-        79      >>>>>>> : ==do== CMD :curl -N -s \"$CMD\":"
-        >>>>>>> : ==do== :359: ID_EX :tsmst.sh: FILE :2018-03-02_21:33:40:
+        78       "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:
+        >>>>>>> : ==do== ID_EX :359: FILE :tsmst.sh: Date :2018-03-02_22:01:42:
         >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/paggen/359?srt=1&d=1&bak=1&lg=en":
-        97           "== GOOD!!! :$ID_EX: ID_EX =================== used :$USED: secs " DATE
-        >>>>>>> : == GOOD!!! :6: ID_EX =================== used :21: secs
-        =========DATE======== :2018-03-02_21:33:56:
-        97           "== GOOD!!! :$ID_EX: ID_EX =================== used :$USED: secs " DATE
-        >>>>>>> : == GOOD!!! :359: ID_EX =================== used :33: secs
-        =========DATE======== :2018-03-02_21:34:13:
-
+        97           "== GOOD!!! ID_EX :$ID_EX: =================== used :$USED: secs " DATE
+        >>>>>>> : == GOOD!!! ID_EX :6: =================== used :18: secs
+        =========DATE======== :2018-03-02_22:01:55:
+        97           "== GOOD!!! ID_EX :$ID_EX: =================== used :$USED: secs " DATE
+        >>>>>>> : == GOOD!!! ID_EX :359: =================== used :29: secs
+        =========DATE======== :2018-03-02_22:02:11:
+    
 You also see that it is important to know which script is doing the work; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`.
 
 Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
