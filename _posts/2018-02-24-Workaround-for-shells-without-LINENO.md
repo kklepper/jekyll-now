@@ -34,6 +34,7 @@ published: true
 > - [Digression: Speech recognition](#digression-speech-recognition-table-of-content)
 > - [Digression: WSR vs. DragonDictate](#digression-wsr-vs-dragondictate-table-of-content)
 > - [Digression: Dictation workflow](#digression-dictation-workflow-table-of-content)
+> - [Digression: AHK magic](#digression-ahk-magic-table-of-content)
 > - [Digression: Key trouble](#digression-key-trouble-table-of-content)
 > - [Digression: Pronunciation](#digression-pronunciation-table-of-content)
 > - [Digression: Hello computer](#digression-hello-computer-table-of-content)
@@ -1299,9 +1300,27 @@ Windows Speech Recognition works equally fine, although it uses other terms to n
 
 DragonDictate, for instance, if you say one word only, because you're still thinking about the rest of the sentence, will search all tabs in your application for this word in order to switch to that tab. It took me a long time to understand what's happening here. It's really annoying if your machine all of a sudden does something which you didn't expect and cannot understand.
 
-At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than a few characters, I'll switch to DragonDictate. 
+At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than a few characters, I'll switch to DragonDictate. That's one of the reasons why I would never be happy to use Linux as a desktop system.  
 
-That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. Windows Speech Recognition is toggled with `F9`; `F10` will copy all content in the open program to the one opened before. 
+Digression: Dictation workflow <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+Speech recognition programs don't work equally well with every other program. That's why they have a special simple text input program, a dictation pad.
+
+I don't use those. I use [Flashnote](http://softvoile.com/flashnote/) instead for dictation input. This tool has a hotkey to be called to front, which I set to `F7`. So this is my workflow: I am in my document and see something to be improved. If it is a simple addition, I click `F7`. If I have to change something, I mark this, copy to the clipboard (my keyboard has a special key for this), switch with `F7` to Flashnote and insert the clipboard content, again with another special key of my keyboard.
+
+Next I choose the appropriate speech recognition engine via `Pause` or `F9`. I do my work, and when I'm done, I may put the speech recognition engine to sleep or not, but in any case I transfer my work with `F10` to the application I was working on before. That's really convenient and I have produced huge amounts of text in both languages this way.
+
+If in the meantime you have changed to another program, like I did right now to find the URL of Flashnote, you better first switch back to the program you want the text to be inserted. So the workflow now I is `F7 F10`. `F7` to get back to Flashnote, `F10` to transfer the text. Which is what I will do right now.
+
+Of course you can dictate in many programs directly, and I do that as well. The problem with Windows Speech Recognition is, that it starts always in caps mode except when it should start in caps mode, and I don't know how to flip that behavior. DragonDictate on the other hand always starts in small letter case, so that is easier to compensate by saying `Caps on` before dictating.
+
+Also, it is next to impossible to correct the speech engine in these programs; instead you get a long sequence of keystroke instructions or something else which screws things up. A better way to cope with correcting is to just mark part of the text and then dictate anew. That's a workaround for Windows Speech Recognition as well: start your marketing with a word which is capitalized anyway.
+
+Digression: AHK magic <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. Windows Speech Recognition is toggled with `F9`; `F10` will copy all content in the open program to the one opened before. 
 
 This is again AHK magic. 
 
@@ -1341,21 +1360,6 @@ If there is a program who uses these keys, you can exclude them.
     	SendInput, {LWin up}
     	SendInput, {Ctrl up}
     }
-
-Digression: Dictation workflow <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
-----------
-
-Speech recognition programs don't work equally well with every other program. That's why they have a special simple text input program, a dictation pad.
-
-I don't use those. I use [Flashnote](http://softvoile.com/flashnote/) instead for dictation input. This tool has a hotkey to be called to front, which I set to `F7`. So this is my workflow: I am in my document and see something to be improved. If it is a simple addition, I click `F7`. If I have to change something, I mark this, copy to the clipboard (my keyboard has a special key for this), switch with `F7` to Flashnote and insert the clipboard content, again with another special key of my keyboard.
-
-Next I choose the appropriate speech recognition engine via `Pause` or `F9`. I do my work, and when I'm done, I may put the speech recognition engine to sleep or not, but in any case I transfer my work with `F10` to the application I was working on before. That's really convenient and I have produced huge amounts of text in both languages this way.
-
-If in the meantime you have changed to another program, like I did right now to find the URL of Flashnote, you better first switch back to the program you want the text to be inserted. So the workflow now I is `F7 F10`. `F7` to get back to Flashnote, `F10` to transfer the text. Which is what I will do right now.
-
-Of course you can dictate in many programs directly, and I do that as well. The problem with Windows Speech Recognition is, that it starts always in caps mode except when it should start in caps mode, and I don't know how to flip that behavior. DragonDictate on the other hand always starts in small letter case, so that is easier to compensate by saying `Caps on` before dictating.
-
-Also, it is next to impossible to correct the speech engine in these programs; instead you get a long sequence of keystroke instructions or something else which screws things up. A better way to cope with correcting is to just mark part of the text and then dictate anew. That's a workaround for Windows Speech Recognition as well: start your marketing with a word which is capitalized anyway.
 
 Digression: Key trouble <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
