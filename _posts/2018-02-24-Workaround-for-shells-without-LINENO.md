@@ -1366,11 +1366,11 @@ This looks a little bit funny; I defined a function here because this function i
 Digression: Key trouble <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Right now I have found a solution for a problem that bugged me for years. I told you that I use the key `F9` to toggle Windows Speech Recognition. Quite frequently, I experienced PSPad to freeze also. It took me quite a while to find out that, although I didn't want that, Windows Speech Recognition had been turned on, and as a consequence, PSPad totally froze. I had to kill it.
+Right now I have found a solution for a problem that bugged me for years. And the reason is that described in detail my workflow and that I use the key `F9` to toggle Windows Speech Recognition. Quite frequently, I experienced PSPad to freeze. It took me quite a while to find out that, although I didn't want that, Windows Speech Recognition had been turned on, and as a consequence, PSPad totally froze. I had to kill both.
 
-I communicated with the creator of PSPad about that phenomenon, but he didn't have a clue. So finally I decided to no longer use Windows Speech Recognition and toggle DragonDictate instead. That's okay if I work for a long time in one of these languages, but if I have to switch very often, that's really no longer acceptable. And right now, working on this text, that's the case.
+To find out about this coincidence I communicated with the creator of PSPad about that phenomenon, but he didn't have a clue. So finally I decided to no longer use Windows Speech Recognition and toggle DragonDictate instead. That's okay if I work for a long time in one of these languages, but if I have to switch very often, that's really no longer acceptable. And right now, working on this text, that's the case.
 
-So I experienced PSPad turning on Windows Speech Recognition and freezing, so I remembered why I quit using it. Before turning back to the second-best solution, I had an idea. What if it is just the wrong key? Would I get the same phenomenon with another key? So I just redefined AHK to `F8`. The problem is gone.
+So I activated Windows Speech Recognition again and experienced PSPad freezing, so I remembered why I quit using it. Before turning back to the second-best solution, I had an idea. What if it is only the wrong key? Would I get the same phenomenon with another key? So I simply redefined AHK to `F8`. The problem is gone.
 
 What's more, it turned out that I originally had chosen that key `F8` and used it in connection with `F4` to open Dragon DictationBox. Somehow I must have decided that the combination `F9 F10` is much more pleasant than the combination `F8 F10`, which introduced trouble. I'm glad I'm back to smooth operations. Hallelujah!
 
