@@ -1898,7 +1898,16 @@ I finally found this page via Google "shell script display line numbers -diff -t
 
 The contributions to this page so far are nearly 5 years old now. They have shown me that there is no solution for my problem except I create one myself, which I did.
 
-I reorganized one of my old scripts to see if everything works as expected. The result is beautiful, much better than all of these echoes I used before.
+I reorganized one of my old scripts to see if everything works as expected. These are the 2 debugging instructions I inserted in my code:
+
+    echo_line_no "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:  
+    >>>>>>> : ==do== CMD :curl -N -s \"$CMD\":" 
+
+and 
+    
+    echo_line_no "== GOOD!!! ID_EX :$ID_EX: =================== used :$USED: secs " DATE      
+
+The result is beautiful, much better than all of these echoes I used before.
 
     docker@boot2docker:/mnt/sda1/tmp$ nohup /path_to_your_script/tsm3.sh "6" </dev/null &>/dev/null &
         78       "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:
