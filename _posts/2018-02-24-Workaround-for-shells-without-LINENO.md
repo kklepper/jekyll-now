@@ -1322,7 +1322,7 @@ Digression: AHK magic <span style="font-size: 11px;float: right;"><a href="#toc"
 
 My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. Windows Speech Recognition is toggled with `F9`; `F10` will copy all content in the open program to the one opened before. 
 
-This is again AHK magic. 
+This `F9` `F10` is again AHK magic. 
 
     #IfWinNotActive, ahk_class wxWindowNR							; only when not in FlashNote
     F10::
@@ -1360,6 +1360,8 @@ If there is a program who uses these keys, you can exclude them.
     	SendInput, {LWin up}
     	SendInput, {Ctrl up}
     }
+
+This looks a little bit funny; I defined a function here because this function is used in other circumstances as well.
 
 Digression: Key trouble <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
