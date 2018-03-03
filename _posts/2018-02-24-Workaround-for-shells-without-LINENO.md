@@ -1380,7 +1380,38 @@ Well, cheered too soon! It turned out that the freezing is triggered by one of t
     Send ^f!l 
     return
 
-Which looks innocent enough. It just says: `Ctrl+f`, then `Alt+l`. Let's see if I can reproduce it. Yes, I can. [ProcessExplorer](https://en.wikipedia.org/wiki/Process_Explorer) shows a CPU load of nearly 40% in one of 2 PSPad-Windows I have open right now. This should be the one in trouble. I am correct. Killing this one removes the frozen PSPad instance.
+Which looks innocent enough. It just says: `Ctrl+f`, then `Alt+l`. Let's see if I can reproduce it. Yes, I can. [ProcessExplorer](https://en.wikipedia.org/wiki/Process_Explorer) shows a CPU load of nearly 40% in one of 2 PSPad-Windows I have open right now. This should be the one in trouble. I am correct. Killing this one removes the frozen PSPad instance. It is a PHP file I'm debugging. The other is the markdown file with this text, which is fine.
+
+So this is good. I have a test case. My experience tells me to test if these 2 keystroke combinations are sent too fast. So I changed the AHK code:
+
+    #j::           ; find all and display as list
+    Send ^f
+    Send !l 
+    return
+
+That's almost perfect. The Windows Speech Recognition icon in the taskbar flashes, but PSPad doesn't freeze. I changed the code again:
+
+    #j::           ; find all and display as list
+    Send ^f
+    Sleep 100
+    Send !l 
+    return
+
+Big surprise! This time I get the Windows greeting image immediately and am logged out. What is this? `Win+L` does log me out, but `Alt+L` should not.
+
+Increasing `Sleep` to 200 ms produces the error: I can see very clearly the result of the command `Ctrl+f`, and then the Windows Speech Recognition engine is turned on and I am logged out. So `Sleep` is not the solution.
+
+You may have noticed that I used a very awkward procedure in the function `toggle_wsr` which was necessary due to very similar problems, if I remember correctly. So this is worth a try,
+
+	SetCapsLockState Off	
+	SendInput, {Ctrl down}
+	SendInput, {f}
+	SendInput, {Ctrl up}
+	SendInput, {Alt down}
+	SendInput, {l}
+	SendInput, {Alt up}
+
+Delivers the same result, unfortunately. What to do now? Leave it almost perfect? No. This time PSPad froze again. I guess I just quit Windows Speech Recognition when I switch to with PSPad. Windows Speech Recognition starts relatively fast, so I might have to live with that workaround for now.
 
 Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
