@@ -1324,7 +1324,7 @@ A nice feature of dictating is that it costs nothing to write complicated long w
 
 In that case I switch to [dict.cc](https://www.dict.cc/), look this word up and listen to different speakers. It is amazing how English words can be pronounced as such. I remember, when I was in the USA in the late 60s and had to go to a hardware store to ask for a `gauge`. I had looked up this word in my printed dictionary and couldn't think of how to pronounce this word. The people in the store didn't understand what I wanted until I wrote this word down, when they relieved and pronounced it the way it is pronounced. 
 
-But still many words are pronounced very differently by different speakers. Well, this isn't surprising, it helps true for all languages there are, I guess. That's why the DragonDictate engine asks you if you want to choose the British or American version. If I pick up the pronunciation of an American speaker, as a rule it works perfectly. Too bad that the influence of my British schoolteacher creeps up again and again.
+But still many words are pronounced very differently by different speakers. Well, this isn't surprising, it is true for all languages there are, I guess. That's why the DragonDictate engine asks you if you want to choose the British or American version. If I pick up the pronunciation of an American speaker, as a rule it works perfectly. Too bad that the influence of my British schoolteacher creeps up again and again.
 
 Long words are no problem, small words are. Recently I looked up the pronunciation for `their` and `there `. Surprisingly, all speakers pronounced those words absolutely identical. No chance for a machine. And no chance for me.
 
