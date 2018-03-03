@@ -1330,7 +1330,7 @@ But still many words are pronounced very differently by different speakers. Well
 
 And then there are the words I have no idea how the correct pronunciation might sound. If I didn't have the Internet, I wouldn't know what to do.
 
-Long words are no problem, small words are. Recently I looked up the pronunciation for `their` and `there `. Surprisingly, all speakers pronounced those words absolutely identical. No chance for a machine. And no chance for me.
+Long words are no problem, short words are. Recently I looked up the pronunciation for `their` and `there `. Surprisingly, all speakers pronounced those words absolutely identical. No chance for a machine. And no chance for me.
 
 Digression: Hello computer <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
