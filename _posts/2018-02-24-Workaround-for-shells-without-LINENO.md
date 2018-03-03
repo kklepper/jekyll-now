@@ -1374,6 +1374,14 @@ So I activated Windows Speech Recognition again and experienced PSPad freezing, 
 
 What's more, it turned out that I originally had chosen that key `F8` and used it in connection with `F4` to open Dragon DictationBox. Somehow I must have decided that the combination `F9 F10` is much more pleasant than the combination `F8 F10`, which introduced trouble. I'm glad I'm back to smooth operations. Hallelujah!
 
+Well, cheered too soon! It turned out that the freezing is triggered by one of the AHK keys I have defined, for example
+
+    #j::           ; find all and display as list
+    Send ^f!l 
+    return
+
+Which looks innocent enough. It just says: `Ctrl+f`, then `Alt+l`.
+
 Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
