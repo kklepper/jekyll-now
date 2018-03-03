@@ -34,6 +34,7 @@ published: true
 > - [Digression: Speech recognition](#digression-speech-recognition-table-of-content)
 > - [Digression: WSR vs. DragonDictate](#digression-wsr-vs-dragondictate-table-of-content)
 > - [Digression: Dictation workflow](#digression-dictation-workflow-table-of-content)
+> - [Digression: Key trouble](#digression-key-trouble-table-of-content)
 > - [Digression: Pronunciation](#digression-pronunciation-table-of-content)
 > - [Digression: Hello computer](#digression-hello-computer-table-of-content)
 > - [Digression: Partitioning by day of week](#digression-partitioning-by-day-of-week-table-of-content)
@@ -1300,7 +1301,7 @@ DragonDictate, for instance, if you say one word only, because you're still thin
 
 At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than a few characters, I'll switch to DragonDictate. 
 
-That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. Windows speech recognition is toggled with `F9`; `F10` will copy all content in the open program to the one opened before. 
+That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. Windows Speech Recognition is toggled with `F9`; `F10` will copy all content in the open program to the one opened before. 
 
 This is again AHK magic. 
 
@@ -1352,14 +1353,25 @@ Next I choose the appropriate speech recognition engine via `Pause` or `F9`. I d
 
 If in the meantime you have changed to another program, like I did right now to find the URL of Flashnote, you better first switch back to the program you want the text to be inserted. So the workflow now I is `F7 F10`. `F7` to get back to Flashnote, `F10` to transfer the text. Which is what I will do right now.
 
-Of course you can dictate in many programs directly, and I do that as well. The problem with Windows speech recognition is, that it starts always in caps mode except when it should start in caps mode, and I don't know how to flip that behavior. DragonDictate on the other hand always starts in small letter case, so that is easier to compensate by saying `Caps on` before dictating.
+Of course you can dictate in many programs directly, and I do that as well. The problem with Windows Speech Recognition is, that it starts always in caps mode except when it should start in caps mode, and I don't know how to flip that behavior. DragonDictate on the other hand always starts in small letter case, so that is easier to compensate by saying `Caps on` before dictating.
 
-Also, it is next to impossible to correct the machine in these programs; instead you get a long sequence of keystroke instructions or something else which screws things up. A better way to cope with correcting is to just mark part of the text and then dictate anew. That's a workaround for Windows speech recognition as well: start your marketing with a word which is capitalized anyway.
+Also, it is next to impossible to correct the speech engine in these programs; instead you get a long sequence of keystroke instructions or something else which screws things up. A better way to cope with correcting is to just mark part of the text and then dictate anew. That's a workaround for Windows Speech Recognition as well: start your marketing with a word which is capitalized anyway.
+
+Digression: Key trouble <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+Right now I have found a solution for a problem that bugged me for years. I told you that I use the key `F9` to toggle Windows Speech Recognition. Quite frequently, I experienced PSPad to freeze also. It took me quite a while to find out that, although I didn't want that, Windows Speech Recognition had been turned on, and as a consequence, PSPad totally froze. I had to kill it.
+
+I communicated with the creator of PSPad about that phenomenon, but he didn't have a clue. So finally I decided to no longer use Windows Speech Recognition and toggle DragonDictate instead. That's okay if I work for a long time in one of these languages, but if I have to switch very often, that's really no longer acceptable. And right now, working on this text, that's the case.
+
+So I experienced PSPad turning on Windows Speech Recognition and freezing, so I remembered why I quit using it. Before turning back to the second-best solution, I had an idea. What if it is just the wrong key? Would I get the same phenomenon with another key? So I just redefined AHK to `F8`. The problem is gone.
+
+What's more, it turned out that I originally had chosen that key `F8` and used it in connection with `F4` to open Dragon DictationBox. Somehow I must have decided that the combination `F9 F10` is much more pleasant than the combination `F8 F10`, which introduced trouble. I'm glad I'm back to smooth operations.
 
 Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-A nice feature of dictating is that it costs nothing to write complicated long words like `DragonDictate` or `Windows speech recognition`. I don't have this problem in my mother tongue, but when DragonDictate doesn't understand a word correctly I oftentimes suspect that my pronunciation is wrong.
+A nice feature of dictating is that it costs nothing to write complicated long words like `DragonDictate` or `Windows Speech Recognition`. I don't have this problem in my mother tongue, but when DragonDictate doesn't understand a word correctly I oftentimes suspect that my pronunciation is wrong.
 
 In that case I switch to [dict.cc](https://www.dict.cc/), look up this word and listen to different speakers. It is amazing how English words can be pronounced as such. I still remember the embarrassing situation when I was in the USA in the late 60s and had to go to a hardware store to ask for a `gauge`. 
 
