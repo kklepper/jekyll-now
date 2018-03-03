@@ -1366,7 +1366,7 @@ This looks a little bit funny; I defined a function here because this function i
 Digression: Key trouble <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Right now I have found a solution for a problem that bugged me for years. And the reason is that described in detail my workflow and that I use the key `F9` to toggle Windows Speech Recognition. Quite frequently, I experienced PSPad to freeze. It took me quite a while to find out that, although I didn't want that, Windows Speech Recognition had been turned on, and as a consequence, PSPad totally froze. I had to kill both.
+Right now I have found a solution for a problem that bugged me for years. And the reason is that I described in detail my workflow and that I use the key `F9` to toggle Windows Speech Recognition. Quite frequently, I experienced PSPad to freeze. It took me quite a while to find out that, although I didn't want that, Windows Speech Recognition had been turned on, and as a consequence, PSPad totally froze. I had to kill both.
 
 To find out about this coincidence I communicated with the creator of PSPad about that phenomenon, but he didn't have a clue. So finally I decided to no longer use Windows Speech Recognition and toggle DragonDictate instead. That's okay if I work for a long time in one of these languages, but if I have to switch very often, that's really no longer acceptable. And right now, working on this text, that's the case.
 
