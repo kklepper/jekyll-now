@@ -1821,6 +1821,8 @@ At the end you see the message from pushing the whole stuff to origin or rather 
 
 In case I have screwed things up somewhere along the lines without noticing and have to find the last clean checkout, I simply check out different revisions by jumping in this list and picking the one in the middle until I have what I want. This procedure is very fast and guaranteed to succeed.
 
+Of course, this procedure is possible only because I work alone. I have no experience with teamwork since the 90s, when revision control didn't exist yet. This may change, though, and then I hope to profit from the experience of my collaborators.
+
 Digression: Automatic boot2docker setup <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
