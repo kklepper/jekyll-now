@@ -40,6 +40,8 @@ published: true
 > - [Digression: Automatic boot2docker setup](#digression-automatic-boot2docker-setup-table-of-content)
 - [Why roll your own, revisited](#why-roll-your-own-revisited-table-of-content)
 - [Have fun](#have-fun-table-of-content)
+- [Proof of concept](#proof-of-concept-table-of-content)
+- [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
 
 Workaround for shells without LINENO <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
@@ -1898,6 +1900,9 @@ I finally found this page via Google "shell script display line numbers -diff -t
 
 The contributions to this page so far are nearly 5 years old now. They have shown me that there is no solution for my problem except I create one myself, which I did.
 
+Proof of concept <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
 I reorganized one of my old scripts to see if everything works as expected. These are the 2 debugging instructions I inserted in my code:
 
     echo_line_no "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:  
@@ -1936,7 +1941,10 @@ The output is even readable when those processes are intertwined:
     
 You also see that it is important to know which script is doing what; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`, given by the variable `FILE` defined by habit at the top of the script.
 
-Last but not least this text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
+Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+This text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
 
 As people in times of Docker containers tend to use minimal Linux systems like `Boot2Docker`, `CoreOS` or `Alpine Linux` using `ash` instead of `bash`, most probably there will be more need for a substitute for LINENO. That's the path I have taken. Those 2 MySQL (or rather MariaDB) replication engines run in Docker containers as does the master. The OS is `Boot2Docker` which is based on `Tiny Linux` which in turn is based on `Busybox`. No `bash`, only `ash`.
 
