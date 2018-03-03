@@ -1903,7 +1903,7 @@ I reorganized one of my old scripts to see if everything works as expected. Thes
     echo_line_no "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:  
     >>>>>>> : ==do== CMD :curl -N -s \"$CMD\":" 
 
-and 
+(a multiline comment) and 
     
     echo_line_no "== GOOD!!! ID_EX :$ID_EX: =================== used :$USED: secs " DATE      
 
