@@ -1370,7 +1370,7 @@ Right now I have found a solution for a problem that bugged me for years. And th
 
 To find out about this coincidence I communicated with the creator of PSPad about that phenomenon, but he didn't have a clue. So finally I decided to no longer use Windows Speech Recognition and toggle DragonDictate instead. That's okay if I work for a long time in one of these languages, but if I have to switch very often, that's really no longer acceptable. And right now, working on this text, that's the case.
 
-So I activated Windows Speech Recognition again and experienced PSPad freezing, so I remembered why I quit using it. Before turning back to the second-best solution, I had an idea. What if it is only the wrong key? Would I get the same phenomenon with another key? So I simply redefined AHK to `F8`. The problem is gone.
+So I activated Windows Speech Recognition again and experienced PSPad freezing, which is when I remembered why I quit using it. Before turning back to the second-best solution, I had an idea. What if it is only the wrong key? Would I get the same phenomenon with another key? So I simply redefined AHK to `F8`. The problem is gone.
 
 What's more, it turned out that I originally had chosen that key `F8` and used it in connection with `F4` to open Dragon DictationBox. Somehow I must have decided that the combination `F9 F10` is much more pleasant than the combination `F8 F10`, which introduced trouble. I'm glad I'm back to smooth operations. Hallelujah!
 
