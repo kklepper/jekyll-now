@@ -1372,7 +1372,7 @@ I communicated with the creator of PSPad about that phenomenon, but he didn't ha
 
 So I experienced PSPad turning on Windows Speech Recognition and freezing, so I remembered why I quit using it. Before turning back to the second-best solution, I had an idea. What if it is just the wrong key? Would I get the same phenomenon with another key? So I just redefined AHK to `F8`. The problem is gone.
 
-What's more, it turned out that I originally had chosen that key `F8` and used it in connection with `F4` to open Dragon DictationBox. Somehow I must have decided that the combination `F9 F10` is much more pleasant than the combination `F8 F10`, which introduced trouble. I'm glad I'm back to smooth operations.
+What's more, it turned out that I originally had chosen that key `F8` and used it in connection with `F4` to open Dragon DictationBox. Somehow I must have decided that the combination `F9 F10` is much more pleasant than the combination `F8 F10`, which introduced trouble. I'm glad I'm back to smooth operations. Hallelujah!
 
 Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
