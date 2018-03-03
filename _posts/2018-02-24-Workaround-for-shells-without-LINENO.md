@@ -1300,7 +1300,46 @@ DragonDictate, for instance, if you say one word only, because you're still thin
 
 At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than a few characters, I'll switch to DragonDictate. 
 
-That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. Windows speech recognition is toggled with `F9`; `F10` will copy all content in the open program to the one opened before. This is again AHK magic. If there is a program who uses these keys, you can exclude them.
+That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. Windows speech recognition is toggled with `F9`; `F10` will copy all content in the open program to the one opened before. 
+
+This is again AHK magic. 
+
+    #IfWinNotActive, ahk_class wxWindowNR							; only when not in FlashNote
+    F10::
+    	Sleep 600
+    	Send ^c
+    	Sleep 400
+    	SendInput, {Ctrl down}{Ctrl up}
+    	SendInput, {Alt down}{Alt up}
+    	Send !s
+    	WinWaitActive, ahk_class wxWindowNR
+    	IfWinNotActive, ahk_class wxWindowNR
+    	{
+    		MsgBox WinNotActive Flashnote
+    		return
+    	}
+    	Sleep 550
+    	ControlFocus, Edit2 ; 
+    	Sleep 150
+    	Send {Alt up}
+    	Sleep 1150
+    	Send ^v
+    return
+
+If there is a program who uses these keys, you can exclude them.
+
+    #IfWinNotActive, SuperJPG - Registered to xxx
+    F9::
+    	toggle_wsr()
+    return
+
+    toggle_wsr() {
+    	SetCapsLockState Off	
+    	SendInput, {Ctrl down}
+    	SendInput, {LWin down}
+    	SendInput, {LWin up}
+    	SendInput, {Ctrl up}
+    }
 
 Digression: Dictation workflow <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
