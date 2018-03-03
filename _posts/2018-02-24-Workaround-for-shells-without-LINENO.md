@@ -33,6 +33,9 @@ published: true
 > - [Digression: Other tools](#digression-other-tools-table-of-content)
 > - [Digression: Speech recognition](#digression-speech-recognition-table-of-content)
 > - [Digression: WSR vs. DragonDictate](#digression-wsr-vs-dragondictate-table-of-content)
+> - [Digression: Dictation workflow](#digression-dictation-workflow-table-of-content)
+> - [Digression: Pronunciation](#digression-pronunciation-table-of-content)
+> - [Digression: Hello computer](#digression-hello-computer-table-of-content)
 > - [Digression: Partitioning by day of week](#digression-partitioning-by-day-of-week-table-of-content)
 > - [Digression: Comparing files](#digression-comparing-files-table-of-content)
 > - [Digression: Why are data files different](#digression-why-are-data-files-different-table-of-content)
@@ -1289,15 +1292,44 @@ The argument was not that he didn't need a secretary anymore. He probably would 
 Digression: WSR vs. DragonDictate <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I did work with Windows Speech Recognition (WSR) for a long time as well, using Windows for my mother tongue and DragonDictate for English, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
+I wouldn't write this long text when I had to type it. Instead I use DragonDictate. I work with Windows Speech Recognition (WSR) as well, using Windows for my mother tongue and DragonDictate for English, both in parallel. You cannot do this with DragonDictate, you have to dump one language and load the other and then back again, which is tedious.
 
-Windows Speech Recognition works equally fine, although it uses other terms to navigate the speech engine. That's really bad, but, hey, we are human, that shouldn't be a problem for us. And it isn't. You can learn that, too, and switch the navigation terms. The reason why I stuck with DragonDictate is that Windows Speech Recognition interferes badly with some programs. Most probably because those speech recognition programs are way too smart these days. 
+Windows Speech Recognition works equally fine, although it uses other terms to navigate the speech engine. That's really bad, but, hey, we are human, that shouldn't be a problem for us. And it isn't. You can learn that, too, and switch the navigation terms. Both speech recognition programs interfere badly with some other programs. Most probably because those speech recognition programs are way too smart these days. 
 
 DragonDictate, for instance, if you say one word only, because you're still thinking about the rest of the sentence, will search all tabs in your application for this word in order to switch to that tab. It took me a long time to understand what's happening here. It's really annoying if your machine all of a sudden does something which you didn't expect and cannot understand.
 
 At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than a few characters, I'll switch to DragonDictate. 
 
-That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. 
+That's one of the reasons why I would never be happy to use Linux as a desktop system. My hotkey to turn DragonDictate on or off is the `Pause` key which usually is of no use and sits very prominently on the keyboard to not be missed easily. Windows speech recognition is toggled with `F9`; `F10` will copy all content in the open program to the one opened before. This is again AHK magic. If there is a program who uses these keys, you can exclude them.
+
+Digression: Dictation workflow <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+Speech recognition programs don't work equally well with every other program. That's why they have a special simple text input program, a dictation pad.
+
+I don't use those. I use [Flashnote](http://softvoile.com/flashnote/) instead for dictation input. This tool has a hotkey to be called to front, which I set to `F7`. So this is my workflow: I am in my document and see something to be improved. If it is a simple addition, I click `F7`. If I have to change something, I mark this, copy to the clipboard (my keyboard has a special key for this), switch with `F7` to Flashnote and insert the clipboard content, again with another special key of my keyboard.
+
+Next I choose the appropriate speech recognition engine via `Pause` or `F9`. I do my work, and when I'm done, I may put the speech recognition engine to sleep or not, but in any case I transfer my work with `F10` to the application I was working on before. That's really convenient and I have produced huge amounts of text in both languages this way.
+
+If in the meantime you have changed to another program, like I did right now to find the URL of Flashnote, you better first switch back to the program you want the text to be inserted. So the workflow now I is `F7 F10`. `F7` to get back to Flashnote, `F10` to transfer the text. Which is what I will do right now.
+
+Of course you can dictate in many programs directly, and I do that as well. The problem with Windows speech recognition is, that it starts always in caps mode except when it should start in caps mode, and I don't know how to flip that behavior. DragonDictate on the other hand always starts in small letter case, so that is easier to compensate by saying `Caps on` before dictating.
+
+Also, it is next to impossible to correct the machine in these programs; instead you get a long sequence of keystroke instructions or something else which screws things up. A better way to cope with correcting is to just mark part of the text and then dictate anew. That's a workaround for Windows speech recognition as well: start your marketing with a word which is capitalized anyway.
+
+Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+A nice feature of dictating is that it costs nothing to write complicated long words like `DragonDictate` or `Windows speech recognition`. I don't have this problem in my mother tongue, but when DragonDictate doesn't understand a word correctly I oftentimes suspect that my pronunciation is wrong.
+
+In that case I switch to [dict.cc](https://www.dict.cc/), look this word up and listen to different speakers. It is amazing how English words can be pronounced as such. I remember, when I was in the USA in the late 60s and had to go to a hardware store to ask for a `gauge`. I had looked up this word in my printed dictionary and couldn't think of how to pronounce this word. The people in the store didn't understand what I wanted until I wrote this word down, when they relieved and pronounced it the way it is pronounced. 
+
+But still many words are pronounced very differently by different speakers. Well, this isn't surprising, it helps true for all languages there are, I guess. That's why the DragonDictate engine asks you if you want to choose the British or American version. If I pick up the pronunciation of an American speaker, as a rule it works perfectly. Too bad that the influence of my British schoolteacher creeps up again and again.
+
+Long words are no problem, small words are. Recently I looked up the pronunciation for `their` and `there `. Surprisingly, all speakers pronounced those words absolutely identical. No chance for a machine. And no chance for me.
+
+Digression: Hello computer <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
 
 If I don't have speech recognition to my disposition, I feel like crippled. I use speech recognition on my notebook just the same when travelling. Traveling kills lots of time for nothing. 
 
