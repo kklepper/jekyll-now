@@ -794,7 +794,7 @@ There are good reasons why I chose MyISAM as database engine for these tables an
 
 With partitioned InnoDB tables, things are more complicated, as usual, but moving files around can be done nevertheless. See [Importing InnoDB Partitions in MySQL 5.6 and MariaDB 10.0/10.1](http://www.geoffmontee.com/importing-innodb-partitions-in-mysql-5-6-and-mariadb-10-010-1/)
 
-In case of MyISAM you can even choose which method to apply if things go wrong, `repair` or `copy`. The `frm` file is not touched as a rule, so there is nothing to do. If only the data file `MYD` is different between master and slave, you best copy. `REPAIR TABLE` must copy as well, so this doesn't cost you any more time. 
+In case of MyISAM you can even choose which method to apply if things go wrong, `repair` or `copy`. The `frm` file is not touched as a rule, so there is nothing to do. If only the data file `MYD` is different between master and slave, you best copy. `REPAIR TABLE` must copy as well, so this doesn't cost you any more time nor does it give you the guarantee that the data files are identical. 
 
 If only the index file `MYI` is different, you best use `REPAIR TABLE`. Chances are, the repair is immediate, because very often it is simply the number of records which is wrong being zero or any other number different from the correct number.
 
