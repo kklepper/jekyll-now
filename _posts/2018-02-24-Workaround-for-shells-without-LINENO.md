@@ -2202,6 +2202,8 @@ Most important will be the selection for errors:
     M:7727678 [tmp]>SELECT * FROM tsmt WHERE comment LIKE '##### NO!!!!!';
     Empty set (0.00 sec)
 
+That's much better than `grep`ing the log file.
+
 Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
