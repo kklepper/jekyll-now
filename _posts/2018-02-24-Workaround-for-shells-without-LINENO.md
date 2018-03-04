@@ -1457,7 +1457,7 @@ There are 3 solutions I found.
 
 2. Another would be to write a JavaScript program for PSPad for each of my hotkeys, which would be overkill, I guess. 
 
-3. The other is simply to switch the `Win` key `#` with a key combination of `Shift+Ctrl` or `Ctrl+Shift`: `^+`. Problem solved. Finally.
+3. The other is found in the above link: simply switch the `Win` key `#` with a key combination of `Shift+Ctrl` or `Ctrl+Shift`: `^+`. Problem solved. Finally.
 
 Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
