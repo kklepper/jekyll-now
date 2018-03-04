@@ -1453,7 +1453,7 @@ Choosing a much smaller PHP file shows that PSPad does not freeze on that one. B
 
 There are 3 solutions I found. 
 
-1. PSPad has an own macro recorder. This would be the most elegant solution. Unfortunately, the find dialog could not be macro recorded.                      
+1. PSPad has an own macro recorder. This would be the most elegant solution. Unfortunately, the find dialog cannot be macro recorded.                      
 
 2. Another would be to write a JavaScript program for PSPad for each of my hotkeys, which would be overkill, I guess. 
 
