@@ -1434,7 +1434,9 @@ Well, it looks like I found an explanation, but no solution. The explanation rea
 >WSR seems to listen to any combination of Win and Control, triggering on the release of the second key:
 >
 >Win down, Control down, Control up
+>
 >or
+>
 >Control down, Win down, Win up
 
 A very elegant solution would be to redefine the key combinations from `Win+?` to `Alt+?`, but this doesn't work in PSPad and some other programs; they seem to catch all `Alt` combinations to validate them or kill them otherwise. `AltGr` did not work either.
