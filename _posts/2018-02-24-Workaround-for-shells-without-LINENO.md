@@ -1481,7 +1481,7 @@ Digression: Hello computer <span style="font-size: 11px;float: right;"><a href="
 
 If I don't have speech recognition at my disposition, I feel like crippled. I use speech recognition on my notebook just the same when travelling. Traveling kills lots of time for nothing. 
 
-When I was traveling a lot, I used to dictate into my notebook on the plane, on the train, on the bus, waiting in the lobby, just about everywhere when I had some time to do some work. Nowadays nobody cares if somebody is talking to his smartphone, but even then people hardly took notice. Never anybody asked me what I was doing. 
+When I was traveling a lot, I used to dictate into my notebook on the plane, on the train, on the bus, waiting in the lobby, in my hotel room, just about everywhere when I had some time to do some work. Nowadays nobody cares if somebody is talking to his smartphone, but even then people hardly took notice. Never anybody asked me what I was doing. 
 
 I don't use the latest edition of DragonDictate as I don't see the need to buy this product again and again. It's excellent, at least for my purposes, and I don't even have the professional edition, so I can't use any macros (preferred 10.10, must be 10 or rather 15 years old now).
 
