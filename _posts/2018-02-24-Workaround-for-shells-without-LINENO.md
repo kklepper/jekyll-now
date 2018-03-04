@@ -1201,9 +1201,9 @@ to whatever code I have in place. Of course, many more complex ready-to-use SQL 
 Digression: Other tools <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too long a time with more or less trouble): My workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. I use WinSCP in Explorer mode to launch any files for editing in PSPad. For file transfer I use [FileZilla](https://filezilla-project.org/). 
+So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [SuperPuTTY](https://github.com/jimradford/superputty) (after having tried numerous other clients for too long a time with more or less trouble): 
 
-WinSCP is my window to my Linux workhorse on the same network, which is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant, but rather more production-like on this separate machine. 
+SuperPuTTY is my window to my Linux workhorse on the same network, which is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant, but rather more production-like on this separate machine. 
 
 For example, this is the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine `m1` and main database `ci4`: 
 
@@ -1275,9 +1275,13 @@ It checks out the branch I am in and merges this to master and checks out master
 
 I'm sorry, I cannot explain why it merges the temp branch back -- I didn't construct this, I found it somewhere online and found it extremely useful. I didn't record the URL, though, which I do quite often, but not here, unfortunately. If you Google for `git merge -s ours master && git checkout master` you find a Russian page with a similar sequence, that's it. I don't speak Russian, so I didn't find it there. The original must've been lost, at least to Google.
 
-Your creativity will find lots of situations where you can ease your workload. One more tip: for the task of recording clipboard snippets I also used a number of other tools, but none of them were really good. The Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/), however, is absolutely excellent. 
+Your creativity will find lots of situations where you can ease your workload. 
 
-I have defined `F1` as the hotkey to the clipboard list and defined a second tab which copies all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. Highly recommended as well.
+One more tip: for the task of recording clipboard snippets I also used a number of other tools, but none of them were really good. The Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/), however, is absolutely excellent. 
+
+I have defined `F1` as the hotkey to the clipboard list and defined a second tab which copies all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. 
+
+My workspace in [WinSCP](https://winscp.net/) is automatically opened and includes tabs with the 15 most frequent directories on my Linux machine. I use WinSCP in Explorer mode to launch any files for editing in PSPad. For file transfer I use [FileZilla](https://filezilla-project.org/).
 
 Digression: Speech recognition <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
