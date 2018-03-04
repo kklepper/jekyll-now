@@ -1216,9 +1216,9 @@ So for this shortcut expansion in PSPad I don't have to clutter the AHK namespac
     ::svl::SHOW VARIABLES LIKE '%%';   
     ::sww::SHOW WARNINGS;
 
-I use those extensively from [SuperPuTTY](https://github.com/jimradford/superputty) (after having tried numerous other clients for too long a time with more or less trouble): 
+I use those extensively from [SuperPuTTY](https://github.com/jimradford/superputty) (after having tried numerous other SSH clients for too long a time with more or less trouble): 
 
-SuperPuTTY is my window to my Linux workhorse on the same network. This box is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant, but rather more production-like on this separate machine. 
+SuperPuTTY is my window to my Linux workhorse on the same network. This box is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant on the same box, but rather more production-like on this separate machine. 
 
 For example, this is the command which is executed automatically via PuTTY configuration and saved as layout to open a mysql session to my master engine `m1` and main database `ci4`: 
 
@@ -1247,6 +1247,10 @@ You may then utilize your keyboard and type bravely `SHOW PROCESSLIST;` -- until
 
     ::spl::SHOW PROCESSLIST;
 
+You see it costs me next to nothing to call `SHOW WARNINGS;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I use AHK to define something new. My latest addition is
+
+    ::ell::echo_line_no ""
+
 Here are some other snippets I use often:
 
     ::ggrr::grep -rn '/mnt/sda1/wp/ci/application/' -e '' ; search for terms in source code
@@ -1258,17 +1262,13 @@ Here are some other snippets I use often:
     ::mms1::docker exec -it s1 mysql ci4                  ; start mysql session on slave 1
     ::mms2::docker exec -it s2 mysql ci4                  ; start mysql session on slave 2 
 
-You see it costs me next to nothing to call `SHOW WARNINGS;` or `SHOW CREATE TABLE \G` like above. And whenever I feel the need for some more ease in my work, I use AHK to define something new. My latest addition is
+The best are more complex commands which really do good work. For example, I placed a command to the Windows key plus o (denoted in AHK lingo: `#o`) to immediately jump to the function definition in my file, when the cursor is placed on the function name. 
 
-    ::ell::echo_line_no ""
+Likewise, `#k` will produce a list of all the function calls of that function. `#j` will produce a list with all the lines containing the word the cursor happens to be placed on. And so on. The limit is only your imagination. These are real productivity boosts; to achieve this by typing you would have to type a couple of keystrokes and combinations of those again and again. 
 
-The best are more complex commands which really do good work. For example, I placed a command to the Windows key plus o (denoted in AHK lingo: #o) to immediately jump to the function definition in my file, when the cursor is placed on the function name. 
+Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I have to look up what the right shortcut is as I forgot due to scarce usage. It's important to define shortcuts you can easily remember under all circumstances. But use it with caution, Windows may not behave like you want it to. I have spent numerous hours trying to get it right. I'll show you another example later on.
 
-Likewise, #k will produce a list of all the function calls of that function. #j will produce a list with all the lines containing the word the cursor happens to be placed on. And so on. The limit is only your imagination. These are real productivity boosts; to achieve this by typing you would have to type a couple of keystrokes and combinations of those again and again. 
-
-Although I use AHK for years now, there is hardly a day that I don't open the AHK editor. Okay, sometimes I have to look up what the right shortcut is as I forgot due to scarce usage. It's important to define shortcuts you can easily remember under all circumstances.
-
-Another nifty command I use regularly reads like this:
+Another principally simple and nifty command I use regularly reads like this:
 
     git checkout temp$NO && git merge -s ours master && git checkout master && git merge temp$NO && git push origin master && git checkout temp$NO && git branch -a --color 
 
