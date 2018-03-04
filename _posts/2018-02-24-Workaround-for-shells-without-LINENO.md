@@ -914,7 +914,7 @@ will trigger this error (<a href="#caveats-table-of-content">Caveat No. 1</a>). 
 This is the `rsync` synchronizing script:
 
     #!/bin/sh
-    # /path_to_your_script/mysql_rsync_lock.sh
+    #FILE=mysql_rsync_lock.sh
     # we do not need to take the service down
     
     source /path_to_your_script/echo_line_no.sh
@@ -1201,18 +1201,33 @@ to whatever code I have in place. Of course, many more complex ready-to-use SQL 
 Digression: Other tools <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [SuperPuTTY](https://github.com/jimradford/superputty) (after having tried numerous other clients for too long a time with more or less trouble): 
+So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example for AHK shortcut expansion I choose some from the database realm:
 
-SuperPuTTY is my window to my Linux workhorse on the same network, which is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant, but rather more production-like on this separate machine. 
+    ::saf::SELECT * FROM 
+    ::sbl::SHOW BINARY LOGS;
+    ::scf::SELECT COUNT(*) FROM 
+    ::sct::SHOW CREATE TABLE \G 
+    ::sdb::SHOW DATABASES;
+    ::sss::SHOW SLAVE STATUS\G
+    ::ssu::SELECT user, host, password FROM mysql.user ORDER BY 1; 
+    ::ssv::SHOW VARIABLES LIKE 'serv%';   
+    ::stt::SHOW TABLES;
+    ::sttt::SHOW TABLES FROM tmp;
+    ::svl::SHOW VARIABLES LIKE '%%';   
+    ::sww::SHOW WARNINGS;
 
-For example, this is the command which is executed automatically via PuTTY Configuration to open a mysql session to my master engine `m1` and main database `ci4`: 
+I use those extensively from [SuperPuTTY](https://github.com/jimradford/superputty) (after having tried numerous other clients for too long a time with more or less trouble): 
+
+SuperPuTTY is my window to my Linux workhorse on the same network. This box is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant, but rather more production-like on this separate machine. 
+
+For example, this is the command which is executed automatically via PuTTY configuration and saved as layout to open a mysql session to my master engine `m1` and main database `ci4`: 
 
     docker@boot2docker:~$ /path_to_your_script/mysql_start.sh ci4
 
 This script reads:
 
     #!/bin/sh
-    #FILE=/path_to_your_script/mysql_start.sh
+    #FILE=mysql_start.sh
     
     DB=$1
     
@@ -1234,18 +1249,6 @@ You may then utilize your keyboard and type bravely `SHOW PROCESSLIST;` -- until
 
 Here are some other snippets I use often:
 
-    ::saf::SELECT * FROM 
-    ::sbl::SHOW BINARY LOGS;
-    ::scf::SELECT COUNT(*) FROM 
-    ::sct::SHOW CREATE TABLE \G 
-    ::sdb::SHOW DATABASES;
-    ::sss::SHOW SLAVE STATUS\G
-    ::ssu::SELECT user, host, password FROM mysql.user ORDER BY 1; 
-    ::ssv::SHOW VARIABLES LIKE 'serv%';   
-    ::stt::SHOW TABLES;
-    ::sttt::SHOW TABLES FROM tmp;
-    ::svl::SHOW VARIABLES LIKE '%%';   
-    ::sww::SHOW WARNINGS;
     ::ggrr::grep -rn '/mnt/sda1/wp/ci/application/' -e '' ; search for terms in source code
     ::ggc::git clone
     ::ggcc::git checkout  
@@ -1905,7 +1908,7 @@ This script has another interesting feature. In regular intervals I run a PHP sc
 
 Table definitions do change from time to time, and it is error prone to rely on manually taking notes.
 
-    # path_to_your_script/git_auto.sh
+    #FILE=git_auto.sh
     #!/bin/sh
     
     TIMEDIFF=7200
@@ -2000,7 +2003,7 @@ There is one place where you can manipulate the startup behavior:
 
 It is inconvenient to manipulate this file directly (remember this path and be root), so I only use it to call another script from my `path_to_your_script` directory called `up.sh` where I put all my instructions to instead.
 
-    # /var/lib/boot2docker/profile
+    #FILE=/var/lib/boot2docker/profile
     #!/bin/sh
     
     if [ ! -d "/c" ]; then
