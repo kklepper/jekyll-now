@@ -36,6 +36,7 @@ published: true
 > - [Digression: Dictation workflow](#digression-dictation-workflow-table-of-content)
 > - [Digression: AHK magic](#digression-ahk-magic-table-of-content)
 > - [Digression: Key trouble](#digression-key-trouble-table-of-content)
+> - [Digression: Explanation, no solution](#digression-explanation-no-solution-table-of-content)
 > - [Digression: Pronunciation](#digression-pronunciation-table-of-content)
 > - [Digression: Hello computer](#digression-hello-computer-table-of-content)
 > - [Digression: Partitioning by day of week](#digression-partitioning-by-day-of-week-table-of-content)
@@ -1421,7 +1422,7 @@ There is one more observation with respect to Windows Speech Recognition. When s
 
 When I had PSPad open and shut down Windows Speech Recognition, the code explorer window was flickering as well. So obviously Windows Speech Recognition interferes with other programs which should not be.
 
-Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Explanation, no solution <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 This situation doesn't leave me at rest. The PHP file I was working on is very big. For testing, I'll better change to a small file. Starting Windows Speech Recognition doesn't work. ProcessExplorer reveals that `sapisvr.exe` is still running, so I kill it. Now the program starts. But while it is starting, Flashnote flickers and DragonDictate does not respond before the start process ends. 
