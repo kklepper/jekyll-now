@@ -1181,7 +1181,9 @@ The query method of that class makes use of this member. That's all.
 
 I don't write this line by typing, that would be cruel. Instead I use [AutoHotkey](https://autohotkey.com/) extensively, so I might have defined a hotkey to produce this line. 
 
-AutoHotkey or short AHK works under Windows from everywhere, but, this being PHP code, I need this particular term in my favorite editor [PSPad](https://www.pspad.com/en/) only. And this editor has its own hotkeys or rather expansion of shortcuts into whatever you want -- pretty much like Word for Windows, plus some more functionality. 
+AutoHotkey or short AHK works under Windows from everywhere, but, this being PHP code, I need this particular term in my favorite editor [PSPad](https://www.pspad.com/en/) only. And this editor has its own hotkeys or rather expansion of shortcuts into whatever you want (`AutoCorr.TXT`) -- pretty much like Word for Windows, plus some more functionality. Example:
+
+    inss|$this->dba->insert($db_table, $ar_set, "L: ".__LINE__."\n#F: ".__FILE__."\n#M: ".__METHOD__);
 
 Every once in a while I look for other editors in case the technical development has produced something more productive than PSPad. My latest adventure in this direction was [Atom](https://atom.io/), but it turned out to be of no use for several reasons.
 
@@ -1366,7 +1368,7 @@ This looks a little bit funny; I defined a function here because this function i
 Digression: Key trouble <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Right now I have found a solution for a problem that bugged me for years. And the reason is that I described in detail my workflow and that I use the key `F9` to toggle Windows Speech Recognition. Quite frequently, I experienced PSPad to freeze. It took me quite a while to find out that, although I didn't want that, Windows Speech Recognition had been turned on, and as a consequence, PSPad totally froze. I had to kill both.
+I thought I found a solution for a problem that bugged me for years. And the reason is that I described in detail my workflow and that I use the key `F9` to toggle Windows Speech Recognition. Quite frequently, I experienced PSPad to freeze. It took me quite a while to find out that, although I didn't want that, Windows Speech Recognition had been turned on, and as a consequence, PSPad totally froze. I had to kill both.
 
 To find out about this coincidence I communicated with the creator of PSPad about that phenomenon, but he didn't have a clue. So finally I decided to no longer use Windows Speech Recognition and toggle DragonDictate instead. That's okay if I work for a long time in one of these languages, but if I have to switch very often, that's really no longer acceptable. And right now, working on this text, that's the case.
 
@@ -1380,7 +1382,7 @@ Well, cheered too soon! It turned out that the freezing is triggered by one of t
     Send ^f!l 
     return
 
-Which looks innocent enough. It just says: `Ctrl+f`, then `Alt+l`. Let's see if I can reproduce it. Yes, I can. [ProcessExplorer](https://en.wikipedia.org/wiki/Process_Explorer) shows a CPU load of nearly 40% in one of 2 PSPad-Windows I have open right now. This should be the one in trouble. I am correct. Killing this one removes the frozen PSPad instance. It is a PHP file I'm debugging. The other is the markdown file with this text, which is fine.
+Which looks innocent enough. It just says: `Ctrl+f`, then `Alt+l`. Let's see if I can reproduce it. Yes, I can. [ProcessExplorer](https://en.wikipedia.org/wiki/Process_Explorer) shows a CPU load of nearly 40% in one of 2 PSPad-Windows I have open right now. This should be the one in trouble. I am correct. Killing this one removes the frozen PSPad instance. It is a really big PHP file I'm debugging. The other is the markdown file with this text, which is fine.
 
 So this is good. I have a test case. My experience tells me to test if these 2 keystroke combinations are sent too fast. So I changed the AHK code:
 
@@ -1403,6 +1405,7 @@ Increasing `Sleep` to 200 ms produces the error: I can see very clearly the resu
 
 You may have noticed that I used a very awkward procedure in the function `toggle_wsr` which was necessary due to very similar problems, if I remember correctly. So this is worth a try,
 
+    #j::           ; find all and display as list
 	SetCapsLockState Off	
 	SendInput, {Ctrl down}
 	SendInput, {f}
@@ -1410,12 +1413,32 @@ You may have noticed that I used a very awkward procedure in the function `toggl
 	SendInput, {Alt down}
 	SendInput, {l}
 	SendInput, {Alt up}
+    return
 
-Delivers the same result, unfortunately. What to do now? Leave it almost perfect? No. This time PSPad froze again. I guess I just quit Windows Speech Recognition when I switch to with PSPad. Windows Speech Recognition starts relatively fast, so I might have to live with that workaround for now.
+Delivers the same result, unfortunately. What to do now? Leave it almost perfect? No. This time PSPad froze again. I guess I just quit Windows Speech Recognition when I switch to work with PSPad. Windows Speech Recognition starts relatively fast, so I might have to live with that workaround for now. Or else I need to abstain from using those nifty shortcuts.
 
 There is one more observation with respect to Windows Speech Recognition. When starting, some programs are heavily "touched" and show this by flickering and presenting the Windows system dialogue reading something like "switch to another application". 
 
 When I had PSPad open and shut down Windows Speech Recognition, the code explorer window was flickering as well. So obviously Windows Speech Recognition interferes with other programs which should not be.
+
+Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+This situation doesn't leave me at rest. The PHP file I was working on is very big. For testing, I'll better change to a small file. Starting Windows Speech Recognition doesn't work. ProcessExplorer reveals that `sapisvr.exe` is still running, so I kill it. Now the program starts. But while it is starting, Flashnote flickers and DragonDictate does not respond before the start process ends. 
+
+That shouldn't be. A program shouldn't interfere with other programs this way. I concede that a speech recognition program must correspond with other programs, but only if it is put to work.
+
+Well, it looks like I found an explanation, but no solution. The explanation reads like this [Windows Speech Recognition + AutoHotkey = Weirdness ](https://autohotkey.com/board/topic/90761-windows-speech-recognition-autohotkey-weirdness/):
+
+    WSR seems to listen to any combination of Win and Control, triggering on the release of the second key:
+    
+    Win down, Control down, Control up
+    or
+    Control down, Win down, Win up
+
+A very elegant solution would be to redefine the key combinations from `Win+?` to `Alt+?`, but this doesn't work in PSPad and some other programs; they seem to catch all `Alt` combinations to validate them or kill them otherwise. `AltGr` did not work either.
+
+Choosing a much more PHP file and shows that PSPad does not freeze on them. But this doesn't help me either.
 
 Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
