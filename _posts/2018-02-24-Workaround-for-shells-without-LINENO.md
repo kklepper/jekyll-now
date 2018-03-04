@@ -2126,7 +2126,7 @@ You also see that it is important to know which script is doing what; the callin
 Record by database <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-That's alright, but not really good. We worked with 2 parameters here only, and both produced relatively short times. What about a long parameter list and really long production times? We just wouldn't be able to interpret what's going on.
+That's alright, but not really good. We worked with 2 parameters here only, and both produced relatively short execution times. What about a long parameter list and really long production times? We just wouldn't be able to interpret what's going on.
 
 That's why we need a database solution here.
 
