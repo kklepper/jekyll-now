@@ -1504,7 +1504,7 @@ For partitioning the table by date, the first thing I had to change was the defi
 
 Next I had to change my code because a `timestamp` value will be populated automatically, whereas a `datetime` value has to be set manually. Partitioning by day doesn't make sense when every timestamp has value `0000-00-00 00:00:00`. No big problem.
 
-Thinking about it, I am wrong. I just have to set the correct default value.
+Thinking about it, I am wrong. Adminer set the wrong value by default. I just have to set the correct default value.
 
     ALTER TABLE `tmp.sql_log`
     CHANGE `tmstmp` `tmstmp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `id_sql`;
