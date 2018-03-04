@@ -47,6 +47,7 @@ published: true
 - [Why roll your own, revisited](#why-roll-your-own-revisited-table-of-content)
 - [Have fun](#have-fun-table-of-content)
 - [Proof of concept](#proof-of-concept-table-of-content)
+- [Record by database](#record-by-database-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
 
@@ -2111,6 +2112,94 @@ The output is even readable when those processes are intertwined:
         =========DATE======== :2018-03-02_22:02:11:
     
 You also see that it is important to know which script is doing what; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`, given by the variable `FILE` defined by habit at the top of the script.
+
+Record by database <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+That's alright, but not really good. We worked with 2 parameters here only, and both produced relatively short times. What about a long parameter list and really long production times? We just wouldn't be able to interpret what's going on.
+
+That's why we need a database solution here.
+
+    M:7727678 [tmp]>SHOW CREATE TABLE tsmt\G
+    *************************** 1. row ***************************
+           Table: tsmt
+    Create Table: CREATE TABLE `tsmt` (
+      `id_ex` bigint(20) unsigned NOT NULL,
+      `tmstmp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+      KEY `id_ex` (`id_ex`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+    1 row in set (0.00 sec)
+
+In the script shell which manages a single parameter, first make sure we have no old entries and then insert the start data.
+
+    docker exec m1 mysql -e "DELETE FROM tmp.tsmt WHERE id_ex = '$ID_EX'; 
+        INSERT INTO tmp.tsmt VALUES ($ID_EX, NOW(), '$CMD')"
+
+In case we have a problem, record this as well:    
+    
+    docker exec m1 mysql -e "INSERT INTO tmp.tsmt VALUES ($ID_EX, NOW(), '##### NO!!!!! ######### PROBLEM HERE')" 
+
+Success is recorded likewise:
+
+    docker exec m1 mysql -e "INSERT INTO tmp.tsmt VALUES ($ID_EX, NOW(), '== GOOD!!!======== used :$USED: secs ')" 
+
+The database table shows similar data, but can be selected:
+
+    M:7727678 [tmp]>SELECT * FROM tsmt;
+    +-------+---------------------+-------------------------------------------------+
+    | id_ex | tmstmp              | comment                                         |
+    +-------+---------------------+-------------------------------------------------+
+    |     6 | 2018-03-04 18:52:11 | localhost:8342/paggen/6?srt=1&d=1&bak=1&lg=en   |
+    |   359 | 2018-03-04 18:52:16 | localhost:8342/paggen/359?srt=1&d=1&bak=1&lg=en |
+    |     6 | 2018-03-04 18:52:29 | == GOOD!!!======== used :18: secs               |
+    |   359 | 2018-03-04 18:52:47 | == GOOD!!!======== used :31: secs               |
+    +-------+---------------------+-------------------------------------------------+
+    4 rows in set (0.00 sec)
+    
+    M:7727678 [tmp]>SELECT * FROM tsmt WHERE id_ex = '6';
+    +-------+---------------------+-----------------------------------------------+
+    | id_ex | tmstmp              | comment                                       |
+    +-------+---------------------+-----------------------------------------------+
+    |     6 | 2018-03-04 18:52:11 | localhost:8342/paggen/6?srt=1&d=1&bak=1&lg=en |
+    |     6 | 2018-03-04 18:52:29 | == GOOD!!!======== used :18: secs             |
+    +-------+---------------------+-----------------------------------------------+
+    2 rows in set (0.00 sec)
+    
+    M:7727678 [tmp]>SELECT * FROM tsmt WHERE id_ex = '359';
+    +-------+---------------------+-------------------------------------------------+
+    | id_ex | tmstmp              | comment                                         |
+    +-------+---------------------+-------------------------------------------------+
+    |   359 | 2018-03-04 18:52:16 | localhost:8342/paggen/359?srt=1&d=1&bak=1&lg=en |
+    |   359 | 2018-03-04 18:52:47 | == GOOD!!!======== used :31: secs               |
+    +-------+---------------------+-------------------------------------------------+
+    2 rows in set (0.00 sec)
+
+The next sequence shows how the job is done sequentially until nothing is left,    
+    
+    M:7727678 [tmp]>SELECT id_ex, COUNT(comment) cnt FROM tsmt GROUP BY id_ex HAVING cnt =1;
+    +-------+-----+
+    | id_ex | cnt |
+    +-------+-----+
+    |     6 |   1 |
+    |   359 |   1 |
+    +-------+-----+
+    2 rows in set (0.00 sec)
+    
+    M:7727678 [tmp]>SELECT id_ex, COUNT(comment) cnt FROM tsmt GROUP BY id_ex HAVING cnt =1;
+    +-------+-----+
+    | id_ex | cnt |
+    +-------+-----+
+    |   359 |   1 |
+    +-------+-----+
+    1 row in set (0.00 sec)
+    
+    M:7727678 [tmp]>SELECT id_ex, COUNT(comment) cnt FROM tsmt GROUP BY id_ex HAVING cnt =1;
+    Empty set (0.00 sec)
+
+Most important will be the selection for errors:
+
+
 
 Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
