@@ -1280,9 +1280,9 @@ I'm sorry, I cannot explain why it merges the temp branch back -- I didn't const
 
 Your creativity will find lots of situations where you can ease your workload. 
 
-One more tip: for the task of recording clipboard snippets I also used a number of other tools, but none of them were really good. The Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/), however, is absolutely excellent. 
+One more tip: for the task of recording clipboard snippets I also used a number of other tools, but none of them were really good in the long run. The Clipboard Manager [CopyQ](https://hluk.github.io/CopyQ/), however, is absolutely excellent. 
 
-I have defined `F1` as the hotkey to the clipboard list and defined a second tab which copies all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. 
+I have defined `F1` as the hotkey to the CopyQ clipboard list and defined a second tab in CopyQ which lists all images, to keep both parts apart. Also I have enlarged the available space as much as possible. I can afford this and don't want to lose anything I have copied for some reason. This tool is very fast and has a very efficient search engine. 
 
 My workspace in [WinSCP](https://winscp.net/) is automatically opened and includes tabs with the 15 most frequent directories on my Linux machine. I use WinSCP in Explorer mode to launch any files for editing in PSPad. For file transfer I use [FileZilla](https://filezilla-project.org/).
 
