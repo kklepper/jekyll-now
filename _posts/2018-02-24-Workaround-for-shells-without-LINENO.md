@@ -1468,7 +1468,7 @@ A nice feature of dictating is that it costs nothing to write complicated long w
 
 In that case I switch to [dict.cc](https://www.dict.cc/), look up this word and listen to different speakers. It is amazing how English words can be pronounced as such. I still remember the embarrassing situation when I was in the USA in the late 60s and had to go to a hardware store to ask for a `gauge`. 
 
-I had looked up this word in my printed dictionary and couldn't think of how to pronounce this word. The people in the store didn't understand what I wanted until I wrote this word down, whereat they were relieved and pronounced it the way it is pronounced. [Wiktionary](https://en.wiktionary.org/wiki/gauge#English) tells me this word comes from French. I could've figured out myself. 
+I had looked up this word in my printed dictionary and couldn't imagine of how to pronounce this word. The people in the store didn't understand what I wanted until I wrote this word down, whereat they were relieved and pronounced it the way it is pronounced. [Wiktionary](https://en.wiktionary.org/wiki/gauge#English) tells me this word comes from French. I could've figured out myself. 
 
 But still many words are pronounced very differently by different speakers. Well, this isn't surprising, it is true for all languages there are, I guess. That's why the DragonDictate engine asks you if you want to choose the British or American version (I chose the last one). If I pick up the pronunciation of an American speaker, as a rule it works perfectly. Too bad that the influence of my adored British schoolteacher creeps up again and again. 
 
