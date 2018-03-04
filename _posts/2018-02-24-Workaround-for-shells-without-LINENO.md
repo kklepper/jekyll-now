@@ -1183,7 +1183,7 @@ The query method of that class makes use of this member. That's all.
 
 I don't write this line by typing, that would be cruel. Instead I use [AutoHotkey](https://autohotkey.com/) extensively, so I might have defined a hotkey to produce this line. 
 
-AutoHotkey or short AHK works under Windows from everywhere, but, this being PHP code, I need this particular term in my favorite editor [PSPad](https://www.pspad.com/en/) only. And this editor has its own hotkeys or rather expansion of shortcuts into whatever you want (`AutoCorr.TXT`) -- pretty much like Word for Windows, plus some more functionality. Example:
+AutoHotkey or short AHK works under Windows from everywhere, but, this being PHP code, I need this particular term in my favorite editor [PSPad](https://www.pspad.com/en/) only. And this editor has its own hotkeys or rather expansion of shortcuts into whatever you want (`AutoCorr.TXT`) -- pretty much like Word for Windows, plus some more functionality, which you can even extend via JavaScript, for example. Example for expansion:
 
     inss|$this->dba->insert($db_table, $ar_set, "L: ".__LINE__."\n#F: ".__FILE__."\n#M: ".__METHOD__);
 
@@ -1450,6 +1450,8 @@ Well, it looks like I found an explanation, but no solution. The explanation rea
 A very elegant solution would be to redefine the key combinations from `Win+?` to `Alt+?`, but this doesn't work in PSPad and some other programs; they seem to catch all `Alt` combinations to validate them or kill them otherwise. `AltGr` did not work either.
 
 Choosing a much smaller PHP file shows that PSPad does not freeze on that one. But this doesn't help me either.
+
+There are 2 solutions I found. One would be to write a JavaScript program for each of my hotkeys, which would be overkill, I guess. The other is simply to switch the `Win` key `#` with a key combination of `Shift+Ctrl` or `Ctrl+Shift`: `^+`. Problem solved. Finally.
 
 Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
