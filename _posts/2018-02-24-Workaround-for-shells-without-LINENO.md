@@ -2199,7 +2199,8 @@ The next sequence shows how the job is done sequentially until nothing is left,
 
 Most important will be the selection for errors:
 
-
+    M:7727678 [tmp]>SELECT * FROM tsmt WHERE comment LIKE '##### NO!!!!!';
+    Empty set (0.00 sec)
 
 Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
