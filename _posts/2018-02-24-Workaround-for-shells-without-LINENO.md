@@ -1470,7 +1470,7 @@ In that case I switch to [dict.cc](https://www.dict.cc/), look up this word and 
 
 I had looked up this word in my printed dictionary and couldn't imagine of how to pronounce this word. The people in the store didn't understand what I wanted until I wrote this word down, whereat they were relieved and pronounced it the way it is pronounced. [Wiktionary](https://en.wiktionary.org/wiki/gauge#English) tells me this word comes from French. I could've figured out myself. 
 
-But still many words are pronounced very differently by different speakers. Well, this isn't surprising, it is true for all languages there are, I guess. That's why the DragonDictate engine asks you if you want to choose the British or American version (I chose the last one). If I pick up the pronunciation of an American speaker, as a rule it works perfectly. Too bad that the influence of my adored British schoolteacher creeps up again and again. 
+But still many words are pronounced very differently by different speakers. Well, this isn't surprising, it is true for all languages there are, I guess. That's why the DragonDictate engine asks you if you want to choose the British or American version (I chose the latter one). If I pick up the pronunciation of an American speaker, as a rule it works perfectly. Too bad that the influence of my adored British schoolteacher creeps up again and again. 
 
 And then there are the words I have no idea how the correct pronunciation might sound. If I didn't have the Internet, I wouldn't know what to do.
 
