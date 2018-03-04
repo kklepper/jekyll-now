@@ -1201,7 +1201,7 @@ to whatever code I have in place. Of course, many more complex ready-to-use SQL 
 Digression: Other tools <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too long a time with more or less trouble): My workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. 
+So for this shortcut expansion in PSPad I don't have to clutter the AHK namespace, which is crammed full anyway. To give you an example from the database realm, which I extensively use from [WinSCP](https://winscp.net/) (after having tried numerous other clients for too long a time with more or less trouble): My workspace in WinSCP is automatically opened and includes several tabs with the MySQL client. I use WinSCP in Explorer mode to launch any files for editing in PSPad. For file transfer I use [FileZilla](https://filezilla-project.org/). 
 
 WinSCP is my window to my Linux workhorse on the same network, which is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant, but rather more production-like on this separate machine. 
 
