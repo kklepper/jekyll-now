@@ -1418,7 +1418,7 @@ You may have noticed that I used a very awkward procedure in the function `toggl
 
 Delivers the same result, unfortunately. What to do now? Leave it almost perfect? No. This time PSPad froze again. I guess I just quit Windows Speech Recognition when I switch to work with PSPad. Windows Speech Recognition starts relatively fast, so I might have to live with that workaround for now. Or else I need to abstain from using those nifty shortcuts.
 
-There is one more observation with respect to Windows Speech Recognition. When starting, some programs are heavily "touched" and show this by flickering and presenting the Windows system dialogue reading something like "switch to another application". 
+There is one more observation with respect to Windows Speech Recognition. When starting, some programs are heavily "touched" and show this by flickering and presenting the Windows system dialogue reading something like "server is busy -- switch to another application". 
 
 When I had PSPad open and shut down Windows Speech Recognition, the code explorer window was flickering as well. So obviously Windows Speech Recognition interferes with other programs which should not be.
 
@@ -1441,7 +1441,7 @@ Well, it looks like I found an explanation, but no solution. The explanation rea
 
 A very elegant solution would be to redefine the key combinations from `Win+?` to `Alt+?`, but this doesn't work in PSPad and some other programs; they seem to catch all `Alt` combinations to validate them or kill them otherwise. `AltGr` did not work either.
 
-Choosing a much more PHP file and shows that PSPad does not freeze on them. But this doesn't help me either.
+Choosing a much smaller PHP file shows that PSPad does not freeze on that one. But this doesn't help me either.
 
 Digression: Pronunciation <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
