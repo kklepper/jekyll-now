@@ -2146,10 +2146,10 @@ That's alright, but not really good. We worked with 2 parameters here only, and 
 
 That's why we need a database solution here.
 
-    M:7727678 [tmp]>SHOW CREATE TABLE tsmt\G
+    M:7727678 [tmp]>SHOW CREATE TABLE tsmst\G
     *************************** 1. row ***************************
-           Table: tsmt
-    Create Table: CREATE TABLE `tsmt` (
+           Table: tsmst
+    Create Table: CREATE TABLE `tsmst` (
       `id_ex` bigint(20) unsigned NOT NULL,
       `tmstmp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
       `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2159,20 +2159,20 @@ That's why we need a database solution here.
 
 In the script shell which manages a single parameter, first make sure we have no old entries and then insert the start data.
 
-    docker exec m1 mysql -e "DELETE FROM tmp.tsmt WHERE id_ex = '$ID_EX'; 
-        INSERT INTO tmp.tsmt VALUES ($ID_EX, NOW(), '$CMD')"
+    docker exec m1 mysql -e "DELETE FROM tmp.tsmst WHERE id_ex = '$ID_EX'; 
+        INSERT INTO tmp.tsmst VALUES ($ID_EX, NOW(), '$CMD')"
 
 In case we have a problem, record this as well:    
     
-    docker exec m1 mysql -e "INSERT INTO tmp.tsmt VALUES ($ID_EX, NOW(), '##### NO!!!!! ######### PROBLEM HERE')" 
+    docker exec m1 mysql -e "INSERT INTO tmp.tsmst VALUES ($ID_EX, NOW(), '##### NO!!!!! ######### PROBLEM HERE')" 
 
 Success is recorded likewise:
 
-    docker exec m1 mysql -e "INSERT INTO tmp.tsmt VALUES ($ID_EX, NOW(), '== GOOD!!!======== used :$USED: secs ')" 
+    docker exec m1 mysql -e "INSERT INTO tmp.tsmst VALUES ($ID_EX, NOW(), '== GOOD!!!======== used :$USED: secs ')" 
 
 The database table shows similar data, but can be selected:
 
-    M:7727678 [tmp]>SELECT * FROM tsmt;
+    M:7727678 [tmp]>SELECT * FROM tsmst;
     +-------+---------------------+-------------------------------------------------+
     | id_ex | tmstmp              | comment                                         |
     +-------+---------------------+-------------------------------------------------+
@@ -2183,7 +2183,7 @@ The database table shows similar data, but can be selected:
     +-------+---------------------+-------------------------------------------------+
     4 rows in set (0.00 sec)
     
-    M:7727678 [tmp]>SELECT * FROM tsmt WHERE id_ex = '6';
+    M:7727678 [tmp]>SELECT * FROM tsmst WHERE id_ex = '6';
     +-------+---------------------+-----------------------------------------------+
     | id_ex | tmstmp              | comment                                       |
     +-------+---------------------+-----------------------------------------------+
@@ -2192,7 +2192,7 @@ The database table shows similar data, but can be selected:
     +-------+---------------------+-----------------------------------------------+
     2 rows in set (0.00 sec)
     
-    M:7727678 [tmp]>SELECT * FROM tsmt WHERE id_ex = '359';
+    M:7727678 [tmp]>SELECT * FROM tsmst WHERE id_ex = '359';
     +-------+---------------------+-------------------------------------------------+
     | id_ex | tmstmp              | comment                                         |
     +-------+---------------------+-------------------------------------------------+
@@ -2203,7 +2203,7 @@ The database table shows similar data, but can be selected:
 
 The next sequence shows how the job is done sequentially until nothing is left,    
     
-    M:7727678 [tmp]>SELECT id_ex, COUNT(comment) cnt FROM tsmt GROUP BY id_ex HAVING cnt =1;
+    M:7727678 [tmp]>SELECT id_ex, COUNT(comment) cnt FROM tsmst GROUP BY id_ex HAVING cnt =1;
     +-------+-----+
     | id_ex | cnt |
     +-------+-----+
@@ -2212,7 +2212,7 @@ The next sequence shows how the job is done sequentially until nothing is left,
     +-------+-----+
     2 rows in set (0.00 sec)
     
-    M:7727678 [tmp]>SELECT id_ex, COUNT(comment) cnt FROM tsmt GROUP BY id_ex HAVING cnt =1;
+    M:7727678 [tmp]>SELECT id_ex, COUNT(comment) cnt FROM tsmst GROUP BY id_ex HAVING cnt =1;
     +-------+-----+
     | id_ex | cnt |
     +-------+-----+
@@ -2220,12 +2220,12 @@ The next sequence shows how the job is done sequentially until nothing is left,
     +-------+-----+
     1 row in set (0.00 sec)
     
-    M:7727678 [tmp]>SELECT id_ex, COUNT(comment) cnt FROM tsmt GROUP BY id_ex HAVING cnt =1;
+    M:7727678 [tmp]>SELECT id_ex, COUNT(comment) cnt FROM tsmst GROUP BY id_ex HAVING cnt =1;
     Empty set (0.00 sec)
 
 Most important will be the selection for errors:
 
-    M:7727678 [tmp]>SELECT * FROM tsmt WHERE comment LIKE '##### NO!!!!!';
+    M:7727678 [tmp]>SELECT * FROM tsmst WHERE comment LIKE '##### NO!!!!!';
     Empty set (0.00 sec)
 
 That's much better than `grep`ing the log file.
