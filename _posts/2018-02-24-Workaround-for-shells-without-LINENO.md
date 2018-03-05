@@ -1687,6 +1687,12 @@ Now we should see what we want:
 The shell script for regularly truncating the oldest partition now reads
 
     p_no=$(($(($(date "+%w") + 1)) % 7)) && docker exec m1 mysql -e "ALTER TABLE tmp.sql_log TRUNCATE PARTITION p$p_no"
+    
+or rather   
+
+    p_no=$(($(($(date "+%w"))) % 7)) && docker exec m1 mysql -e "ALTER TABLE tmp.sql_log TRUNCATE PARTITION p$p_no"
+
+when you run this script at midnight. The first action will be to clear the partition which will be filled for the day with new data.
 
 Digression: Inspecting the SQL log <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
