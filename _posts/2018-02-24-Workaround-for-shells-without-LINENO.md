@@ -39,6 +39,7 @@ published: true
 > - [Digression: Explanation, no solution](#digression-explanation-no-solution-table-of-content)
 > - [Digression: Pronunciation](#digression-pronunciation-table-of-content)
 > - [Digression: Hello computer](#digression-hello-computer-table-of-content)
+> - [Digression: Partitioning by day](#digression-partitioning-by-day-table-of-content)
 > - [Digression: Partitioning by day of week](#digression-partitioning-by-day-of-week-table-of-content)
 > - [Digression: Comparing files](#digression-comparing-files-table-of-content)
 > - [Digression: Why are data files different](#digression-why-are-data-files-different-table-of-content)
@@ -1491,7 +1492,7 @@ Every once in a while, when I met colleagues complaining about stress injury syn
 
 Of course, there are lots of people online using these products and chatting about it in their forums, but they are a totally different kind of people and professionally producing huge amounts of text. The industry has concentrated on lawyers and physicians, obviously successfully. Although back then everybody was dreaming of talking with a machine (see Star Trek IV: ["hello computer"](https://www.youtube.com/watch?v=v9kTVZiJ3Uc), 32 secs), not much has happened in the private realm. Nowadays we have Siri and Cortana, but sorry, I don't use that.
 
-Digression: Partitioning by day of week <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Partitioning by day <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Back to partitioning. I don't need that old data anymore. So to save time testing partitioning, I `truncate` that table.
@@ -1576,6 +1577,9 @@ The first part defines the variable `p_no`.
 p_no=$(($(($(date "+%d") + 1)) % 7))
 
 `$(date "+%d")` gives the date number. We add 1 by the expression `$(($(date "+%d") + 1))` and then we calculate the modulus by the expression `$(($(($(date "+%d") + 1)) % 7))`. That's fine.
+
+Digression: Partitioning by day of week <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
 
 But now it is obvious that the whole construction is screwed up. We work by the `day of month` number and have to take the modulus, so we will not cycle evenly to all of the partitions. We should not take the `day of month number` but the `day of week` number:
 
