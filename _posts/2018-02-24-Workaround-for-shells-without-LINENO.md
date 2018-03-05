@@ -1492,6 +1492,10 @@ Every once in a while, when I met colleagues complaining about stress injury syn
 
 Of course, there are lots of people online using these products and chatting about it in their forums, but they are a totally different kind of people and professionally producing huge amounts of text. The industry has concentrated on lawyers and physicians, obviously successfully. Although back then everybody was dreaming of talking with a machine (see Star Trek IV: ["hello computer"](https://www.youtube.com/watch?v=v9kTVZiJ3Uc), 32 secs), not much has happened in the private realm. Nowadays we have Siri and Cortana, but sorry, I don't use that.
 
+There is much discussion about the right type of microphone to use with speech recognition. As long as I use speech recognition, which is more than 20 years now, I tried many different types most of which were pretty cheap, whereas all those professionals swear that you have to spend as much money on the microphone as you can afford.
+
+The last years I used a microphone which I cannot buy anymore, unfortunately. It has an ear hook and a solid short microphone arm, is easy to wear and works excellently. Hopefully it will not be damaged by accident in the years to come. It looks like I cannot replace it.
+
 Digression: Partitioning by day <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
