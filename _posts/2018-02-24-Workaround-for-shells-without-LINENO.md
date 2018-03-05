@@ -1326,7 +1326,9 @@ If in the meantime you have changed to another program, like I did right now to 
 
 Of course you can dictate in many programs directly, and I do that as well. The problem with Windows Speech Recognition is, that it starts always in caps mode except when it should start in caps mode, and I don't know how to flip that behavior. DragonDictate on the other hand always starts in small letter case, so that is easier to compensate by saying `Caps on` before dictating.
 
-Also, it is next to impossible to correct the speech engine in these programs; instead you get a long sequence of keystroke instructions or something else which screws things up. A better way to cope with correcting is to just mark part of the text and then dictate anew. That's a workaround for Windows Speech Recognition as well: start your marketing with a word which is capitalized anyway.
+Also, it is next to impossible to correct the speech engine in these programs; instead you get a long sequence of keystroke instructions or something else which screws things up. A better way to cope with correcting is to just mark part of the text and then dictate anew. That's a workaround for Windows Speech Recognition as well: start your marking with a word which is capitalized anyway.
+
+A caveat here: with speech recognition, you will hardly make spelling errors, but you will undoubtedly get hearing defects. Not only you will get `there` and `their` mixed up, but also `marking` and `marketing`. And this time no automatic spelling correction can detect these errors.
 
 Digression: AHK magic <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
