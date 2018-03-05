@@ -1328,7 +1328,7 @@ Of course you can dictate in many programs directly, and I do that as well. The 
 
 Also, it is next to impossible to correct the speech engine in these programs; instead you get a long sequence of keystroke instructions or something else which screws things up. A better way to cope with correcting is to just mark part of the text and then dictate anew. That's a workaround for Windows Speech Recognition as well: start your marking with a word which is capitalized anyway.
 
-A caveat here: with speech recognition, you will hardly make spelling errors, but you will undoubtedly get hearing defects. Not only you will get `there` and `their` mixed up, but also `marking` and `marketing`. And this time no automatic spelling correction can detect these errors.
+A caveat here: with speech recognition, you will hardly make spelling errors, but you will undoubtedly get hearing defects. Not only you will get `there` and `their` mixed up, but also `marking` and `marketing`. And this time no automatic spelling correction can detect these errors. You really have to be attentive and proofread thoroughly.
 
 Digression: AHK magic <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
