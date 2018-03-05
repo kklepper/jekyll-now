@@ -159,12 +159,12 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     example 4:
         -- variable substitution
         46   "this is another simple comment with line number and variable: FOO :$FOO:"
-        >>>>>> variable substitution: this is another simple comment with line number and variable: FOO :bar:
+        >>>>>> this is another simple comment with line number and variable: FOO :bar:
     
     example 5:
         -- variable substitution, 2 variables
         52   "this is another simple comment with line number and 2 variables: FOO :$FOO: BAZ :$BAZ:"
-        >>>>>> variable substitution: this is another simple comment with line number and 2 variables: FOO :bar: BAZ :42:
+        >>>>>> this is another simple comment with line number and 2 variables: FOO :bar: BAZ :42:
     
     example 6:
         -- show the value of a variable plus the line it is defined
@@ -184,7 +184,7 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     example 9:
         -- with variable and with VARTOKEN
         86  whatsup "hi my dear buddy :$buddy:"
-        >>>>>> variable substitution: hi my dear buddy :joe:
+        >>>>>> hi my dear buddy :joe:
 
 How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -212,10 +212,12 @@ Create a script defining the function only. This script is to be included in the
         cat -n $0 | grep "$input" | sed "s/echo_line_no//" | tee -a $log_echo_line_no
         # if $log_echo_line_no is not defined, there is no error here
         
+        # variable substitution
         case "$1" in
-            *$VARTOKEN* ) echo "    >>>>>> variable substitution$VARTOKEN $1" | tee -a $log_echo_line_no ;;
+            *$VARTOKEN* ) echo "    >>>>>>> $VARTOKEN $1" | tee -a $log_echo_line_no ;;
             * )  ;;
         esac
+
     } # echo_line_no
 
 Include this script into your working script (which you want to debug) via `source` call 
