@@ -4,7 +4,7 @@ title: Workaround for shells without LINENO
 published: true
 ---
 
-... and some other musings
+... and some other reflections
 ----------
 
 ## Table of Content <span id="toc"></span>
