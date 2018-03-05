@@ -159,12 +159,12 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     example 4:
         -- variable substitution
         46   "this is another simple comment with line number and variable: FOO :$FOO:"
-        >>>>>> this is another simple comment with line number and variable: FOO :bar:
+        >>>>>> : this is another simple comment with line number and variable: FOO :bar:
     
     example 5:
         -- variable substitution, 2 variables
         52   "this is another simple comment with line number and 2 variables: FOO :$FOO: BAZ :$BAZ:"
-        >>>>>> this is another simple comment with line number and 2 variables: FOO :bar: BAZ :42:
+        >>>>>> : this is another simple comment with line number and 2 variables: FOO :bar: BAZ :42:
     
     example 6:
         -- show the value of a variable plus the line it is defined
@@ -184,7 +184,7 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     example 9:
         -- with variable and with VARTOKEN
         86  whatsup "hi my dear buddy :$buddy:"
-        >>>>>> hi my dear buddy :joe:
+        >>>>>> : hi my dear buddy :joe:
 
 How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -324,7 +324,7 @@ Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Cont
 
 3. **Example 3**: For multi-line strings, this constraint of uniqueness applies to the first line only as `grep` is line oriented -- the argument however has more than one line, so grep will fail and you see nothing unless we cut off everything after the first line. Consequently you will not see the other lines in the output, but that may not be really bad unless you need the information therein; if this is a problem, consider putting the information you need into the first line or add the token character for variables `VARTOKEN` (I prefer `:`) in each additional line you want to see.
 
-4. **Examples 4 and 5**: For the use of variables, this same constraint of uniqueness applies to the part up to `VARTOKEN` used to enclose these (which is a good idea anyway to see if a variable is empty: `variable: FOO :$FOO:`). The reason is: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the line has to be stripped from `VARTOKEN` as well. Instead, we show the variable values in the next line with the prefix `>>>>>> `. 
+4. **Examples 4 and 5**: For the use of variables, this same constraint of uniqueness applies to the part up to `VARTOKEN` used to enclose these (which is a good idea anyway to see if a variable is empty: `variable: FOO :$FOO:`). The reason is: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the line has to be stripped from `VARTOKEN` as well. Instead, we show the variable values in the next line with the prefix `>>>>>> : `. 
 
 5. **Example 6**: If you only give a quoted variable as argument (`echo_line_no "$FOO"`), you will not get the line number of the "comment" but the line number of the `definition of the variable` instead -- which may be exactly what you want as this information is hard to find otherwise. The first two show said variables `FOO` and `BAZ` from examples 4 and 5, the next 2 assignments show the lines of definition of the same variable `MSG` defined at different places with different values.
 
