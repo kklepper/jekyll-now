@@ -2241,50 +2241,50 @@ That's much better than `grep`ing the log file.
 Digression: More complexity by languages <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-We have seen more complexity and the samples suggest that there is even more to show. The next example shows our script working on different languages. 
+We have seen more complexity and the samples suggest that there is even more to show. The next example shows our script working on different languages: de (German), en (English), fr (French), nl (Dutch), zh (Chinese). 
 
-In order to get things right, I used this same table to record debug messages from my main program. This proved to be a very clever idea.
+In order to get things right, I used this same table to record debug messages from my main program as well. This proved to be a very clever idea.
 
-The mechanism starts with just one language and if there are other languages to process as well, trigger commands are written to a file. 
+The mechanism starts with just one language and if there are other languages to process, trigger commands are written to a file. 
 
 Crontab runs a shell script every minute looking for the existence of this file, and if so, executes the commands in this file and moves it to a backup file for debug purposes.
 
 If all languages are processed, another mechanism is invoked which will produce results files for each language. The whole protocol looks really nice.
 
     M:7727678 [tmp]>select * from tsmst where id_ex = '2181' ORDER BY 2, 3;
-    +-------+---------------------+----------------------------------------------------------------------------------------+
-    | id_ex | tmstmp              | comment                                                                                |
-    +-------+---------------------+----------------------------------------------------------------------------------------+
-    |  2181 | 2018-03-09 02:12:14 | 24657 nohup /c/bak/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /c/bak/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /c/bak/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /c/bak/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /c/bak/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT en DEL :0:                                                               |
-    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT fr DEL :0:                                                               |
-    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT zh DEL :0:                                                               |
-    |  2181 | 2018-03-09 02:13:02 | tsmst.sh INIT nl DEL :0:                                                               |
-    |  2181 | 2018-03-09 02:16:03 | tsmst.sh == GOOD!!!===== LG :fr: === used :182: secs                                   |
-    |  2181 | 2018-03-09 02:16:03 | 22380 while fr done, about to _transfer_tmp_to_ci4                                     |
-    |  2181 | 2018-03-09 02:16:03 | 24756 done INSERT INTO sm_fr                                                           |
-    |  2181 | 2018-03-09 02:16:03 | 24798 DROP TABLE IF EXISTS bak.sm_2181_fr                                              |
-    |  2181 | 2018-03-09 02:16:03 | 24808 INSERT INTO bak.sm_2181_fr SELECT * FROM tmp.sm_2181_fr                          |
-    |  2181 | 2018-03-09 02:16:21 | tsmst.sh == GOOD!!!===== LG :en: === used :200: secs                                   |
-    |  2181 | 2018-03-09 02:16:21 | 22380 while en done, about to _transfer_tmp_to_ci4                                     |
-    |  2181 | 2018-03-09 02:16:21 | 24756 done INSERT INTO sm_en                                                           |
-    |  2181 | 2018-03-09 02:16:21 | 24798 DROP TABLE IF EXISTS bak.sm_2181_en                                              |
-    |  2181 | 2018-03-09 02:16:21 | 24808 INSERT INTO bak.sm_2181_en SELECT * FROM tmp.sm_2181_en                          |
-    |  2181 | 2018-03-09 02:16:24 | tsmst.sh == GOOD!!!===== LG :zh: === used :203: secs                                   |
-    |  2181 | 2018-03-09 02:16:24 | 22380 while zh done, about to _transfer_tmp_to_ci4                                     |
-    |  2181 | 2018-03-09 02:16:24 | 24756 done INSERT INTO sm_zh                                                           |
-    |  2181 | 2018-03-09 02:16:24 | 24798 DROP TABLE IF EXISTS bak.sm_2181_zh                                              |
-    |  2181 | 2018-03-09 02:16:24 | 24808 INSERT INTO bak.sm_2181_zh SELECT * FROM tmp.sm_2181_zh                          |
-    |  2181 | 2018-03-09 02:16:36 | tsmst.sh == GOOD!!!===== LG :nl: === used :215: secs                                   |
-    |  2181 | 2018-03-09 02:16:36 | 22380 while nl done, about to _transfer_tmp_to_ci4                                     |
-    |  2181 | 2018-03-09 02:16:36 | 24756 done INSERT INTO sm_nl                                                           |
-    |  2181 | 2018-03-09 02:16:36 | 24798 DROP TABLE IF EXISTS bak.sm_2181_nl                                              |
-    |  2181 | 2018-03-09 02:16:36 | 24808 INSERT INTO bak.sm_2181_nl SELECT * FROM tmp.sm_2181_nl                          |
-    +-------+---------------------+----------------------------------------------------------------------------------------+
+    +-------+---------------------+---------------------------------------------------------------------------------------------------+
+    | id_ex | tmstmp              | comment                                                                                           |
+    +-------+---------------------+---------------------------------------------------------------------------------------------------+
+    |  2181 | 2018-03-09 02:12:14 | 24657 nohup /path_to_your_script/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT en DEL :0:                                                                          |
+    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT fr DEL :0:                                                                          |
+    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT zh DEL :0:                                                                          |
+    |  2181 | 2018-03-09 02:13:02 | tsmst.sh INIT nl DEL :0:                                                                          |
+    |  2181 | 2018-03-09 02:16:03 | tsmst.sh == GOOD!!!===== LG :fr: === used :182: secs                                              |
+    |  2181 | 2018-03-09 02:16:03 | 22380 while fr done, about to _transfer_tmp_to_ci4                                                |
+    |  2181 | 2018-03-09 02:16:03 | 24756 done INSERT INTO sm_fr                                                                      |
+    |  2181 | 2018-03-09 02:16:03 | 24798 DROP TABLE IF EXISTS bak.sm_2181_fr                                                         |
+    |  2181 | 2018-03-09 02:16:03 | 24808 INSERT INTO bak.sm_2181_fr SELECT * FROM tmp.sm_2181_fr                                     |
+    |  2181 | 2018-03-09 02:16:21 | tsmst.sh == GOOD!!!===== LG :en: === used :200: secs                                              |
+    |  2181 | 2018-03-09 02:16:21 | 22380 while en done, about to _transfer_tmp_to_ci4                                                |
+    |  2181 | 2018-03-09 02:16:21 | 24756 done INSERT INTO sm_en                                                                      |
+    |  2181 | 2018-03-09 02:16:21 | 24798 DROP TABLE IF EXISTS bak.sm_2181_en                                                         |
+    |  2181 | 2018-03-09 02:16:21 | 24808 INSERT INTO bak.sm_2181_en SELECT * FROM tmp.sm_2181_en                                     |
+    |  2181 | 2018-03-09 02:16:24 | tsmst.sh == GOOD!!!===== LG :zh: === used :203: secs                                              |
+    |  2181 | 2018-03-09 02:16:24 | 22380 while zh done, about to _transfer_tmp_to_ci4                                                |
+    |  2181 | 2018-03-09 02:16:24 | 24756 done INSERT INTO sm_zh                                                                      |
+    |  2181 | 2018-03-09 02:16:24 | 24798 DROP TABLE IF EXISTS bak.sm_2181_zh                                                         |
+    |  2181 | 2018-03-09 02:16:24 | 24808 INSERT INTO bak.sm_2181_zh SELECT * FROM tmp.sm_2181_zh                                     |
+    |  2181 | 2018-03-09 02:16:36 | tsmst.sh == GOOD!!!===== LG :nl: === used :215: secs                                              |
+    |  2181 | 2018-03-09 02:16:36 | 22380 while nl done, about to _transfer_tmp_to_ci4                                                |
+    |  2181 | 2018-03-09 02:16:36 | 24756 done INSERT INTO sm_nl                                                                      |
+    |  2181 | 2018-03-09 02:16:36 | 24798 DROP TABLE IF EXISTS bak.sm_2181_nl                                                         |
+    |  2181 | 2018-03-09 02:16:36 | 24808 INSERT INTO bak.sm_2181_nl SELECT * FROM tmp.sm_2181_nl                                     |
+    +-------+---------------------+---------------------------------------------------------------------------------------------------+
     29 rows in set (0.00 sec)
 
 You can see which line is written by the shell script tsmst.sh, the rest stems from my PHP script with the line number for easy identification. 
