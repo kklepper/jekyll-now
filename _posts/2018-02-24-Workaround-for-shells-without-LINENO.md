@@ -2480,7 +2480,7 @@ Furthermore, I hope that you, having read so far, did enjoy the article and don'
 A big thank you to you all <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Last but not least I want to thank all those experts out there emphatically for all their excellent work. There are very many fine solutions I've found for my problems which have been incorporated in my setup without a note.
+Last but not least I want to thank all you experts out there emphatically for all your excellent work. There are very many fine solutions I've found for my problems which have been incorporated in my setup without a note.
 
 Nowadays, whenever I have a problem, I call Google, and if there is a solution, most probably I find it this way. If nobody had this kind of problem, there is a good chance that the problem isn't where I think it is.
 
