@@ -1228,9 +1228,9 @@ I use those extensively from [SuperPuTTY](https://github.com/jimradford/superput
 
 SuperPuTTY is my window to my Linux workhorse on the same network. This box is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant on the same box, but rather more production-like on this separate machine. 
 
-For example, this is the command which is executed automatically via PuTTY configuration and saved as layout to open a mysql session to my master engine `m1` and main database `ci4`: 
+For example, this is the command which is executed automatically via PuTTY configuration and saved as layout to open a mysql session to my master engine `m1` and main database `dj5`: 
 
-    docker@boot2docker:~$ /path_to_your_script/mysql_start.sh ci4
+    docker@boot2docker:~$ /path_to_your_script/mysql_start.sh dj5
 
 This script reads:
 
@@ -1267,8 +1267,8 @@ Here are some other snippets I use often:
     ::ggs::git status
     ::ggp::git push origin master
     ::ggpp::git pull origin master    
-    ::mms1::docker exec -it s1 mysql ci4                  ; start mysql session on slave 1
-    ::mms2::docker exec -it s2 mysql ci4                  ; start mysql session on slave 2 
+    ::mms1::docker exec -it s1 mysql dj5                  ; start mysql session on slave 1
+    ::mms2::docker exec -it s2 mysql dj5                  ; start mysql session on slave 2 
 
 The best are more complex commands which really do good work. For example, I placed a command to the Windows key plus o (denoted in AHK lingo: `#o`) to immediately jump to the function definition in my file, when the cursor is placed on the function name. 
 
@@ -1761,10 +1761,10 @@ In order to find out I used the SQL logging table, because the binlog informatio
 
 What does it mean when rsync thinks a file is different? In my understanding there should be some byte difference in both files. And if so, shouldn't this difference be reflected in the data?
 
-    root@boot2docker:~# ls -la /d/data/master/ci4/cmp_ex_sm#P#p6.MYD
-    -rw-rw----    1 dockrema dockrema    142740 Feb 28 23:10 /d/data/master/ci4/cmp_ex_sm#P#p6.MYD
-    root@boot2docker:~# ls -la /d/data/slave1/ci4/cmp_ex_sm#P#p6.MYD
-    -rw-rw----    1 dockrema dockrema    142740 Feb 28 21:19 /d/data/slave1/ci4/cmp_ex_sm#P#p6.MYD
+    root@boot2docker:~# ls -la /d/data/master/dj5/cmp_ex_sm#P#p6.MYD
+    -rw-rw----    1 dockrema dockrema    142740 Feb 28 23:10 /d/data/master/dj5/cmp_ex_sm#P#p6.MYD
+    root@boot2docker:~# ls -la /d/data/slave1/dj5/cmp_ex_sm#P#p6.MYD
+    -rw-rw----    1 dockrema dockrema    142740 Feb 28 21:19 /d/data/slave1/dj5/cmp_ex_sm#P#p6.MYD
 
 Now this is revealing, isn't it? Both files have different file time data. How come?
 
@@ -1774,7 +1774,7 @@ Exactly this mechanism should have happened on the slave as well. Therefore the 
 
 Let's see what we have got:
 
-    M:7727678 [ci4]>desc cmp_ex_sm;
+    M:7727678 [dj5]>desc cmp_ex_sm;
     +-------------+-----------------------+------+-----+-------------------+-----------------------------+
     | Field       | Type                  | Null | Key | Default           | Extra                       |
     +-------------+-----------------------+------+-----+-------------------+-----------------------------+
@@ -1788,7 +1788,7 @@ Let's see what we have got:
 
 We have a timestamp here. That's another habit of mine. Most every table has an auto increment column and a timestamp. We can use that here.
 
-    M:7727678 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
+    M:7727678 [dj5]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
     +-------+---------------------+
     | id_ex | ca_tmstmp           |
     +-------+---------------------+
@@ -1798,11 +1798,11 @@ We have a timestamp here. That's another habit of mine. Most every table has an 
 
 Now let us start the mysql client for the first slave:
 
-     docker exec -it s1 mysql ci4
+     docker exec -it s1 mysql dj5
 
 and issue the same command here:
 
-    S:8728244 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
+    S:8728244 [dj5]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
     +-------+---------------------+
     | id_ex | ca_tmstmp           |
     +-------+---------------------+
@@ -1812,7 +1812,7 @@ and issue the same command here:
 
 Same procedure for the second slave:
 
-    S:8715945 [ci4]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
+    S:8715945 [dj5]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
     +-------+---------------------+
     | id_ex | ca_tmstmp           |
     +-------+---------------------+
@@ -1823,9 +1823,9 @@ Same procedure for the second slave:
 or, more compact:
 
 
-    $ docker exec m1 mysql -e "SELECT 'm1', id_ex, ca_tmstmp FROM ci4.cmp_ex_sm WHERE id_ex = 6" && \
-      docker exec s1 mysql -e "SELECT 's1', id_ex, ca_tmstmp FROM ci4.cmp_ex_sm WHERE id_ex = 6" && \
-      docker exec s2 mysql -e "SELECT 's2', id_ex, ca_tmstmp FROM ci4.cmp_ex_sm WHERE id_ex = 6"
+    $ docker exec m1 mysql -e "SELECT 'm1', id_ex, ca_tmstmp FROM dj5.cmp_ex_sm WHERE id_ex = 6" && \
+      docker exec s1 mysql -e "SELECT 's1', id_ex, ca_tmstmp FROM dj5.cmp_ex_sm WHERE id_ex = 6" && \
+      docker exec s2 mysql -e "SELECT 's2', id_ex, ca_tmstmp FROM dj5.cmp_ex_sm WHERE id_ex = 6"
     m1      id_ex   ca_tmstmp
     m1      6       2018-03-01 00:10:56
     s1      id_ex   ca_tmstmp
@@ -1869,17 +1869,17 @@ This way, write table locks are minimized in contrast to the rsync method, where
 The function doing the actual compare job is defined like this:
 
     # we check master file
-    chk_master=$(sudo md5sum $datm/ci4/$2.MYD | awk -F" " '{print $1}')
+    chk_master=$(sudo md5sum $datm/dj5/$2.MYD | awk -F" " '{print $1}')
     # we check slave file
-    chk_slave=$(sudo md5sum /d/data/slave$no/ci4/$2.MYD | awk -F" " '{print $1}')
+    chk_slave=$(sudo md5sum /d/data/slave$no/dj5/$2.MYD | awk -F" " '{print $1}')
 
 In case these 2 expressions are different, the master file is copied to the slave file.
 
 What about using this mechanism to shed light on this enigmatic situation?
 
-    $ sudo md5sum /d/data/master/ci4/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
+    $ sudo md5sum /d/data/master/dj5/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
     1e17b1d93fb117bc8f0408259e4433e3
-    $ sudo md5sum /d/data/slave1/ci4/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
+    $ sudo md5sum /d/data/slave1/dj5/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
     896cffca7c7252ef1b043ecfa1137a5e
 
 Well, it looks like these files are indeed different. 
@@ -1909,9 +1909,9 @@ Still, I feel uneasy about the situation. In my understanding those files should
 
 Are they equal database-wise? That question should be easy to answer by mysqldump.
 
-    $ docker exec m1 /bin/ash -c 'mysqldump --opt --compact ci4 cmp_ex_sm > /tmp/cmp_ex_sm_m1.sql'
-    $ docker exec s1 /bin/ash -c 'mysqldump --opt --compact ci4 cmp_ex_sm > /tmp/cmp_ex_sm_s1.sql'
-    $ docker exec s2 /bin/ash -c 'mysqldump --opt --compact ci4 cmp_ex_sm > /tmp/cmp_ex_sm_s2.sql'
+    $ docker exec m1 /bin/ash -c 'mysqldump --opt --compact dj5 cmp_ex_sm > /tmp/cmp_ex_sm_m1.sql'
+    $ docker exec s1 /bin/ash -c 'mysqldump --opt --compact dj5 cmp_ex_sm > /tmp/cmp_ex_sm_s1.sql'
+    $ docker exec s2 /bin/ash -c 'mysqldump --opt --compact dj5 cmp_ex_sm > /tmp/cmp_ex_sm_s2.sql'
 
 At first glance, it looks good.
 
@@ -2241,13 +2241,15 @@ That's much better than `grep`ing the log file.
 Digression: More complexity by languages <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-We have seen more complexity and the samples suggest that there is even more to show. The next example shows our script working on different languages: de (German), en (English), fr (French), nl (Dutch), zh (Chinese). 
+We have seen more complexity and the samples suggest that there is even more to show. The next example shows our script working on different languages: in the case of ID `2181` the 5 languages `de` (German), `en` (English), `fr` (French), `nl` (Dutch), `zh` (Chinese). 
 
 In order to get things right, I used this same table to record debug messages from my PHP program as well. This proved to be a very clever idea.
 
-The mechanism starts with just one language and if there are other languages to process, trigger commands are written to a file. 
+The mechanism starts with just one language and if there are other languages to process, trigger commands are written to a file(first 5 lines). 
 
-Crontab runs a shell script every minute looking for the existence of this file, and if so, executes the commands in this file and moves it to a backup file for debug purposes.
+Crontab runs a shell script every minute looking for the existence of this file, and if so, executes the commands in this file (next 5 lines) and moves that trigger file to a backup file for debug purposes.
+
+If a language is processed, the data is transferred from the tmp database to the main database dj5, the backup table in database bak is dropped, the tmp result table is copied to the database bak in case the data should be of use for inspection.
 
 If all languages are processed, another mechanism is invoked which will produce results files for each language. The whole protocol looks really nice.
 
@@ -2265,22 +2267,22 @@ If all languages are processed, another mechanism is invoked which will produce 
     |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT zh DEL :0:                                                                          |
     |  2181 | 2018-03-09 02:13:02 | tsmst.sh INIT nl DEL :0:                                                                          |
     |  2181 | 2018-03-09 02:16:03 | tsmst.sh == GOOD!!!===== LG :fr: === used :182: secs                                              |
-    |  2181 | 2018-03-09 02:16:03 | 22380 while fr done, about to _transfer_tmp_to_ci4                                                |
+    |  2181 | 2018-03-09 02:16:03 | 22380 while fr done, about to _transfer_tmp_to_dj5                                                |
     |  2181 | 2018-03-09 02:16:03 | 24756 done INSERT INTO sm_fr                                                                      |
     |  2181 | 2018-03-09 02:16:03 | 24798 DROP TABLE IF EXISTS bak.sm_2181_fr                                                         |
     |  2181 | 2018-03-09 02:16:03 | 24808 INSERT INTO bak.sm_2181_fr SELECT * FROM tmp.sm_2181_fr                                     |
     |  2181 | 2018-03-09 02:16:21 | tsmst.sh == GOOD!!!===== LG :en: === used :200: secs                                              |
-    |  2181 | 2018-03-09 02:16:21 | 22380 while en done, about to _transfer_tmp_to_ci4                                                |
+    |  2181 | 2018-03-09 02:16:21 | 22380 while en done, about to _transfer_tmp_to_dj5                                                |
     |  2181 | 2018-03-09 02:16:21 | 24756 done INSERT INTO sm_en                                                                      |
     |  2181 | 2018-03-09 02:16:21 | 24798 DROP TABLE IF EXISTS bak.sm_2181_en                                                         |
     |  2181 | 2018-03-09 02:16:21 | 24808 INSERT INTO bak.sm_2181_en SELECT * FROM tmp.sm_2181_en                                     |
     |  2181 | 2018-03-09 02:16:24 | tsmst.sh == GOOD!!!===== LG :zh: === used :203: secs                                              |
-    |  2181 | 2018-03-09 02:16:24 | 22380 while zh done, about to _transfer_tmp_to_ci4                                                |
+    |  2181 | 2018-03-09 02:16:24 | 22380 while zh done, about to _transfer_tmp_to_dj5                                                |
     |  2181 | 2018-03-09 02:16:24 | 24756 done INSERT INTO sm_zh                                                                      |
     |  2181 | 2018-03-09 02:16:24 | 24798 DROP TABLE IF EXISTS bak.sm_2181_zh                                                         |
     |  2181 | 2018-03-09 02:16:24 | 24808 INSERT INTO bak.sm_2181_zh SELECT * FROM tmp.sm_2181_zh                                     |
     |  2181 | 2018-03-09 02:16:36 | tsmst.sh == GOOD!!!===== LG :nl: === used :215: secs                                              |
-    |  2181 | 2018-03-09 02:16:36 | 22380 while nl done, about to _transfer_tmp_to_ci4                                                |
+    |  2181 | 2018-03-09 02:16:36 | 22380 while nl done, about to _transfer_tmp_to_dj5                                                |
     |  2181 | 2018-03-09 02:16:36 | 24756 done INSERT INTO sm_nl                                                                      |
     |  2181 | 2018-03-09 02:16:36 | 24798 DROP TABLE IF EXISTS bak.sm_2181_nl                                                         |
     |  2181 | 2018-03-09 02:16:36 | 24808 INSERT INTO bak.sm_2181_nl SELECT * FROM tmp.sm_2181_nl                                     |
