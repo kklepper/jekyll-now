@@ -2348,6 +2348,7 @@ Having a closer look, it turns out that the database engine can do microtime by 
 Now I took the pain to clean up my code. I had inserted with copy and paste lots of `INSERT` statements, which I replaced by a function accepting one value for the column `comment`.
 
     function _tmp_tsmst_record($comment) {
+        $comment = addSlashes($comment); 
         $sql = "INSERT INTO tmp.tsmst (id_ex, tmstmp, comment) VALUES ($this->id_ex, NOW(6), '$comment')";
         $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
     } # _tmp_tsmst_record
@@ -2460,7 +2461,7 @@ Now it looks really fine (in order to make it more readable for me and you I int
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     85 rows in set (0.00 sec)
 
-Here `too early` means that I have to wait for all language processes to be completed before I can sum up.
+Here `too early` means that I have to wait for all language processes to be completed before I can sum up with `Ex_model->_build_tn`.
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy. This technique has saved me much time and effort. 
 
