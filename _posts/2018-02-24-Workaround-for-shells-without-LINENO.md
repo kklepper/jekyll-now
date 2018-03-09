@@ -2247,11 +2247,11 @@ In order to get things right, I used this same table to record debug messages fr
 
 The mechanism starts with just one language and if there are other languages to process, trigger commands are written to a file (first 5 lines). 
 
-Crontab runs a shell script every minute looking for the existence of this file, and if so, executes the commands in this file (next 5 lines) and moves that trigger file to a backup file for debug purposes.
+Crontab runs a shell script every minute looking for the existence of this file, and if so, executes the commands in this file (next 4 lines) and moves that trigger file to a backup file for debug purposes.
 
-If a language is processed, the data is transferred from the tmp database to the main database dj5, the backup table in database bak is dropped, the tmp result table is copied to the database bak in case the data should be of use for inspection.
+If a language is processed (`tsmst.sh == GOOD!!!`), the data is transferred from the `tmp` database to the main database `dj5` (`done INSERT INTO`), the backup table in database `bak` is dropped (`DROP TABLE IF EXISTS`), at last the `tmp` result table is copied to the database `bak` in case the data should be of use for inspection (`INSERT INTO bak`).
 
-If all languages are processed, another mechanism is invoked which will produce results files for each language. The whole protocol looks really nice.
+If all languages are processed, another mechanism is invoked which will produce results files for each language (not in the protocol). The whole protocol looks really nice.
 
     M:7727678 [tmp]>select * from tsmst where id_ex = '2181' ORDER BY 2, 3;
     +-------+---------------------+---------------------------------------------------------------------------------------------------+
@@ -2286,6 +2286,11 @@ If all languages are processed, another mechanism is invoked which will produce 
     |  2181 | 2018-03-09 02:16:36 | 24756 done INSERT INTO sm_nl                                                                      |
     |  2181 | 2018-03-09 02:16:36 | 24798 DROP TABLE IF EXISTS bak.sm_2181_nl                                                         |
     |  2181 | 2018-03-09 02:16:36 | 24808 INSERT INTO bak.sm_2181_nl SELECT * FROM tmp.sm_2181_nl                                     |
+    |  2181 | 2018-03-09 02:16:36 | 24832 de 2181 _build_sm                                                                           |
+    |  2181 | 2018-03-09 02:16:36 | 24832 en 2181 _build_sm                                                                           |
+    |  2181 | 2018-03-09 02:16:36 | 24832 fr 2181 _build_sm                                                                           |
+    |  2181 | 2018-03-09 02:16:36 | 24832 nl 2181 _build_sm                                                                           |
+    |  2181 | 2018-03-09 02:16:36 | 24832 zh 2181 _build_sm                                                                           |
     +-------+---------------------+---------------------------------------------------------------------------------------------------+
     29 rows in set (0.00 sec)
 
