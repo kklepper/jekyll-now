@@ -2337,7 +2337,7 @@ I had been lazy and did not list the columns when doing an insert, as I listed a
 Digression: Adding microtime natively <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Having a closer look, it turns out that the database engine can do microtime by itself, so I could drop the microtime column and the trigger and nevertheless leave the corrected PHP code in place as a reminder that this can happen any time and it is good practice to list all columns for this reason.
+Having a closer look, it turns out that the database engine can do microtime by itself now, so I could drop the microtime column and the trigger and nevertheless leave the corrected PHP code in place as a reminder that this can happen any time and it is good practice to list all columns for this reason.
 
     ALTER TABLE `tsmst`
     CHANGE `tmstmp` `tmstmp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `id_ex`,
@@ -2354,7 +2354,7 @@ Now I took the pain to clean up my code. I had inserted with copy and paste lots
 
 The term `NOW(6)` reflects the new definition of the timestamp column. And as I introduced this mechanism into several PHP files, I pushed this function definition high enough in the hierarchy to be used by all models. Well, the shell script also had to be corrected from `NOW()` to `NOW(6)`.
 
-Now it looks really fime:
+Now it looks really fine ():
 
     M:7727678 [tmp]>select * from tsmst where id_ex = '2181' ORDER BY 2;
     +-------+----------------------------+-------------------------------------------------------------------------------------------------------------+
