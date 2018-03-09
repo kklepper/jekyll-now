@@ -2330,7 +2330,7 @@ He told me that they had huge problems with their customers because their databa
 
 That reminded me of programming rule number one: start simple and try to stay simple. It will become complex fast enough.
 
-So from this reason alone I would object to introduce a trigger, although I admit that this solution looks very elegant. The second reason is that I have to change my PHP code. 
+So from this reason alone I would object to introduce a trigger, although I admit that this solution looks very elegant. The second reason is that I had to change my PHP code. 
 
 I had been lazy and did not list the columns when doing an insert, as I listed all the values anyway. Now my database had one more column, so these commands didn't work anymore. Okay, I changed everything in two PHP files, but then it turned out that I also had to change a shell script as well. At this point I hesitated.
 
