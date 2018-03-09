@@ -2294,7 +2294,7 @@ If all languages are processed, another mechanism is invoked which will produce 
     +-------+---------------------+---------------------------------------------------------------------------------------------------+
     29 rows in set (0.00 sec)
 
-You can see which line is written by the shell script tsmst.sh, the rest stems from my PHP script with the line number for easy identification. 
+You can see which line is written by the shell script tsmst.sh responsible for starting the language specific process, the rest stems from my PHP script with the line number for easy identification. 
 
 End of digression.
 
