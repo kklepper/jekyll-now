@@ -2243,7 +2243,7 @@ Digression: More complexity by languages <span style="font-size: 11px;float: rig
 
 We have seen more complexity and the samples suggest that there is even more to show. The next example shows our script working on different languages: de (German), en (English), fr (French), nl (Dutch), zh (Chinese). 
 
-In order to get things right, I used this same table to record debug messages from my main program as well. This proved to be a very clever idea.
+In order to get things right, I used this same table to record debug messages from my PHP program as well. This proved to be a very clever idea.
 
 The mechanism starts with just one language and if there are other languages to process, trigger commands are written to a file. 
 
