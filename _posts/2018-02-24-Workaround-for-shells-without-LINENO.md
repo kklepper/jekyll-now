@@ -2461,7 +2461,9 @@ Now it looks really fine (in order to make it more readable for me and you I int
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     85 rows in set (0.00 sec)
 
-Here `too early` means that I have to wait for all language processes to be completed before I can sum up with `Ex_model->_build_tn`.
+Here `too early` means that I have to wait for all language processes to be completed before I can sum up with `Ex_model->_build_tn`. 
+
+Some lines seem to be redundant -- you see that I track the value of a variable which seemed to be wrong. The problem was not where I thought it would be. However, I find out where it was with the same technique and fixed the problem, so what you see here is just the remainder which is clean now. 
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy. This technique has saved me much time and effort. 
 
