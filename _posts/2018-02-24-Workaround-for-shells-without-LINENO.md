@@ -2249,9 +2249,9 @@ The mechanism starts with just one language and if there are other languages to 
 
 Crontab runs a shell script every minute looking for the existence of this file, and if so, executes the commands in this file (next 4 lines) and moves that trigger file to a backup file for debug purposes.
 
-If a language is processed (`tsmst.sh == GOOD!!!`), the data is transferred from the `tmp` database to the main database `dj5` (`done INSERT INTO`), the backup table in database `bak` is dropped (`DROP TABLE IF EXISTS`), at last the `tmp` result table is copied to the database `bak` in case the data should be of use for inspection (`INSERT INTO bak`).
+If a language is processed (`tsmst.sh == GOOD!!!`), the data is transferred from the `tmp` database to the main database `dj5` (`done INSERT INTO`), the backup table in database `bak` is dropped (`DROP TABLE IF EXISTS`), at last the `tmp` result table is copied to the database `bak` in case the data should be of use for inspection (`INSERT INTO bak`). Of course, before doing that, the `bak` table has to be created, which is not recorded here (`CREATE TABLE $bak LIKE $tbl`).
 
-If all languages are processed, another mechanism is invoked which will produce results files for each language (not in the protocol). The whole protocol looks really nice.
+If all languages are processed, another mechanism is invoked which will produce results files for each language (the last 5 lines). The whole protocol looks really nice and is extremely useful for debugging.
 
     M:7727678 [tmp]>select * from tsmst where id_ex = '2181' ORDER BY 2, 3;
     +-------+---------------------+---------------------------------------------------------------------------------------------------+
