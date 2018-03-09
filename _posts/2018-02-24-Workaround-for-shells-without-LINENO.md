@@ -1163,8 +1163,8 @@ Everything okay now? Test it.
     M:7727678 [tmp]>SELECT id_sql, uncompress(sql_compressed) FROM tmp.sql_log_log ORDER BY 1 LIMIT 1\G
     *************************** 1. row ***************************
                         id_sql: 1
-    uncompress(sql_compressed): DROP TABLE IF EXISTS tmp.sm_id_ar, tmp.sm_id_bn, tmp.sm_id_de, tmp.sm_id_en, tmp.sm_id_es, tmp.sm_id_fa, tmp.sm_id_fr, tmp.sm_id_hi, tmp.sm_id_it, tmp.sm_id_ja, tmp.sm_id_nl, tmp.sm_id_pt, tmp.sm_id_ru, tmp.sm_id_ur, tmp.sm_id_zh
-    # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sm
+    uncompress(sql_compressed): DROP TABLE IF EXISTS tmp.tn_id_ar, tmp.tn_id_bn, tmp.tn_id_de, tmp.tn_id_en, tmp.tn_id_es, tmp.tn_id_fa, tmp.tn_id_fr, tmp.tn_id_hi, tmp.tn_id_it, tmp.tn_id_ja, tmp.tn_id_nl, tmp.tn_id_pt, tmp.tn_id_ru, tmp.tn_id_ur, tmp.tn_id_zh
+    # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_tn
     1 row in set (0.00 sec)
 
 The code is pretty much self-explanatory. May I point you to the comment in this SQL statement?
@@ -1174,7 +1174,7 @@ Digression: Comments and editors <span style="font-size: 11px;float: right;"><a 
 
 If you have a fairly complex application, you want to know where to look when an error occurs. That's why I made it a habit to add this kind of debug information to every single SQL query in my code. I want to see the line, the file and the method which has called this database query. 
 
-    # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_sm 
+    # L: 1926. F:/www/application/models/Ex_model.php. M: Ex_model::_drop_tmp_tn 
 
 Maybe there are even more calls in between, so I get something like a trace. I have 2 mechanisms for this. The first is used when I don't want to clutter the SQL term with debug information. I then simply insert the line
 
@@ -1724,27 +1724,27 @@ But the synchronizing script tells me otherwise:
     41: " -------- FLUSH TABLES LOCK TABLES WRITE" DATE
     48: " -------- rsync datm dat1"
     sending incremental file list
-    cmp_ex_sm#P#p6.MYD
-    cmp_ex_sm#P#p6.MYI
+    cmp_ex_tn#P#p6.MYD
+    cmp_ex_tn#P#p6.MYI
     cmp_temp.MYD
     cmp_temp.MYI
     ex.MYD
     ex.MYI
-    sm_de#P#p6.MYD
-    sm_de#P#p6.MYI
+    tn_de#P#p6.MYD
+    tn_de#P#p6.MYI
     
     sent 192,358,460 bytes  received 172 bytes  29,593,635.69 bytes/sec
     total size is 4,469,961,199  speedup is 23.24
         =========================================== 2018-02-28_22:50:29
     sending incremental file list
-    cmp_ex_sm#P#p6.MYD
-    cmp_ex_sm#P#p6.MYI
+    cmp_ex_tn#P#p6.MYD
+    cmp_ex_tn#P#p6.MYI
     cmp_temp.MYD
     cmp_temp.MYI
     ex.MYD
     ex.MYI
-    sm_de#P#p6.MYD
-    sm_de#P#p6.MYI
+    tn_de#P#p6.MYD
+    tn_de#P#p6.MYI
     
     sent 192,358,460 bytes  received 172 bytes  54,959,609.14 bytes/sec
     total size is 4,469,961,199  speedup is 23.24
@@ -1761,10 +1761,10 @@ In order to find out I used the SQL logging table, because the binlog informatio
 
 What does it mean when rsync thinks a file is different? In my understanding there should be some byte difference in both files. And if so, shouldn't this difference be reflected in the data?
 
-    root@boot2docker:~# ls -la /d/data/master/dj5/cmp_ex_sm#P#p6.MYD
-    -rw-rw----    1 dockrema dockrema    142740 Feb 28 23:10 /d/data/master/dj5/cmp_ex_sm#P#p6.MYD
-    root@boot2docker:~# ls -la /d/data/slave1/dj5/cmp_ex_sm#P#p6.MYD
-    -rw-rw----    1 dockrema dockrema    142740 Feb 28 21:19 /d/data/slave1/dj5/cmp_ex_sm#P#p6.MYD
+    root@boot2docker:~# ls -la /d/data/master/dj5/cmp_ex_tn#P#p6.MYD
+    -rw-rw----    1 dockrema dockrema    142740 Feb 28 23:10 /d/data/master/dj5/cmp_ex_tn#P#p6.MYD
+    root@boot2docker:~# ls -la /d/data/slave1/dj5/cmp_ex_tn#P#p6.MYD
+    -rw-rw----    1 dockrema dockrema    142740 Feb 28 21:19 /d/data/slave1/dj5/cmp_ex_tn#P#p6.MYD
 
 Now this is revealing, isn't it? Both files have different file time data. How come?
 
@@ -1774,21 +1774,21 @@ Exactly this mechanism should have happened on the slave as well. Therefore the 
 
 Let's see what we have got:
 
-    M:7727678 [dj5]>desc cmp_ex_sm;
+    M:7727678 [dj5]>desc cmp_ex_tn;
     +-------------+-----------------------+------+-----+-------------------+-----------------------------+
     | Field       | Type                  | Null | Key | Default           | Extra                       |
     +-------------+-----------------------+------+-----+-------------------+-----------------------------+
     | id_ex       | bigint(20) unsigned   | NO   | PRI | NULL              |                             |
     | lg          | varchar(2)            | NO   | PRI |                   |                             |
     | str         | mediumblob            | NO   |     | NULL              |                             |
-    | sm_cnt      | mediumint(8) unsigned | NO   |     | 0                 |                             |
+    | tn_cnt      | mediumint(8) unsigned | NO   |     | 0                 |                             |
     | ca_tmstmp   | timestamp             | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
     +-------------+-----------------------+------+-----+-------------------+-----------------------------+
     5 rows in set (0.00 sec)
 
 We have a timestamp here. That's another habit of mine. Most every table has an auto increment column and a timestamp. We can use that here.
 
-    M:7727678 [dj5]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
+    M:7727678 [dj5]>SELECT id_ex, ca_tmstmp FROM cmp_ex_tn WHERE id_ex = 6;
     +-------+---------------------+
     | id_ex | ca_tmstmp           |
     +-------+---------------------+
@@ -1802,7 +1802,7 @@ Now let us start the mysql client for the first slave:
 
 and issue the same command here:
 
-    S:8728244 [dj5]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
+    S:8728244 [dj5]>SELECT id_ex, ca_tmstmp FROM cmp_ex_tn WHERE id_ex = 6;
     +-------+---------------------+
     | id_ex | ca_tmstmp           |
     +-------+---------------------+
@@ -1812,7 +1812,7 @@ and issue the same command here:
 
 Same procedure for the second slave:
 
-    S:8715945 [dj5]>SELECT id_ex, ca_tmstmp FROM cmp_ex_sm WHERE id_ex = 6;
+    S:8715945 [dj5]>SELECT id_ex, ca_tmstmp FROM cmp_ex_tn WHERE id_ex = 6;
     +-------+---------------------+
     | id_ex | ca_tmstmp           |
     +-------+---------------------+
@@ -1823,9 +1823,9 @@ Same procedure for the second slave:
 or, more compact:
 
 
-    $ docker exec m1 mysql -e "SELECT 'm1', id_ex, ca_tmstmp FROM dj5.cmp_ex_sm WHERE id_ex = 6" && \
-      docker exec s1 mysql -e "SELECT 's1', id_ex, ca_tmstmp FROM dj5.cmp_ex_sm WHERE id_ex = 6" && \
-      docker exec s2 mysql -e "SELECT 's2', id_ex, ca_tmstmp FROM dj5.cmp_ex_sm WHERE id_ex = 6"
+    $ docker exec m1 mysql -e "SELECT 'm1', id_ex, ca_tmstmp FROM dj5.cmp_ex_tn WHERE id_ex = 6" && \
+      docker exec s1 mysql -e "SELECT 's1', id_ex, ca_tmstmp FROM dj5.cmp_ex_tn WHERE id_ex = 6" && \
+      docker exec s2 mysql -e "SELECT 's2', id_ex, ca_tmstmp FROM dj5.cmp_ex_tn WHERE id_ex = 6"
     m1      id_ex   ca_tmstmp
     m1      6       2018-03-01 00:10:56
     s1      id_ex   ca_tmstmp
@@ -1877,9 +1877,9 @@ In case these 2 expressions are different, the master file is copied to the slav
 
 What about using this mechanism to shed light on this enigmatic situation?
 
-    $ sudo md5sum /d/data/master/dj5/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
+    $ sudo md5sum /d/data/master/dj5/cmp_ex_tn#P#p6.MYD | awk -F" " '{print $1}'
     1e17b1d93fb117bc8f0408259e4433e3
-    $ sudo md5sum /d/data/slave1/dj5/cmp_ex_sm#P#p6.MYD | awk -F" " '{print $1}'
+    $ sudo md5sum /d/data/slave1/dj5/cmp_ex_tn#P#p6.MYD | awk -F" " '{print $1}'
     896cffca7c7252ef1b043ecfa1137a5e
 
 Well, it looks like these files are indeed different. 
@@ -1909,24 +1909,24 @@ Still, I feel uneasy about the situation. In my understanding those files should
 
 Are they equal database-wise? That question should be easy to answer by mysqldump.
 
-    $ docker exec m1 /bin/ash -c 'mysqldump --opt --compact dj5 cmp_ex_sm > /tmp/cmp_ex_sm_m1.sql'
-    $ docker exec s1 /bin/ash -c 'mysqldump --opt --compact dj5 cmp_ex_sm > /tmp/cmp_ex_sm_s1.sql'
-    $ docker exec s2 /bin/ash -c 'mysqldump --opt --compact dj5 cmp_ex_sm > /tmp/cmp_ex_sm_s2.sql'
+    $ docker exec m1 /bin/ash -c 'mysqldump --opt --compact dj5 cmp_ex_tn > /tmp/cmp_ex_tn_m1.sql'
+    $ docker exec s1 /bin/ash -c 'mysqldump --opt --compact dj5 cmp_ex_tn > /tmp/cmp_ex_tn_s1.sql'
+    $ docker exec s2 /bin/ash -c 'mysqldump --opt --compact dj5 cmp_ex_tn > /tmp/cmp_ex_tn_s2.sql'
 
 At first glance, it looks good.
 
     $ ls -latr /tmp/cmp_ex*
-    -rw-r--r--    1 root     root      15959336 Mar  1 10:29 cmp_ex_sm_m1.sql
-    -rw-r--r--    1 root     root      15959336 Mar  1 10:30 cmp_ex_sm_s1.sql
-    -rw-r--r--    1 root     root      15959336 Mar  1 10:30 cmp_ex_sm_s2.sql
+    -rw-r--r--    1 root     root      15959336 Mar  1 10:29 cmp_ex_tn_m1.sql
+    -rw-r--r--    1 root     root      15959336 Mar  1 10:30 cmp_ex_tn_s1.sql
+    -rw-r--r--    1 root     root      15959336 Mar  1 10:30 cmp_ex_tn_s2.sql
 
 But even thorough inspection reveals that they are indeed identical.
 
-    $ md5sum /tmp/cmp_ex_sm_m1.sql | awk -F" " '{print $1}'
+    $ md5sum /tmp/cmp_ex_tn_m1.sql | awk -F" " '{print $1}'
     42d3702f3e0e7f2f6956d9a722f1eb88
-    $ md5sum /tmp/cmp_ex_sm_s1.sql | awk -F" " '{print $1}'
+    $ md5sum /tmp/cmp_ex_tn_s1.sql | awk -F" " '{print $1}'
     42d3702f3e0e7f2f6956d9a722f1eb88
-    $ md5sum /tmp/cmp_ex_sm_s2.sql | awk -F" " '{print $1}'
+    $ md5sum /tmp/cmp_ex_tn_s2.sql | awk -F" " '{print $1}'
     42d3702f3e0e7f2f6956d9a722f1eb88
 
 Any explanation why the data files are different? No idea.
@@ -2268,29 +2268,29 @@ If all languages are processed, another mechanism is invoked which will produce 
     |  2181 | 2018-03-09 02:13:02 | tsmst.sh INIT nl DEL :0:                                                                          |
     |  2181 | 2018-03-09 02:16:03 | tsmst.sh == GOOD!!!===== LG :fr: === used :182: secs                                              |
     |  2181 | 2018-03-09 02:16:03 | 22380 while fr done, about to _transfer_tmp_to_dj5                                                |
-    |  2181 | 2018-03-09 02:16:03 | 24756 done INSERT INTO sm_fr                                                                      |
-    |  2181 | 2018-03-09 02:16:03 | 24798 DROP TABLE IF EXISTS bak.sm_2181_fr                                                         |
-    |  2181 | 2018-03-09 02:16:03 | 24808 INSERT INTO bak.sm_2181_fr SELECT * FROM tmp.sm_2181_fr                                     |
+    |  2181 | 2018-03-09 02:16:03 | 24756 done INSERT INTO tn_fr                                                                      |
+    |  2181 | 2018-03-09 02:16:03 | 24798 DROP TABLE IF EXISTS bak.tn_2181_fr                                                         |
+    |  2181 | 2018-03-09 02:16:03 | 24808 INSERT INTO bak.tn_2181_fr SELECT * FROM tmp.tn_2181_fr                                     |
     |  2181 | 2018-03-09 02:16:21 | tsmst.sh == GOOD!!!===== LG :en: === used :200: secs                                              |
     |  2181 | 2018-03-09 02:16:21 | 22380 while en done, about to _transfer_tmp_to_dj5                                                |
-    |  2181 | 2018-03-09 02:16:21 | 24756 done INSERT INTO sm_en                                                                      |
-    |  2181 | 2018-03-09 02:16:21 | 24798 DROP TABLE IF EXISTS bak.sm_2181_en                                                         |
-    |  2181 | 2018-03-09 02:16:21 | 24808 INSERT INTO bak.sm_2181_en SELECT * FROM tmp.sm_2181_en                                     |
+    |  2181 | 2018-03-09 02:16:21 | 24756 done INSERT INTO tn_en                                                                      |
+    |  2181 | 2018-03-09 02:16:21 | 24798 DROP TABLE IF EXISTS bak.tn_2181_en                                                         |
+    |  2181 | 2018-03-09 02:16:21 | 24808 INSERT INTO bak.tn_2181_en SELECT * FROM tmp.tn_2181_en                                     |
     |  2181 | 2018-03-09 02:16:24 | tsmst.sh == GOOD!!!===== LG :zh: === used :203: secs                                              |
     |  2181 | 2018-03-09 02:16:24 | 22380 while zh done, about to _transfer_tmp_to_dj5                                                |
-    |  2181 | 2018-03-09 02:16:24 | 24756 done INSERT INTO sm_zh                                                                      |
-    |  2181 | 2018-03-09 02:16:24 | 24798 DROP TABLE IF EXISTS bak.sm_2181_zh                                                         |
-    |  2181 | 2018-03-09 02:16:24 | 24808 INSERT INTO bak.sm_2181_zh SELECT * FROM tmp.sm_2181_zh                                     |
+    |  2181 | 2018-03-09 02:16:24 | 24756 done INSERT INTO tn_zh                                                                      |
+    |  2181 | 2018-03-09 02:16:24 | 24798 DROP TABLE IF EXISTS bak.tn_2181_zh                                                         |
+    |  2181 | 2018-03-09 02:16:24 | 24808 INSERT INTO bak.tn_2181_zh SELECT * FROM tmp.tn_2181_zh                                     |
     |  2181 | 2018-03-09 02:16:36 | tsmst.sh == GOOD!!!===== LG :nl: === used :215: secs                                              |
     |  2181 | 2018-03-09 02:16:36 | 22380 while nl done, about to _transfer_tmp_to_dj5                                                |
-    |  2181 | 2018-03-09 02:16:36 | 24756 done INSERT INTO sm_nl                                                                      |
-    |  2181 | 2018-03-09 02:16:36 | 24798 DROP TABLE IF EXISTS bak.sm_2181_nl                                                         |
-    |  2181 | 2018-03-09 02:16:36 | 24808 INSERT INTO bak.sm_2181_nl SELECT * FROM tmp.sm_2181_nl                                     |
-    |  2181 | 2018-03-09 02:16:36 | 24832 de 2181 _build_sm                                                                           |
-    |  2181 | 2018-03-09 02:16:36 | 24832 en 2181 _build_sm                                                                           |
-    |  2181 | 2018-03-09 02:16:36 | 24832 fr 2181 _build_sm                                                                           |
-    |  2181 | 2018-03-09 02:16:36 | 24832 nl 2181 _build_sm                                                                           |
-    |  2181 | 2018-03-09 02:16:36 | 24832 zh 2181 _build_sm                                                                           |
+    |  2181 | 2018-03-09 02:16:36 | 24756 done INSERT INTO tn_nl                                                                      |
+    |  2181 | 2018-03-09 02:16:36 | 24798 DROP TABLE IF EXISTS bak.tn_2181_nl                                                         |
+    |  2181 | 2018-03-09 02:16:36 | 24808 INSERT INTO bak.tn_2181_nl SELECT * FROM tmp.tn_2181_nl                                     |
+    |  2181 | 2018-03-09 02:16:36 | 24832 de 2181 _build_tn                                                                           |
+    |  2181 | 2018-03-09 02:16:36 | 24832 en 2181 _build_tn                                                                           |
+    |  2181 | 2018-03-09 02:16:36 | 24832 fr 2181 _build_tn                                                                           |
+    |  2181 | 2018-03-09 02:16:36 | 24832 nl 2181 _build_tn                                                                           |
+    |  2181 | 2018-03-09 02:16:36 | 24832 zh 2181 _build_tn                                                                           |
     +-------+---------------------+---------------------------------------------------------------------------------------------------+
     29 rows in set (0.00 sec)
 
