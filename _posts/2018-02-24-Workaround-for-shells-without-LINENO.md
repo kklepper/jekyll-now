@@ -53,6 +53,7 @@ published: true
 > - [Digression: Proof of concept](#digression-proof-of-concept-table-of-content)
 > - [Digression: Record by database](#digression-record-by-database-table-of-content)
 > - [Digression: More complexity by languages](#digression-more-complexity-by-languages-table-of-content)
+> - [Digression: Adding microtime](#digression-adding-microtime-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
 
@@ -2297,6 +2298,51 @@ If all languages are processed, another mechanism is invoked which will produce 
 You can see which line is written by the shell script tsmst.sh responsible for starting the language specific process, the rest stems from my PHP script preceded by the line number for easy identification. 
 
 It's funny -- I'm programming for so long now and never developed a viable idea how to track what a program is really doing. CodeIgniter has a `benchmark class` which I misused for this purpose at times, but that was unrewarding mostly. This idea, however, seems to be really helpful.
+
+Digression: Adding microtime <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+That's fine, but still not really satisfactorily. The reason is that one second is too long a time to get the right sequence of commands. Hence the protocol is hard to read. 
+
+As MySQL or MariaDB don't have a special data type `microtime`, I was looking for a solution via Google and first hit an attempt which is fine but nevertheless didn't convince me in the end: [Default value for “microtime” column in MySQL](https://dba.stackexchange.com/questions/114850/default-value-for-microtime-column-in-mysql).
+
+    ALTER TABLE `tsmst`
+    ADD `microtime` decimal(16,6) NOT NULL;
+    
+    DELIMITER //
+    
+    CREATE DEFINER=`root`@`localhost` TRIGGER `tmp`.`tsmst_BEFORE_INSERT` BEFORE INSERT ON `tsmst` FOR EACH ROW
+     BEGIN
+     SET NEW.microtime=UNIX_TIMESTAMP(NOW(6));
+     END
+     //
+    
+    DELIMITER ;
+
+This is the first time that I defined a trigger. 20 years ago, I had an employee who was a programming genius. I had to let him go and he ended up working for a company having a complex solution for haulage contractors. He told me that they had huge problems with their customers because their engine all of a sudden would do enigmatic operations and nobody would know what was happening. The reason was tons of triggers buried somewhere deep in the database nobody had an idea of, one calling the other under circumstances which were hard to test.
+
+That reminded me of programming rule number one: start simple and try to stay simple. It will become complex fast enough.
+
+So from this reason alone I would object to introducing a trigger, although I admit that this solution looks very elegant. The second reason is that I have to change my PHP code. I had been lazy and did not list the columns when doing an insert, as I listed all the values anyway. Now my database had one more column, so these commands didn't work anymore. Okay, I changed everything in two PHP files, but then it turned out that I also had to change a shell script as well. At this point I hesitated.
+
+Having a closer look, it turns out that the database engine can do microtime by itself, so I could drop the microtime column and nevertheless leave the corrected PHP code in place as a reminder that this can happen any time and it is good practice to list all columns for this reason.
+
+    ALTER TABLE `tsmst`
+    CHANGE `tmstmp` `tmstmp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `id_ex`,
+    DROP `microtime`;
+
+    DROP TRIGGER `tmp`.`tsmst_BEFORE_INSERT`;
+
+Now I took the pain to clean up my code. I had inserted with copy and paste lots of `INSERT` statements, which I replaced by a function accepting one value for the column `comment`.
+
+    function _tmp_tsmst_record($comment) {
+        $sql = "INSERT INTO tmp.tsmst (id_ex, tmstmp, comment) VALUES ($this->id_ex, NOW(6), '$comment')";
+        $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
+    } # _tmp_tsmst_record
+
+The term `NOW(6)` reflects the new definition of the timestamp column. And as I introduced this mechanism into several PHP files, I pushed this function definition high enough in the hierarchy to be used by all models.
+
+
 
 End of digression.
 
