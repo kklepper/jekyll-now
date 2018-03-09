@@ -2465,6 +2465,69 @@ Here `too early` means that I have to wait for all language processes to be comp
 
 Some lines seem to be redundant -- you see that I track the value of a variable which seemed to be wrong. The problem was not where I thought it would be. However, I find out where it was with the same technique and fixed the problem, so what you see here is just the remainder which is clean now. 
 
+Omitting these lines which are now superfluous, the whole picture is even clearer:
+
+    M:7727678 [tmp]>select tmstmp, comment from tsmst where id_ex = '2181' ORDER BY 1;
+    +----------------------------+-------------------------------------------------------------------------------------------------------------+
+    | tmstmp                     | comment                                                                                                     |
+    +----------------------------+-------------------------------------------------------------------------------------------------------------+
+    | 2018-03-09 19:09:45.077000 | tsmst.sh INIT en DEL :1:                                                                                    |
+    
+    | 2018-03-09 19:09:54.465791 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.467829 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.469888 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.471953 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.473298 | 24663 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    
+    | 2018-03-09 19:10:02.085619 | tsmst.sh INIT nl DEL :0:                                                                                    |
+    | 2018-03-09 19:10:02.144768 | tsmst.sh INIT en DEL :0:                                                                                    |
+    | 2018-03-09 19:10:02.214229 | tsmst.sh INIT fr DEL :0:                                                                                    |
+    | 2018-03-09 19:10:02.275222 | tsmst.sh INIT zh DEL :0:                                                                                    |
+    
+    | 2018-03-09 19:13:18.152125 | 22384 while fr done, about to _transfer_tmp_to_dj5                                                          |
+    | 2018-03-09 19:13:18.201954 | 24808 DROP TABLE IF EXISTS bak.tn_2181_fr                                                                   |
+    | 2018-03-09 19:13:18.249423 | 24819 INSERT INTO bak.tn_2181_fr SELECT * FROM tmp.tn_2181_fr                                               |
+    | 2018-03-09 19:13:18.345219 | 24765 done INSERT INTO tn_fr                                                                                |
+    | 2018-03-09 19:13:18.349045 | 24838 de 2181 _build_tn too early                                                                           |
+    | 2018-03-09 19:13:18.573786 | == GOOD!!!===== LG :fr: === used :197: secs                                                                 |
+    
+    | 2018-03-09 19:13:28.585231 | 22384 while en done, about to _transfer_tmp_to_dj5                                                          |
+    | 2018-03-09 19:13:28.593704 | 24808 DROP TABLE IF EXISTS bak.tn_2181_en                                                                   |
+    | 2018-03-09 19:13:28.623794 | 24819 INSERT INTO bak.tn_2181_en SELECT * FROM tmp.tn_2181_en                                               |
+    | 2018-03-09 19:13:29.399184 | 24765 done INSERT INTO tn_en                                                                                |
+    | 2018-03-09 19:13:29.401784 | 24838 de 2181 _build_tn too early                                                                           |
+    | 2018-03-09 19:13:29.568019 | == GOOD!!!===== LG :en: === used :208: secs                                                                 |
+    
+    | 2018-03-09 19:13:34.380006 | 22384 while zh done, about to _transfer_tmp_to_dj5                                                          |
+    | 2018-03-09 19:13:34.392166 | 24808 DROP TABLE IF EXISTS bak.tn_2181_zh                                                                   |
+    | 2018-03-09 19:13:34.453988 | 24819 INSERT INTO bak.tn_2181_zh SELECT * FROM tmp.tn_2181_zh                                               |
+    | 2018-03-09 19:13:34.641064 | 24765 done INSERT INTO tn_zh                                                                                |
+    | 2018-03-09 19:13:34.644690 | 24838 de 2181 _build_tn too early                                                                           |
+    | 2018-03-09 19:13:34.835122 | == GOOD!!!===== LG :zh: === used :213: secs                                                                 |
+    
+    | 2018-03-09 19:13:46.975934 | 22384 while nl done, about to _transfer_tmp_to_dj5                                                          |
+    | 2018-03-09 19:13:46.985674 | 24808 DROP TABLE IF EXISTS bak.tn_2181_nl                                                                   |
+    | 2018-03-09 19:13:47.010678 | 24819 INSERT INTO bak.tn_2181_nl SELECT * FROM tmp.tn_2181_nl                                               |
+    | 2018-03-09 19:13:47.367528 | 24765 done INSERT INTO tn_nl                                                                                |
+    | 2018-03-09 19:13:47.371394 | 24838 de 2181 _build_tn too early                                                                           |
+    | 2018-03-09 19:13:47.560558 | == GOOD!!!===== LG :nl: === used :226: secs                                                                 |
+    
+    | 2018-03-09 19:15:58.444864 | 22384 while de done, about to _transfer_tmp_to_dj5                                                          |
+    | 2018-03-09 19:15:58.452480 | 24808 DROP TABLE IF EXISTS bak.tn_2181_de                                                                   |
+    | 2018-03-09 19:15:58.478059 | 24819 INSERT INTO bak.tn_2181_de SELECT * FROM tmp.tn_2181_de                                               |
+    | 2018-03-09 19:15:58.630610 | 24765 done INSERT INTO tn_de         
+                                                              |
+    | 2018-03-09 19:15:58.634881 | 24844 nl 2181 trigger Ex_model->_build_tn -----------------                                                 |
+    | 2018-03-09 19:15:58.726843 | 24844 en 2181 trigger Ex_model->_build_tn -----------------                                                 |
+    | 2018-03-09 19:15:58.804513 | 24844 fr 2181 trigger Ex_model->_build_tn -----------------                                                 |
+    | 2018-03-09 19:15:58.863054 | 24844 zh 2181 trigger Ex_model->_build_tn -----------------                                                 |
+    | 2018-03-09 19:15:58.905317 | 24844 de 2181 trigger Ex_model->_build_tn -----------------                                                 |
+
+    | 2018-03-09 19:15:58.964101 | 24850 de 2181  this->_current_tn_lg :en:                                                                    |
+    | 2018-03-09 19:15:59.173544 | == GOOD!!!===== LG :en: === used :375: secs                                                                 |
+    +----------------------------+-------------------------------------------------------------------------------------------------------------+
+
+
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy. This technique has saved me much time and effort. 
 
 I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
