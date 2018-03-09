@@ -2245,7 +2245,7 @@ We have seen more complexity and the samples suggest that there is even more to 
 
 In order to get things right, I used this same table to record debug messages from my PHP program as well. This proved to be a very clever idea.
 
-The mechanism starts with just one language and if there are other languages to process, trigger commands are written to a file(first 5 lines). 
+The mechanism starts with just one language and if there are other languages to process, trigger commands are written to a file (first 5 lines). 
 
 Crontab runs a shell script every minute looking for the existence of this file, and if so, executes the commands in this file (next 5 lines) and moves that trigger file to a backup file for debug purposes.
 
