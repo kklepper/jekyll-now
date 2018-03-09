@@ -2296,6 +2296,8 @@ If all languages are processed, another mechanism is invoked which will produce 
 
 You can see which line is written by the shell script tsmst.sh, the rest stems from my PHP script with the line number for easy identification. 
 
+End of digression.
+
 Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
