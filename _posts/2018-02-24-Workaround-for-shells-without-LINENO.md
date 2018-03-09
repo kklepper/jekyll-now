@@ -2354,7 +2354,7 @@ Now I took the pain to clean up my code. I had inserted with copy and paste lots
 
 The term `NOW(6)` reflects the new definition of the timestamp column. And as I introduced this mechanism into several PHP files, I pushed this function definition high enough in the hierarchy to be used by all models. Well, the shell script also had to be corrected from `NOW()` to `NOW(6)`.
 
-Now it looks really fine ():
+Now it looks really fine (in order to make it more readable for me and you I introduced empty lines):
 
     M:7727678 [tmp]>select * from tsmst where id_ex = '2181' ORDER BY 2;
     +-------+----------------------------+-------------------------------------------------------------------------------------------------------------+
@@ -2459,6 +2459,8 @@ Now it looks really fine ():
     |  2181 | 2018-03-09 19:15:59.173544 | == GOOD!!!===== LG :en: === used :375: secs                                                                 |
     +-------+----------------------------+-------------------------------------------------------------------------------------------------------------+
     85 rows in set (0.00 sec)
+
+Here `too early` means that I have to wait for all language processes to be completed before I can sum up.
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism which usually is not easy. This technique has saved me much time and effort. 
 
