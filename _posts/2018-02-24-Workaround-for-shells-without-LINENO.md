@@ -2527,6 +2527,10 @@ Omitting these lines which are now superfluous, the whole picture is even cleare
     | 2018-03-09 19:15:59.173544 | == GOOD!!!===== LG :en: === used :375: secs                                                                 |
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
 
+Working more with this approach, I found that `varchar (255)` is not enough:
+
+    ALTER TABLE `tsmst`
+    CHANGE `comment` `comment` longtext COLLATE 'utf8mb4_unicode_ci' NOT NULL AFTER `tmstmp`;
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy. This technique has saved me much time and effort. 
 
