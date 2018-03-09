@@ -54,7 +54,7 @@ published: true
 > - [Digression: Record by database](#digression-record-by-database-table-of-content)
 > - [Digression: More complexity by languages](#digression-more-complexity-by-languages-table-of-content)
 > - [Digression: Adding microtime by trigger](#digression-adding-microtime-by-trigger-table-of-content)
-> - [Digression: Adding microtime natively](#digression-adding-microtime-table-of-content)
+> - [Digression: Adding microtime natively](#digression-adding-microtime-natively-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
 
