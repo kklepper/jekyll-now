@@ -2482,7 +2482,7 @@ A big thank you to you all <span style="font-size: 11px;float: right;"><a href="
 
 Last but not least I want to thank all you experts out there emphatically for all your excellent work. There are very many fine solutions I've found for my problems which have been incorporated in my setup without a note.
 
-Nowadays, whenever I have a problem, I call Google, and if there is a solution, most probably I find it this way. If nobody had this kind of problem, there is a good chance that the problem isn't where I think it is.
+Nowadays, whenever I have a problem without having an idea, I immediately call Google, and if there is a solution, most probably I find it this way. If nobody had this kind of problem, there is a good chance that the problem isn't where I think it is.
 
 It's hard to look into the future, but we can look back. My first encounter with computers was in the 60s, when [ALGOL 60](https://en.wikipedia.org/wiki/Algol_60) had just been invented. We tediously punched lots of cards a deck of which was transferred to an operator, and a week later the result was handed back, maybe with a typo.
 
