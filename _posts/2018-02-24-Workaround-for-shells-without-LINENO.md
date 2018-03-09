@@ -2464,7 +2464,7 @@ Here `too early` means that I have to wait for all language processes to be comp
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism which usually is not easy. This technique has saved me much time and effort. 
 
-I'm glad I have developed it. I'm not sure if I would have if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary.
+I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary.
 
 End of digression.
 
