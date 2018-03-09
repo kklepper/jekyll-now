@@ -50,8 +50,9 @@ published: true
 > - [Digression: Automatic boot2docker setup](#digression-automatic-boot2docker-setup-table-of-content)
 - [Why roll your own, revisited](#why-roll-your-own-revisited-table-of-content)
 - [Have fun](#have-fun-table-of-content)
-- [Proof of concept](#proof-of-concept-table-of-content)
-- [Record by database](#record-by-database-table-of-content)
+- [Digression: Proof of concept](#digression-proof-of-concept-table-of-content)
+- [Digression: Record by database](#digression-record-by-database-table-of-content)
+- [Digression: More complexity by languages](#digression-more-complexity-by-languages-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
 
@@ -1495,7 +1496,9 @@ I don't use the latest edition of DragonDictate as I don't see the need to buy t
 
 Every once in a while, when I met colleagues complaining about stress injury syndrome, I told them about this fascinating technique. You cannot have it in Linux, unfortunately, except you simulate Windows, but anyway I still have to meet somebody who is interested. I don't know of anybody who dictates.
 
-Of course, there are lots of people online using these products and chatting about it in their forums, but they are a totally different kind of people and professionally producing huge amounts of text. The industry has concentrated on lawyers and physicians, obviously successfully. Although back then everybody was dreaming of talking with a machine (see Star Trek IV: ["hello computer"](https://www.youtube.com/watch?v=v9kTVZiJ3Uc), 32 secs), not much has happened in the private realm. Nowadays we have Siri and Cortana, but sorry, I don't use that.
+Of course, there are lots of people online using these products and chatting about it in their forums, but they are a totally different kind of people and professionally producing huge amounts of text. The industry has concentrated on lawyers and physicians, obviously successfully. Although back then everybody was dreaming of talking with a machine (see Star Trek IV: ["hello computer"](https://www.youtube.com/watch?v=v9kTVZiJ3Uc), 32 secs), not much has happened in the private realm. Nowadays we have Siri and Cortana, but sorry, I don't use that. 
+
+Yesterday, somebody told me that she switched to dictating because of [WhatsApp](https://www.whatsapp.com/). In consequence, her messages get longer and longer. That's good.
 
 There is much discussion about the right type of microphone to use with speech recognition. As long as I use speech recognition, which is more than 20 years now, I tried many different types most of which were pretty cheap, whereas all those professionals swear that you have to spend as much money on the microphone as you can afford. I cannot confirm that.
 
@@ -2103,7 +2106,7 @@ I finally found this page via Google "shell script display line numbers -diff -t
 
 The contributions to this page so far are nearly 5 years old now. They have shown me that there is no solution for my problem except I create one myself, which I did.
 
-Proof of concept <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Proof of concept <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 I reorganized one of my old scripts to see if everything works as expected. These are the 2 debugging instructions I inserted in my code:
@@ -2144,7 +2147,7 @@ The output is even readable when those processes are intertwined:
     
 You also see that it is important to know which script is doing what; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`, given by the variable `FILE` defined by habit at the top of the script.
 
-Record by database <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Record by database <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 That's alright, but not really good. We worked with 2 parameters here only, and both produced relatively short execution times. What about a long parameter list and really long execution times? We just wouldn't be able to interpret what's going on.
@@ -2234,6 +2237,57 @@ Most important will be the selection for errors:
     Empty set (0.00 sec)
 
 That's much better than `grep`ing the log file.
+
+Digression: More complexity by languages <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+We have seen more complexity and the samples suggest that there is even more to show. The next example shows our script working on different languages. 
+
+In order to get things right, I used this same table to record debug messages from my main program. This proved to be a very clever idea.
+
+The mechanism starts with just one language and if there are other languages to process as well, trigger commands are written to a file. 
+
+Crontab runs a shell script every minute looking for the existence of this file, and if so, executes the commands in this file and moves it to a backup file for debug purposes.
+
+If all languages are processed, another mechanism is invoked which will produce results files for each language. The whole protocol looks really nice.
+
+    M:7727678 [tmp]>select * from tsmst where id_ex = '2181' ORDER BY 2, 3;
+    +-------+---------------------+----------------------------------------------------------------------------------------+
+    | id_ex | tmstmp              | comment                                                                                |
+    +-------+---------------------+----------------------------------------------------------------------------------------+
+    |  2181 | 2018-03-09 02:12:14 | 24657 nohup /c/bak/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /c/bak/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /c/bak/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /c/bak/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /c/bak/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT en DEL :0:                                                               |
+    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT fr DEL :0:                                                               |
+    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT zh DEL :0:                                                               |
+    |  2181 | 2018-03-09 02:13:02 | tsmst.sh INIT nl DEL :0:                                                               |
+    |  2181 | 2018-03-09 02:16:03 | tsmst.sh == GOOD!!!===== LG :fr: === used :182: secs                                   |
+    |  2181 | 2018-03-09 02:16:03 | 22380 while fr done, about to _transfer_tmp_to_ci4                                     |
+    |  2181 | 2018-03-09 02:16:03 | 24756 done INSERT INTO sm_fr                                                           |
+    |  2181 | 2018-03-09 02:16:03 | 24798 DROP TABLE IF EXISTS bak.sm_2181_fr                                              |
+    |  2181 | 2018-03-09 02:16:03 | 24808 INSERT INTO bak.sm_2181_fr SELECT * FROM tmp.sm_2181_fr                          |
+    |  2181 | 2018-03-09 02:16:21 | tsmst.sh == GOOD!!!===== LG :en: === used :200: secs                                   |
+    |  2181 | 2018-03-09 02:16:21 | 22380 while en done, about to _transfer_tmp_to_ci4                                     |
+    |  2181 | 2018-03-09 02:16:21 | 24756 done INSERT INTO sm_en                                                           |
+    |  2181 | 2018-03-09 02:16:21 | 24798 DROP TABLE IF EXISTS bak.sm_2181_en                                              |
+    |  2181 | 2018-03-09 02:16:21 | 24808 INSERT INTO bak.sm_2181_en SELECT * FROM tmp.sm_2181_en                          |
+    |  2181 | 2018-03-09 02:16:24 | tsmst.sh == GOOD!!!===== LG :zh: === used :203: secs                                   |
+    |  2181 | 2018-03-09 02:16:24 | 22380 while zh done, about to _transfer_tmp_to_ci4                                     |
+    |  2181 | 2018-03-09 02:16:24 | 24756 done INSERT INTO sm_zh                                                           |
+    |  2181 | 2018-03-09 02:16:24 | 24798 DROP TABLE IF EXISTS bak.sm_2181_zh                                              |
+    |  2181 | 2018-03-09 02:16:24 | 24808 INSERT INTO bak.sm_2181_zh SELECT * FROM tmp.sm_2181_zh                          |
+    |  2181 | 2018-03-09 02:16:36 | tsmst.sh == GOOD!!!===== LG :nl: === used :215: secs                                   |
+    |  2181 | 2018-03-09 02:16:36 | 22380 while nl done, about to _transfer_tmp_to_ci4                                     |
+    |  2181 | 2018-03-09 02:16:36 | 24756 done INSERT INTO sm_nl                                                           |
+    |  2181 | 2018-03-09 02:16:36 | 24798 DROP TABLE IF EXISTS bak.sm_2181_nl                                              |
+    |  2181 | 2018-03-09 02:16:36 | 24808 INSERT INTO bak.sm_2181_nl SELECT * FROM tmp.sm_2181_nl                          |
+    +-------+---------------------+----------------------------------------------------------------------------------------+
+    29 rows in set (0.00 sec)
+
+You can see which line is written by the shell script tsmst.sh, the rest stems from my PHP script with the line number for easy identification. 
 
 Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
