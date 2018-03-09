@@ -2303,7 +2303,9 @@ It's funny -- I'm programming for so long now and never developed a viable idea 
 Digression: Adding microtime by trigger <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-That's fine, but still not really satisfactorily. The reason is that one second is too long a time to get the right sequence of commands. Hence the protocol is hard to read. 
+That's fine, but still not really satisfactorily. The reason is that one second is too long a time to get the right sequence of commands. Hence the protocol is hard to read. And that's bad for debugging. 
+
+Debugging means that you don't see what you should see. So the art of debugging is changing the conditions in order to be able to see what you should see. And if you see it, that's it: you can do something about it.  
 
 As MySQL or MariaDB don't have a special data type `microtime`, I was looking for a solution via Google and first hit an attempt which is fine but nevertheless didn't convince me in the end: [Default value for “microtime” column in MySQL](https://dba.stackexchange.com/questions/114850/default-value-for-microtime-column-in-mysql).
 
@@ -2354,7 +2356,113 @@ The term `NOW(6)` reflects the new definition of the timestamp column. And as I 
 
 Now it looks really fime:
 
+    M:7727678 [tmp]>select * from tsmst where id_ex = '2181' ORDER BY 2;
+    +-------+----------------------------+-------------------------------------------------------------------------------------------------------------+
+    | id_ex | tmstmp                     | comment                                                                                                     |
+    +-------+----------------------------+-------------------------------------------------------------------------------------------------------------+
+    |  2181 | 2018-03-09 19:09:45.077000 | tsmst.sh INIT en DEL :1:                                                                                    |
+    
+    |  2181 | 2018-03-09 19:09:54.465791 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 19:09:54.467829 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 19:09:54.469888 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 19:09:54.471953 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    |  2181 | 2018-03-09 19:09:54.473298 | 24663 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    
+    |  2181 | 2018-03-09 19:10:02.085619 | tsmst.sh INIT nl DEL :0:                                                                                    |
+    |  2181 | 2018-03-09 19:10:02.144768 | tsmst.sh INIT en DEL :0:                                                                                    |
+    |  2181 | 2018-03-09 19:10:02.214229 | tsmst.sh INIT fr DEL :0:                                                                                    |
+    |  2181 | 2018-03-09 19:10:02.275222 | tsmst.sh INIT zh DEL :0:                                                                                    |
+    
+    |  2181 | 2018-03-09 19:13:18.152125 | 22384 while fr done, about to _transfer_tmp_to_dj5                                                          |
+    |  2181 | 2018-03-09 19:13:18.201954 | 24808 DROP TABLE IF EXISTS bak.tn_2181_fr                                                                   |
+    |  2181 | 2018-03-09 19:13:18.249423 | 24819 INSERT INTO bak.tn_2181_fr SELECT * FROM tmp.tn_2181_fr                                               |
+    |  2181 | 2018-03-09 19:13:18.345219 | 24765 done INSERT INTO tn_fr                                                                                |
+    |  2181 | 2018-03-09 19:13:18.349045 | 24838 de 2181 _build_tn too early                                                                           |
+    |  2181 | 2018-03-09 19:13:18.573786 | == GOOD!!!===== LG :fr: === used :197: secs                                                                 |
+    
+    |  2181 | 2018-03-09 19:13:28.585231 | 22384 while en done, about to _transfer_tmp_to_dj5                                                          |
+    |  2181 | 2018-03-09 19:13:28.593704 | 24808 DROP TABLE IF EXISTS bak.tn_2181_en                                                                   |
+    |  2181 | 2018-03-09 19:13:28.623794 | 24819 INSERT INTO bak.tn_2181_en SELECT * FROM tmp.tn_2181_en                                               |
+    |  2181 | 2018-03-09 19:13:29.399184 | 24765 done INSERT INTO tn_en                                                                                |
+    |  2181 | 2018-03-09 19:13:29.401784 | 24838 de 2181 _build_tn too early                                                                           |
+    |  2181 | 2018-03-09 19:13:29.568019 | == GOOD!!!===== LG :en: === used :208: secs                                                                 |
+    
+    |  2181 | 2018-03-09 19:13:34.380006 | 22384 while zh done, about to _transfer_tmp_to_dj5                                                          |
+    |  2181 | 2018-03-09 19:13:34.392166 | 24808 DROP TABLE IF EXISTS bak.tn_2181_zh                                                                   |
+    |  2181 | 2018-03-09 19:13:34.453988 | 24819 INSERT INTO bak.tn_2181_zh SELECT * FROM tmp.tn_2181_zh                                               |
+    |  2181 | 2018-03-09 19:13:34.641064 | 24765 done INSERT INTO tn_zh                                                                                |
+    |  2181 | 2018-03-09 19:13:34.644690 | 24838 de 2181 _build_tn too early                                                                           |
+    |  2181 | 2018-03-09 19:13:34.835122 | == GOOD!!!===== LG :zh: === used :213: secs                                                                 |
+    
+    |  2181 | 2018-03-09 19:13:46.975934 | 22384 while nl done, about to _transfer_tmp_to_dj5                                                          |
+    |  2181 | 2018-03-09 19:13:46.985674 | 24808 DROP TABLE IF EXISTS bak.tn_2181_nl                                                                   |
+    |  2181 | 2018-03-09 19:13:47.010678 | 24819 INSERT INTO bak.tn_2181_nl SELECT * FROM tmp.tn_2181_nl                                               |
+    |  2181 | 2018-03-09 19:13:47.367528 | 24765 done INSERT INTO tn_nl                                                                                |
+    |  2181 | 2018-03-09 19:13:47.371394 | 24838 de 2181 _build_tn too early                                                                           |
+    |  2181 | 2018-03-09 19:13:47.560558 | == GOOD!!!===== LG :nl: === used :226: secs                                                                 |
+    
+    |  2181 | 2018-03-09 19:15:58.444864 | 22384 while de done, about to _transfer_tmp_to_dj5                                                          |
+    |  2181 | 2018-03-09 19:15:58.452480 | 24808 DROP TABLE IF EXISTS bak.tn_2181_de                                                                   |
+    |  2181 | 2018-03-09 19:15:58.478059 | 24819 INSERT INTO bak.tn_2181_de SELECT * FROM tmp.tn_2181_de                                               |
+    |  2181 | 2018-03-09 19:15:58.630610 | 24765 done INSERT INTO tn_de         
+                                                                      |
+    |  2181 | 2018-03-09 19:15:58.634881 | 24844 nl 2181 trigger Ex_model->_build_tn -----------------                                                 |
+    |  2181 | 2018-03-09 19:15:58.637278 | 2455 lg :nl: CI->lg :nl: 2181  Ex_model::_build_tn                                                          |
+    |  2181 | 2018-03-09 19:15:58.640836 | 2575 nl :nl: 2181 Ex_model::_build_tn                                                                       |
+    |  2181 | 2018-03-09 19:15:58.644141 | 2638 nl :nl: 2181 Ex_model::_build_tn                                                                       |
+    |  2181 | 2018-03-09 19:15:58.649960 | 3109 nl :nl: 2181 Ex_model::_get_tn_lg_links                                                                |
+    |  2181 | 2018-03-09 19:15:58.650381 | 3113 this->lg :nl: here we set em5 Ex_model::_get_tn_lg_links                                               |
+    |  2181 | 2018-03-09 19:15:58.715690 | 1452 this->lg :nl: token :9d4ee0c51b36a4a5c4de82f2a0449b69: cmp_temp md5 XQ_Model::_cmp_lg_set              |
+    |  2181 | 2018-03-09 19:15:58.722742 | 2703 nl :nl: 2181 before _cmp_lg_set Ex_model::_build_tn                                                    |
+    |  2181 | 2018-03-09 19:15:58.726384 | 1452 this->lg :nl: token :2181: cmp_ex_tn id_ex XQ_Model::_cmp_lg_set                                       |
+    
+    |  2181 | 2018-03-09 19:15:58.726843 | 24844 en 2181 trigger Ex_model->_build_tn -----------------                                                 |
+    |  2181 | 2018-03-09 19:15:58.727288 | 2455 lg :en: CI->lg :en: 2181  Ex_model::_build_tn                                                          |
+    |  2181 | 2018-03-09 19:15:58.738060 | 2575 en :en: 2181 Ex_model::_build_tn                                                                       |
+    |  2181 | 2018-03-09 19:15:58.741976 | 2638 en :en: 2181 Ex_model::_build_tn                                                                       |
+    |  2181 | 2018-03-09 19:15:58.748151 | 3109 en :en: 2181 Ex_model::_get_tn_lg_links                                                                |
+    |  2181 | 2018-03-09 19:15:58.748594 | 3113 this->lg :en: here we set em5 Ex_model::_get_tn_lg_links                                               |
+    |  2181 | 2018-03-09 19:15:58.796012 | 1452 this->lg :en: token :219c3878ac7ae59d9341e52246047eaf: cmp_temp md5 XQ_Model::_cmp_lg_set              |
+    |  2181 | 2018-03-09 19:15:58.800604 | 2703 en :en: 2181 before _cmp_lg_set Ex_model::_build_tn                                                    |
+    |  2181 | 2018-03-09 19:15:58.804053 | 1452 this->lg :en: token :2181: cmp_ex_tn id_ex XQ_Model::_cmp_lg_set                                       |
+    
+    |  2181 | 2018-03-09 19:15:58.804513 | 24844 fr 2181 trigger Ex_model->_build_tn -----------------                                                 |
+    |  2181 | 2018-03-09 19:15:58.804955 | 2455 lg :fr: CI->lg :fr: 2181  Ex_model::_build_tn                                                          |
+    |  2181 | 2018-03-09 19:15:58.815546 | 2575 fr :fr: 2181 Ex_model::_build_tn                                                                       |
+    |  2181 | 2018-03-09 19:15:58.820236 | 2638 fr :fr: 2181 Ex_model::_build_tn                                                                       |
+    |  2181 | 2018-03-09 19:15:58.827271 | 3109 fr :fr: 2181 Ex_model::_get_tn_lg_links                                                                |
+    |  2181 | 2018-03-09 19:15:58.827680 | 3113 this->lg :fr: here we set em5 Ex_model::_get_tn_lg_links                                               |
+    |  2181 | 2018-03-09 19:15:58.855871 | 1452 this->lg :fr: token :302547b53945d521b9124c2855a5f91a: cmp_temp md5 XQ_Model::_cmp_lg_set              |
+    |  2181 | 2018-03-09 19:15:58.859158 | 2703 fr :fr: 2181 before _cmp_lg_set Ex_model::_build_tn                                                    |
+    |  2181 | 2018-03-09 19:15:58.862583 | 1452 this->lg :fr: token :2181: cmp_ex_tn id_ex XQ_Model::_cmp_lg_set                                       |
+    
+    |  2181 | 2018-03-09 19:15:58.863054 | 24844 zh 2181 trigger Ex_model->_build_tn -----------------                                                 |
+    |  2181 | 2018-03-09 19:15:58.863506 | 2455 lg :zh: CI->lg :zh: 2181  Ex_model::_build_tn                                                          |
+    |  2181 | 2018-03-09 19:15:58.866537 | 2575 zh :zh: 2181 Ex_model::_build_tn                                                                       |
+    |  2181 | 2018-03-09 19:15:58.870033 | 2638 zh :zh: 2181 Ex_model::_build_tn                                                                       |
+    |  2181 | 2018-03-09 19:15:58.876537 | 3109 zh :zh: 2181 Ex_model::_get_tn_lg_links                                                                |
+    |  2181 | 2018-03-09 19:15:58.877004 | 3113 this->lg :zh: here we set em5 Ex_model::_get_tn_lg_links                                               |
+    |  2181 | 2018-03-09 19:15:58.897932 | 1452 this->lg :zh: token :8b431ae02edcbdf2afc6528c5688a963: cmp_temp md5 XQ_Model::_cmp_lg_set              |
+    |  2181 | 2018-03-09 19:15:58.901354 | 2703 zh :zh: 2181 before _cmp_lg_set Ex_model::_build_tn                                                    |
+    |  2181 | 2018-03-09 19:15:58.904851 | 1452 this->lg :zh: token :2181: cmp_ex_tn id_ex XQ_Model::_cmp_lg_set                                       |
+    
+    |  2181 | 2018-03-09 19:15:58.905317 | 24844 de 2181 trigger Ex_model->_build_tn -----------------                                                 |
+    |  2181 | 2018-03-09 19:15:58.905766 | 2455 lg :de: CI->lg :de: 2181  Ex_model::_build_tn                                                          |
+    |  2181 | 2018-03-09 19:15:58.919954 | 2575 de :de: 2181 Ex_model::_build_tn                                                                       |
+    |  2181 | 2018-03-09 19:15:58.923323 | 2638 de :de: 2181 Ex_model::_build_tn                                                                       |
+    |  2181 | 2018-03-09 19:15:58.931337 | 3109 de :de: 2181 Ex_model::_get_tn_lg_links                                                                |
+    |  2181 | 2018-03-09 19:15:58.931844 | 3113 this->lg :de: here we set em5 Ex_model::_get_tn_lg_links                                               |
+    |  2181 | 2018-03-09 19:15:58.955611 | 1452 this->lg :de: token :89f1427a4efa3002069afe6c5019f27f: cmp_temp md5 XQ_Model::_cmp_lg_set              |
+    |  2181 | 2018-03-09 19:15:58.959340 | 2703 de :de: 2181 before _cmp_lg_set Ex_model::_build_tn                                                    |
+    |  2181 | 2018-03-09 19:15:58.963374 | 1452 this->lg :de: token :2181: cmp_ex_tn id_ex XQ_Model::_cmp_lg_set                                       |
+    |  2181 | 2018-03-09 19:15:58.964101 | 24850 de 2181  this->_current_tn_lg :en:                                                                    |
+    |  2181 | 2018-03-09 19:15:59.173544 | == GOOD!!!===== LG :en: === used :375: secs                                                                 |
+    +-------+----------------------------+-------------------------------------------------------------------------------------------------------------+
+    85 rows in set (0.00 sec)
 
+This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism which usually is not easy. This technique has saved me much time and effort. 
+
+I'm glad I have developed it. I'm not sure if I would have if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary.
 
 End of digression.
 
