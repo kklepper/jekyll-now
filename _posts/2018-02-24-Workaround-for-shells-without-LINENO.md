@@ -2323,7 +2323,7 @@ This is the first time that I defined a trigger.
 
 20 years ago, I had an employee who was a programming genius. I had to let him go and he ended up working for a company having a complex solution for haulage contractors. 
 
-He told me that they had huge problems with their customers because their engine all of a sudden would do enigmatic operations and nobody would know what was happening. The reason was tons of triggers buried somewhere deep in the database nobody had an idea of, one calling the other under circumstances which were hard to test.
+He told me that they had huge problems with their customers because their database engine all of a sudden would do enigmatic operations and nobody would know what was happening. The reason was tons of triggers buried somewhere deep in the database nobody had an idea of, one calling the other under circumstances which were hard to test.
 
 That reminded me of programming rule number one: start simple and try to stay simple. It will become complex fast enough.
 
