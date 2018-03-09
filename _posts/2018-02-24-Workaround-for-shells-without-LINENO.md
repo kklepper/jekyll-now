@@ -2301,7 +2301,7 @@ End of digression.
 Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-This text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution of their problems related to any of the search-relevant technical terms I have used. 
+This text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution to their problems related to any of the search-relevant technical terms I have used. 
 
 As people in times of Docker containers tend to use minimal Linux systems like `Boot2Docker`, `CoreOS` or `Alpine Linux` using `ash` instead of `bash`, most probably there will be more need for a substitute for LINENO. That's the path I have taken. Those 2 MySQL (or rather MariaDB) replication engines run in Docker containers as does the master. The OS is `Boot2Docker` which is based on `Tiny Linux` which in turn is based on `Busybox`. No `bash`, only `ash`.
 
