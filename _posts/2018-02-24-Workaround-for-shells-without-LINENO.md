@@ -1320,7 +1320,7 @@ Windows Speech Recognition works equally fine, although it uses other terms to n
 
 DragonDictate, for instance, if you say one word only, because you're still thinking about the rest of the sentence, will search all tabs in your application for this word in order to switch to that tab. It took me a long time to understand what's happening here. It's really annoying if your machine all of a sudden does something which you didn't expect and cannot understand.
 
-At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate, instead I rather use AHK. But as soon as I have to write more than a few characters, I'll switch to DragonDictate or Windows Speech Recognition. That's one of the reasons why I would never be happy to use Linux as a desktop system.  
+At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate (except for comments, which isn't really programming), instead I rather use AHK- or PSPad-defined shortcuts. But as soon as I have to write more than a few characters, I'll switch to DragonDictate or Windows Speech Recognition. That's one of the reasons why I would never be happy to use Linux as a desktop system.  
 
 Digression: Dictation workflow <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -2298,7 +2298,7 @@ If all languages are processed, another mechanism is invoked which will produce 
 
 You can see which line is written by the shell script tsmst.sh responsible for starting the language specific process, the rest stems from my PHP script preceded by the line number for easy identification. 
 
-It's funny -- I'm programming for so long now and never developed a viable idea how to track what a program is really doing. CodeIgniter has a `benchmark class` which I misused for this purpose at times, but that was unrewarding mostly. This idea, however, seems to be really helpful.
+It's funny -- I'm programming for so long now and never developed a viable idea of how to track what a program is really doing. CodeIgniter has a `benchmark class` which I misused for this purpose at times, but that was unrewarding mostly. This idea, however, seems to be really helpful.
 
 Digression: Adding microtime by trigger <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -2462,9 +2462,9 @@ Now it looks really fine (in order to make it more readable for me and you I int
 
 Here `too early` means that I have to wait for all language processes to be completed before I can sum up.
 
-This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism which usually is not easy. This technique has saved me much time and effort. 
+This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy. This technique has saved me much time and effort. 
 
-I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary.
+I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
 
 End of digression.
 
