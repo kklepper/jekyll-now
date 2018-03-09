@@ -2296,6 +2296,8 @@ If all languages are processed, another mechanism is invoked which will produce 
 
 You can see which line is written by the shell script tsmst.sh responsible for starting the language specific process, the rest stems from my PHP script preceded by the line number for easy identification. 
 
+It's funny -- I'm programming for so long now and never developed a viable idea how to track what a program is really doing. CodeIgniter has a `benchmark class` which I misused for this purpose at times, but that was unrewarding mostly. This idea, however, seems to be really helpful.
+
 End of digression.
 
 Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
