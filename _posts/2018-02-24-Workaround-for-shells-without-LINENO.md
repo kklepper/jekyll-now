@@ -57,6 +57,7 @@ published: true
 > - [Digression: Adding microtime by trigger](#digression-adding-microtime-by-trigger-table-of-content)
 > - [Digression: Adding microtime natively](#digression-adding-microtime-natively-table-of-content)
 > - [Digression: Language versions](#digression-language-versions-table-of-content)
+> - [Digression: Analyzing data](#digression-analyzing-data-table-of-content)
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
@@ -2612,8 +2613,11 @@ The same for the former example:
     | 2018-03-10 14:44:50.655962 | 3173 Ex_model::_get_tn_lg_links this->lg :nl: Taalversies            |
     | 2018-03-10 14:44:50.698879 | 3173 Ex_model::_get_tn_lg_links this->lg :en: Language versions      |
     | 2018-03-10 14:44:50.804486 | 3173 Ex_model::_get_tn_lg_links this->lg :fr: Versions linguistiques |
-    | 2018-03-10 14:44:50.840104 | 3173 Ex_model::_get_tn_lg_links this->lg :zh: 语言版本                |
+    | 2018-03-10 14:44:50.840104 | 3173 Ex_model::_get_tn_lg_links this->lg :zh: 语言版本               |
     | 2018-03-10 14:44:50.888654 | 3173 Ex_model::_get_tn_lg_links this->lg :de: Sprachversionen        |
+
+Digression: Analyzing data <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
 
 There is so much you can do with databases:
 
