@@ -339,7 +339,9 @@ Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Cont
             40  BAZ=42
             42  echo '
     
-    What does the last line mean? Where does it come from? Is it a bug? Well, it is neither a bug nor a feature but sheer luck that we see this phenomenon. 
+    What does the last line mean? Where does it come from? Is it a bug? 
+    
+    Well, it is neither a bug nor a feature but sheer luck that we see this phenomenon. 
     
     I could've chosen any value for the variable `BAZ`, but I picked [42](https://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life,_the_Universe,_and_Everything_(42)) for no particular reason, and this is a line number also present in our file, so `grep` cannot avoid to filter this line as well, and there is nothing I as a programmer can do about it.
 
