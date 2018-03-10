@@ -56,6 +56,7 @@ published: true
 > - [Digression: Dirty debugging techniques](#digression-dirty-debugging-techniques-table-of-content)
 > - [Digression: Adding microtime by trigger](#digression-adding-microtime-by-trigger-table-of-content)
 > - [Digression: Adding microtime natively](#digression-adding-microtime-natively-table-of-content)
+> - [Digression: Language versions](#digression-language-versions-table-of-content)
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
@@ -2553,7 +2554,7 @@ Working more with this approach, I found that `varchar (255)` is not enough:
     ALTER TABLE `tsmst`
     CHANGE `comment` `comment` longtext COLLATE 'utf8mb4_unicode_ci' NOT NULL AFTER `tmstmp`;
 
-Digression: Erlang style <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Language versions <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 One more example with another ID which uses the languages German, English, Spanish, French, Italian and Russian. Using this database technique, I easily found the problem of not getting the right translation for a specific word when I was wrapping up all the language versions after having collected all data separately. 
@@ -2600,6 +2601,9 @@ The same for the former example:
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
 I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
+
+Digression: Erlang style <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
 
 You may wonder about the big line numbers in one of those PHP files. That's not a problem but due to the complexity of the task being addressed by this class. A problem are the long function definitions. There are quite a lot of methods in that class defined in that file, but still many of these functions are really really big. And that's not really good.
 
