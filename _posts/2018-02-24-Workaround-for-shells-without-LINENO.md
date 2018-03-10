@@ -2650,6 +2650,8 @@ There is so much you can do with databases:
     +-------+----------------------------+----------------------------------------------+----+-----------+
     14 rows in set (0.00 sec)
 
+It's true, you can do much with `grep` and `awk` and `sed` as well, but it doesn't come as naturally and much isn't possible at all. There's a reason why relational databases exist and if you have one at your disposal, you will most probably take advantage of it.
+
 Looking at these numbers, it is obvious that there are 2 lines which stand out by the `time` value:
 
     |  1624 | 2018-03-10 16:26:41.156284 | == GOOD!!!===== LG :en: === used :361: secs  | en | 361 secs  |
