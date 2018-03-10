@@ -2304,9 +2304,11 @@ It's funny -- I'm programming for so long now and never developed a viable idea 
 Digression: Dirty debugging techniques <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Of course, there are many debugging techniques. When I started with PHP, there was no `try except` mechanism, so I had to develop my own, basically with some kind of echo construction.
+Of course, there are many debugging techniques. When I started with PHP, there was no `try except` mechanism, so I had to develop my own, basically with some kind of echo construction. I can show any kind of variable and any number of them plus any kind of arrays and objects. 
 
-When exceptions were introduced, I wasn't convinced that this concept would give me any advantage, and since then I have seen many examples, but never made it a habit -- in fact I don't use them at all. They are fancy and they are cool, but I need ad hoc debugging techniques, and this is overkill.
+If there should be some new desire, I'd just enhance my function. Actually, it is a small set of functions. In CodeIgniter, they reside in a helper file.
+
+When exceptions were introduced in PHP, I wasn't convinced that this concept would give me any advantage, and since then I have seen many examples, but never made it a habit -- in fact I don't use them at all. They are fancy and they are cool, but I need ad hoc debugging techniques, and this is overkill. I didn't even use them back in times when I was programming in VC++ and Delphi, although they were highly recommended to me by a very gifted colleague.
 
 The same holds true with testing mechanisms. There are test units everywhere, but I don't use them. Either code is okay and it works under all circumstances, or it doesn't and I have to find out the circumstances. Maybe I will change my mind if there is a program state which is stable in a sense, but so far I never reached this state, and I doubt I ever will.
 
