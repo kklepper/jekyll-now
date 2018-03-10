@@ -2634,7 +2634,7 @@ There is so much you can do with databases:
     +-------+----------------------------+----------------------------------------------+----+-----------+
     |   391 | 2018-03-10 21:27:50.293078 | == GOOD!!!===== LG :de: === used :109: secs  | de | 109 secs  |
     |   391 | 2018-03-10 21:27:51.615886 | == GOOD!!!===== LG :en: === used :110: secs  | en | 110 secs  |
-    |   391 | 2018-03-10 21:28:05.237891 | == GOOD!!!===== LG :nl: === used :138: secs  | nl | 113 secs  |
+    |   391 | 2018-03-10 21:27:54.237891 | == GOOD!!!===== LG :nl: === used :113: secs  | nl | 113 secs  |
     |   391 | 2018-03-10 21:28:20.194331 | == GOOD!!!===== LG :fr: === used :138: secs  | fr | 138 secs  |
     |  1624 | 2018-03-10 16:21:51.781247 | == GOOD!!!===== LG :fr: === used :49: secs   | fr | 49 secs   |
     |  1624 | 2018-03-10 16:21:51.962183 | == GOOD!!!===== LG :es: === used :49: secs   | es | 49 secs   |
@@ -2668,6 +2668,15 @@ So the mechanism is as follows: we start with `en`, and this is what the shell s
 For some reason, in these cases the language `en` is then switched to `de` to be processed first, which the shell script does not know of. This explains why the value `en` in this line is wrong and should be `de`. 
 
 For another reason `de` is the last one to be completed in both cases, so only then the windup can start. The time it takes to process all the languages one by one adds up to the total time this last language needs. In these both cases the time span used was significant so the mismatch leaps to the eye.
+
+The average time taken for processing these languages is obviously very different:
+
+    |   ID | number of lg | time |
+    |  391 |            4 |    7 |
+    | 1624 |            6 |   52 |
+    | 2181 |            5 |   34 |
+
+The time does not depend on the number of languages but on the nature of the data to be processed.
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
