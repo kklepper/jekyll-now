@@ -56,7 +56,7 @@ published: true
 > - [Digression: Dirty debugging techniques](#digression-dirty-debugging-techniques-table-of-content)
 > - [Digression: Adding microtime by trigger](#digression-adding-microtime-by-trigger-table-of-content)
 > - [Digression: Adding microtime natively](#digression-adding-microtime-natively-table-of-content)
-> - [Digression: Style question](#digression-style-question-table-of-content)
+> - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
 
@@ -2553,7 +2553,7 @@ Working more with this approach, I found that `varchar (255)` is not enough:
     ALTER TABLE `tsmst`
     CHANGE `comment` `comment` longtext COLLATE 'utf8mb4_unicode_ci' NOT NULL AFTER `tmstmp`;
 
-Digression: Style question <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Erlang style <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 One more example with another ID which uses the languages German, English, Spanish, French, Italian and Russian. Using this database technique, I easily found the problem of not getting the right translation for a specific word when I was wrapping up all the language versions after having collected all data separately. 
