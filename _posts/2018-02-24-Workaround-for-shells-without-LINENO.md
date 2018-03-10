@@ -339,7 +339,7 @@ Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Cont
             40  BAZ=42
             42  echo '
     
-    What does the last line mean? Where does it come from? Is it a bug? 
+    What does the last line mean? Where does it come from? Is it a bug? Or is it a feature?
     
     Well, it is neither a bug nor a feature but sheer luck that we see this phenomenon. 
     
