@@ -332,7 +332,16 @@ Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Cont
 
 4. **Examples 4 and 5**: For the use of variables, this same constraint of uniqueness applies to the part up to `VARTOKEN` used to enclose these (which is a good idea anyway to see if a variable is empty: `variable: FOO :$FOO:`). The reason is: `grep` looks for the original line and will not recognize the substitution (which we do not know), so the line has to be stripped from `VARTOKEN` as well. Instead, we show the variable values in the next line with the prefix `>>>>>> : `. 
 
-5. **Example 6**: If you only give a quoted variable as argument (`echo_line_no "$FOO"`), you will not get the line number of the "comment" but the line number of the `definition of the variable` instead -- which may be exactly what you want as this information is hard to find otherwise. The first two show said variables `FOO` and `BAZ` from examples 4 and 5, the next 2 assignments show the lines of definition of the same variable `MSG` defined at different places with different values.
+5. **Example 6**: If you only give a quoted variable as argument (`echo_line_no "$FOO"`), you will not get the line number of the "comment" but the line number of the `definition of the variable` instead -- which may be exactly what you want as this information is hard to find otherwise. The first two show said variables `FOO` and `BAZ` from examples 4 and 5, the next 2 assignments show the lines of definition of the same variable `MSG` defined at different places with different values. 
+
+You may have noticed that we also got an enigmatic output here:
+
+        40  BAZ=42
+        42  echo '
+
+What does the last line mean? Where does it come from? Is it a bug? Well, it is neither a bug nor a feature but sheer luck that we see this phenomenon. 
+
+I could've chosen any value for the variable `BAZ`, but I picked [42](https://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life,_the_Universe,_and_Everything_(42)), and this is a line number also present in our file, so `grep` cannot avoid to filter this line as well, and there is nothing I as a programmer can do about it.
 
 6. You can use `echo_line_no` from inside a function. In contrast to bash there is no way to get the function name via system variable due to the same restrictions. No problem, you can always hardcode if necessary, as demonstrated here in the comment `this was from inside function whatsup`; you have to hardcode the call to `echo_line_no` there anyway. But there is more to the use within functions:
 
