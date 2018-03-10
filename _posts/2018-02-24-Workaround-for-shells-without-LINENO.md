@@ -2323,9 +2323,9 @@ This kind of debugging is really dirty, I admit that. But I can comment any of t
 Digression: Adding microtime by trigger <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-That's fine, but still not really satisfactorily. The reason is that one second is too long a time to get the right sequence of commands. Hence the protocol is hard to read. And that's bad for debugging. 
+That's all fine with that database approach, but still not really satisfactorily. The reason is that one second is too long a time to get the right sequence of commands. Hence the protocol is hard to read. And that's bad for debugging. 
 
-Debugging means that you don't see what you should see. So the art of debugging is changing the conditions in order to be able to see what you should see. And if you see it, that's it: you can do something about it.  
+Debugging basically means that you don't see what you should see. So the art of debugging is changing the conditions in order to be able to see what you should see. And if you see it, that's it: you can do something about it.  
 
 As MySQL or MariaDB don't have a special data type `microtime`, I was looking for a solution via Google and first hit an attempt which is fine but nevertheless didn't convince me in the end: [Default value for “microtime” column in MySQL](https://dba.stackexchange.com/questions/114850/default-value-for-microtime-column-in-mysql).
 
