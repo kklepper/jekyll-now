@@ -2659,7 +2659,8 @@ Also, `en` appears twice in both ID cases 1624 and 2181. You may not have notice
 
     | 2018-03-10 16:26:40.629453 | 24774 _transfer_tmp_to_dj5 done INSERT INTO tn_de, try to _build_tns |
     | 2018-03-10 16:26:40.641469 | 24855 _build_tns de 1624 trigger Ex_model->_build_tn --------------- |
- &nbsp;
+
+
     | 2018-03-10 15:31:14.327917 | 24774 _transfer_tmp_to_dj5 done INSERT INTO tn_de, try to _build_tns |
     | 2018-03-10 15:31:14.336398 | 24855 _build_tns de 1624 trigger Ex_model->_build_tn --------------- |
 
