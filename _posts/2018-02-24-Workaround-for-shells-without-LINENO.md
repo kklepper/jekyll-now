@@ -56,6 +56,7 @@ published: true
 > - [Digression: Dirty debugging techniques](#digression-dirty-debugging-techniques-table-of-content)
 > - [Digression: Adding microtime by trigger](#digression-adding-microtime-by-trigger-table-of-content)
 > - [Digression: Adding microtime natively](#digression-adding-microtime-natively-table-of-content)
+> - [Digression: Style question](#digression-style-question-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
 
@@ -2552,19 +2553,15 @@ Working more with this approach, I found that `varchar (255)` is not enough:
     ALTER TABLE `tsmst`
     CHANGE `comment` `comment` longtext COLLATE 'utf8mb4_unicode_ci' NOT NULL AFTER `tmstmp`;
 
-This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy. This technique has saved me much time and effort. 
+Digression: Style question <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
 
-I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
-
-You may wonder about the big line numbers in one of those PHP files. That's not a problem. A problem are the long function definitions. There are quite a lot of methods in that class which is defined in that file, but still most of these functions are really really big. And that's not really good.
-
-I learned it from my first experiences with `Erlang`. Functions in Erlang are short, sometimes extremely short. Nevertheless they produce programs in Erlang with millions of rows. It was quite an experience to get a grip on Erlang in order to be able to produce productive code. I wish I had learned something along these lines earlier so that I could use that experience in my programming habits in PHP as well. 
-
-And, of course, the problem of debugging that code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
-
-One more example of how I easily found the problem of not getting the right translation for a specific word when I was wrapping up all the language versions after having collected all data separately. 
+One more example with another ID which uses the languages German, English, Spanish, French, Italian and Russian. Using this database technique, I easily found the problem of not getting the right translation for a specific word when I was wrapping up all the language versions after having collected all data separately. 
 
     | 2018-03-10 14:10:03.617272 | 24774 _transfer_tmp_to_dj5 done INSERT INTO tn_de, try to _build_tns |
+
+Here everything is done and we try to build the result for de, en, es, fr, it, ru:
+
     | 2018-03-10 14:10:03.630156 | 24855 _build_tns de 1624 trigger Ex_model->_build_tn --------------- |
     | 2018-03-10 14:10:03.665357 | 3173 Ex_model::_get_tn_lg_links this->lg :de: Sprachversionen        |
     | 2018-03-10 14:10:03.696897 | 24855 _build_tns en 1624 trigger Ex_model->_build_tn --------------- |
@@ -2577,10 +2574,23 @@ One more example of how I easily found the problem of not getting the right tran
     | 2018-03-10 14:10:03.881396 | 3173 Ex_model::_get_tn_lg_links this->lg :it: Versioni linguistiche  |
     | 2018-03-10 14:10:03.910080 | 24855 _build_tns ru 1624 trigger Ex_model->_build_tn --------------- |
     | 2018-03-10 14:10:03.930972 | 3173 Ex_model::_get_tn_lg_links this->lg :ru: Языковые               |
+
+We switch back to the original language we began our operations with:
+
     | 2018-03-10 14:10:03.957584 | 24861 _build_tns ru 1624  this->_current_tn_lg :en:                  |
     | 2018-03-10 14:10:04.145263 | == GOOD!!!===== LG :en: === used :259: secs                          |
 
-The result shows that one by one the languages are switched and the correct translation is found,
+The result shows that one by one the languages are switched and the correct translation is found: Sprachversionen, Language versions, Versiones de idioma, Versions linguistiques, Versioni linguistiche, Языковые.
+
+This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy. This technique has saved me much time and effort. 
+
+I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
+
+You may wonder about the big line numbers in one of those PHP files. That's not a problem. A problem are the long function definitions. There are quite a lot of methods in that class which is defined in that file, but still most of these functions are really really big. And that's not really good.
+
+I learned it from my first experiences with `Erlang`. Functions in Erlang are short, sometimes extremely short. Nevertheless they produce programs in Erlang with millions of rows. It was quite an experience to get a grip on Erlang in order to be able to produce productive code. I wish I had learned something along these lines earlier so that I could use that experience in my programming habits in PHP as well. 
+
+And, of course, the problem of debugging that code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
 
 End of digression.
 
