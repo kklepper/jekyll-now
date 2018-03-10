@@ -345,7 +345,7 @@ Caveats <span style="font-size: 11px;float: right;"><a href="#toc">Table of Cont
     
     I could've chosen any value for the variable `BAZ`, but I picked [42](https://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life,_the_Universe,_and_Everything_(42)) for no particular reason, and this is a line number also present in our file having some content, so `grep` cannot avoid to filter this line as well and show it, and there is nothing I as a programmer can do about it.
     
-    Or can I? Of course I can. This number is the beginning of the line, and I could use that as a token to filter out that result. I'm too lazy to do that and I don't see that this will really improve our debugging mechanism. The chances that this phenomenon will annoy under real circumstances are really low.
+    Or can I? Of course I can. This number is the beginning of the line, and I could use that property as a token to filter out that result. I'm too lazy to do that and I don't see that this will really improve our debugging mechanism. The chances that this phenomenon will annoy under real circumstances are really low.
     
     What's really important here is that this phenomenon is understood. That's enough.
 
