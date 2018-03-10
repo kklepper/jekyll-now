@@ -2304,9 +2304,9 @@ It's funny -- I'm programming for so long now and never developed a viable idea 
 Digression: Dirty debugging techniques <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Of course, there are many debugging techniques. When I started with PHP, there was no `try except` mechanism, so I had to develop my own, basically with some kind of echo construction. I can show any kind of variable and any number of them plus any kind of arrays and objects. 
+Of course, there are many debugging techniques. When I started with PHP, there was no `try except` mechanism, so I had to develop my own, basically with some kind of echo construction -- of course, what else? That's fine, I can show any kind of variable and any number of them plus any kind of arrays and objects. 
 
-If there should be some new desire, I'd just enhance my function. Actually, it is a small set of functions. In CodeIgniter, they reside in a helper file.
+And if there should be some new desire, I'd just enhance my function. Actually, it is a small set of functions. In CodeIgniter, they reside in a helper file.
 
 When exceptions were introduced in PHP, I wasn't convinced that this concept would give me any advantage, and since then I have seen many examples, but never made it a habit -- in fact I don't use them at all. They are fancy and they are cool, but I need ad hoc debugging techniques, and this is overkill. I didn't even use them back in times when I was programming in VC++ and Delphi, although they were highly recommended to me by a very gifted colleague.
 
@@ -2316,7 +2316,7 @@ Things may be different when you publish open source code to be used by a pletho
 
 Maybe I will change my mind if there is a program state which is stable in a sense, but so far I never reached this state, and I doubt I ever will.
 
-My debug messages tell me everything I need and are inserted by PSPad shortcuts with a few keystrokes. For a very complex problem, I developed a technique where I could switch on or off this kind of debug messages in certain functions via GET variables. This turned out to be very helpful as well.
+My debug messages tell me everything I need and are inserted by PSPad shortcuts with a few keystrokes. For a very complex problem, I developed a technique where I could switch on or off this kind of debug messages in certain functions via `GET` variables. This turned out to be very helpful as well.
 
 This kind of debugging is really dirty, I admit that. But I can comment any of these lines anytime in order to uncomment them whenever I should happen to need them again. That makes debugging very fast and easy.
 
