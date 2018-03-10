@@ -2624,27 +2624,41 @@ There is so much you can do with databases:
         -> WHERE 1
         -> AND id_ex IN (1624, 2181, 391)
         -> AND comment LIKE '%good!%'
-        -> ORDER BY 1;
+        -> ORDER BY 1, 2;
     +-------+----------------------------+----------------------------------------------+----+-----------+
     | id_ex | tmstmp                     | comment                                      | lg | time      |
     +-------+----------------------------+----------------------------------------------+----+-----------+
     |   391 | 2018-03-10 21:27:50.293078 | == GOOD!!!===== LG :de: === used :109: secs  | de | 109 secs  |
     |   391 | 2018-03-10 21:27:51.615886 | == GOOD!!!===== LG :en: === used :110: secs  | en | 110 secs  |
     |   391 | 2018-03-10 21:28:20.194331 | == GOOD!!!===== LG :fr: === used :138: secs  | fr | 138 secs  |
-    |  1624 | 2018-03-10 16:26:41.156284 | == GOOD!!!===== LG :en: === used :361: secs  | en | 361 secs  |
     |  1624 | 2018-03-10 16:21:51.781247 | == GOOD!!!===== LG :fr: === used :49: secs   | fr | 49 secs   |
     |  1624 | 2018-03-10 16:21:51.962183 | == GOOD!!!===== LG :es: === used :49: secs   | es | 49 secs   |
     |  1624 | 2018-03-10 16:21:52.020165 | == GOOD!!!===== LG :it: === used :49: secs   | it | 49 secs   |
     |  1624 | 2018-03-10 16:21:52.098927 | == GOOD!!!===== LG :en: === used :50: secs   | en | 50 secs   |
     |  1624 | 2018-03-10 16:21:52.205438 | == GOOD!!!===== LG :ru: === used :50: secs   | ru | 50 secs   |
-    |  2181 | 2018-03-10 15:31:14.793069 | == GOOD!!!===== LG :en: === used :367: secs  | en | 367 secs  |
-    |  2181 | 2018-03-10 15:29:33.003864 | == GOOD!!!===== LG :nl: === used :211: secs  | nl | 211 secs  |
-    |  2181 | 2018-03-10 15:29:21.306236 | == GOOD!!!===== LG :en: === used :200: secs  | en | 200 secs  |
-    |  2181 | 2018-03-10 15:29:20.260428 | == GOOD!!!===== LG :zh: === used :199: secs  | zh | 199 secs  |
+    |  1624 | 2018-03-10 16:26:41.156284 | == GOOD!!!===== LG :en: === used :361: secs  | en | 361 secs  |
     |  2181 | 2018-03-10 15:28:59.089538 | == GOOD!!!===== LG :fr: === used :177: secs  | fr | 177 secs  |
+    |  2181 | 2018-03-10 15:29:20.260428 | == GOOD!!!===== LG :zh: === used :199: secs  | zh | 199 secs  |
+    |  2181 | 2018-03-10 15:29:21.306236 | == GOOD!!!===== LG :en: === used :200: secs  | en | 200 secs  |
+    |  2181 | 2018-03-10 15:29:33.003864 | == GOOD!!!===== LG :nl: === used :211: secs  | nl | 211 secs  |
+    |  2181 | 2018-03-10 15:31:14.793069 | == GOOD!!!===== LG :en: === used :367: secs  | en | 367 secs  |
     +-------+----------------------------+----------------------------------------------+----+-----------+
     14 rows in set (0.00 sec)
 
+Looking at these numbers, it is obvious that there are 2 lines which stand out:
+
+    |  1624 | 2018-03-10 16:26:41.156284 | == GOOD!!!===== LG :en: === used :361: secs  | en | 361 secs  |
+    |  2181 | 2018-03-10 15:31:14.793069 | == GOOD!!!===== LG :en: === used :367: secs  | en | 367 secs  |
+
+Also, `en` appears twice in both cases. You may not have noticed, but the message of the shell file is wrong, it shows the wrong language, which is clear from the context:
+
+    | 2018-03-10 16:26:40.629453 | 24774 _transfer_tmp_to_dj5 done INSERT INTO tn_de, try to _build_tns |
+    | 2018-03-10 16:26:40.641469 | 24855 _build_tns de 1624 trigger Ex_model->_build_tn --------------- |
+
+    | 2018-03-10 15:31:14.327917 | 24774 _transfer_tmp_to_dj5 done INSERT INTO tn_de, try to _build_tns |
+    | 2018-03-10 15:31:14.336398 | 24855 _build_tns de 1624 trigger Ex_model->_build_tn --------------- |      
+                                      |
+So the mechanism is as follows: we start with `en`, and this is what the shell knows. For some reason, the language `de` is the last one to be completed, so only then the windup can start. The time it takes to process all the languages one by one adds up to the total time this last language needs. And, yes, the value `en` in this line is wrong and should be `de`.
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
