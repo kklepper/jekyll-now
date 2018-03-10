@@ -2273,45 +2273,45 @@ If a language is processed (`tsmst.sh == GOOD!!!`), the data is transferred from
 
 If all languages are processed, another mechanism is invoked which will produce results files for each language (the last 5 lines). The whole protocol looks really nice and is extremely useful for debugging.
 
-    M:7727678 [tmp]>select * from tsmst where id_ex = '2181' ORDER BY 2, 3;
-    +-------+---------------------+---------------------------------------------------------------------------------------------------+
-    | id_ex | tmstmp              | comment                                                                                           |
-    +-------+---------------------+---------------------------------------------------------------------------------------------------+
-    |  2181 | 2018-03-09 02:12:14 | 24657 nohup /path_to_your_script/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
-    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
-    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
-    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
-    |  2181 | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
-    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT en DEL :0:                                                                          |
-    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT fr DEL :0:                                                                          |
-    |  2181 | 2018-03-09 02:13:01 | tsmst.sh INIT zh DEL :0:                                                                          |
-    |  2181 | 2018-03-09 02:13:02 | tsmst.sh INIT nl DEL :0:                                                                          |
-    |  2181 | 2018-03-09 02:16:03 | tsmst.sh == GOOD!!!===== LG :fr: === used :182: secs                                              |
-    |  2181 | 2018-03-09 02:16:03 | 22380 while fr done, about to _transfer_tmp_to_dj5                                                |
-    |  2181 | 2018-03-09 02:16:03 | 24756 done INSERT INTO tn_fr                                                                      |
-    |  2181 | 2018-03-09 02:16:03 | 24798 DROP TABLE IF EXISTS bak.tn_2181_fr                                                         |
-    |  2181 | 2018-03-09 02:16:03 | 24808 INSERT INTO bak.tn_2181_fr SELECT * FROM tmp.tn_2181_fr                                     |
-    |  2181 | 2018-03-09 02:16:21 | tsmst.sh == GOOD!!!===== LG :en: === used :200: secs                                              |
-    |  2181 | 2018-03-09 02:16:21 | 22380 while en done, about to _transfer_tmp_to_dj5                                                |
-    |  2181 | 2018-03-09 02:16:21 | 24756 done INSERT INTO tn_en                                                                      |
-    |  2181 | 2018-03-09 02:16:21 | 24798 DROP TABLE IF EXISTS bak.tn_2181_en                                                         |
-    |  2181 | 2018-03-09 02:16:21 | 24808 INSERT INTO bak.tn_2181_en SELECT * FROM tmp.tn_2181_en                                     |
-    |  2181 | 2018-03-09 02:16:24 | tsmst.sh == GOOD!!!===== LG :zh: === used :203: secs                                              |
-    |  2181 | 2018-03-09 02:16:24 | 22380 while zh done, about to _transfer_tmp_to_dj5                                                |
-    |  2181 | 2018-03-09 02:16:24 | 24756 done INSERT INTO tn_zh                                                                      |
-    |  2181 | 2018-03-09 02:16:24 | 24798 DROP TABLE IF EXISTS bak.tn_2181_zh                                                         |
-    |  2181 | 2018-03-09 02:16:24 | 24808 INSERT INTO bak.tn_2181_zh SELECT * FROM tmp.tn_2181_zh                                     |
-    |  2181 | 2018-03-09 02:16:36 | tsmst.sh == GOOD!!!===== LG :nl: === used :215: secs                                              |
-    |  2181 | 2018-03-09 02:16:36 | 22380 while nl done, about to _transfer_tmp_to_dj5                                                |
-    |  2181 | 2018-03-09 02:16:36 | 24756 done INSERT INTO tn_nl                                                                      |
-    |  2181 | 2018-03-09 02:16:36 | 24798 DROP TABLE IF EXISTS bak.tn_2181_nl                                                         |
-    |  2181 | 2018-03-09 02:16:36 | 24808 INSERT INTO bak.tn_2181_nl SELECT * FROM tmp.tn_2181_nl                                     |
-    |  2181 | 2018-03-09 02:16:36 | 24832 de 2181 _build_tn                                                                           |
-    |  2181 | 2018-03-09 02:16:36 | 24832 en 2181 _build_tn                                                                           |
-    |  2181 | 2018-03-09 02:16:36 | 24832 fr 2181 _build_tn                                                                           |
-    |  2181 | 2018-03-09 02:16:36 | 24832 nl 2181 _build_tn                                                                           |
-    |  2181 | 2018-03-09 02:16:36 | 24832 zh 2181 _build_tn                                                                           |
-    +-------+---------------------+---------------------------------------------------------------------------------------------------+
+    M:7727678 [tmp]>SELECT tmstmp, comment FROM tsmst WHERE id_ex = '2181' ORDER BY 1, 2;
+    +---------------------+---------------------------------------------------------------------------------------------------+
+    | tmstmp              | comment                                                                                           |
+    +---------------------+---------------------------------------------------------------------------------------------------+
+    | 2018-03-09 02:12:14 | 24657 nohup /path_to_your_script/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
+    | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
+    | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
+    | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
+    | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
+    | 2018-03-09 02:13:01 | tsmst.sh INIT en DEL :0:                                                                          |
+    | 2018-03-09 02:13:01 | tsmst.sh INIT fr DEL :0:                                                                          |
+    | 2018-03-09 02:13:01 | tsmst.sh INIT zh DEL :0:                                                                          |
+    | 2018-03-09 02:13:02 | tsmst.sh INIT nl DEL :0:                                                                          |
+    | 2018-03-09 02:16:03 | tsmst.sh == GOOD!!!===== LG :fr: === used :182: secs                                              |
+    | 2018-03-09 02:16:03 | 22380 while fr done, about to _transfer_tmp_to_dj5                                                |
+    | 2018-03-09 02:16:03 | 24756 done INSERT INTO tn_fr                                                                      |
+    | 2018-03-09 02:16:03 | 24798 DROP TABLE IF EXISTS bak.tn_2181_fr                                                         |
+    | 2018-03-09 02:16:03 | 24808 INSERT INTO bak.tn_2181_fr SELECT * FROM tmp.tn_2181_fr                                     |
+    | 2018-03-09 02:16:21 | tsmst.sh == GOOD!!!===== LG :en: === used :200: secs                                              |
+    | 2018-03-09 02:16:21 | 22380 while en done, about to _transfer_tmp_to_dj5                                                |
+    | 2018-03-09 02:16:21 | 24756 done INSERT INTO tn_en                                                                      |
+    | 2018-03-09 02:16:21 | 24798 DROP TABLE IF EXISTS bak.tn_2181_en                                                         |
+    | 2018-03-09 02:16:21 | 24808 INSERT INTO bak.tn_2181_en SELECT * FROM tmp.tn_2181_en                                     |
+    | 2018-03-09 02:16:24 | tsmst.sh == GOOD!!!===== LG :zh: === used :203: secs                                              |
+    | 2018-03-09 02:16:24 | 22380 while zh done, about to _transfer_tmp_to_dj5                                                |
+    | 2018-03-09 02:16:24 | 24756 done INSERT INTO tn_zh                                                                      |
+    | 2018-03-09 02:16:24 | 24798 DROP TABLE IF EXISTS bak.tn_2181_zh                                                         |
+    | 2018-03-09 02:16:24 | 24808 INSERT INTO bak.tn_2181_zh SELECT * FROM tmp.tn_2181_zh                                     |
+    | 2018-03-09 02:16:36 | tsmst.sh == GOOD!!!===== LG :nl: === used :215: secs                                              |
+    | 2018-03-09 02:16:36 | 22380 while nl done, about to _transfer_tmp_to_dj5                                                |
+    | 2018-03-09 02:16:36 | 24756 done INSERT INTO tn_nl                                                                      |
+    | 2018-03-09 02:16:36 | 24798 DROP TABLE IF EXISTS bak.tn_2181_nl                                                         |
+    | 2018-03-09 02:16:36 | 24808 INSERT INTO bak.tn_2181_nl SELECT * FROM tmp.tn_2181_nl                                     |
+    | 2018-03-09 02:16:36 | 24832 de 2181 _build_tn                                                                           |
+    | 2018-03-09 02:16:36 | 24832 en 2181 _build_tn                                                                           |
+    | 2018-03-09 02:16:36 | 24832 fr 2181 _build_tn                                                                           |
+    | 2018-03-09 02:16:36 | 24832 nl 2181 _build_tn                                                                           |
+    | 2018-03-09 02:16:36 | 24832 zh 2181 _build_tn                                                                           |
+    +---------------------+---------------------------------------------------------------------------------------------------+
     29 rows in set (0.00 sec)
 
 You can see which line is written by the shell script tsmst.sh responsible for starting the language specific process, the rest stems from my PHP script preceded by the line number for easy identification. 
@@ -2396,7 +2396,7 @@ The term `NOW(6)` reflects the new definition of the timestamp column. And as I 
 
 Now it looks really fine (in order to make it more readable for me and you I introduced empty lines):
 
-    M:7727678 [tmp]>select tmstmp, comment from tsmst where id_ex = '2181' ORDER BY 1;
+    M:7727678 [tmp]>SELECT tmstmp, comment FROM tsmst WHERE id_ex = '2181' ORDER BY 1;
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     | tmstmp                     | comment                                                                                                     |
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
@@ -2506,7 +2506,7 @@ Some lines seem to be redundant -- you see that I track the value of a variable 
 
 Omitting these lines which are now superfluous, the whole picture is even clearer:
 
-    M:7727678 [tmp]>select tmstmp, comment from tsmst where id_ex = '2181' ORDER BY 1;
+    M:7727678 [tmp]>SELECT tmstmp, comment FROM tsmst WHERE id_ex = '2181' ORDER BY 1;
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     | tmstmp                     | comment                                                                                                     |
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
@@ -2614,6 +2614,26 @@ The same for the former example:
     | 2018-03-10 14:44:50.804486 | 3173 Ex_model::_get_tn_lg_links this->lg :fr: Versions linguistiques |
     | 2018-03-10 14:44:50.840104 | 3173 Ex_model::_get_tn_lg_links this->lg :zh: 语言版本               |
     | 2018-03-10 14:44:50.888654 | 3173 Ex_model::_get_tn_lg_links this->lg :de: Sprachversionen        |        
+
+There is so much you can do with databases:
+
+    M:7727678 [tmp]>SELECT id_ex, tmstmp, comment FROM tsmst WHERE id_ex IN (1624, 2181) AND comment LIKE '%good!%' ORDER BY 1;
+    +-------+----------------------------+----------------------------------------------+
+    | id_ex | tmstmp                     | comment                                      |
+    +-------+----------------------------+----------------------------------------------+
+    |  1624 | 2018-03-10 16:26:41.156284 | == GOOD!!!===== LG :en: === used :361: secs  |
+    |  1624 | 2018-03-10 16:21:51.781247 | == GOOD!!!===== LG :fr: === used :49: secs   |
+    |  1624 | 2018-03-10 16:21:51.962183 | == GOOD!!!===== LG :es: === used :49: secs   |
+    |  1624 | 2018-03-10 16:21:52.020165 | == GOOD!!!===== LG :it: === used :49: secs   |
+    |  1624 | 2018-03-10 16:21:52.098927 | == GOOD!!!===== LG :en: === used :50: secs   |
+    |  1624 | 2018-03-10 16:21:52.205438 | == GOOD!!!===== LG :ru: === used :50: secs   |
+    |  2181 | 2018-03-10 15:31:14.793069 | == GOOD!!!===== LG :en: === used :367: secs  |
+    |  2181 | 2018-03-10 15:29:33.003864 | == GOOD!!!===== LG :nl: === used :211: secs  |
+    |  2181 | 2018-03-10 15:29:21.306236 | == GOOD!!!===== LG :en: === used :200: secs  |
+    |  2181 | 2018-03-10 15:29:20.260428 | == GOOD!!!===== LG :zh: === used :199: secs  |
+    |  2181 | 2018-03-10 15:28:59.089538 | == GOOD!!!===== LG :fr: === used :177: secs  |
+    +-------+----------------------------+----------------------------------------------+
+    11 rows in set (0.00 sec)
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
