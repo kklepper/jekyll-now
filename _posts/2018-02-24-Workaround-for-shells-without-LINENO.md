@@ -2594,11 +2594,13 @@ This investigation is not just for fun. I have rearranged central parts of my co
 
 I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
 
-You may wonder about the big line numbers in one of those PHP files. That's not a problem. A problem are the long function definitions. There are quite a lot of methods in that class which is defined in that file, but still most of these functions are really really big. And that's not really good.
+You may wonder about the big line numbers in one of those PHP files. That's not a problem but due to the complexity of the task being addressed by this class. A problem are the long function definitions. There are quite a lot of methods in that class defined in that file, but still many of these functions are really really big. And that's not really good.
 
-I learned it from my first experiences with `Erlang`. Functions in Erlang are short, sometimes extremely short. Nevertheless they produce programs in Erlang with millions of rows. It was quite an experience to get a grip on Erlang in order to be able to produce productive code. I wish I had learned something along these lines earlier so that I could use that experience in my programming habits in PHP as well. 
+I learned that from my first experiences with `Erlang`. Functions in Erlang are short, sometimes extremely short. Nevertheless they produce programs in Erlang with millions of rows. 
 
-And, of course, the problem of debugging that code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
+It was quite an experience to get a grip on Erlang in order to be able to produce productive code. I wish I had learned something along these lines earlier so that I could have used that experience in my programming habits in PHP as well. 
+
+And, of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
 
 End of digression.
 
