@@ -2663,7 +2663,7 @@ Also, `en` appears twice in both ID cases 1624 and 2181. You may not have notice
     | 2018-03-10 15:31:14.327917 | 24774 _transfer_tmp_to_dj5 done INSERT INTO tn_de, try to _build_tns |
     | 2018-03-10 15:31:14.336398 | 24855 _build_tns de 1624 trigger Ex_model->_build_tn --------------- |
 
-So the mechanism is as follows: we start with `en`, and this is what the shell script knows. 
+So the mechanism is as follows: we start with `en`, and this is what the shell script (`== GOOD!!!`) knows. 
 
 For some reason, in these cases the language `en` is then switched to `de` to be processed first, which the shell script does not know of. This explains why the value `en` in this line is wrong and should be `de`. 
 
