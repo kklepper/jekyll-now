@@ -2671,10 +2671,10 @@ For another reason `de` is the last one to be completed in both cases, so only t
 
 The average time taken for processing these languages is obviously very different:
 
-    |   ID | number of lg | time |
-    |  391 |            4 |    7 |
-    | 1624 |            6 |   52 |
-    | 2181 |            5 |   34 |
+    |   ID | number of lg | avg. time per lg |
+    |  391 |            4 |                7 |
+    | 1624 |            6 |               52 |
+    | 2181 |            5 |               34 |
 
 The time does not depend on the number of languages but on the nature of the data to be processed.
 
