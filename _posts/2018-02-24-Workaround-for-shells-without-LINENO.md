@@ -2327,6 +2327,8 @@ And if there should be some new desire, I'd just enhance my function. Actually, 
 
 When exceptions were introduced in PHP, I wasn't convinced that this concept would give me any advantage, and since then I have seen many examples, but never made it a habit -- in fact I don't use them at all. They are fancy and they are cool, but I need ad hoc debugging techniques, and this is overkill. I didn't even use them back in times when I was programming in VC++ and Delphi, although they were highly recommended to me by a very gifted colleague.
 
+But that's another story. PHP is an interpreted language, debugging is easy. With Delphi and VC++, being languages to be compiled first before you can see if there is an error, debugging was extremely time-consuming and boring just the same.
+
 The same holds true with testing mechanisms. There are test units everywhere, but I don't use them. Either code is okay and it works under all circumstances, or it doesn't and I have to find out the conditions. In all these years, cases where some error would return were extremely seldom. And in these one or two cases the error conditions were so complex, it wouldn't have paid out to define a test case in the first place.
 
 Things may be different when you publish open source code to be used by a plethora of other people. I know that the MySQL team had the habit to translate every error fixed into a test case in order to prevent that this error would creep in again. Well, eventually they had to to pay somebody full-time to run all these test cases. Sorry, my time is limited. 
