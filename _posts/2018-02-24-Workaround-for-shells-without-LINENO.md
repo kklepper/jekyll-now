@@ -2669,7 +2669,7 @@ So the mechanism is as follows: we start with `en`, and this is what the shell s
 
 For some reason, in these cases the language `en` is then switched to `de` to be processed first, which the shell script does not know of. This explains why the value `en` in this line is wrong and should be `de`. 
 
-For another reason `de` is the last one to be completed in both cases, so only then the windup can start. The time it takes to process all the languages one by one adds up to the total time this last language needs. 
+For another reason `de` is the last one to be completed in both cases, so only then the windup can start. The time it takes to process all the languages one by one adds up to the total time this last language needs. In these both cases the time span used was significant so the mismatch leaps to the eye.
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
