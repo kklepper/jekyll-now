@@ -341,7 +341,7 @@ You may have noticed that we also got an enigmatic output here:
 
 What does the last line mean? Where does it come from? Is it a bug? Well, it is neither a bug nor a feature but sheer luck that we see this phenomenon. 
 
-I could've chosen any value for the variable `BAZ`, but I picked [42](https://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life,_the_Universe,_and_Everything_(42)), and this is a line number also present in our file, so `grep` cannot avoid to filter this line as well, and there is nothing I as a programmer can do about it.
+I could've chosen any value for the variable `BAZ`, but I picked [42](https://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life,_the_Universe,_and_Everything_(42)) for no particular reason, and this is a line number also present in our file, so `grep` cannot avoid to filter this line as well, and there is nothing I as a programmer can do about it.
 
 6. You can use `echo_line_no` from inside a function. In contrast to bash there is no way to get the function name via system variable due to the same restrictions. No problem, you can always hardcode if necessary, as demonstrated here in the comment `this was from inside function whatsup`; you have to hardcode the call to `echo_line_no` there anyway. But there is more to the use within functions:
 
