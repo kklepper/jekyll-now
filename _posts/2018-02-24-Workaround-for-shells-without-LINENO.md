@@ -53,6 +53,7 @@ published: true
 > - [Digression: Proof of concept](#digression-proof-of-concept-table-of-content)
 > - [Digression: Record by database](#digression-record-by-database-table-of-content)
 > - [Digression: More complexity by languages](#digression-more-complexity-by-languages-table-of-content)
+> - [Digression: Dirty debugging techniques](#digression-dirty-debugging-techniques-table-of-content)
 > - [Digression: Adding microtime by trigger](#digression-adding-microtime-by-trigger-table-of-content)
 > - [Digression: Adding microtime natively](#digression-adding-microtime-natively-table-of-content)
 - [Search engines](#search-engines-table-of-content)
@@ -2300,6 +2301,19 @@ You can see which line is written by the shell script tsmst.sh responsible for s
 
 It's funny -- I'm programming for so long now and never developed a viable idea of how to track what a program is really doing. CodeIgniter has a `benchmark class` which I misused for this purpose at times, but that was unrewarding mostly. This idea, however, seems to be really helpful.
 
+Digression: Dirty debugging techniques <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+Of course, there are many debugging techniques. When I started with PHP, there was no `try except` mechanism, so I had to develop my own, basically with some kind of echo construction.
+
+When exceptions were introduced, I wasn't convinced that this concept would give me any advantage, and since then I have seen many examples, but never made it a habit -- in fact I don't use them at all. They are fancy and they are cool, but I need ad hoc debugging techniques, and this is overkill.
+
+The same holds true with testing mechanisms. There are test units everywhere, but I don't use them. Either code is okay and it works under all circumstances, or it doesn't and I have to find out the circumstances. Maybe I will change my mind if there is a program state which is stable in a sense, but so far I never reached this state, and I doubt I ever will.
+
+My debug messages tell me everything I need and are inserted by PSPad shortcuts with a few keystrokes. For a very complex problem, I developed a technique where I could switch on or off this kind of debug messages in certain functions via GET variables. This turned out to be very helpful as well.
+
+This kind of debugging is really dirty, I admit that. But I can comment any of these lines anytime in order to uncomment them whenever I should happen to need them again. That makes debugging very fast and easy.
+
 Digression: Adding microtime by trigger <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
@@ -2463,7 +2477,7 @@ Now it looks really fine (in order to make it more readable for me and you I int
 
 Here `too early` means that I have to wait for all language processes to be completed before I can sum up with `Ex_model->_build_tn`. 
 
-Some lines seem to be redundant -- you see that I track the value of a variable which seemed to be wrong. The problem was not where I thought it would be. However, I found out where it was with the same technique and fixed the problem, so what you see here is just the remainder which is clean now. 
+Some lines seem to be redundant -- you see that I track the value of a variable which seemed to be wrong. The problem was not where I thought it would be. However, I found out where it was with the same technique and fixed the problem, so what you see here is just the remainder of debug messages which is clean now. 
 
 Omitting these lines which are now superfluous, the whole picture is even clearer:
 
