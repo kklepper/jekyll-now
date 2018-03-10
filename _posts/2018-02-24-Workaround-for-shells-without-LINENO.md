@@ -2597,7 +2597,7 @@ The same for the former example:
     | 2018-03-10 14:44:50.840104 | 3173 Ex_model::_get_tn_lg_links this->lg :zh: 语言版本               |
     | 2018-03-10 14:44:50.888654 | 3173 Ex_model::_get_tn_lg_links this->lg :de: Sprachversionen        |        
 
-This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy. This technique has saved me much time and effort. 
+This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
 I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
 
