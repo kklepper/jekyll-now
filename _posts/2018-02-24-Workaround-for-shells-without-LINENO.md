@@ -2649,12 +2649,12 @@ There is so much you can do with databases:
     +-------+----------------------------+----------------------------------------------+----+-----------+
     14 rows in set (0.00 sec)
 
-Looking at these numbers, it is obvious that there are 2 lines which stand out:
+Looking at these numbers, it is obvious that there are 2 lines which stand out by the `time` value:
 
     |  1624 | 2018-03-10 16:26:41.156284 | == GOOD!!!===== LG :en: === used :361: secs  | en | 361 secs  |
     |  2181 | 2018-03-10 15:31:14.793069 | == GOOD!!!===== LG :en: === used :367: secs  | en | 367 secs  |
 
-Also, `en` appears twice in both cases. You may not have noticed, but the message of the shell file is wrong, it shows the wrong language, which is clear from the context:
+Also, `en` appears twice in both ID cases 1624 and 2181. You may not have noticed, but the message of the shell file is wrong, it shows the wrong language, which is clear from the context:
 
     | 2018-03-10 16:26:40.629453 | 24774 _transfer_tmp_to_dj5 done INSERT INTO tn_de, try to _build_tns |
     | 2018-03-10 16:26:40.641469 | 24855 _build_tns de 1624 trigger Ex_model->_build_tn --------------- |
