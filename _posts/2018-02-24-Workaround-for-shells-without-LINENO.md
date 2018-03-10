@@ -2310,7 +2310,11 @@ If there should be some new desire, I'd just enhance my function. Actually, it i
 
 When exceptions were introduced in PHP, I wasn't convinced that this concept would give me any advantage, and since then I have seen many examples, but never made it a habit -- in fact I don't use them at all. They are fancy and they are cool, but I need ad hoc debugging techniques, and this is overkill. I didn't even use them back in times when I was programming in VC++ and Delphi, although they were highly recommended to me by a very gifted colleague.
 
-The same holds true with testing mechanisms. There are test units everywhere, but I don't use them. Either code is okay and it works under all circumstances, or it doesn't and I have to find out the circumstances. Maybe I will change my mind if there is a program state which is stable in a sense, but so far I never reached this state, and I doubt I ever will.
+The same holds true with testing mechanisms. There are test units everywhere, but I don't use them. Either code is okay and it works under all circumstances, or it doesn't and I have to find out the conditions. In all these years, cases where some error would return were extremely seldom. And in these one or two cases the error conditions were so complex, it wouldn't have paid out to define a test case in the first place.
+
+Things may be different when you publish open source code to be used by a plethora of other people. I know that the MySQL team had the habit to translate every error fixed into a test case in order to prevent that this error would creep in again. Well, eventually they had to to pay somebody full-time to run all these test cases. Sorry, my time is limited. 
+
+Maybe I will change my mind if there is a program state which is stable in a sense, but so far I never reached this state, and I doubt I ever will.
 
 My debug messages tell me everything I need and are inserted by PSPad shortcuts with a few keystrokes. For a very complex problem, I developed a technique where I could switch on or off this kind of debug messages in certain functions via GET variables. This turned out to be very helpful as well.
 
