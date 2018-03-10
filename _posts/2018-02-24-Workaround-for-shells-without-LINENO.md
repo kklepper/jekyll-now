@@ -2667,7 +2667,7 @@ Also, `en` appears twice in both ID cases 1624 and 2181. You may not have notice
 
 So the mechanism is as follows: we start with `en`, and this is what the shell script knows. 
 
-For some reason, in these cases the language `en` is then switched to `de` to be processed first for some reason, which the shell script does not know of. This explains why the value `en` in this line is wrong and should be `de`. 
+For some reason, in these cases the language `en` is then switched to `de` to be processed first, which the shell script does not know of. This explains why the value `en` in this line is wrong and should be `de`. 
 
 For another reason `de` is the last one to be completed in both cases, so only then the windup can start. The time it takes to process all the languages one by one adds up to the total time this last language needs. 
 
