@@ -2562,6 +2562,26 @@ I learned it from my first experiences with `Erlang`. Functions in Erlang are sh
 
 And, of course, the problem of debugging that code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
 
+One more example of how I easily found the problem of not getting the right translation for a specific word when I was wrapping up all the language versions after having collected all data separately. 
+
+    | 2018-03-10 14:10:03.617272 | 24774 Metahelper::_transfer_tmp_to_dj5 done INSERT INTO tn_de, try to _build_tns          |
+    | 2018-03-10 14:10:03.630156 | 24855 Metahelper::_build_tns de 1624 trigger Ex_model->_build_tn -----------------        |
+    | 2018-03-10 14:10:03.665357 | 3173 Ex_model::_get_tn_lg_links this->lg :de: this->CI->lg :de: Sprachversionen           |
+    | 2018-03-10 14:10:03.696897 | 24855 Metahelper::_build_tns en 1624 trigger Ex_model->_build_tn -----------------        |
+    | 2018-03-10 14:10:03.723393 | 3173 Ex_model::_get_tn_lg_links this->lg :en: this->CI->lg :en: Language versions         |
+    | 2018-03-10 14:10:03.753933 | 24855 Metahelper::_build_tns es 1624 trigger Ex_model->_build_tn -----------------        |
+    | 2018-03-10 14:10:03.773810 | 3173 Ex_model::_get_tn_lg_links this->lg :es: this->CI->lg :es: Versiones de idioma       |
+    | 2018-03-10 14:10:03.803189 | 24855 Metahelper::_build_tns fr 1624 trigger Ex_model->_build_tn -----------------        |
+    | 2018-03-10 14:10:03.830543 | 3173 Ex_model::_get_tn_lg_links this->lg :fr: this->CI->lg :fr: Versions linguistiques    |
+    | 2018-03-10 14:10:03.861603 | 24855 Metahelper::_build_tns it 1624 trigger Ex_model->_build_tn -----------------        |
+    | 2018-03-10 14:10:03.881396 | 3173 Ex_model::_get_tn_lg_links this->lg :it: this->CI->lg :it: Versioni linguistiche     |
+    | 2018-03-10 14:10:03.910080 | 24855 Metahelper::_build_tns ru 1624 trigger Ex_model->_build_tn -----------------        |
+    | 2018-03-10 14:10:03.930972 | 3173 Ex_model::_get_tn_lg_links this->lg :ru: this->CI->lg :ru: Языковые                  |
+    | 2018-03-10 14:10:03.957584 | 24861 Metahelper::_build_tns ru 1624  this->_current_tn_lg :en:                           |
+    | 2018-03-10 14:10:04.145263 | == GOOD!!!===== LG :en: === used :259: secs                                               |
+
+The result shows that one by one the languages are switched and the correct translation is found,
+
 End of digression.
 
 Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
