@@ -2580,7 +2580,14 @@ We switch back to the original language we began our operations with:
     | 2018-03-10 14:10:03.957584 | 24861 _build_tns ru 1624  this->_current_tn_lg :en:                  |
     | 2018-03-10 14:10:04.145263 | == GOOD!!!===== LG :en: === used :259: secs                          |
 
-The result shows that one by one the languages are switched and the correct translation is found: Sprachversionen, Language versions, Versiones de idioma, Versions linguistiques, Versioni linguistiche, Языковые.
+The result shows that one by one the languages are switched and the correct translation is found: 
+
+- Sprachversionen, 
+- Language versions, 
+- Versiones de idioma, 
+- Versions linguistiques, 
+- Versioni linguistiche, 
+- Языковые.
 
 The same for the former example:
 
