@@ -2661,7 +2661,7 @@ Also, `en` appears twice in both ID cases 1624 and 2181. You may not have notice
 
     | 2018-03-10 15:31:14.327917 | 24774 _transfer_tmp_to_dj5 done INSERT INTO tn_de, try to _build_tns |
     | 2018-03-10 15:31:14.336398 | 24855 _build_tns de 1624 trigger Ex_model->_build_tn --------------- |      
-                                      |
+
 So the mechanism is as follows: we start with `en`, and this is what the shell knows. For some reason, the language `de` is the last one to be completed, so only then the windup can start. The time it takes to process all the languages one by one adds up to the total time this last language needs. And, yes, the value `en` in this line is wrong and should be `de`.
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
