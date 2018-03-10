@@ -2582,6 +2582,14 @@ We switch back to the original language we began our operations with:
 
 The result shows that one by one the languages are switched and the correct translation is found: Sprachversionen, Language versions, Versiones de idioma, Versions linguistiques, Versioni linguistiche, Языковые.
 
+The same for the former example:
+
+    | 2018-03-10 14:44:50.655962 | 3173 Ex_model::_get_tn_lg_links this->lg :nl: Taalversies            |
+    | 2018-03-10 14:44:50.698879 | 3173 Ex_model::_get_tn_lg_links this->lg :en: Language versions      |
+    | 2018-03-10 14:44:50.804486 | 3173 Ex_model::_get_tn_lg_links this->lg :fr: Versions linguistiques |
+    | 2018-03-10 14:44:50.840104 | 3173 Ex_model::_get_tn_lg_links this->lg :zh: 语言版本               |
+    | 2018-03-10 14:44:50.888654 | 3173 Ex_model::_get_tn_lg_links this->lg :de: Sprachversionen        |        
+
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy. This technique has saved me much time and effort. 
 
 I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
