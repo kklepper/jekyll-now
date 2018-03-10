@@ -2622,12 +2622,15 @@ There is so much you can do with databases:
         -> REPLACE(SUBSTRING(comment, 35), ':', '') time
         -> FROM tsmst
         -> WHERE 1
-        -> AND id_ex IN (1624, 2181)
+        -> AND id_ex IN (1624, 2181, 391)
         -> AND comment LIKE '%good!%'
         -> ORDER BY 1;
     +-------+----------------------------+----------------------------------------------+----+-----------+
     | id_ex | tmstmp                     | comment                                      | lg | time      |
     +-------+----------------------------+----------------------------------------------+----+-----------+
+    |   391 | 2018-03-10 21:27:50.293078 | == GOOD!!!===== LG :de: === used :109: secs  | de | 109 secs  |
+    |   391 | 2018-03-10 21:27:51.615886 | == GOOD!!!===== LG :en: === used :110: secs  | en | 110 secs  |
+    |   391 | 2018-03-10 21:28:20.194331 | == GOOD!!!===== LG :fr: === used :138: secs  | fr | 138 secs  |
     |  1624 | 2018-03-10 16:26:41.156284 | == GOOD!!!===== LG :en: === used :361: secs  | en | 361 secs  |
     |  1624 | 2018-03-10 16:21:51.781247 | == GOOD!!!===== LG :fr: === used :49: secs   | fr | 49 secs   |
     |  1624 | 2018-03-10 16:21:51.962183 | == GOOD!!!===== LG :es: === used :49: secs   | es | 49 secs   |
@@ -2640,7 +2643,8 @@ There is so much you can do with databases:
     |  2181 | 2018-03-10 15:29:20.260428 | == GOOD!!!===== LG :zh: === used :199: secs  | zh | 199 secs  |
     |  2181 | 2018-03-10 15:28:59.089538 | == GOOD!!!===== LG :fr: === used :177: secs  | fr | 177 secs  |
     +-------+----------------------------+----------------------------------------------+----+-----------+
-    11 rows in set (0.00 sec)
+    14 rows in set (0.00 sec)
+
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
