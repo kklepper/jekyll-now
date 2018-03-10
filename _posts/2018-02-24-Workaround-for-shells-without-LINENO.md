@@ -2463,7 +2463,7 @@ Now it looks really fine (in order to make it more readable for me and you I int
 
 Here `too early` means that I have to wait for all language processes to be completed before I can sum up with `Ex_model->_build_tn`. 
 
-Some lines seem to be redundant -- you see that I track the value of a variable which seemed to be wrong. The problem was not where I thought it would be. However, I find out where it was with the same technique and fixed the problem, so what you see here is just the remainder which is clean now. 
+Some lines seem to be redundant -- you see that I track the value of a variable which seemed to be wrong. The problem was not where I thought it would be. However, I found out where it was with the same technique and fixed the problem, so what you see here is just the remainder which is clean now. 
 
 Omitting these lines which are now superfluous, the whole picture is even clearer:
 
