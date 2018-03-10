@@ -2617,22 +2617,29 @@ The same for the former example:
 
 There is so much you can do with databases:
 
-    M:7727678 [tmp]>SELECT id_ex, tmstmp, comment FROM tsmst WHERE id_ex IN (1624, 2181) AND comment LIKE '%good!%' ORDER BY 1;
-    +-------+----------------------------+----------------------------------------------+
-    | id_ex | tmstmp                     | comment                                      |
-    +-------+----------------------------+----------------------------------------------+
-    |  1624 | 2018-03-10 16:26:41.156284 | == GOOD!!!===== LG :en: === used :361: secs  |
-    |  1624 | 2018-03-10 16:21:51.781247 | == GOOD!!!===== LG :fr: === used :49: secs   |
-    |  1624 | 2018-03-10 16:21:51.962183 | == GOOD!!!===== LG :es: === used :49: secs   |
-    |  1624 | 2018-03-10 16:21:52.020165 | == GOOD!!!===== LG :it: === used :49: secs   |
-    |  1624 | 2018-03-10 16:21:52.098927 | == GOOD!!!===== LG :en: === used :50: secs   |
-    |  1624 | 2018-03-10 16:21:52.205438 | == GOOD!!!===== LG :ru: === used :50: secs   |
-    |  2181 | 2018-03-10 15:31:14.793069 | == GOOD!!!===== LG :en: === used :367: secs  |
-    |  2181 | 2018-03-10 15:29:33.003864 | == GOOD!!!===== LG :nl: === used :211: secs  |
-    |  2181 | 2018-03-10 15:29:21.306236 | == GOOD!!!===== LG :en: === used :200: secs  |
-    |  2181 | 2018-03-10 15:29:20.260428 | == GOOD!!!===== LG :zh: === used :199: secs  |
-    |  2181 | 2018-03-10 15:28:59.089538 | == GOOD!!!===== LG :fr: === used :177: secs  |
-    +-------+----------------------------+----------------------------------------------+
+    M:7727678 [tmp]>SELECT id_ex, tmstmp, comment,
+        -> MID(comment, 21, 2) lg,
+        -> REPLACE(SUBSTRING(comment, 35), ':', '') time
+        -> FROM tsmst
+        -> WHERE 1
+        -> AND id_ex IN (1624, 2181)
+        -> AND comment LIKE '%good!%'
+        -> ORDER BY 1;
+    +-------+----------------------------+----------------------------------------------+----+-----------+
+    | id_ex | tmstmp                     | comment                                      | lg | time      |
+    +-------+----------------------------+----------------------------------------------+----+-----------+
+    |  1624 | 2018-03-10 16:26:41.156284 | == GOOD!!!===== LG :en: === used :361: secs  | en | 361 secs  |
+    |  1624 | 2018-03-10 16:21:51.781247 | == GOOD!!!===== LG :fr: === used :49: secs   | fr | 49 secs   |
+    |  1624 | 2018-03-10 16:21:51.962183 | == GOOD!!!===== LG :es: === used :49: secs   | es | 49 secs   |
+    |  1624 | 2018-03-10 16:21:52.020165 | == GOOD!!!===== LG :it: === used :49: secs   | it | 49 secs   |
+    |  1624 | 2018-03-10 16:21:52.098927 | == GOOD!!!===== LG :en: === used :50: secs   | en | 50 secs   |
+    |  1624 | 2018-03-10 16:21:52.205438 | == GOOD!!!===== LG :ru: === used :50: secs   | ru | 50 secs   |
+    |  2181 | 2018-03-10 15:31:14.793069 | == GOOD!!!===== LG :en: === used :367: secs  | en | 367 secs  |
+    |  2181 | 2018-03-10 15:29:33.003864 | == GOOD!!!===== LG :nl: === used :211: secs  | nl | 211 secs  |
+    |  2181 | 2018-03-10 15:29:21.306236 | == GOOD!!!===== LG :en: === used :200: secs  | en | 200 secs  |
+    |  2181 | 2018-03-10 15:29:20.260428 | == GOOD!!!===== LG :zh: === used :199: secs  | zh | 199 secs  |
+    |  2181 | 2018-03-10 15:28:59.089538 | == GOOD!!!===== LG :fr: === used :177: secs  | fr | 177 secs  |
+    +-------+----------------------------+----------------------------------------------+----+-----------+
     11 rows in set (0.00 sec)
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
