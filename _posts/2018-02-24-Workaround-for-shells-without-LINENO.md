@@ -2695,9 +2695,7 @@ It was quite an experience to get a grip on Erlang in order to be able to produc
 
 Of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
 
-Well, looking at the source code of CodeIgniter, there are lots of functions which are extremely short. I could have learned from them as well, but alas I didn't. Frankly, I didn't study their source code if I didn't have to -- I was too eager to become productive. 
-
-To be fair, they do have plenty of very long functions as well. Right now I try to understand why I cannot make use of a model I have already loaded in another model from a second model. In order to find out I have to study the CodeIgniter source code as Google doesn't help me. There are lots of people having the same problem but none of them seems to fit.
+Well, looking at the source code of CodeIgniter, there are lots of functions which are extremely short. I could have learned from them as well, but alas I didn't. Frankly, I didn't study their source code if I didn't have to -- I was too eager to become productive. To be fair, they do have plenty of very long functions as well. 
 
 Another problem probably is that I don't have any peer review anymore for about 20 years now. Also it is difficult to explore new realms producing almost inevitably quick and dirty code and then afterwards getting clean and lean code easy to maintain. When does development stop? When do you have time to optimize your code?
 
