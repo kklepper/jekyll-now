@@ -2691,9 +2691,11 @@ You may wonder about the big line numbers in one of those PHP files. That's not 
 
 I learned that from my first experiences with `Erlang`. Functions in Erlang are short, sometimes extremely short. Nevertheless they produce programs in Erlang with millions of rows. 
 
-It was quite an experience to get a grip on Erlang in order to be able to produce productive code. I wish I had learned something along these lines earlier so that I could have used that experience in my programming habits in PHP as well. 
+It was quite an experience to get a grip on Erlang in order to be able to produce productive code. I wish I had learned something along these lines earlier so that I could have used that experience in my programming habits in PHP as well.
 
-And, of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
+Well, looking at the source code of CodeIgniter, there are lots of functions which are extremely short. I could have learned from them as well, but alas I didn't. 
+
+Of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
 
 Another problem probably is that I don't have any peer review anymore for about 20 years now. Also it is difficult to explore new realms producing almost inevitably quick and dirty code and then afterwards getting clean and lean code easy to maintain. When does development stop? When do you have time to optimize your code?
 
