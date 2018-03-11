@@ -1282,7 +1282,7 @@ You see it costs me next to nothing to call `SHOW WARNINGS;` or `SHOW CREATE TAB
 
 Here are some other snippets I use often:
 
-    ::ggrr::grep -rn '/mnt/sda1/wp/ci/application/' -e '' ; search for terms in source code
+    ::ggrr::grep -rn '/mnt/sda1/xq/dj/application/' -e '' ; search for terms in source code
     ::ggc::git clone
     ::ggcc::git checkout  
     ::ggs::git status
@@ -1860,7 +1860,7 @@ Here my memory fails me. Somewhere in one of my scripts I used the term `diff`. 
 
 Now I need something like
 
-    grep -rn '/mnt/sda1/wp/ci/application/' -e '' 
+    grep -rn '/mnt/sda1/xq/dj/application/' -e '' 
 
 for a totally different directory: `path_to_your_script`. Numerous times I have overwritten this template by typing, but now I will define a new hotkey or rather shortcut.
 
@@ -1974,9 +1974,9 @@ Table definitions do change from time to time, and it is error prone to rely on 
     
     echo --- $DATE
     
-    cp /tmp/_show_create_table.sql /c/wp/ci/
+    cp /tmp/_show_create_table.sql /c/xq/dj/
     
-    cd /c/wp/ci
+    cd /c/xq/dj
     /usr/local/bin/git commit -am "$DATE"
 
 The last line shows the recipe. You change to whatever directory you have under revision control, and then simply call that statement. 
@@ -2650,7 +2650,7 @@ There is so much you can do with databases:
     +-------+----------------------------+----------------------------------------------+----+-----------+
     14 rows in set (0.00 sec)
 
-It's true, you can do much with `grep` and `awk` and `sed` as well, but it doesn't come as naturally and much isn't possible at all. There's a reason why relational databases exist and if you have one at your disposal, you will most probably take advantage of it.
+It's true, you can do much with `grep` and `awk` and `sed` as well, but it doesn't come as naturally and much isn't possible at all. There's a reason why relational databases exist, and if you have one at your disposal, you will most probably take advantage of it.
 
 Looking at these numbers, it is obvious that there are 2 lines which stand out by the `time` value:
 
