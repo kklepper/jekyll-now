@@ -2673,12 +2673,12 @@ For another reason `de` is the last one to be completed in both cases, so only t
 
 The average time taken for processing these languages is obviously very different:
 
-    |   ID | number of lg | avg. time per lg |
-    |  391 |            4 |                7 |
-    | 1624 |            6 |               52 |
-    | 2181 |            5 |               34 |
+    |   ID | number of lg | avg. time first run per lg | avg. time windup per lg |
+    |  391 |            4 |                         49 |                       7 |
+    | 1624 |            6 |                        110 |                      52 |
+    | 2181 |            5 |                        196 |                      34 |
 
-The time does not depend on the number of languages but on the nature of the data to be processed.
+The value for `average time first run` is calculated on the basis of all but the last runs. This value and the `average time windup` do not depend on the number of languages but on the nature of the data to be processed.
 
 This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
