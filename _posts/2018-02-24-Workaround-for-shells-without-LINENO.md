@@ -2680,7 +2680,7 @@ The average time taken for processing these languages is obviously very differen
 
 The value for `average time first run` is calculated on the basis of all but the last runs. This value and the `average time windup` do not depend on the number of languages but on the nature of the data to be processed.
 
-This investigation is not just for fun. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
+The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
 I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
 
