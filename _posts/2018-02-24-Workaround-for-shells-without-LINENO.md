@@ -2707,7 +2707,7 @@ Often I think a good program will have at least 3 stages:
 
 - and after that you may understand what the whole endeavor is about so you can rewrite once again. 
 
-And maybe even that is not the last iteration. This expensive scenario reminds me very much to what some authors tell about their way of producing novels. 
+And maybe even that is not the last iteration. This expensive scenario reminds me very much of what some authors tell about their way of producing novels. 
 
 Well, not every author works this way, some just write down what comes to mind and it is brilliant nevertheless. Maybe there are programmers out there who do work like that.
 
