@@ -2667,7 +2667,7 @@ Also, `en` appears twice in both ID cases 1624 and 2181. You may not have notice
 
 So the mechanism is as follows: we start with `en`, and this is what the shell script (`== GOOD!!!`) knows. 
 
-For some reason, in these cases the language `en` is then switched to `de` to be processed first, which the shell script does not know of. Maybe I could think of a mechanism to inform the shell about this transition, but I don't think it's worth the effort. Anyway, this explains why the value `en` in this line is wrong and should be `de` instead. 
+For some reason, in these cases the language `en` is then switched to `de` to be processed first, which the shell script does not know of. Maybe I could invent a mechanism to inform the shell about this transition, but I don't think it's worth the effort. Anyway, this explains why the value `en` in this line is wrong and should be `de` instead. 
 
 For another reason `de` is the last one to be completed in both cases, so only then the windup can start. The time it takes to process all the languages one by one adds up to the total time this last language needs. In these both cases the time span used was significant so the mismatch leaps to the eye.
 
