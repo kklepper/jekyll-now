@@ -2695,6 +2695,18 @@ It was quite an experience to get a grip on Erlang in order to be able to produc
 
 And, of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
 
+A problem almost probably is also that I don't have any peer review anymore for about 20 years now. Also it is difficult to explore new realms producing quick and dirty code and getting clean and lean code easy to maintain. When does development stop? Do you have time to optimize your code?
+
+Often I think a good program will have at least 3 stages: 
+
+- development first, when you don't know yet exactly what you want or should be after, 
+
+- next you most probably know what you're heading at so you can rewrite the whole thing from scratch, 
+
+- and after that you may understand what the whole thing is about so you can rewrite once again. 
+
+And maybe even that is not the last iteration.
+
 End of digression.
 
 Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
