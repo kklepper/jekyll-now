@@ -2178,7 +2178,11 @@ The contributions to this page so far are nearly 5 years old now. They have show
 Digression: Proof of concept <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-I reorganized one of my old scripts to see if everything works as expected. These are the 2 debugging instructions I inserted in my code:
+I reorganized one of my old scripts to see if everything works as expected. The purpose is to start complex operations not from the browser but via shell allowing to let several of those operations run concurrently. The same process can be started from the browser as well, but then the first process is visible from the browser, the others are also run in a shell.
+
+Now with Docker this is a bit complicated as the browser process is handled by a container, and this container cannot do what the process needs. So I write a trigger file with the appropriate shell instruction in a directory accessible by the container and the shell (`tmp`), and let Cron check for the existence of this file and eventually start the processes recoded there. 
+
+These are the 2 debugging instructions I inserted in my code:
 
     echo_line_no "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:  
     >>>>>>> : ==do== CMD :curl -N -s \"$CMD\":" 
@@ -2192,7 +2196,7 @@ The result is beautiful, much better than all of these echoes I used before.
     docker@boot2docker:/mnt/sda1/tmp$ nohup /path_to_your_script/tsm3.sh "6" </dev/null &>/dev/null &
         78       "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:
         >>>>>>> : ==do== ID_EX :6: FILE :tsmst.sh: Date :2018-03-02_22:00:51:
-        >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/paggen/6?srt=1&d=1&bak=1&lg=en":
+        >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/qh/6?srt=1&d=1&bak=1&lg=en":
         97           "== GOOD!!! ID_EX :$ID_EX: =================== used :$USED: secs " DATE
         >>>>>>> : == GOOD!!! ID_EX :6: =================== used :19: secs
         =========DATE======== :2018-03-02_22:01:10:
@@ -2202,11 +2206,11 @@ The output is even readable when those processes are intertwined:
     docker@boot2docker:/mnt/sda1/tmp$ nohup /path_to_your_script/tsm3.sh "6 359" </dev/null &>/dev/null &
         78       "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:
         >>>>>>> : ==do== ID_EX :6: FILE :tsmst.sh: Date :2018-03-02_22:01:37:
-        >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/paggen/6?srt=1&d=1&bak=1&lg=en":
+        >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/qh/6?srt=1&d=1&bak=1&lg=en":
     
         78       "==do== ID_EX :$ID_EX: FILE :$FILE: Date :$DATE:
         >>>>>>> : ==do== ID_EX :359: FILE :tsmst.sh: Date :2018-03-02_22:01:42:
-        >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/paggen/359?srt=1&d=1&bak=1&lg=en":
+        >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/qh/359?srt=1&d=1&bak=1&lg=en":
         97           "== GOOD!!! ID_EX :$ID_EX: =================== used :$USED: secs " DATE
         >>>>>>> : == GOOD!!! ID_EX :6: =================== used :18: secs
         =========DATE======== :2018-03-02_22:01:55:
@@ -2253,8 +2257,8 @@ The database table shows similar data, but can be selected:
     +-------+---------------------+-------------------------------------------------+
     | id_ex | tmstmp              | comment                                         |
     +-------+---------------------+-------------------------------------------------+
-    |     6 | 2018-03-04 18:52:11 | localhost:8342/paggen/6?srt=1&d=1&bak=1&lg=en   |
-    |   359 | 2018-03-04 18:52:16 | localhost:8342/paggen/359?srt=1&d=1&bak=1&lg=en |
+    |     6 | 2018-03-04 18:52:11 | localhost:8342/qh/6?srt=1&d=1&bak=1&lg=en       |
+    |   359 | 2018-03-04 18:52:16 | localhost:8342/qh/359?srt=1&d=1&bak=1&lg=en     |
     |     6 | 2018-03-04 18:52:29 | == GOOD!!!======== used :18: secs               |
     |   359 | 2018-03-04 18:52:47 | == GOOD!!!======== used :31: secs               |
     +-------+---------------------+-------------------------------------------------+
@@ -2264,7 +2268,7 @@ The database table shows similar data, but can be selected:
     +-------+---------------------+-----------------------------------------------+
     | id_ex | tmstmp              | comment                                       |
     +-------+---------------------+-----------------------------------------------+
-    |     6 | 2018-03-04 18:52:11 | localhost:8342/paggen/6?srt=1&d=1&bak=1&lg=en |
+    |     6 | 2018-03-04 18:52:11 | localhost:8342/qh/6?srt=1&d=1&bak=1&lg=en     |
     |     6 | 2018-03-04 18:52:29 | == GOOD!!!======== used :18: secs             |
     +-------+---------------------+-----------------------------------------------+
     2 rows in set (0.00 sec)
@@ -2273,7 +2277,7 @@ The database table shows similar data, but can be selected:
     +-------+---------------------+-------------------------------------------------+
     | id_ex | tmstmp              | comment                                         |
     +-------+---------------------+-------------------------------------------------+
-    |   359 | 2018-03-04 18:52:16 | localhost:8342/paggen/359?srt=1&d=1&bak=1&lg=en |
+    |   359 | 2018-03-04 18:52:16 | localhost:8342/qh/359?srt=1&d=1&bak=1&lg=en     |
     |   359 | 2018-03-04 18:52:47 | == GOOD!!!======== used :31: secs               |
     +-------+---------------------+-------------------------------------------------+
     2 rows in set (0.00 sec)
