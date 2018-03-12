@@ -1952,7 +1952,7 @@ But even thorough inspection reveals that they are indeed identical.
 
 Any explanation why the data files are different? No idea.
 
-Accidentally I had a look at the monitoring file and noticed that first one and then the other slave had a lag, which was taken care of automatically, as it seems: 
+Accidentally I had a look at the monitoring file and noticed that first slave s1 and then the slave s2 had a lag, which was taken care of automatically, as it seems: 
 
     /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:23:00
     175 =====> s1 OK 2018-03-12_12:23:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24624489
