@@ -1952,6 +1952,20 @@ But even thorough inspection reveals that they are indeed identical.
 
 Any explanation why the data files are different? No idea.
 
+Accidentally I had a look on the file and noticed that first one and then the other slave had a lag, which was taken care of automatically, as it seems:
+
+    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:31:00
+    175 =====> s1 OK 2018-03-12_12:31:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25886547
+    175 =====> s2 OK 2018-03-12_12:31:00 Seconds_Behind_Master 62 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25886547
+    
+    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:32:00
+    175 =====> s1 OK 2018-03-12_12:32:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25901745
+    175 =====> s2 OK 2018-03-12_12:32:00 Seconds_Behind_Master 122 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25901745
+    
+    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:33:00
+    175 =====> s1 OK 2018-03-12_12:33:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25939553
+    175 =====> s2 OK 2018-03-12_12:33:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25939553
+
 Digression: Automatic git checkout <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
