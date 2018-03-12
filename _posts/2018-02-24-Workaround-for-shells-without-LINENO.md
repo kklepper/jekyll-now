@@ -2650,7 +2650,7 @@ Example:
     | 2018-03-12 13:48:30.825544 | == GOOD!!!===== LG :ru: === used :29: secs                                            |
     | 2018-03-12 13:48:31.437410 | == GOOD!!!===== LG :fr: === used :30: secs                                            |
     
-I guess the best way to get a clearer picture will then be to filter the result by adding conditions to the query. The conditions are not that easy with short snippets like `fr` which are part of something else, in this case even the SQL syntax `FROM`, so there is more hassle here:
+I guess the best way to get a clearer picture will then be to filter the result by adding conditions to the query. The conditions are not that easy with short snippets like `fr` which are part of something else, in this case even the SQL syntax `FROM`, so there is more hassle here, but it can be done:
 
     M:7727678 [tmp]>SELECT tmstmp, comment FROM tsmst 
     	WHERE id_ex = '1624' 
