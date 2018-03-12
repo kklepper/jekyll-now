@@ -2096,14 +2096,14 @@ In case I have screwed things up somewhere along the lines without noticing and 
 
 The only prerequisite is that this command runs continuously. It happened that it didn't due to some git error:
 
-    docker@boot2docker:/c/wp/ci$ git checkout temp7
-    fatal: Unable to create '/c/wp/ci/.git/index.lock': File exists.
-
-Another git process seems to be running in this repository, e.g.
-an editor opened by 'git commit'. Please make sure all processes
-are terminated then try again. If it still fails, a git process
-may have crashed in this repository earlier:
-remove the file manually to continue.
+    docker@boot2docker:/c/xq/dj/$ git checkout temp7
+    fatal: Unable to create '/c/xq/dj//.git/index.lock': File exists.
+    
+    Another git process seems to be running in this repository, e.g.
+    an editor opened by 'git commit'. Please make sure all processes
+    are terminated then try again. If it still fails, a git process
+    may have crashed in this repository earlier:
+    remove the file manually to continue.
 
 So how to prevent this? Create another supervising script? I don't know. It happened to me this morning and I thought I would have to get back to work which hasn't been checked out due to this error. Luckily, this turned out to be false, I could just carry on. But otherwise this wouldn't have been so nice.
 
