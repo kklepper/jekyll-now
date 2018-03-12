@@ -2654,7 +2654,13 @@ I guess the best way to get a clearer picture will then be to filter the result 
 
     M:7727678 [tmp]>SELECT tmstmp, comment FROM tsmst 
     	WHERE id_ex = '1624' 
-    	AND (comment LIKE '% fr %' OR comment LIKE '%\_fr%') 
+    	AND (
+            comment LIKE '% fr %' 
+            OR 
+            comment LIKE '%\_fr%' 
+            OR 
+            comment LIKE '%:fr:%'
+            ) 
     	ORDER BY 1;
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     | tmstmp                     | comment                                                                                                     |
@@ -2666,6 +2672,7 @@ I guess the best way to get a clearer picture will then be to filter the result 
     | 2018-03-12 13:56:33.820771 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_fr SELECT * FROM tmp.tn_1624_fr                           |
     | 2018-03-12 13:56:33.843314 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_fr, try to _build_tns                                        |
     | 2018-03-12 13:56:33.861680 | 24912 _build_tns fr -- de not ready yet 1624 _build_tn too early                                            |
+    | 2018-03-12 13:56:34.894510 | == GOOD!!!===== LG :fr: === used :33: secs                                                                  |
     | 2018-03-12 13:58:51.315580 | 24924 _build_tns fr Versions linguistiques                                                                  |
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     8 rows in set (0.00 sec)
