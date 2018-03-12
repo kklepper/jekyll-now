@@ -2620,6 +2620,56 @@ Working more with this approach, I found that `varchar (255)` is not enough:
     ALTER TABLE `tsmst`
     CHANGE `comment` `comment` longtext COLLATE 'utf8mb4_unicode_ci' NOT NULL AFTER `tmstmp`;
 
+The picture is not that clear when more than one language needs exactly the same time to complete its job. Then the different actions intertwine again, so I guess the best way to get a clearer picture will then be to filter the result by adding conditions to the query. 
+
+Example:
+
+    | 2018-03-12 13:48:28.721303 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_en                         |
+    | 2018-03-12 13:48:28.778219 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_en SELECT * FROM tmp.tn_1624_en     |
+    | 2018-03-12 13:48:28.824289 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_en, try to _build_tns                  |
+    | 2018-03-12 13:48:28.827740 | 24912 _build_tns en -- de not ready yet 1624 _build_tn too early                      |
+    | 2018-03-12 13:48:29.277281 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_it                         |
+    | 2018-03-12 13:48:29.375357 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_it SELECT * FROM tmp.tn_1624_it     |
+    | 2018-03-12 13:48:29.407542 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_it, try to _build_tns                  |
+    | 2018-03-12 13:48:29.410364 | 24912 _build_tns it -- de not ready yet 1624 _build_tn too early                      |
+    | 2018-03-12 13:48:29.493763 | == GOOD!!!===== LG :en: === used :28: secs                                            |
+    | 2018-03-12 13:48:29.818472 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_es                         |
+    | 2018-03-12 13:48:29.845114 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_es SELECT * FROM tmp.tn_1624_es     |
+    | 2018-03-12 13:48:29.885764 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_es, try to _build_tns                  |
+    | 2018-03-12 13:48:29.890009 | 24912 _build_tns es -- de not ready yet 1624 _build_tn too early                      |
+    | 2018-03-12 13:48:29.997682 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_ru                         |
+    | 2018-03-12 13:48:30.059024 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_ru SELECT * FROM tmp.tn_1624_ru     |
+    | 2018-03-12 13:48:30.094415 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_ru, try to _build_tns                  |
+    | 2018-03-12 13:48:30.098471 | 24912 _build_tns ru -- de not ready yet 1624 _build_tn too early                      |
+    | 2018-03-12 13:48:30.248740 | == GOOD!!!===== LG :it: === used :29: secs                                            |
+    | 2018-03-12 13:48:30.563944 | == GOOD!!!===== LG :es: === used :29: secs                                            |
+    | 2018-03-12 13:48:30.744574 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_fr                         |
+    | 2018-03-12 13:48:30.767134 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_fr SELECT * FROM tmp.tn_1624_fr     |
+    | 2018-03-12 13:48:30.778874 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_fr, try to _build_tns                  |
+    | 2018-03-12 13:48:30.782254 | 24912 _build_tns fr -- de not ready yet 1624 _build_tn too early                      |
+    | 2018-03-12 13:48:30.825544 | == GOOD!!!===== LG :ru: === used :29: secs                                            |
+    | 2018-03-12 13:48:31.437410 | == GOOD!!!===== LG :fr: === used :30: secs                                            |
+    
+The conditions are not that easy with short snippets like `fr` which are part of something else, in this case even the SQL syntax `FROM`, so there is more hassle here:
+
+    M:7727678 [tmp]>SELECT tmstmp, comment FROM tsmst 
+    	WHERE id_ex = '1624' 
+    	AND (comment LIKE '% fr %' OR comment LIKE '%\_fr%') 
+    	ORDER BY 1;
+    +----------------------------+-------------------------------------------------------------------------------------------------------------+
+    | tmstmp                     | comment                                                                                                     |
+    +----------------------------+-------------------------------------------------------------------------------------------------------------+
+    | 2018-03-12 13:55:03.321134 | 24743 _tsmst_write_trigger nohup /c/bak/tsmst.sh 1624 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-12 13:56:01.976050 | tsmst.sh INIT fr DEL :0:                                                                                    |
+    | 2018-03-12 13:56:02.743360 | 24912 _build_tns fr -- de not ready yet 1624 _build_tn too early                                            |
+    | 2018-03-12 13:56:33.790927 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_fr                                               |
+    | 2018-03-12 13:56:33.820771 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_fr SELECT * FROM tmp.tn_1624_fr                           |
+    | 2018-03-12 13:56:33.843314 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_fr, try to _build_tns                                        |
+    | 2018-03-12 13:56:33.861680 | 24912 _build_tns fr -- de not ready yet 1624 _build_tn too early                                            |
+    | 2018-03-12 13:58:51.315580 | 24924 _build_tns fr Versions linguistiques                                                                  |
+    +----------------------------+-------------------------------------------------------------------------------------------------------------+
+    8 rows in set (0.00 sec)
+
 Digression: Language versions <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
