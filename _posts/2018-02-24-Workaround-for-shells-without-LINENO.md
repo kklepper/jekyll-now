@@ -2180,7 +2180,7 @@ Digression: Proof of concept <span style="font-size: 11px;float: right;"><a href
 
 I reorganized one of my old scripts to see if everything works as expected. The purpose is to start complex operations not from the browser but via shell allowing to let several of those operations run concurrently. The same process can be started from the browser as well, but then the first process is visible from the browser, the others are also run in a shell.
 
-Now with Docker this is a bit complicated as the browser process is handled by a container, and this container cannot do what the process needs. So I write a trigger file with the appropriate shell instruction in a directory accessible by the container and the shell (`tmp`), and let Cron check for the existence of this file and eventually start the processes recoded there. 
+Now with Docker this is a bit complicated as the browser process is handled by a container, and this container cannot do what the process needs. So I write a trigger file with the appropriate shell instruction in a directory accessible by the container and the shell (`tmp`), and let Cron check for the existence of this file and eventually start the processes recorded there. 
 
 These are the 2 debugging instructions I inserted in my code:
 
