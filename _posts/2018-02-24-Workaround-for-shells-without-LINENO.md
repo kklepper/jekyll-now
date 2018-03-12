@@ -2094,7 +2094,20 @@ At the end you see the message from pushing the whole stuff to origin or rather 
 
 In case I have screwed things up somewhere along the lines without noticing and have to find the last clean checkout, I simply check out different revisions by jumping in this list and picking the one in the middle until I have what I want. This procedure is very fast and guaranteed to succeed.
 
-Of course, this procedure is possible only because I work alone. I have no experience with teamwork since the 90s, when revision control didn't exist yet. This may change, though, and if so I hope to profit from the experience of my collaborators.
+The only prerequisite is that this command runs continuously. It happened that it didn't due to some git error:
+
+    docker@boot2docker:/c/wp/ci$ git checkout temp7
+    fatal: Unable to create '/c/wp/ci/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+
+So how to prevent this? Create another supervising script? I don't know. It happened to me this morning and I thought I would have to get back to work which hasn't been checked out due to this error. Luckily, this turned out to be false, I could just carry on. But otherwise this wouldn't have been so nice.
+
+Of course, this automatic procedure is possible only because I work alone. I have no experience with teamwork since the 90s, when revision control didn't exist yet. This condition may change, though, and if so I hope to profit from the experience of my collaborators.
 
 Digression: Automatic boot2docker setup <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
