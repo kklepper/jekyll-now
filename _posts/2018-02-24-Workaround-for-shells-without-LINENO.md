@@ -2107,7 +2107,7 @@ The only prerequisite is that this command runs continuously. It happened that i
 
 So how to prevent this? Create another supervising script? I don't know. It happened to me this morning and I thought I would have to get back to work done hours ago which unfortunately hasn't been checked out due to this error. Luckily, this turned out to be false, so I could just carry on by deleting this file `.git/index.lock`. But otherwise this situation wouldn't have been so nice with 12 files modified. It's no fun to re-create things you have done before.
 
-Of course, this automatic procedure is possible only because I work alone. I have no experience with teamwork since the 90s, when revision control didn't exist yet. This condition may change, though, and if so I hope to profit from the experience of my collaborators.
+Of course, this simple and primitive automatic procedure is possible only because I work alone. I have no experience with teamwork since the 90s, when revision control didn't exist yet. This condition may change, though, and if so I hope to profit from the experience of my collaborators.
 
 Digression: Automatic boot2docker setup <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
