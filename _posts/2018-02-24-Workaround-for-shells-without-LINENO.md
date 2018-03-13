@@ -1345,6 +1345,8 @@ DragonDictate, for instance, if you say one word only, because you're still thin
 
 At the beginning of the new century, I taught database classes and sometimes used DragonDictate in class to dictate SQL into my notebook. Still, I don't program with DragonDictate (except for comments, which isn't really programming), instead I rather use AHK- or PSPad-defined shortcuts. But as soon as I have to write more than a few characters, I'll switch to DragonDictate or Windows Speech Recognition. That's one of the reasons why I would never be happy to use Linux as a desktop system.  
 
+Well, I noticed I got tired of typing after having thoroughly investigated a very complicated problem for hours. I switched to dictating SQL, and it was really relieving. So nice. I should do that more often. I should rather make it a habit.
+
 Digression: Dictation workflow <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
