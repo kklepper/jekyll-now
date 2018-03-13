@@ -2144,7 +2144,7 @@ In starting, the script `up.sh` will call the script `cron_build.sh` which popul
         (crontab -l 2>/dev/null; echo "$LINE")| crontab -
     done < /path_to_your_script/cron.sh                                          
 
-So whenever I change something in my crontab, in order to make it permanent, I have to change the crontab template `cron.sh` accordingly. But that's it. With this setup, it is absolutely safe to say `sudo reboot` my docker machine, provided the USB stick is in place. After boot up, it is safe to remove it in order to not accidentally break it if it sits in a front port. 
+So whenever I change something in my crontab, in order to make it permanent, I have to change the crontab template `cron.sh` accordingly. But that's it. With this setup, it is absolutely safe to say `sudo reboot` to my docker machine, provided the USB stick is in place. After boot up, it is safe to remove it in order to not accidentally break it if it sits in a front port. 
 
 End of digression.
 
