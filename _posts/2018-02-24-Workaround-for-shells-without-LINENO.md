@@ -2233,6 +2233,19 @@ The output is even readable when those processes are intertwined:
     
 You also see that it is important to know which script is doing what; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`, given by the variable `FILE` defined by habit at the top of the script.
 
+Later, I found that I wanted to get more information about the sequence of shell scripts, so I rewrote them accordingly. All you can see exactly what calls what and what is happening when.
+
+    tsm3.sh ------------------------------
+        68       "FILE :$FILE: ID_EX :$ID_EX: LG :$LG: DEL :$DEL: CMD :$CMD:"
+        >>>>>>> : FILE :/path_to_your_script/tsm3.sh: ID_EX :6: LG :en: DEL :1: CMD :/path_to_your_script/tsmst.sh 6 en 1:
+    
+    echo_line_no.sh ------------------------------
+       114       "==do== CMD :curl -N -s \"$CMD\":"
+        >>>>>>> : ==do== CMD :curl -N -s "localhost:8342/qh/6?srt=1&d=1&bak=1&lg=en":
+       151           "== GOOD!!! ID_EX :$ID_EX: ========= LG :$LG: ========== used :$USED: secs " DATE
+        >>>>>>> : == GOOD!!! ID_EX :6: ========= LG :en: ========== used :15: secs
+        =========DATE======== :2018-03-13_12:55:03:
+
 Digression: Record by database <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
