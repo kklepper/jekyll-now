@@ -2233,7 +2233,7 @@ The output is even readable when those processes are intertwined:
     
 You also see that it is important to know which script is doing what; the calling script `tsm3.sh` is different from the one shown in the output: `tsmst.sh`, given by the variable `FILE` defined by habit at the top of the script.
 
-Later, I found that I wanted to get more information about the sequence of shell scripts, so I rewrote them accordingly. All you can see exactly what calls what and what is happening when.
+Later, I found that I wanted to get more information about the sequence of shell scripts, so I rewrote them accordingly. Now you can see exactly what calls what and what is happening when.
 
     tsm3.sh ------------------------------
         68       "FILE :$FILE: ID_EX :$ID_EX: LG :$LG: DEL :$DEL: CMD :$CMD:"
