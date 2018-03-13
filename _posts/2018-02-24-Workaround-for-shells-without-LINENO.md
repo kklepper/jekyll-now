@@ -448,7 +448,11 @@ This is a good approach if you don't know what may happen. Maybe there is a logi
 
 But if you are sure that this doesn't happen and the error is not triggered and cannot be tackled by code, it may be a viable solution to apply brute force. If I understand the approach of database specialist company Percona correctly, this is what they do. They check at the level of the operation system if the corresponding tables are in sync, and if not, they copy the original master table to the slave. 
 
-Here I don't write about fancy scenarios. I have experienced replication errors which obviously stem from the database engines involved and which I could not explain. Google of course knows about these errors. They are discussed in the MySQL forum, but none of these cases has found a solution. So there is nothing I can conclude here. Brute force is the only remedy.
+Here I don't write about fancy scenarios. I have experienced replication errors which obviously stem from the database engines involved and which I could not explain. Google of course knows about these errors. They are discussed in the MySQL forum, but none of these cases has found a solution. 
+
+    Last_SQL_Error: Could not execute Update_rows_v1 event on table ci4.l_h_p; Can't find record in 'l_h_p', Error_code: 1032; handler error HA_ERR_KEY_NOT_FOUND; the event's master log mysql-bin.000001, end_log_pos 571756
+
+So there is nothing I can conclude here. Brute force is the only remedy.
 
 Digression: Repair or copy <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
