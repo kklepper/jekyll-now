@@ -450,7 +450,7 @@ But if you are sure that this doesn't happen and the error is not triggered and 
 
 Here I don't write about fancy scenarios. I have experienced replication errors which obviously stem from the database engines involved and which I could not explain. Google of course knows about these errors. They are discussed in the MySQL forum, but none of these cases has found a solution. 
 
-    Last_SQL_Error: Could not execute Update_rows_v1 event on table ci4.l_h_p; Can't find record in 'l_h_p', Error_code: 1032; handler error HA_ERR_KEY_NOT_FOUND; the event's master log mysql-bin.000001, end_log_pos 571756
+    Last_SQL_Error: Could not execute Update_rows_v1 event on table dj5.l_h_p; Can't find record in 'l_h_p', Error_code: 1032; handler error HA_ERR_KEY_NOT_FOUND; the event's master log mysql-bin.000001, end_log_pos 571756
 
 So there is nothing I can conclude here. Brute force is the only remedy.
 
@@ -2660,26 +2660,26 @@ Example:
 
     | 2018-03-12 13:48:28.721303 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_en                         |
     | 2018-03-12 13:48:28.778219 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_en SELECT * FROM tmp.tn_1624_en     |
-    | 2018-03-12 13:48:28.824289 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_en, try to _build_tns                  |
+    | 2018-03-12 13:48:28.824289 | 24832 _transfer_tmp_to_dj5 done INSERT INTO tn_en, try to _build_tns                  |
     | 2018-03-12 13:48:28.827740 | 24912 _build_tns en -- de not ready yet 1624 _build_tn too early                      |
     | 2018-03-12 13:48:29.277281 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_it                         |
     | 2018-03-12 13:48:29.375357 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_it SELECT * FROM tmp.tn_1624_it     |
-    | 2018-03-12 13:48:29.407542 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_it, try to _build_tns                  |
+    | 2018-03-12 13:48:29.407542 | 24832 _transfer_tmp_to_dj5 done INSERT INTO tn_it, try to _build_tns                  |
     | 2018-03-12 13:48:29.410364 | 24912 _build_tns it -- de not ready yet 1624 _build_tn too early                      |
     | 2018-03-12 13:48:29.493763 | == GOOD!!!===== LG :en: === used :28: secs                                            |
     | 2018-03-12 13:48:29.818472 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_es                         |
     | 2018-03-12 13:48:29.845114 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_es SELECT * FROM tmp.tn_1624_es     |
-    | 2018-03-12 13:48:29.885764 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_es, try to _build_tns                  |
+    | 2018-03-12 13:48:29.885764 | 24832 _transfer_tmp_to_dj5 done INSERT INTO tn_es, try to _build_tns                  |
     | 2018-03-12 13:48:29.890009 | 24912 _build_tns es -- de not ready yet 1624 _build_tn too early                      |
     | 2018-03-12 13:48:29.997682 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_ru                         |
     | 2018-03-12 13:48:30.059024 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_ru SELECT * FROM tmp.tn_1624_ru     |
-    | 2018-03-12 13:48:30.094415 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_ru, try to _build_tns                  |
+    | 2018-03-12 13:48:30.094415 | 24832 _transfer_tmp_to_dj5 done INSERT INTO tn_ru, try to _build_tns                  |
     | 2018-03-12 13:48:30.098471 | 24912 _build_tns ru -- de not ready yet 1624 _build_tn too early                      |
     | 2018-03-12 13:48:30.248740 | == GOOD!!!===== LG :it: === used :29: secs                                            |
     | 2018-03-12 13:48:30.563944 | == GOOD!!!===== LG :es: === used :29: secs                                            |
     | 2018-03-12 13:48:30.744574 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_fr                         |
     | 2018-03-12 13:48:30.767134 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_fr SELECT * FROM tmp.tn_1624_fr     |
-    | 2018-03-12 13:48:30.778874 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_fr, try to _build_tns                  |
+    | 2018-03-12 13:48:30.778874 | 24832 _transfer_tmp_to_dj5 done INSERT INTO tn_fr, try to _build_tns                  |
     | 2018-03-12 13:48:30.782254 | 24912 _build_tns fr -- de not ready yet 1624 _build_tn too early                      |
     | 2018-03-12 13:48:30.825544 | == GOOD!!!===== LG :ru: === used :29: secs                                            |
     | 2018-03-12 13:48:31.437410 | == GOOD!!!===== LG :fr: === used :30: secs                                            |
@@ -2704,7 +2704,7 @@ I guess the best way to get a clearer picture will then be to filter the result 
     | 2018-03-12 13:56:02.743360 | 24912 _build_tns fr -- de not ready yet 1624 _build_tn too early                                            |
     | 2018-03-12 13:56:33.790927 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_fr                                               |
     | 2018-03-12 13:56:33.820771 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_fr SELECT * FROM tmp.tn_1624_fr                           |
-    | 2018-03-12 13:56:33.843314 | 24832 _transfer_tmp_to_ci4 done INSERT INTO tn_fr, try to _build_tns                                        |
+    | 2018-03-12 13:56:33.843314 | 24832 _transfer_tmp_to_dj5 done INSERT INTO tn_fr, try to _build_tns                                        |
     | 2018-03-12 13:56:33.861680 | 24912 _build_tns fr -- de not ready yet 1624 _build_tn too early                                            |
     | 2018-03-12 13:56:34.894510 | == GOOD!!!===== LG :fr: === used :33: secs                                                                  |
     | 2018-03-12 13:58:51.315580 | 24924 _build_tns fr Versions linguistiques                                                                  |
