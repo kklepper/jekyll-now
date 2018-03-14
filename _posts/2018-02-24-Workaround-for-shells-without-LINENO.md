@@ -2499,9 +2499,9 @@ Here you see 2 other nifty functions at work constructed very similar, but witho
     
     L: 2846 id_avb :49301: this->id_ex :0: M: C_helper::_is_gs_error 15:58:07 ( YES check_now ) 
 
-Here you can see that I skim through a whole lot of entries `L: 789 key` to find the one where something will happen (`YES check_now`). Now back to the other problem.
+Here you can see that I skim through a whole lot of entries of type `L: 789 key` to find the one where something will happen (`YES check_now`). 
 
-By commenting the first line `$this->CI->id_ex = 6;` above I can turn the error off, by uncommenting I turn it on. So what's happening here?
+Now back to the other problem. By commenting the first line `$this->CI->id_ex = 6;` above I can turn the error off, by uncommenting I turn it on. So what's happening here?
 
 If you happen to load a module several times, that is no problem, CodeIgniter will handle that. The module technically is a property of the controller which is the base instance of all the modules. The loader class has an array which lists all the modules loaded.
 
