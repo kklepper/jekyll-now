@@ -2495,7 +2495,9 @@ By commenting the first line I can turn the error off, by uncommenting I turn it
 
 If you happen to load a module several times, that is no problem, CodeIgniter will handle that. The module technically is a member of the controller which is the base instance of all the modules. The loader class has an array which lists all the modules loaded.
 
-This array is private, of course. Now my problem was that I had a call to a method of a class which was already loaded and I got an error saying that this module is not loaded. 
+This array is private, of course. Now my problem was that I had a call to a method of a class which was already loaded and I got an error saying that this module is not loaded. No, this is not correct. It says the module is no member of the controller class `Pages`. 
+
+That's something different, but still when instantiated first, this module was set as a member to this class. And now the system tells me, that there is no such member. How come? Who took it away? Or do I have different instances of that class? No, that cannot be.
 
 In order to be able to check what the problem is here I wanted to see what this array in the loader class says. Maybe this entry had been erased by some enigmatic process.
 
