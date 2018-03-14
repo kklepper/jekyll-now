@@ -2493,13 +2493,13 @@ Here you see 2 other nifty functions at work constructed very similar, but witho
 
     L: 789 key 108 id_avb 51519 M: Ex_common::_get_dm_entries 15:58:07 (  ) 
     
-    L: 2841 id_avb :51519: this->id_ex :0: M: C_helper::_is_ht_error 15:58:07 ( NO check_now ) 
+    L: 2841 id_avb :51519: this->id_ex :0: M: C_helper::_is_gs_error 15:58:07 ( NO check_now ) 
     
     L: 789 key 109 id_avb 49301 M: Ex_common::_get_dm_entries 15:58:07 (  ) 
     
-    L: 2846 id_avb :49301: this->id_ex :0: M: C_helper::_is_ht_error 15:58:07 ( YES check_now ) 
+    L: 2846 id_avb :49301: this->id_ex :0: M: C_helper::_is_gs_error 15:58:07 ( YES check_now ) 
 
-By commenting the first line I can turn the error off, by uncommenting I turn it on. So what's happening here?
+By commenting the first line `$this->CI->id_ex = 6;` I can turn the error off, by uncommenting I turn it on. So what's happening here?
 
 If you happen to load a module several times, that is no problem, CodeIgniter will handle that. The module technically is a property of the controller which is the base instance of all the modules. The loader class has an array which lists all the modules loaded.
 
