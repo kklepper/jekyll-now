@@ -17,7 +17,7 @@ published: true
 - [Logging](#logging-table-of-content)
 - [Example](#example-table-of-content)
 - [Why roll your own?](#why-roll-your-own-table-of-content)
-- [Error handling](#error-handling-table-of-content)
+- [Database replication error handling](#database-replication-error-handling-table-of-content)
 > - [Digression: Repair or copy](#digression-repair-or-copy-table-of-content)
 > - [Digression: Table partitioning](#digression-table-partitioning-table-of-content)
 > - [Digression: Partition by md5](#digression-partition-by-md5-table-of-content)
@@ -437,7 +437,7 @@ Of course it would be, and shell scripts are the perfect tool to accomplish this
 
 Giuseppe Maxia knows all that just as well, but it is not his job to do my job. He could not even do it if he wanted to, because he doesn't know anything about the nature of my setup. Therefore his intention is not to deliver a ready-to-use solution, but instead to outline how this task might be done in order to get you or me on the right track. So this is the first reason why we have to write our own scripts. But there is more to it.
 
-Error handling <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Database replication error handling <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 We would need at least one more shell script to clean up the problem as soon as possible, and that is the moment an error is detected, which only depends on the interval of the monitoring service, itself being realized as a shell script. 
