@@ -26,8 +26,8 @@ published: true
 > - [Digression: Experimenting with CONV](#digression-experimenting-with-conv-table-of-content)
 > - [Digression: Max value of bigint datatype](#digression-max-value-of-bigint-datatype-table-of-content)
 > - [Digression: Table type: MyISAM vs. InnoDB](#digression-table-type-myisam-vs-innodb-table-of-content)
-- [Regular health checking](#regular-health-checking-table-of-content)
-- [Automatic failover](#automatic-failover-table-of-content)
+- [Database replication regular health checking](#database-replication-regular-health-checking-table-of-content)
+- [Database replication automatic failover](#database-replication-automatic-failover-table-of-content)
 - [Adding a stopwatch](#adding-a-stopwatch-table-of-content)
 > - [Digression: Docker and mysqlbinlog](#digression-docker-and-mysqlbinlog-table-of-content)
 > - [Digression: Partitioning by RANGE](#digression-partitioning-by-range-table-of-content)
@@ -843,7 +843,7 @@ Of course, if you copy, you have to make sure that the master table is not chang
 
 End of digression.
 
-Regular health checking <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Database replication regular health checking <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 One more consideration here. The monitoring script can only detect errors which occur during operation. If at startup the table setup on the slave is different from the master for some reason or the slave database engine produces an error maybe due to some hardware failure, the slave will never find out and the monitoring script is of no use in this case. Comparing the files directly however will find out and the copy process will successfully synchronize any files that are not in sync.
@@ -866,7 +866,7 @@ This way you can be sure to not leave any transaction out and to not duplicate a
 
 For the repair process it would be intelligent to analyze the error message from the slave. If that shows that just one table is affected, then only this table has to be processed. Doing so will speed up the whole thing tremendously, in particular if you have lots of tables.
 
-Automatic failover <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Database replication automatic failover <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Having a solution for occasional errors on slave machines doesn't mean your done. What happens when the master has a problem and this problem is propagated to the slaves? Well, I'm afraid there is no automatic solution for that problem.
