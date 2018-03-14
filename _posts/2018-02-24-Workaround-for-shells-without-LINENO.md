@@ -2489,7 +2489,7 @@ If I set the parameter before I load the module, I get the error. If I set it af
     #xecho("<hr><pre> L: ".__LINE__."  ::  :: M: ".__METHOD__ . " F: ".__FILE__." ".date('H:i:s').' (  ) '."</pre>\n"   );
         $this->CI->id_ex = 6;        
 
-Here you see 2 other nifty functions constructed very similar, but without the property of being able to display arrays and objects. The first one can be called before anything else is loaded, they are cheap, they are easy to read (just one line, as a rule) and with the `x` can be used to exit. 
+Here you see 2 other nifty functions at work constructed very similar, but without the property of being able to display arrays and objects. The first one can be called before anything else is loaded, they are cheap, they are easy to read (just one line, as a rule) and with the `x` can be used to exit. Those functions stand out in the source code as all the debugging functions start in column one, so they are easy to detect. 
 
 By commenting the first line I can turn the error off, by uncommenting I turn it on. So what's happening here?
 
