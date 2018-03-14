@@ -2423,7 +2423,7 @@ Maybe I will change my mind if there is a program state which is stable in a sen
 
 My debug messages tell me everything I need and are inserted by PSPad shortcuts with a few keystrokes. 
 
-Digression: Dirty debugging techniques <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Dirty example <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 For example, I happened to cross a very weird problem. Quite often, I load CodeIgniter modules in other CodeIgniter modules, which is no problem:
