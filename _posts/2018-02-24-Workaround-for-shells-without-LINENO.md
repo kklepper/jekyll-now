@@ -54,6 +54,7 @@ published: true
 > - [Digression: Record by database](#digression-record-by-database-table-of-content)
 > - [Digression: More complexity by languages](#digression-more-complexity-by-languages-table-of-content)
 > - [Digression: Dirty debugging techniques](#digression-dirty-debugging-techniques-table-of-content)
+> - [Digression: Dirty example](#digression-dirty-example-table-of-content)
 > - [Digression: Adding microtime by trigger](#digression-adding-microtime-by-trigger-table-of-content)
 > - [Digression: Adding microtime natively](#digression-adding-microtime-natively-table-of-content)
 > - [Digression: Language versions](#digression-language-versions-table-of-content)
@@ -2420,7 +2421,115 @@ Things may be different when you publish open source code to be used by a pletho
 
 Maybe I will change my mind if there is a program state which is stable in a sense, but so far I never reached this state, and I doubt I ever will.
 
-My debug messages tell me everything I need and are inserted by PSPad shortcuts with a few keystrokes. For a very complex problem, I developed a technique where I could switch on or off this kind of debug messages in certain functions via `GET` variables. This turned out to be very helpful as well.
+My debug messages tell me everything I need and are inserted by PSPad shortcuts with a few keystrokes. 
+
+Digression: Dirty debugging techniques <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+For example, I happened to cross a very weird problem. Quite often, I load CodeIgniter modules in other CodeIgniter modules, which is no problem:
+
+    $this->load->model('curlhelper', 'ch'); 
+
+The shortcut `ch` is optional. Next I can use this model with a simple syntax `$this->ch...`. As proof that this works, I might call a public member of this class with the shortcut `eex` and add `should be 5 DAY` in the title section and the call to the public member `$this->ch->check_interval` as a 2nd argument:
+
+    xwp_echo("\nL: ".__LINE__."\n  :: \n  :: \nF: ".__FILE__."\nM: ".__METHOD__."\n" . wp_title(' should be 5 DAY '), $this->ch->check_interval );
+
+This function `xwp_echo` is such a quick and dirty helper. The `x` can be added or deleted very quickly and will cause the whole process to stop if set. The function `wp_echo` is a simple `echo` with placeholders for easy addition of variable names to check their content plus information about the situation I am right in line to line number and method name and filename, but it takes a 2nd parameter, and if set will take care of proper formatting for strings, arrays and objects.
+
+The output in this case is easy:
+
+    L: 8425
+      :: 
+      :: 
+    F: /www/application/models/Test.php
+    M: Test::_load_model_metahelper
+    12:44:55
+    
+     =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  => ||| should be 5 DAY
+    
+    seconds elapsed: 0.07 xwp_echo ============= L: 8425 ======= M: Test::_load_model_metahelper ::::::
+    
+    
+    ---------------------------
+    5 DAY 
+
+So this works. How come I get the error
+
+    A PHP Error was encountered
+    
+    Severity: Notice
+    
+    Message: Undefined property: Pages::$mh
+
+    Line Number: 65
+    
+    Backtrace:
+    
+    File: /www/application/models/Ex_model.php
+    Line: 3679
+    Function: __get 
+
+when calling the very similar
+
+    xwp_echo("\nL: ".__LINE__."\n  :: \n  :: \nF: ".__FILE__."\nM: ".__METHOD__."\n" . wp_title(' should be 600 '), $this->mh->mem_lim );
+
+I never had this kind of error, and I couldn't find anything about it via Google, except trivial faulty use. So no chance except finding myself. The first thing that comes to mind is that I use several classes here which obviously interfere. So I narrowed it down to the following scenario: for the function to work it needs an integer parameter. If this parameter is not set, it is 0 by default and nothing will happen. If not, I expect some nice output.
+
+If I set the parameter before I load the module, I get the error. If I set it afterwards, everything is okay. Now this is hard to understand, isn't it? What happens here?
+
+If you happen to load a module several times, that is no problem, CodeIgniter will handle that. The module technically is a member of the controller which is the base instance of all the modules. The loader class has an array which lists all the modules loaded.
+
+This array is private, of course. Now my problem was that I had a call to a method of a class which was already loaded and I got an error saying that this module is not loaded. 
+
+In order to be able to check what the problem is here I wanted to see what this array in the loader class says. Maybe this entry had been erased by some enigmatic process.
+
+I had already defined a subclass `WP_Loader` to the original `CI_Loader` class. That's the place to add a new method `get_ci_models`.
+
+    // ====================================================================
+    /**
+     * get_ci_models()
+     *
+     * @access	public
+     * @return	array
+     */
+    function get_ci_models() {
+        return $this->_ci_models; 
+    } # get_ci_models
+    
+Calling this function as a second argument to my debug function delivers the following state:
+
+    L: 3672
+      :: 
+      :: 
+    F: /www/application/models/Ex_model.php
+    M: Ex_model::_get_ar_tn_tbl
+    13:32:16
+    
+     =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  => ||| This shows all the models loaded
+    
+    
+    ---------------------------
+    
+        =================== :bgn array: ------------------: count(ar) = 5 :
+    
+        0  : ec
+    
+        1  : ex_model
+    
+        2  : test
+    
+        3  : ch
+    
+        4  : mh
+    
+    =================== :end array: ------------------ 
+
+So this shows without doubt that the module `mh` I will have trouble with is loaded. 
+
+
+
+
+For a very complex problem, I developed a technique where I could switch on or off this kind of debug messages in certain functions via `GET` variables. This turned out to be very helpful as well.
 
 This kind of debugging is really dirty, I admit that. But I can comment any of these lines anytime in order to uncomment them whenever I should happen to need them again. That makes debugging very fast and easy.
 
