@@ -1208,11 +1208,11 @@ Maybe there are even more calls in between, so I get something like a trace. I h
 
 right before the query. That's obviously PHP, and in order to understand this line, I have to tell you more.
 
-I use [CodeIgniter](https://codeigniter.com/), and as far as I remember, in the earlier days they had a module named `Active_record`. Anyway, I wrote an `Active Record Class` which takes care of everything I like. This is what the `dba` stands for. So this class has a member `comment`.
+I use [CodeIgniter](https://codeigniter.com/), and as far as I remember, in the earlier days they had a module named `Active_record`. Anyway, I wrote an `Active Record Class` which takes care of everything I like. This is what the `dba` stands for. So this class has a property `comment`.
 
     public $comment = '';
 
-The query method of that class makes use of this member. That's all.
+The query method of that class makes use of this property. That's all.
 
 I don't write this line by typing, that would be cruel. Instead I use [AutoHotkey](https://autohotkey.com/) extensively, so I might have defined a hotkey to produce this line. 
 
@@ -2430,7 +2430,7 @@ For example, I happened to cross a very weird problem. Quite often, I load CodeI
 
     $this->load->model('curlhelper', 'ch'); 
 
-The shortcut `ch` is optional. Next I can use this model with a simple syntax `$this->ch...`. As proof that this works, I might call a public member of this class with the shortcut `eex` and add `should be 5 DAY` in the title section and the call to the public member `$this->ch->check_interval` as a 2nd argument:
+The shortcut `ch` is optional. Next I can use this model with a simple syntax `$this->ch...`. As proof that this works, I might call a public property of this class with the shortcut `eex` and add `should be 5 DAY` in the title section and the call to the public property `$this->ch->check_interval` as a 2nd argument:
 
     xwp_echo("\nL: ".__LINE__."\n  :: \n  :: \nF: ".__FILE__."\nM: ".__METHOD__."\n" . wp_title(' should be 5 DAY '), $this->ch->check_interval );
 
@@ -2493,11 +2493,15 @@ Here you see 2 other nifty functions at work constructed very similar, but witho
 
 By commenting the first line I can turn the error off, by uncommenting I turn it on. So what's happening here?
 
-If you happen to load a module several times, that is no problem, CodeIgniter will handle that. The module technically is a member of the controller which is the base instance of all the modules. The loader class has an array which lists all the modules loaded.
+If you happen to load a module several times, that is no problem, CodeIgniter will handle that. The module technically is a property of the controller which is the base instance of all the modules. The loader class has an array which lists all the modules loaded.
 
-This array is private, of course. Now my problem was that I had a call to a method of a class which was already loaded and I got an error saying that this module is not loaded. No, this is not correct. It says the module is no member of the controller class `Pages`. 
+This array is private, of course. Now my problem was that I had a call to a method of a class which was already loaded and I got an error saying that this module is not loaded. No, this is not correct. It says the module is no property of the controller class `Pages`. 
 
-That's something different, but still when instantiated first, this module was set as a member to this class. And now the system tells me, that there is no such member. How come? Who took it away? Or do I have different instances of that class? No, that cannot be.
+That's something different, but still when instantiated first, this module was set as a property to this class. And now the system tells me, that there is no such property. 
+
+     Undefined property: Pages::$mh
+
+How come? Who took it away? Or do I have different instances of that class? No, that cannot be.
 
 In order to be able to check what the problem is here I wanted to see what this array in the loader class says. Maybe this entry had been erased by some enigmatic process.
 
