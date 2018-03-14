@@ -1356,7 +1356,7 @@ I don't use those. I use [Flashnote](http://softvoile.com/flashnote/) instead fo
 
 Next I choose the appropriate speech recognition engine via `Pause` or `F9`. I do my work, and when I'm done, I may put the speech recognition engine to sleep or not, but in any case I transfer my work with `F10` to the application I was working on before. That's really convenient and I have produced huge amounts of text in both languages this way.
 
-If in the meantime you have changed to another program, like I did right now to find the URL of Flashnote, you better first switch back to the program you want the text to be inserted. So the workflow now I is `F7 F10`. `F7` to get back to Flashnote, `F10` to transfer the text. Which is what I will do right now.
+If in the meantime you have changed to another program, like I did right now to find the URL of Flashnote, you better first switch back to the program you want the text to be inserted. So the workflow now is `F7 F10`. `F7` to get back to Flashnote, `F10` to transfer the text. Which is what I will do right now.
 
 Of course you can dictate in many programs directly, and I do that as well. The problem with Windows Speech Recognition is, that it starts always in caps mode except when it should start in caps mode, and I don't know how to flip that behavior. DragonDictate on the other hand always starts in small letter case, so that is easier to compensate by saying `Caps on` before dictating. Or just the other way around, depending on the program you are dictating to.
 
