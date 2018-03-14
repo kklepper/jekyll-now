@@ -2434,7 +2434,9 @@ The shortcut `ch` is optional. Next I can use this model with a simple syntax `$
 
     xwp_echo("\nL: ".__LINE__."\n  :: \n  :: \nF: ".__FILE__."\nM: ".__METHOD__."\n" . wp_title(' should be 5 DAY '), $this->ch->check_interval );
 
-This function `xwp_echo` is such a quick and dirty helper. The `x` can be added or deleted very quickly and will cause the whole process to stop if set. The function `wp_echo` is a simple `echo` with placeholders for easy addition of variable names to check their content plus information about the situation I am right in line to line number and method name and filename, but it takes a 2nd parameter, and if set will take care of proper formatting for strings, arrays and objects.
+This function `xwp_echo` is such a quick and dirty helper. The `x` can be added or deleted very quickly and will cause the whole process to stop if set and show the elapsed time. 
+
+The function `wp_echo` is a simple `echo` with placeholders for easy addition of variable names to check their content plus information about the situation I am right in line to line number and method name and filename, but it takes a 2nd parameter, and if set will take care of proper formatting for strings, arrays and objects.
 
 The output in this case is easy:
 
