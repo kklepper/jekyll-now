@@ -2487,7 +2487,7 @@ echo("<hr><pre> L: ".__LINE__."  ::  :: M: ".__METHOD__ . " F: ".__FILE__." ".da
 #xecho("<hr><pre> L: ".__LINE__."  ::  :: M: ".__METHOD__ . " F: ".__FILE__." ".date('H:i:s').' (  ) '."</pre>\n"   );
         $this->CI->id_ex = 6;        
 
-Here you see 2 other nifty functions constructed very similar, but without the property of being able to display arrays and objects. The first one can be called before anything else is loaded, they are cheap, they are easy to read (just one line, as a rule) and with the `x` can be used to exit.
+Here you see 2 other nifty functions constructed very similar, but without the property of being able to display arrays and objects. The first one can be called before anything else is loaded, they are cheap, they are easy to read (just one line, as a rule) and with the `x` can be used to exit. By commenting the first line I can turn the error off, by uncommenting I turn it on. So what's happening here?
 
 If you happen to load a module several times, that is no problem, CodeIgniter will handle that. The module technically is a member of the controller which is the base instance of all the modules. The loader class has an array which lists all the modules loaded.
 
