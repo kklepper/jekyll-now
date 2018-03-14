@@ -2428,7 +2428,7 @@ Digression: Dirty example <span style="font-size: 11px;float: right;"><a href="#
 
 For example, I happened to cross a very weird problem. Quite often, I load CodeIgniter modules in other CodeIgniter modules, which is no problem:
 
-    $this->load->model('curlhelper', 'ch'); 
+    $this->load->model('C_helper', 'ch'); 
 
 The shortcut `ch` is optional. Next I can use this model with a simple syntax `$this->ch...`. As proof that this works, I might call a public property of this class with the shortcut `eex` and add `should be 5 DAY` in the title section and the call to the public property `$this->ch->check_interval` as a 2nd argument:
 
@@ -2444,12 +2444,12 @@ The output in this case is easy:
       :: 
       :: 
     F: /www/application/models/Test.php
-    M: Test::_load_model_metahelper
+    M: Test::_load_model_M_helper
     12:44:55
     
      =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  => ||| should be 5 DAY
     
-    seconds elapsed: 0.07 xwp_echo ============= L: 8425 ======= M: Test::_load_model_metahelper ::::::
+    seconds elapsed: 0.07 xwp_echo ============= L: 8425 ======= M: Test::_load_model_M_helper ::::::
     
     
     ---------------------------
@@ -2485,11 +2485,19 @@ If I set the parameter before I load the module, I get the error. If I set it af
 
         $this->CI->id_ex = 6;        
     echo("<hr><pre> L: ".__LINE__."  ::  :: M: ".__METHOD__ . " F: ".__FILE__." ".date('H:i:s').' (  ) '."</pre>\n"   );
-        $this->load->model('metahelper', 'mh'); 
+        $this->load->model('M_helper', 'mh'); 
     #xecho("<hr><pre> L: ".__LINE__."  ::  :: M: ".__METHOD__ . " F: ".__FILE__." ".date('H:i:s').' (  ) '."</pre>\n"   );
         $this->CI->id_ex = 6;        
 
-Here you see 2 other nifty functions at work constructed very similar, but without the property of being able to display arrays and objects. The first one can be called before anything else is loaded, they are cheap, they are easy to read (just one line, as a rule) and with the `x` can be used to exit. Those functions stand out in the source code as all the debugging functions start in column one, so they are easy to detect. 
+Here you see 2 other nifty functions at work constructed very similar, but without the property of being able to display arrays and objects. The first one can be called before anything else is loaded, they are cheap, they are easy to read (just one line, as a rule) and with the `x` can be used to exit. Those functions stand out in the source code as all the debugging functions start in column one, so they are easy to detect. Example:   
+
+    L: 789 key 108 id_avb 51519 M: Ex_common::_get_dm_entries 15:58:07 (  ) 
+    
+    L: 2841 id_avb :51519: this->id_ex :0: M: C_helper::_is_ht_error 15:58:07 ( NO check_now ) 
+    
+    L: 789 key 109 id_avb 49301 M: Ex_common::_get_dm_entries 15:58:07 (  ) 
+    
+    L: 2846 id_avb :49301: this->id_ex :0: M: C_helper::_is_ht_error 15:58:07 ( YES check_now ) 
 
 By commenting the first line I can turn the error off, by uncommenting I turn it on. So what's happening here?
 
@@ -2546,7 +2554,7 @@ Calling this function as a second argument to my debug function delivers the fol
     
     =================== :end array: ------------------ 
 
-So this shows without doubt that the module `mh` I will have trouble with is loaded. 
+So this shows without doubt that the module `mh` I have trouble with is loaded. 
 
 
 
