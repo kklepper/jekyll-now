@@ -2477,7 +2477,9 @@ when calling the very similar
 
 I never had this kind of error, and I couldn't find anything about it via Google, except trivial faulty use. So no chance except finding myself. 
 
-The first thing that comes to mind is that I use several classes here which obviously interfere. So I narrowed it down to the following scenario: for the function to work it needs an integer parameter. If this parameter is not set, it is 0 by default and nothing will happen. If not, I expect some nice output.
+The first thing that comes to mind is that I use several classes here which obviously interfere. This shouldn't be a problem at all. And in fact it doesn't seem to be.
+
+So I narrowed it down to the following scenario: for the function to work it needs an integer parameter. If this parameter is not set, it is 0 by default and nothing will happen. If not, I expect some nice output.
 
 If I set the parameter before I load the module, I get the error. If I set it afterwards, everything is okay. Now this is hard to understand, isn't it? What happens here?
 
