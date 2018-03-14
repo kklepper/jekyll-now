@@ -2475,9 +2475,19 @@ when calling the very similar
 
     xwp_echo("\nL: ".__LINE__."\n  :: \n  :: \nF: ".__FILE__."\nM: ".__METHOD__."\n" . wp_title(' should be 600 '), $this->mh->mem_lim );
 
-I never had this kind of error, and I couldn't find anything about it via Google, except trivial faulty use. So no chance except finding myself. The first thing that comes to mind is that I use several classes here which obviously interfere. So I narrowed it down to the following scenario: for the function to work it needs an integer parameter. If this parameter is not set, it is 0 by default and nothing will happen. If not, I expect some nice output.
+I never had this kind of error, and I couldn't find anything about it via Google, except trivial faulty use. So no chance except finding myself. 
+
+The first thing that comes to mind is that I use several classes here which obviously interfere. So I narrowed it down to the following scenario: for the function to work it needs an integer parameter. If this parameter is not set, it is 0 by default and nothing will happen. If not, I expect some nice output.
 
 If I set the parameter before I load the module, I get the error. If I set it afterwards, everything is okay. Now this is hard to understand, isn't it? What happens here?
+
+        $this->CI->id_ex = 6;        
+echo("<hr><pre> L: ".__LINE__."  ::  :: M: ".__METHOD__ . " F: ".__FILE__." ".date('H:i:s').' (  ) '."</pre>\n"   );
+        $this->load->model('metahelper', 'mh'); 
+#xecho("<hr><pre> L: ".__LINE__."  ::  :: M: ".__METHOD__ . " F: ".__FILE__." ".date('H:i:s').' (  ) '."</pre>\n"   );
+        $this->CI->id_ex = 6;        
+
+Here you see 2 other nifty functions constructed very similar, but without the property of being able to display arrays and objects. The first one can be called before anything else is loaded, they are cheap, they are easy to read (just one line, as a rule) and with the `x` can be used to exit.
 
 If you happen to load a module several times, that is no problem, CodeIgniter will handle that. The module technically is a member of the controller which is the base instance of all the modules. The loader class has an array which lists all the modules loaded.
 
