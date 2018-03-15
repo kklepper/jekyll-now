@@ -3065,7 +3065,7 @@ Of course, the PHP code had to be updated as well
 
         $sql = "REPLACE INTO tmp.tsmst_time (id_ex, lg, tmstmp, comment) VALUES ('$this->id_ex', '$this->lg', NOW(6), '')";
 
-You may notice that I put all my values in `'` even when not necessary. Actually I didn't here, if you look back, which was okay here because `$this->id_ex` is an integer, and because of that, when inserting the new value `$this->lg`, I wasn't aware that this is a string and must be enclosed by `'`. Well, it didn't take long until I found out because my program didn't work anymore.
+You may notice that I put all my values in `'` even when not necessary. Actually I didn't here, if you look back, which was okay  because `$this->id_ex` is an integer, so you don't need `'`, and because of that, when inserting the new value `$this->lg`, I wasn't aware that this is a string and definitely must be enclosed by `'`. Well, it didn't take long until I found out because my program didn't work anymore. So it's better to make it a habit to enclose all values with `'`. Maybe you use some kind of PDO mechanism, so your style is different. I didn't see the necessity to change my habits. I don't think I will ever change the database engine in a running system so I don't need another extraction layer.
 
     M:7727678 [tmp]>select * from tsmst_time ORDER BY 1,2;
     +-------+----+----------------------------+-----------------+
@@ -3110,6 +3110,8 @@ Well, it still doesn't work. If I want to repeat the whole process, I get proble
             $sql = "DELETE FROM tmp.tsmst_time WHERE id_ex = '$this->id_ex'";
             $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
         }
+
+Of course, `REPLACE INTO` doesn't make any sense anymore.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
