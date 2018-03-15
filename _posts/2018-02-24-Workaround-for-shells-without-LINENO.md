@@ -2980,7 +2980,7 @@ Now I was bitten by the bug and realized that I need more. That whole time takin
       PRIMARY KEY (`id_ex`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-For a moment I was irritated because I didn't want to timestamp column to be updated automatically and couldn't manage to change this definition, so I thought about it and remembered that the first `timestamp` value is automatically, no matter what, updated -- which is a good thing. So in order to preserve the original `timestamp` when the record was created I could introduce a second `timestamp` column, but as I am only interested in the difference anyway and will record this difference in the `comment` column, that's all right.
+For a moment I was irritated because I didn't want the `timestamp` column to be updated automatically and couldn't manage to change this definition, so I thought about it and remembered that in MySQL the first `timestamp` value is automatically updated, no matter what -- which is a good thing. So in order to preserve the original `timestamp` when the record was created I could introduce a second `timestamp` column, but as I am only interested in the difference anyway and will record this difference in the `comment` column, that's all right.
 
 Next I introduced a new function:
 
@@ -2997,11 +2997,13 @@ Next I introduced a new function:
         $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
     } # _tmp_tsmst_record
 
-This function will take care of recoding the time taken. The beginning is recorded in the constructor of my class; to this end, I introduced a new private member `$_microtime`:
+This function will take care of recording the time taken. The beginning is recorded in the constructor of my class; to this end, I introduced a new private member `$_microtime`:
 
         $this->_microtime = microtime(true); # this is the beginning of time taking
+        
         $this->_tmp_tsmst_record(__LINE__ . ' ' . __METHOD__ . " $this->lg $this->id_ex  ");
         # record the beginning of the whole process in our monitoring table as well
+        
         $sql = "REPLACE INTO tmp.tsmst_time (id_ex, tmstmp, comment) VALUES ($this->id_ex, NOW(6), '')";
         $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
         # make sure that we only have one record for each $this->id_ex
