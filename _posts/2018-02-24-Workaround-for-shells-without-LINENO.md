@@ -59,7 +59,7 @@ published: true
 > - [Digression: Adding microtime natively](#digression-adding-microtime-natively-table-of-content)
 > - [Digression: Language versions](#digression-language-versions-table-of-content)
 > - [Digression: Analyzing data](#digression-analyzing-data-table-of-content)
-> - [Digression: Adding a stopwatch by database](#adding-a-stopwatch-by-database-table-of-content)
+> - [Digression: Adding a stopwatch by PHP](#adding-a-stopwatch-by-php-table-of-content)
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
@@ -2621,7 +2621,7 @@ Now I took the pain to clean up my code. I had inserted with copy and paste lots
     function _tmp_tsmst_record($comment) {
         $comment = addSlashes($comment); 
         $sql = "INSERT INTO tmp.tsmst (id_ex, tmstmp, comment) VALUES ($this->id_ex, NOW(6), '$comment')";
-        $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
+        $query = $this->dba->query($sql . PHP_EOL . "# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
     } # _tmp_tsmst_record
 
 The term `NOW(6)` reflects the new definition of the timestamp column. And as I introduced this mechanism into several PHP files, I pushed this function definition high enough in the hierarchy to be used by all models. Well, the shell script also had to be corrected from `NOW()` to `NOW(6)`.
@@ -2968,7 +2968,7 @@ The average time taken for processing these languages is obviously very differen
 
 The value for `average time first run` is calculated on the basis of all but the last runs. This value and the `average time windup` do not depend on the number of languages but on the nature of the data to be processed.
 
-Digression: Adding a stopwatch by database <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Adding a stopwatch by PHP <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Now I was bitten by the bug and realized that I need more. That whole time taking by the shell isn't what I need. I want to start a whole lot of shell scripts at once and have an easy way to monitor these processes. Basically I'm only interested in those running and the time each one takes if it finishes. So I need a new table:
@@ -2980,9 +2980,13 @@ Now I was bitten by the bug and realized that I need more. That whole time takin
       PRIMARY KEY (`id_ex`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-For a moment I was irritated because I didn't want the `timestamp` column to be updated automatically and couldn't manage to change this definition, so I thought about it and remembered that in MySQL the first `timestamp` value is automatically updated, no matter what -- which is a good thing. So in order to preserve the original `timestamp` when the record was created I could introduce a second `timestamp` column, but as I am only interested in the difference anyway and will record this difference in the `comment` column, that's all right.
+This is basically a copy of the `tsmst` table. 
 
-Next I introduced a new function:
+For a moment I was irritated because I didn't want the `timestamp` column to be updated automatically and couldn't manage to change this definition, so I thought about it and remembered that in MySQL the first `timestamp` value is automatically updated on `UPDATE`, no matter what -- which is a good thing. 
+
+So in order to preserve the original `timestamp` when the record was created I could introduce a second `timestamp` column, but as I am only interested in the difference anyway and will record this difference in the `comment` column, that's all right.
+
+Next I introduced a new function, again basically a copy of the other function:
 
     // ====================================================================
     /**
@@ -2994,10 +2998,12 @@ Next I introduced a new function:
      */
     function _tmp_tsmst_time_record($comment) {
         $sql = "UPDATE tmp.tsmst_time set comment = '$comment' WHERE id_ex = '$this->id_ex'";
-        $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
+        $query = $this->dba->query($sql . PHP_EOL . "# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
     } # _tmp_tsmst_record
 
-This function will take care of recording the time taken. The beginning is recorded in the constructor of my class; to this end, I introduced a new private member `$_microtime`:
+This function will take care of recording the time taken.  
+
+The beginning is recorded in the constructor of my class; to this end, I introduced a new private member `$_microtime`:
 
         $this->_microtime = microtime(true); # this is the beginning of time taking
         
@@ -3005,7 +3011,7 @@ This function will take care of recording the time taken. The beginning is recor
         # record the beginning of the whole process in our monitoring table as well
         
         $sql = "REPLACE INTO tmp.tsmst_time (id_ex, tmstmp, comment) VALUES ($this->id_ex, NOW(6), '')";
-        $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
+        $query = $this->dba->query($sql . PHP_EOL . "# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
         # make sure that we only have one record for each $this->id_ex
 
 So when a process starts, we will know because there is one row in this time taking table, and as long as the process runs, the value for `comment` will be empty. 
@@ -3028,7 +3034,7 @@ To round up things, I additionally write this value to the monitoring table as w
 
         $this->_tmp_tsmst_record(__LINE__ . ' ' . __METHOD__ . " done $lg $this->id_ex :$this->_current_sitemap_lg: exhibitor_model->_show_ex_sitemap time_used :$time_used:");
 
-Interestingly, the whole process takes much more time when started from the shell versus the browser. I have no idea why this is so. The browser lives on a different machine and has to transmit its message across the network. I would have thought that the relation would've been just the opposite. For example, instead of these 17 seconds recorded in this sample the values taken from the browser are 12 or 13 seconds, which will not be significant if the whole process takes much longer.
+Interestingly, the whole process takes much more time when started from the shell versus the browser. I have no idea why this is so. The browser lives on a different machine and has to transmit its message across the network. I would have thought that the relation would've been just the opposite. For example, instead of these 17 seconds recorded in this sample the values taken from the browser are 12 or 13 seconds. The difference will not be significant if the whole process takes much longer.
 
 Soon I found out that I didn't think far enough. The example I was testing this enhancement with was the simplest I could get, so it only works in one language. But the next one had a couple more, and then I found that each language would call the constructor, killing my entry. So I had to introduce the language as well and also change the primary key in order to make the construct `REPLACE INTO` work as expected.
 
@@ -3053,7 +3059,7 @@ Of course, the PHP code had to be updated as well
     function _tmp_tsmst_time_record($comment) {
         $comment = addSlashes($comment); 
         $sql = "UPDATE tmp.tsmst_time set comment = '$comment' WHERE id_ex = '$this->id_ex' AND lg = '$this->lg'";
-        $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
+        $query = $this->dba->query($sql . PHP_EOL . "# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
     } # _tmp_tsmst_record
 
 
@@ -3076,6 +3082,29 @@ You may notice that I put all my values in `'` even when not necessary. Actually
     7 rows in set (0.00 sec)
 
 Very good. I still had to add something which bugged me with the shell script, if you remember. With `id_ex` 6 I start with `lg` en and then switch to de. This is reflected now in `tsmst_time` table .
+
+The next run shows that my initial observation that the windup will take much time is not true. Looking at `id_ex` 2181, all languages take about the same time, while with 1624 we see that `de` takes much longer than the other languages, so this is just due to the different nature of the data.
+
+    M:7727678 [tmp]>select * from tsmst_time ORDER BY 1,2;
+    +-------+----+----------------------------+-----------------+
+    | id_ex | lg | tmstmp                     | comment         |
+    +-------+----+----------------------------+-----------------+
+    |     6 | de | 2018-03-15 21:30:17.590032 | 12.787583112717 |
+    |  1624 | de | 2018-03-15 22:11:39.725407 | 252.35472178459 |   <--- stands out
+    |  1624 | en | 2018-03-15 22:08:28.132654 | 25.657135009766 |
+    |  1624 | es | 2018-03-15 22:08:29.261217 | 26.91079211235  |
+    |  1624 | fr | 2018-03-15 22:08:30.245134 | 27.702016115189 |
+    |  1624 | it | 2018-03-15 22:08:29.210744 | 26.677371025085 |
+    |  1624 | ru | 2018-03-15 22:08:28.504607 | 25.995233058929 |
+    |  2181 | de | 2018-03-15 21:27:10.945662 | 229.9711329937  |
+    |  2181 | en | 2018-03-15 21:27:32.842782 | 210.77082204819 |
+    |  2181 | fr | 2018-03-15 21:27:13.965795 | 191.78736495972 |
+    |  2181 | nl | 2018-03-15 21:27:47.040491 | 224.85882592201 |
+    |  2181 | zh | 2018-03-15 21:27:35.164289 | 212.90746688843 |
+    +-------+----+----------------------------+-----------------+
+    12 rows in set (0.00 sec)
+
+
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
