@@ -59,6 +59,7 @@ published: true
 > - [Digression: Adding microtime natively](#digression-adding-microtime-natively-table-of-content)
 > - [Digression: Language versions](#digression-language-versions-table-of-content)
 > - [Digression: Analyzing data](#digression-analyzing-data-table-of-content)
+> - [Digression: Adding a stopwatch by database](#adding-a-stopwatch-by-database-table-of-content)
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
@@ -2966,6 +2967,97 @@ The average time taken for processing these languages is obviously very differen
     | 2181 |            5 |                        196 |                      34 |
 
 The value for `average time first run` is calculated on the basis of all but the last runs. This value and the `average time windup` do not depend on the number of languages but on the nature of the data to be processed.
+
+Digression: Adding a stopwatch by database <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+Now I was bitten by the bug and realize that I need more. That whole time taking by the shell isn't what I need. I want to start a whole lot of shell scripts and have an easy way to monitor these processes. Basically I'm only interested in those running and the time each one takes if it finishes. So I need a new table:
+
+ CREATE TABLE `tsmst_time` (
+  `id_ex` bigint(20) unsigned NOT NULL,
+  `tmstmp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `comment` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id_ex`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+For a moment I was irritated because I didn't want to timestamp column to be updated automatically and couldn't manage to change this definition, so I thought about it and remembered that the first `timestamp` value is automatically, no matter what, updated -- which is a good thing. So in order to preserve the original `timestamp` when the record was created I could introduce a second `timestamp` column, but as I am only interested in the difference anyway and will record this difference in the `comment` column, that's all right.
+
+Next I introduced a new function:
+
+    // ====================================================================
+    /**
+     * _tmp_tsmst_record($comment)
+     *
+     * @access	public
+     * @param 	string
+     * @return	void
+     */
+    function _tmp_tsmst_time_record($comment) {
+        $sql = "UPDATE tmp.tsmst_time set comment = '$comment' WHERE id_ex = '$this->id_ex'";
+        $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
+    } # _tmp_tsmst_record
+
+This function will take care of recoding the time taken. The beginning is recorded in the constructor of my class; to this end, I introduced a new private member `$_microtime`:
+
+        $this->_microtime = microtime(true); # this is the beginning of time taking
+        $this->_tmp_tsmst_record(__LINE__ . ' ' . __METHOD__ . " $this->lg $this->id_ex  ");
+        # record the beginning of the whole process in our monitoring table as well
+        $sql = "REPLACE INTO tmp.tsmst_time (id_ex, tmstmp, comment) VALUES ($this->id_ex, NOW(6), '')";
+        $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
+        # make sure that we only have one record for each $this->id_ex
+
+So when a process starts, we will know because there is one row in this time taking table, and as long as the process runs, the value for `comment` will be empty. 
+
+    M:7727678 [tmp]>select * from tsmst_time ORDER BY 1;
+    +-------+----------------------------+-----------------+
+    | id_ex | tmstmp                     | comment         |
+    +-------+----------------------------+-----------------+
+    |     6 | 2018-03-15 18:34:10.463571 | 17.235496044159 |
+    |  1624 | 2018-03-15 18:33:58.407854 |                 |
+    |  2181 | 2018-03-15 18:34:03.484912 |                 |
+    +-------+----------------------------+-----------------+
+
+When the process finishes, we take the time and update this row. We not only know that the process has finished, but also how much time it has taken.
+
+        $time_used = microtime(true) - $this->_microtime; 
+        $this->_tmp_tsmst_time_record($time_used);
+
+To round up things, I additionally write this value to the monitoring table as well:
+
+        $this->_tmp_tsmst_record(__LINE__ . ' ' . __METHOD__ . " done $lg $this->id_ex :$this->_current_sitemap_lg: exhibitor_model->_show_ex_sitemap time_used :$time_used:");
+
+Interestingly, the whole process takes much more time when started from the shell versus the browser. I have no idea why this is so. The browser lives on a different machine and has to transmit its message across the network. I would have thought that the relation would've been just the opposite. For example, instead of these 17 seconds recorded in this sample the values taken from the browser are 12 or 13 seconds, which will not be significant if the whole process takes much longer.
+
+Soon I found out that I didn't think far enough. The example I was testing this enhancement with was the simplest I could get, so it only works in one language. But the next one had a couple more, and then I found that each language would call the constructor, killing my entry. So I had to introduce the language as well and also change the primary key in order to make the construct `REPLACE INTO` work as expected.
+
+    ALTER TABLE `tsmst_time`
+    ADD `lg` varchar(2) NOT NULL AFTER `id_ex`,
+    CHANGE `comment` `comment` varchar(25) COLLATE 'utf8mb4_unicode_ci' NOT NULL AFTER `tmstmp`;
+    
+    ALTER TABLE `tsmst_time`
+    ADD PRIMARY KEY `id_ex_lg` (`id_ex`, `lg`),
+    DROP INDEX `PRIMARY`;
+
+Of course, the PHP code had to be updated as well
+
+    // ====================================================================
+    /**
+     * _tmp_tsmst_record($comment)
+     *
+     * @access	public
+     * @param 	string
+     * @return	void
+     */
+    function _tmp_tsmst_time_record($comment) {
+        $comment = addSlashes($comment); 
+        $sql = "UPDATE tmp.tsmst_time set comment = '$comment' WHERE id_ex = '$this->id_ex' AND lg = '$this->lg'";
+        $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
+    } # _tmp_tsmst_record
+
+
+        $sql = "REPLACE INTO tmp.tsmst_time (id_ex, lg, tmstmp, comment) VALUES ('$this->id_ex', '$this->lg', NOW(6), '')";
+
+You may notice that I put all my values in `'` even when not necessary. Actually I didn't here, if you look back, which was okay here because `$this->id_ex` is an integer, and because of that, when inserting the new value `$this->lg`, I wasn't aware that this is a string and must be enclosed by `'`. Well, it didn't take long until I found out because my program didn't work anymore.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
