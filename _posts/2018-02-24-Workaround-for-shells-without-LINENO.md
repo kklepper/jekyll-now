@@ -2556,14 +2556,19 @@ Calling this function as a second argument to my debug function delivers the fol
     
     =================== :end array: ------------------ 
 
-So this shows without doubt that the module `mh` I have trouble with is loaded. 
+So this shows without doubt that the module `mh` I have trouble with is loaded. Confused.
 
+So I have a model `test` which calls model `mh` which in turn calls model `ex_model` to invoke a method in `ex_model` which itself calls a method in `mh`. Now that's fairly complicated.
 
+But the real circumstance that produces this trouble is the fact that I call this method of `ex_model` in the constructor of `mh` which is really dumb.          
 
+I checked the existence of the models somewhere in the sequence, but when being in the constructor, this model cannot have been recorded yet. So `ex_model` in turn wants to call `mh` which, being constructed, isn't available yet. I should have asked for the existence of models at this place. Later on, this information doesn't tell me anything of use.
 
-For a very complex problem, I developed a technique where I could switch on or off this kind of debug messages in certain functions via `GET` variables. This turned out to be very helpful as well.
+I don't pretend to have really understood what happened here, but this explanation sounds plausible. Anyway, removing my call in the constructor and placing it some other place totally resolved the whole issue.
 
-This kind of debugging is really dirty, I admit that. But I can comment any of these lines anytime in order to uncomment them whenever I should happen to need them again. That makes debugging very fast and easy.
+For other very complex problems, I developed a technique where I could switch on or off this kind of dirty debug messages in certain functions via `GET` variables. This turned out to be very helpful as well.
+
+This kind of debugging is really messy, I admit that. But I can comment any of these lines anytime in order to uncomment them whenever I should happen to need them again. That makes debugging very fast and easy. It's not elegant, it's not professional, but it simply works.
 
 Digression: Adding microtime by trigger <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
