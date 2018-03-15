@@ -2971,14 +2971,14 @@ The value for `average time first run` is calculated on the basis of all but the
 Digression: Adding a stopwatch by database <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Now I was bitten by the bug and realize that I need more. That whole time taking by the shell isn't what I need. I want to start a whole lot of shell scripts and have an easy way to monitor these processes. Basically I'm only interested in those running and the time each one takes if it finishes. So I need a new table:
+Now I was bitten by the bug and realized that I need more. That whole time taking by the shell isn't what I need. I want to start a whole lot of shell scripts at once and have an easy way to monitor these processes. Basically I'm only interested in those running and the time each one takes if it finishes. So I need a new table:
 
- CREATE TABLE `tsmst_time` (
-  `id_ex` bigint(20) unsigned NOT NULL,
-  `tmstmp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-  `comment` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_ex`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+    CREATE TABLE `tsmst_time` (
+      `id_ex` bigint(20) unsigned NOT NULL,
+      `tmstmp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+      `comment` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+      PRIMARY KEY (`id_ex`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 For a moment I was irritated because I didn't want to timestamp column to be updated automatically and couldn't manage to change this definition, so I thought about it and remembered that the first `timestamp` value is automatically, no matter what, updated -- which is a good thing. So in order to preserve the original `timestamp` when the record was created I could introduce a second `timestamp` column, but as I am only interested in the difference anyway and will record this difference in the `comment` column, that's all right.
 
@@ -3058,6 +3058,22 @@ Of course, the PHP code had to be updated as well
         $sql = "REPLACE INTO tmp.tsmst_time (id_ex, lg, tmstmp, comment) VALUES ('$this->id_ex', '$this->lg', NOW(6), '')";
 
 You may notice that I put all my values in `'` even when not necessary. Actually I didn't here, if you look back, which was okay here because `$this->id_ex` is an integer, and because of that, when inserting the new value `$this->lg`, I wasn't aware that this is a string and must be enclosed by `'`. Well, it didn't take long until I found out because my program didn't work anymore.
+
+    M:7727678 [tmp]>select * from tsmst_time ORDER BY 1,2;
+    +-------+----+----------------------------+-----------------+
+    | id_ex | lg | tmstmp                     | comment         |
+    +-------+----+----------------------------+-----------------+
+    |     6 | de | 2018-03-15 19:54:13.533044 | 13.269875049591 |
+    |  1624 | de | 2018-03-15 21:15:16.074236 |                 |
+    |  1624 | en | 2018-03-15 21:16:27.733217 | 25.636638879776 |
+    |  1624 | es | 2018-03-15 21:16:28.626559 | 26.434961080551 |
+    |  1624 | fr | 2018-03-15 21:16:30.977820 | 28.691392183304 |
+    |  1624 | it | 2018-03-15 21:16:28.917363 | 26.670063972473 |
+    |  1624 | ru | 2018-03-15 21:16:29.858016 | 27.578630924225 |
+    +-------+----+----------------------------+-----------------+
+    7 rows in set (0.00 sec)
+
+Very good. I still had to add something which bugged me with the shell script, if you remember. With `id_ex` 6 I start with `lg` en and then switch to de. This is reflected now in `tsmst_time` table .
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
