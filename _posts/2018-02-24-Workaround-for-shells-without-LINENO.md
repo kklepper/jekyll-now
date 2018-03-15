@@ -2483,7 +2483,7 @@ So I narrowed it down to the following scenario: for the function to work it nee
 
 If I set the parameter before I load the module, I get the error. If I set it afterwards, everything is okay. Now this is hard to understand, isn't it? What happens here?
 
-        $this->CI->id_ex = 6;        
+        $this->CI->id_ex = 6;         # This instruction triggers the error
     echo("<hr><pre> L: ".__LINE__."  ::  :: M: ".__METHOD__ . " F: ".__FILE__." ".date('H:i:s').' (  ) '."</pre>\n"   );
         $this->load->model('M_helper', 'mh'); 
     #xecho("<hr><pre> L: ".__LINE__."  ::  :: M: ".__METHOD__ . " F: ".__FILE__." ".date('H:i:s').' (  ) '."</pre>\n"   );
