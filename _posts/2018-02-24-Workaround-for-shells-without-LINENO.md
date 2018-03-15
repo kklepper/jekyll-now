@@ -3104,7 +3104,12 @@ The next run shows that my initial observation that the windup will take much ti
     +-------+----+----------------------------+-----------------+
     12 rows in set (0.00 sec)
 
+Well, it still doesn't work. If I want to repeat the whole process, I get problems when a switch of languages has happened as then the update causes a database error. So I have to make sure that when I start the first process which triggers all the other languages first clears all entries;
 
+        if ($this->_get_vars('d')) {
+            $sql = "DELETE FROM tmp.tsmst_time WHERE id_ex = '$this->id_ex'";
+            $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
+        }
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
