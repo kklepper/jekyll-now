@@ -3126,6 +3126,8 @@ I learned that from my first experiences with `Erlang`. Functions in Erlang are 
 
 It was quite an experience to get a grip on Erlang in order to be able to produce productive code. I wish I had learned something along these lines earlier so that I could have used that experience in my programming habits in PHP as well.
 
+In case you're interested in learning Erlang, I recommend [Learn You Some Erlang for great good!](http://learnyousomeerlang.com/) by Fred Hébert who also illustrated his opus with very gifted graphics. It is really great fun to follow him on his journey. I am very grateful. Great guy.
+
 Of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
 
 Well, looking at the source code of CodeIgniter, there are lots of functions which are extremely short. I could have learned from them as well, but alas I didn't. Frankly, I didn't study their source code if I didn't have to -- I was too eager to become productive. To be fair, they do have plenty of very long functions as well. 
