@@ -3041,7 +3041,9 @@ Soon I found out that I didn't think far enough. The example I was testing this 
     ALTER TABLE `tsmst_time`
     ADD `lg` varchar(2) NOT NULL AFTER `id_ex`,
     CHANGE `comment` `comment` varchar(25) COLLATE 'utf8mb4_unicode_ci' NOT NULL AFTER `tmstmp`;
-    
+
+As you see, I used the occasion to change the definition of the `comment` column as well. It doesn't really matter, but it's kind of hygiene.
+
     ALTER TABLE `tsmst_time`
     ADD PRIMARY KEY `id_ex_lg` (`id_ex`, `lg`),
     DROP INDEX `PRIMARY`;
