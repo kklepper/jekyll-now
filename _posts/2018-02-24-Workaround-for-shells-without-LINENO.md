@@ -3305,6 +3305,18 @@ And maybe even that is not the last iteration. This expensive scenario reminds m
 
 Well, not every author works this way, some just write down what comes to mind and it is brilliant nevertheless. Maybe there are programmers out there who do work like that.
 
+Thinking about it, this process of rewriting reminds me very much about the development of mathematics as a science. Those guys think about the same stuff for thousands of years, numbers, points, lines, circles. 
+
+And looking at these objects, they discover things and try to understand and then they look at it from a different perspective and understand some more and make some more discoveries which sheds more light on stuff already thought to have been understood and so on.
+
+Finally you may learn a mathematical theory without understanding where this whole body of thought has come from. I didn't know that [Galois theory](https://en.wikipedia.org/wiki/Galois_theory) dealt with zeroing polynomials I learned about in school. You can learn the whole Galois theory without ever hearing about polynomials. You may want to know how [Galois](https://en.wikipedia.org/wiki/%C3%89variste_Galois) himself may have thought about it, how he expressed his ideas.
+
+This is the first paragraph of the above mentioned Wikipedia article:
+
+>In mathematics, more specifically in abstract algebra, Galois theory, named after Évariste Galois, provides a connection between field theory and group theory. Using Galois theory, certain problems in field theory can be reduced to group theory, which is in some sense simpler and better understood.
+
+A couple of years ago, I happened to find a book trying to explain this whole development and I bought it and read it and didn't understand anything. What a pity.
+
 End of digression.
 
 Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
