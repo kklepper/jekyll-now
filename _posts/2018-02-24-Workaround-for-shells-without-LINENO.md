@@ -242,7 +242,7 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     #!/bin/ash
     FILE=test_echo_line_no.sh   
     
-    source /c/bak/echo_line_no.sh
+    source /path_to_your_script/echo_line_no.sh
     
     function whatsup {
     #echo "    debug ==:$1:====== argument given to function whatsup ========"
@@ -1964,47 +1964,47 @@ Any explanation why the data files are different? No idea.
 
 Accidentally I had a look at the monitoring file and noticed that first slave s1 and then the slave s2 had a lag, which was taken care of automatically, as it seems: 
 
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:23:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:23:00
     175 =====> s1 OK 2018-03-12_12:23:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24624489
     175 =====> s2 OK 2018-03-12_12:23:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24624489
     
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:24:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:24:00
     175 =====> s1 OK 2018-03-12_12:24:00 Seconds_Behind_Master 31 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24658308
     175 =====> s2 OK 2018-03-12_12:24:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24658308
     
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:25:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:25:00
     175 =====> s1 OK 2018-03-12_12:25:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24694252
     175 =====> s2 OK 2018-03-12_12:25:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24694252
     
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:26:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:26:00
     175 =====> s1 OK 2018-03-12_12:26:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24700335
     175 =====> s2 OK 2018-03-12_12:26:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24700335
     
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:27:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:27:00
     175 =====> s1 OK 2018-03-12_12:27:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24706366
     175 =====> s2 OK 2018-03-12_12:27:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24706366
     
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:28:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:28:00
     175 =====> s1 OK 2018-03-12_12:28:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24760084
     175 =====> s2 OK 2018-03-12_12:28:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24760084
     
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:29:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:29:00
     175 =====> s1 OK 2018-03-12_12:29:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24760084
     175 =====> s2 OK 2018-03-12_12:29:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24760084
     
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:30:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:30:00
     175 =====> s1 OK 2018-03-12_12:30:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24788628
     175 =====> s2 OK 2018-03-12_12:30:00 Seconds_Behind_Master 2 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 24788628
     
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:31:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:31:00
     175 =====> s1 OK 2018-03-12_12:31:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25886547
     175 =====> s2 OK 2018-03-12_12:31:00 Seconds_Behind_Master 62 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25886547
     
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:32:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:32:00
     175 =====> s1 OK 2018-03-12_12:32:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25901745
     175 =====> s2 OK 2018-03-12_12:32:00 Seconds_Behind_Master 122 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25901745
     
-    /c/bak/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:33:00
+    /path_to_your_script/mysql_repl_monitor.sh 240 ------------------------------------------------------------------- 2018-03-12_12:33:00
     175 =====> s1 OK 2018-03-12_12:33:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25939553
     175 =====> s2 OK 2018-03-12_12:33:00 Seconds_Behind_Master 0 Master_Log_File mysql-bin.000004 Read_Master_Log_Pos 25939553
 
@@ -2636,11 +2636,11 @@ Now it looks really fine (in order to make it more readable for me and you I int
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     | 2018-03-09 19:09:45.077000 | tsmst.sh INIT en DEL :1:                                                                                    |
     
-    | 2018-03-09 19:09:54.465791 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.467829 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.469888 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.471953 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.473298 | 24663 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.465791 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.467829 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.469888 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.471953 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.473298 | 24663 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
     
     | 2018-03-09 19:10:02.085619 | tsmst.sh INIT nl DEL :0:                                                                                    |
     | 2018-03-09 19:10:02.144768 | tsmst.sh INIT en DEL :0:                                                                                    |
@@ -2746,11 +2746,11 @@ Omitting these lines which are now superfluous, the whole picture is even cleare
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     | 2018-03-09 19:09:45.077000 | tsmst.sh INIT en DEL :1:                                                                                    |
     
-    | 2018-03-09 19:09:54.465791 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.467829 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.469888 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.471953 | 24670 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.473298 | 24663 _tsmst_write_trigger nohup /c/bak/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.465791 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.467829 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.469888 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.471953 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.473298 | 24663 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
     
     | 2018-03-09 19:10:02.085619 | tsmst.sh INIT nl DEL :0:                                                                                    |
     | 2018-03-09 19:10:02.144768 | tsmst.sh INIT en DEL :0:                                                                                    |
@@ -2850,7 +2850,7 @@ I guess the best way to get a clearer picture will then be to filter the result 
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     | tmstmp                     | comment                                                                                                     |
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
-    | 2018-03-12 13:55:03.321134 | 24743 _tsmst_write_trigger nohup /c/bak/tsmst.sh 1624 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-12 13:55:03.321134 | 24743 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 1624 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
     | 2018-03-12 13:56:01.976050 | tsmst.sh INIT fr DEL :0:                                                                                    |
     | 2018-03-12 13:56:02.743360 | 24912 _build_tns fr -- de not ready yet 1624 _build_tn too early                                            |
     | 2018-03-12 13:56:33.790927 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_fr                                               |
@@ -3139,20 +3139,32 @@ It is quite easy to start a docker job from the host, as we saw. The other way a
 
 I have lots of data of which I don't know in which languages this data is given. Maybe it is only one, maybe a whole bunch, as we have seen already.
 
-The other way to tackle this problem is to begin somewhere, make a guess about the language, find out which language it is, then maybe switch languages if your guess was wrong, and then find out if there are other languages, how much and which.
+My way to tackle this problem is to begin somewhere, make a guess about the language, find out which language it is, then maybe switch languages if my guess was wrong, and then find out if there are other languages, how much and which.
 
-Once you know that, you may want to start the same process for each of the other languages in parallel in order to speed up the whole procedure. The secondary processes differ from the first one in that they don't have to find out which language the date is given, as we already know, and also how many other languages there are, as we know this also.
+Once you know that, you may want to start the same process for each of the other languages in parallel in order to speed up the whole procedure. You may want to do that from the browser, making your program open a new browser session, but it is obvious that you cannot do that with a number of IDs in parallel each of them having a number of languages, so you will look for a method to call these processes from the host shell. 
 
-The solution to this problem is to write a file with the appropriate commands and another file triggered by Cron which looks for this command file and processes it if found. One by one those commands are issued in parallel.
+The secondary processes differ from the first one in that they don't have to find out which language the date is given, as we already know, and also how many other languages there are, as we know this also. The first of all these processes may be started by the browser or also by a shell command which we will use for the parallel processing.
+
+The equivalent of opening a browser session is something like
+
+    curl -N -s "localhost:8342/qh/$ID_EX?srt=1&d=$D&bak=1&lg=$LG":
+    
+if your docker container listens to port 8432 -- this is what tsmst.sh actually does. Don't forget the quotes around the argument for `curl`.
+
+The solution to this problem of starting several processes in parallel from a docker container is 
+
+- to write a file to the host in a directory the container can write to (for example /tmp/, mapped via `- /tmp:/tmp` in the yml file) with the appropriate commands 
+
+- and another file triggered by Cron which looks for this command file and processes it if it is found. One by one those commands are issued in parallel. You will have to wait for at most a minute for Cron to become active.
 
 An example for the command file may look like
 
     $ cat  /tmp/trigger.cmd
-    nohup /c/bak/tsmst.sh 1624 en 0 2>&1 &
-    nohup /c/bak/tsmst.sh 1624 es 0 2>&1 &
-    nohup /c/bak/tsmst.sh 1624 fr 0 2>&1 &
-    nohup /c/bak/tsmst.sh 1624 it 0 2>&1 &
-    nohup /c/bak/tsmst.sh 1624 ru 0 2>&1 &
+    nohup /path_to_your_script/tsmst.sh 1624 en 0 2>&1 &
+    nohup /path_to_your_script/tsmst.sh 1624 es 0 2>&1 &
+    nohup /path_to_your_script/tsmst.sh 1624 fr 0 2>&1 &
+    nohup /path_to_your_script/tsmst.sh 1624 it 0 2>&1 &
+    nohup /path_to_your_script/tsmst.sh 1624 ru 0 2>&1 &
 
 A snippet covering most from the processing file called by Cron:
 
@@ -3236,8 +3248,6 @@ This is the function definition with my debugging stuff still in place:
         docker exec m1 mysql -e "INSERT INTO tmp.tsmst VALUES ($ID_EX, NOW(6), '$1')" 
     } # docker_insert 
     #--------------------------------------------------------------------
-
-The first of all these processes may be started by the browser or also by a shell command, much like the ones we used for the parallel processing.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
