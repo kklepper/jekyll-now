@@ -3318,13 +3318,14 @@ Finally you may learn a mathematical theory without understanding where this who
 This is the first paragraph of the above mentioned Wikipedia article:
 >In mathematics, more specifically in abstract algebra, Galois theory, named after Évariste Galois, provides a connection between field theory and group theory. Using Galois theory, certain problems in field theory can be reduced to group theory, which is in some sense simpler and better understood.
 
-That sounds really good, but it is incomprehensible.
+That sounds really good, but it is totally incomprehensible.
 
-A couple of years ago, I happened to find a book trying to explain this whole development and I bought it and read it and didn't understand anything. What a pity.
+A couple of years ago, I happened to find a book trying to explain this whole development by Galois from his forerunners to this day and I bought it and read it and didn't understand anything. What a pity.
 
 >The birth and development of Galois theory was caused by the following question, whose answer is known as the Abel–Ruffini theorem:
-    Why is there no formula for the roots of a fifth (or higher) degree polynomial equation in terms of the coefficients of the polynomial, using only the usual algebraic operations (addition, subtraction, multiplication, division) and application of radicals (square roots, cube roots, etc)?
->
+    
+    > Why is there no formula for the roots of a fifth (or higher) degree polynomial equation in terms of the coefficients of the polynomial, using only the usual algebraic operations (addition, subtraction, multiplication, division) and application of radicals (square roots, cube roots, etc)?
+
 >Galois' theory not only provides a beautiful answer to this question, but also explains in detail why it is possible to solve equations of degree four or lower in the above manner, and why their solutions take the form that they do. Further, it gives a conceptually clear, and often practical, means of telling when some particular equation of higher degree can be solved in that manner.
 
 End of digression.
