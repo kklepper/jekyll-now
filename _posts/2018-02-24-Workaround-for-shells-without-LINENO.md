@@ -3119,7 +3119,8 @@ Of course, `REPLACE INTO` doesn't make sense in this case, but this `GET` value 
 
 Therefore the following `ON DUPLICATE KEY UPDATE` construct is much more intelligent:
 
-        $sql = "INSERT INTO tmp.tsmst_time (id_ex, lg, tmstmp, time_taken) VALUES ('$this->id_ex', '$this->lg', NOW(6), '')
+        $sql = "INSERT INTO tmp.tsmst_time (id_ex, lg, tmstmp, time_taken) 
+                VALUES ('$this->id_ex', '$this->lg', NOW(6), '')
                 ON DUPLICATE KEY UPDATE time_taken = ''";   # reset
     # so we do have a record
         $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
