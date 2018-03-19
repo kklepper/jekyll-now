@@ -3115,7 +3115,14 @@ Well, it still doesn't work. If I want to repeat the whole process, I get proble
             $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
         }
 
-Of course, `REPLACE INTO` doesn't make any sense anymore.
+Of course, `REPLACE INTO` doesn't make sense in this case, but this ´GET` value may not be set, that's why we have the condition. Anyway, `REPLACE INTO` will eventually delete first and then insert which means 2 operations for index update, which may be costly.
+
+Therefore the following `ON DUPLICATE KEY UPDATE` construct is much more intelligent:
+
+        $sql = "INSERT INTO tmp.tsmst_time (id_ex, lg, tmstmp, time_taken) VALUES ('$this->id_ex', '$this->lg', NOW(6), '')
+                ON DUPLICATE KEY UPDATE time_taken = ''";   # reset
+    # so we do have a record
+        $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
