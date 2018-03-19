@@ -60,6 +60,7 @@ published: true
 > - [Digression: Language versions](#digression-language-versions-table-of-content)
 > - [Digression: Analyzing data](#digression-analyzing-data-table-of-content)
 > - [Digression: Adding a stopwatch by PHP](#adding-a-stopwatch-by-php-table-of-content)
+> - [Digression: Adding a stopwatch table](#adding-a-stopwatch-table-table-of-content)
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
@@ -2448,7 +2449,7 @@ The output in this case is easy:
     M: Test::_load_model_M_helper
     12:44:55
     
-     =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  => ||| should be 5 DAY
+    =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  => ||| should be 5 DAY
     
     seconds elapsed: 0.07 xwp_echo ============= L: 8425 ======= M: Test::_load_model_M_helper ::::::
     
@@ -2538,7 +2539,7 @@ Calling this function as a second argument to my debug function delivers the fol
     M: Ex_model::_get_ar_tn_tbl
     13:32:16
     
-     =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  => ||| This shows all the models loaded
+    =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  =>  => ||| This shows all the models loaded
     
     
     ---------------------------
@@ -3020,8 +3021,8 @@ So when a process starts, we will know because there is one row in this time tak
     +-------+----------------------------+-----------------+
     | id_ex | tmstmp                     | comment         |
     +-------+----------------------------+-----------------+
-    |     6 | 2018-03-15 18:34:10.463571 | 17.235496044159 |
-    |  1624 | 2018-03-15 18:33:58.407854 |                 |
+    |     6 | 2018-03-15 18:34:10.463571 | 17.235496044159 |  <--- finished
+    |  1624 | 2018-03-15 18:33:58.407854 |                 |  <--- just started
     |  2181 | 2018-03-15 18:34:03.484912 |                 |
     +-------+----------------------------+-----------------+
 
@@ -3035,6 +3036,9 @@ To round up things, I additionally write this value to the monitoring table as w
         $this->_tmp_tsmst_record(__LINE__ . ' ' . __METHOD__ . " done $lg $this->id_ex :$this->_current_sitemap_lg: exhibitor_model->_show_ex_sitemap time_used :$time_used:");
 
 Interestingly, the whole process takes much more time when started from the shell versus the browser. I have no idea why this is so. The browser lives on a different machine and has to transmit its message across the network. I would have thought that the relation would've been just the opposite. For example, instead of these 17 seconds recorded in this sample the values taken from the browser are 12 or 13 seconds. The difference will not be significant if the whole process takes much longer.
+
+Digression: Adding a stopwatch table <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
 
 Soon I found out that I didn't think far enough. The example I was testing this enhancement with was the simplest I could get, so it only works in one language. But the next one had a couple more, and then I found that each language would call the constructor, killing my entry. So I had to introduce the language as well and also change the primary key in order to make the construct `REPLACE INTO` work as expected.
 
@@ -3060,12 +3064,14 @@ Of course, the PHP code had to be updated as well
      */
     function _tmp_tsmst_time_record($comment) {
         $comment = addSlashes($comment); 
-        $sql = "UPDATE tmp.tsmst_time set comment = '$comment' WHERE id_ex = '$this->id_ex' AND lg = '$this->lg'";
+        $sql = "UPDATE tmp.tsmst_time set comment = '$comment' 
+            WHERE id_ex = '$this->id_ex' AND lg = '$this->lg'";
         $query = $this->dba->query($sql . PHP_EOL . "# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
     } # _tmp_tsmst_record
 
 
-        $sql = "REPLACE INTO tmp.tsmst_time (id_ex, lg, tmstmp, comment) VALUES ('$this->id_ex', '$this->lg', NOW(6), '')";
+        $sql = "REPLACE INTO tmp.tsmst_time (id_ex, lg, tmstmp, comment) 
+            VALUES ('$this->id_ex', '$this->lg', NOW(6), '')";
 
 You may notice that I put all my values in `'` even when not necessary. Actually, if you look back, I didn't do it here which was okay  because `$this->id_ex` is an integer, so you don't need `'`, and because of that, when inserting the new value `$this->lg`, I wasn't aware that this is a string and definitely must be enclosed by `'`. Well, it didn't take long until I found out because my program didn't work anymore. So it's better to make it a habit to enclose all values with `'`. 
 
@@ -3076,7 +3082,7 @@ Maybe you use some kind of PDO mechanism, so your style is different. I didn't s
     | id_ex | lg | tmstmp                     | comment         |
     +-------+----+----------------------------+-----------------+
     |     6 | de | 2018-03-15 19:54:13.533044 | 13.269875049591 |
-    |  1624 | de | 2018-03-15 21:15:16.074236 |                 |
+    |  1624 | de | 2018-03-15 21:15:16.074236 |                 |  <--- still running 
     |  1624 | en | 2018-03-15 21:16:27.733217 | 25.636638879776 |
     |  1624 | es | 2018-03-15 21:16:28.626559 | 26.434961080551 |
     |  1624 | fr | 2018-03-15 21:16:30.977820 | 28.691392183304 |
