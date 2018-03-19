@@ -3166,7 +3166,7 @@ An example for the command file may look like
     nohup /path_to_your_script/tsmst.sh 1624 it 0 2>&1 &
     nohup /path_to_your_script/tsmst.sh 1624 ru 0 2>&1 &
 
-A snippet covering most from the processing file called by Cron:
+A snippet covering most from the processing file `cron_parallel.sh` called by Cron:
 
     # summer
     #TIMEDIFF=7200
