@@ -3198,8 +3198,11 @@ A snippet covering most from the processing file called by Cron:
     
     while read -r line 
     do
+    
         $line &
-    # This calls tsmst.sh which will start a crawling session for each language which is not the start language
+    # This calls tsmst.sh which will start a crawling session for each language 
+    # which is not the start language
+    
     done < "$CMDFILE.$DATESHORT"
     
     echo sudo mv -f $CMDFILE $CMDFILE.bak
