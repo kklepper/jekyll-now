@@ -3313,7 +3313,7 @@ Thinking about it, this process of rewriting reminds me very much about the deve
 
 And looking at these objects, they discover things and try to understand and then they look at it from a different perspective and understand some more and make some more discoveries which sheds more light on stuff already thought to have been understood and so on.
 
-Finally you may learn a mathematical theory without understanding where this whole body of thought has come from. I didn't know that [Galois theory](https://en.wikipedia.org/wiki/Galois_theory) dealt with zeroing polynomials I learned about in school. You can learn the whole Galois theory without ever hearing about polynomials. You may want to know how [Galois](https://en.wikipedia.org/wiki/%C3%89variste_Galois) himself may have thought about it, how he expressed his ideas.
+Finally you may learn a mathematical theory without understanding where this whole body of thought has come from. I didn't know that [Galois theory](https://en.wikipedia.org/wiki/Galois_theory) dealt with zeroing polynomials about which I learned in school. You can learn the whole Galois theory without ever hearing about polynomials. You may want to know how [Galois](https://en.wikipedia.org/wiki/%C3%89variste_Galois) himself may have thought about it, how he expressed his ideas.
 
 This is the first paragraph of the above mentioned Wikipedia article:
 >In mathematics, more specifically in abstract algebra, Galois theory, named after Évariste Galois, provides a connection between field theory and group theory. Using Galois theory, certain problems in field theory can be reduced to group theory, which is in some sense simpler and better understood.
