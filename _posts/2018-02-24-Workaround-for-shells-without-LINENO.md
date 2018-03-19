@@ -3309,7 +3309,7 @@ Well, not every author works this way, some just write down what comes to mind a
 Digression: Mathematics <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-Thinking about it, this process of rewriting reminds me very much about the development of mathematics as a science. Those guys think about the same stuff for thousands of years, numbers, points, lines, circles. 
+Thinking about it, this process of rewriting reminds me very much of the development of mathematics as a science. Those guys think about the same stuff for thousands of years, numbers, points, lines, circles. 
 
 And looking at these objects, they discover things and try to understand and then they look at it from a different perspective and understand some more and make some more discoveries which sheds more light on stuff already thought to have been understood and so on.
 
