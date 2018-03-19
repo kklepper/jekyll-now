@@ -3172,37 +3172,31 @@ A snippet covering most from the processing file called by Cron:
     #TIMEDIFF=7200
     # winter
     TIMEDIFF=3600
-    
-    DATEUTP=$(date "+%d.%m.%Y %H:%M:%S");
     # when called directly by shell
-    DATE=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%d.%m.%Y %H:%M:%S")
+    DATEUTP=$(date "+%d.%m.%Y %H:%M:%S");
     # to compensate UTC when called by cron
-    DATESHORT=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%d.%m.%Y_%H.%M")
+    DATE=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%d.%m.%Y %H:%M:%S")
     # for renaming the command file
+    DATESHORT=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%d.%m.%Y_%H.%M")
     
     CMDFILE=/tmp/trigger.cmd
     
     # Some error checking first
-    
     if [ ! -e "$CMDFILE" ]
     then
         echo_line_no "FILE $FILE, not exist CMDFILE $CMDFILE" DATE
         exit
     fi
     
-    # next sort and remove duplicates
-    
+    # next sort and remove duplicates, write to a unique file for debugging later
     sort $CMDFILE | uniq > $CMDFILE.$DATESHORT
     
-    # Process every line
-    
+    # Process every line in that file in a while loop
     while read -r line 
     do
-    
-        $line &
+            $line &
     # This calls tsmst.sh which will start a crawling session for each language 
     # which is not the start language
-    
     done < "$CMDFILE.$DATESHORT"
     
     echo sudo mv -f $CMDFILE $CMDFILE.bak
