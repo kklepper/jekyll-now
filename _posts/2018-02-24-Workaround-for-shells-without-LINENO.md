@@ -3330,7 +3330,7 @@ These are paragraphs 4 to 6 of the above-mentioned article:
 >
 >Galois' theory not only provides a beautiful answer to this question, but also explains in detail why it is possible to solve equations of degree four or lower in the above manner, and why their solutions take the form that they do. Further, it gives a conceptually clear, and often practical, means of telling when some particular equation of higher degree can be solved in that manner.
 
-Great. Still I have no idea how the modern abstract conceptions relate to these down to earth questions, and in particular how modern theories provide answers to these. Maybe I should try to study the Wikipedia articles in order to understand. But from my experience with other articles specialized on higher mathematics, I don't have much hope. And indeed: it didn't take long for me to get lost. 
+Great. Still I have no idea how the modern abstract conceptions relate to these down to earth questions, and in particular how modern theories provide answers to these. Maybe I should try to study the Wikipedia articles in order to understand. But from my experience with other Wikipedia articles specialized on higher mathematics, I don't have much hope. And indeed: it didn't take long for me to get lost. 
 
 I wonder how many mathematicians with high university degrees know this in abstract and in detail.
 
