@@ -3208,7 +3208,41 @@ Unfortunately I had a lot of trouble getting all these processes running in para
     echo_line_no "before while " DATE     
     echo_line_no "after while " DATE     
 
-Even if each process only takes about 2 dozen seconds as with ID 1624, with 5 processes it's easy to see if the while loop runs much faster. And if it does, your mechanism is correct. Of course, if you take notes of the times in your debug table, you can see if they are started simultaneously as well:
+Even if each process only takes about 2 dozen seconds as with ID 1624, with 5 processes it's easy to see if the while loop runs much faster. And if it does, your mechanism is correct. Of course, if you take notes of the times in your debug table, you can see if they are started simultaneously as well.
+
+For quite some time I didn't see what I should have seen so I introduced more and more debugging mechanisms in order to be able to see. This included the need to get the debugging mechanisms of this Cron file into my debugging table, as the output of the Cron file is not visible if Cron calls it, except you write it to a logging file etc. etc.
+
+If you have a complex setup with several components which all can fail, you first must find out where something goes wrong, or better check one by one, that each does its job as expected.
+
+So I introduced a function in my Cron file doing the actual insertion of the data. As my debugging table relies heavily on this ID `id_ex`, I had to extract this information from the line of the data file first. So the first action in the while loop is
+
+    ID_EX=$(echo $line | awk '{print $3}')
+    LG=$(echo $line | awk '{print $4}')
+
+Now I can feed this function with the appropriate data:
+
+    docker_insert "92 $FILE $DATE $ID_EX $LG before "
+    docker_insert "99 $FILE $DATE $ID_EX $LG after "
+
+Nice and easy to check `cron_parallel.sh`:
+
+    M:9519574 [tmp]>SELECT * FROM tsmst 
+    	WHERE id_ex = '1624' 
+    	AND comment LIKE '%after%'  
+    	ORDER BY 1,2 
+    	LIMIT 50;
+    +-------+----------------------------+---------------------------------------------------------+
+    | id_ex | tmstmp                     | comment                                                 |
+    +-------+----------------------------+---------------------------------------------------------+
+    |  1624 | 2018-03-19 17:18:01.700971 | 99 cron_parallel.sh 19.03.2018 17:18:00 1624 en after   |
+    |  1624 | 2018-03-19 17:18:02.095257 | 99 cron_parallel.sh 19.03.2018 17:18:00 1624 es after   |
+    |  1624 | 2018-03-19 17:18:02.518824 | 99 cron_parallel.sh 19.03.2018 17:18:00 1624 fr after   |
+    |  1624 | 2018-03-19 17:18:03.018318 | 99 cron_parallel.sh 19.03.2018 17:18:00 1624 it after   |
+    |  1624 | 2018-03-19 17:18:03.389657 | 99 cron_parallel.sh 19.03.2018 17:18:00 1624 ru after   |
+    +-------+----------------------------+---------------------------------------------------------+
+    5 rows in set (0.00 sec)
+
+The same holds true for monitoring the actual script `tsmst.sh` which does the job:
 
     M:9519574 [tmp]>SELECT * FROM tsmst 
     	WHERE id_ex=1624 
@@ -3226,18 +3260,6 @@ Even if each process only takes about 2 dozen seconds as with ID 1624, with 5 pr
     |  1624 | 2018-03-19 17:18:03.588183 | 83 ru tsmst.sh INIT D :0:    |
     +-------+----------------------------+------------------------------+
     5 rows in set (0.00 sec)
-
-For quite some time I didn't see what I should have seen so I introduced more and more debugging mechanisms in order to be able to see. This included the need to get the debugging mechanisms of this Cron file into my debugging table, as the output of the Cron file is not visible if Cron calls it, except you write it to a logging file etc. etc.
-
-So I introduced a function in my Cron file doing the actual insertion of the data. As my debugging table relies heavily on this ID `id_ex`, I had to extract this information from the line of the data file first. So the first action in the while loop is
-
-    ID_EX=$(echo $line | awk '{print $3}')
-    LG=$(echo $line | awk '{print $4}')
-
-Now I can feed this function with the appropriate data:
-
-    docker_insert "92 $FILE $DATE $ID_EX $LG before "
-    docker_insert "99 $FILE $DATE $ID_EX $LG after "
 
 This is the function definition with my debugging stuff still in place:
 
