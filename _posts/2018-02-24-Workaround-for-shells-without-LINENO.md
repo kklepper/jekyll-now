@@ -3115,7 +3115,7 @@ Well, it still doesn't work. If I want to repeat the whole process, I get proble
             $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
         }
 
-Of course, `REPLACE INTO` doesn't make sense in this case, but this ´GET` value may not be set, that's why we have the condition. Anyway, `REPLACE INTO` will eventually delete first and then insert which means 2 operations for index update, which may be costly.
+Of course, `REPLACE INTO` doesn't make sense in this case, but this `GET` value may not be set, that's why we have the condition. Anyway, `REPLACE INTO` will eventually delete first and then insert which means 2 operations for index update, which may be costly.
 
 Therefore the following `ON DUPLICATE KEY UPDATE` construct is much more intelligent:
 
