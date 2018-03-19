@@ -61,6 +61,7 @@ published: true
 > - [Digression: Analyzing data](#digression-analyzing-data-table-of-content)
 > - [Digression: Adding a stopwatch by PHP](#adding-a-stopwatch-by-php-table-of-content)
 > - [Digression: Adding a stopwatch table](#adding-a-stopwatch-table-table-of-content)
+> - [Digression: Processing multiple languages in parallel](#processing-multiple-languages-in-parallel-table-of-content)
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
@@ -3130,6 +3131,113 @@ Therefore the following `ON DUPLICATE KEY UPDATE` construct is much more intelli
                 ON DUPLICATE KEY UPDATE time_taken = ''";   # reset
     # so we do have a record
         $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
+
+Digression: Processing multiple languages in parallel <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+It is quite easy to start a docker job from the host, as we saw. The other way around is not possible except you introduce severe security problems. But sometimes, you really need to do that, as is the case with my job here. 
+
+I have lots of data of which I don't know in which languages this data is given. Maybe it is only one, maybe a whole bunch, as we have seen already.
+
+The other way to tackle this problem is to begin somewhere, make a guess about the language, find out which language it is, then maybe switch languages if your guess was wrong, and then find out if there are other languages, how much and which.
+
+Once you know that, you may want to start the same process for each of the other languages in parallel in order to speed up the whole procedure. The secondary processes differ from the first one in that they don't have to find out which language the date is given, as we already know, and also how many other languages there are, as we know this also.
+
+The solution to this problem is to write a file with the appropriate commands and another file triggered by Cron which looks for this command file and processes it if found. One by one those commands are issued in parallel.
+
+An example for the command file may look like
+
+    $ cat  /tmp/trigger.cmd
+    nohup /c/bak/tsmst.sh 1624 en 0 2>&1 &
+    nohup /c/bak/tsmst.sh 1624 es 0 2>&1 &
+    nohup /c/bak/tsmst.sh 1624 fr 0 2>&1 &
+    nohup /c/bak/tsmst.sh 1624 it 0 2>&1 &
+    nohup /c/bak/tsmst.sh 1624 ru 0 2>&1 &
+
+A snippet covering most from the processing file called by Cron:
+
+    # summer
+    #TIMEDIFF=7200
+    # winter
+    TIMEDIFF=3600
+    
+    DATEUTP=$(date "+%d.%m.%Y %H:%M:%S");
+    # when called directly by shell
+    DATE=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%d.%m.%Y %H:%M:%S")
+    # to compensate UTC when called by cron
+    DATESHORT=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%d.%m.%Y_%H.%M")
+    # for renaming the command file
+    
+    CMDFILE=/tmp/trigger.cmd
+    
+    # Some error checking first
+    
+    if [ ! -e "$CMDFILE" ]
+    then
+        echo_line_no "FILE $FILE, not exist CMDFILE $CMDFILE" DATE
+        exit
+    fi
+    
+    # next sort and remove duplicates
+    
+    sort $CMDFILE | uniq > $CMDFILE.$DATESHORT
+    
+    # Process every line
+    
+    while read -r line 
+    do
+        $line &
+    # This calls tsmst.sh which will start a crawling session for each language which is not the start language
+    done < "$CMDFILE.$DATESHORT"
+    
+    echo sudo mv -f $CMDFILE $CMDFILE.bak
+    sudo mv -f $CMDFILE $CMDFILE.bak  
+    # Force overwrite, this is the last original version for debug purposes
+    # sudo because the container has written this file, so it's a different owner
+
+Unfortunately I had a lot of trouble getting all these processes running in parallel. In order to make sure that we really get parallel processing I introduced two function calls:
+
+    echo_line_no "before while " DATE     
+    echo_line_no "after while " DATE     
+
+Even if each process only takes about 2 dozen seconds, with 5 processes it's easy to see if the while loop runs much faster. And if it does, your mechanism is correct. Of course, if you take notes of the times in your debug table, you can see if they are started simultaneously as well:
+
+    M:9519574 [tmp]>select * from tsmst where id_ex=1624 and comment like '%init%' and comment  LIKE '%83%'  ORDER BY 1,2 limit 50;
+    +-------+----------------------------+------------------------------+
+    | id_ex | tmstmp                     | comment                      |
+    +-------+----------------------------+------------------------------+
+    |  1624 | 2018-03-19 17:18:01.882205 | 83 en tsmst.sh INIT DEL :0:  |
+    |  1624 | 2018-03-19 17:18:02.346524 | 83 es tsmst.sh INIT DEL :0:  |
+    |  1624 | 2018-03-19 17:18:02.640180 | 83 fr tsmst.sh INIT DEL :0:  |
+    |  1624 | 2018-03-19 17:18:03.162806 | 83 it tsmst.sh INIT DEL :0:  |
+    |  1624 | 2018-03-19 17:18:03.588183 | 83 ru tsmst.sh INIT DEL :0:  |
+    +-------+----------------------------+------------------------------+
+    5 rows in set (0.00 sec)
+
+For quite some time I didn't see what I should have seen so I introduced more and more debugging mechanisms in order to be able to see. This included the need to get the debugging mechanisms of this Cron file into my debugging table, as the output of the Cron file is not visible if Cron calls it, except you write it to a logging file etc. etc.
+
+So I introduced a function in my Cron file doing the actual insertion of the data. As my debugging table relies heavily on this ID `id_ex`, I had to extract this information from the line of the data file first. So the first action in the while loop is
+
+    ID_EX=$(echo $line | awk '{print $3}')
+    LG=$(echo $line | awk '{print $4}')
+
+Now I can feed this function with the appropriate data:
+
+    docker_insert "92 $FILE $DATE $ID_EX $LG before "
+    docker_insert "99 $FILE $DATE $ID_EX $LG after "
+
+This is the function definition with my debugging stuff still in place:
+
+    #--------------------------------------------------------------------
+    docker_insert()
+    {
+    #echo "docker_insert---------ID_EX :$ID_EX:-----------$1----------" 
+    #exit
+        docker exec m1 mysql -e "INSERT INTO tmp.tsmst VALUES ($ID_EX, NOW(6), '$1')" 
+    } # docker_insert 
+    #--------------------------------------------------------------------
+
+The first of all these processes may be started by the browser or also by a shell command, much like the ones we used for the parallel processing.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
