@@ -59,10 +59,11 @@ published: true
 > - [Digression: Adding microtime natively](#digression-adding-microtime-natively-table-of-content)
 > - [Digression: Language versions](#digression-language-versions-table-of-content)
 > - [Digression: Analyzing data](#digression-analyzing-data-table-of-content)
-> - [Digression: Adding a stopwatch by PHP](#adding-a-stopwatch-by-php-table-of-content)
-> - [Digression: Adding a stopwatch table](#adding-a-stopwatch-table-table-of-content)
-> - [Digression: Processing multiple languages in parallel](#processing-multiple-languages-in-parallel-table-of-content)
+> - [Digression: Adding a stopwatch by PHP](#digression-adding-a-stopwatch-by-php-table-of-content)
+> - [Digression: Adding a stopwatch table](#digression-adding-a-stopwatch-table-table-of-content)
+> - [Digression: Processing multiple languages in parallel](#digression-processing-multiple-languages-in-parallel-table-of-content)
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
+> - [Digression: Mathematics](#digression-mathematics-table-of-content)
 - [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
 
@@ -3305,6 +3306,9 @@ And maybe even that is not the last iteration. This expensive scenario reminds m
 
 Well, not every author works this way, some just write down what comes to mind and it is brilliant nevertheless. Maybe there are programmers out there who do work like that.
 
+Digression: Mathematics <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
 Thinking about it, this process of rewriting reminds me very much about the development of mathematics as a science. Those guys think about the same stuff for thousands of years, numbers, points, lines, circles. 
 
 And looking at these objects, they discover things and try to understand and then they look at it from a different perspective and understand some more and make some more discoveries which sheds more light on stuff already thought to have been understood and so on.
@@ -3312,10 +3316,16 @@ And looking at these objects, they discover things and try to understand and the
 Finally you may learn a mathematical theory without understanding where this whole body of thought has come from. I didn't know that [Galois theory](https://en.wikipedia.org/wiki/Galois_theory) dealt with zeroing polynomials I learned about in school. You can learn the whole Galois theory without ever hearing about polynomials. You may want to know how [Galois](https://en.wikipedia.org/wiki/%C3%89variste_Galois) himself may have thought about it, how he expressed his ideas.
 
 This is the first paragraph of the above mentioned Wikipedia article:
-
 >In mathematics, more specifically in abstract algebra, Galois theory, named after Évariste Galois, provides a connection between field theory and group theory. Using Galois theory, certain problems in field theory can be reduced to group theory, which is in some sense simpler and better understood.
 
+That sounds really good, but it is incomprehensible.
+
 A couple of years ago, I happened to find a book trying to explain this whole development and I bought it and read it and didn't understand anything. What a pity.
+
+>The birth and development of Galois theory was caused by the following question, whose answer is known as the Abel–Ruffini theorem:
+    Why is there no formula for the roots of a fifth (or higher) degree polynomial equation in terms of the coefficients of the polynomial, using only the usual algebraic operations (addition, subtraction, multiplication, division) and application of radicals (square roots, cube roots, etc)?
+>
+>Galois' theory not only provides a beautiful answer to this question, but also explains in detail why it is possible to solve equations of degree four or lower in the above manner, and why their solutions take the form that they do. Further, it gives a conceptually clear, and often practical, means of telling when some particular equation of higher degree can be solved in that manner.
 
 End of digression.
 
