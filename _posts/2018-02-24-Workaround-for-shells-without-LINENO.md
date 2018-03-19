@@ -3322,6 +3322,8 @@ That sounds really good, but it is totally incomprehensible.
 
 A couple of years ago, I happened to find a book trying to explain this whole development by Galois from his forerunners to this day and I bought it and read it and didn't understand anything. What a pity.
 
+These are paragraphs 4 to 6 of the above-mentioned article:
+
 >The birth and development of Galois theory was caused by the following question, whose answer is known as the Abel–Ruffini theorem:
 >    
 >> Why is there no formula for the roots of a fifth (or higher) degree polynomial equation in terms of the coefficients of the polynomial, using only the usual algebraic operations (addition, subtraction, multiplication, division) and application of radicals (square roots, cube roots, etc)?
