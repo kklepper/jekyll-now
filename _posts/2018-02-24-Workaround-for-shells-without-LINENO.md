@@ -2246,8 +2246,8 @@ You also see that it is important to know which script is doing what; the callin
 Later, I found that I wanted to get more information about the sequence of shell scripts, so I rewrote them accordingly. Now you can see exactly what calls what and what is happening when.
 
     tsm3.sh ------------------------------
-        68       "FILE :$FILE: ID_EX :$ID_EX: LG :$LG: DEL :$DEL: CMD :$CMD:"
-        >>>>>>> : FILE :/path_to_your_script/tsm3.sh: ID_EX :6: LG :en: DEL :1: CMD :/path_to_your_script/tsmst.sh 6 en 1:
+        68       "FILE :$FILE: ID_EX :$ID_EX: LG :$LG: D :$D: CMD :$CMD:"
+        >>>>>>> : FILE :/path_to_your_script/tsm3.sh: ID_EX :6: LG :en: D :1: CMD :/path_to_your_script/tsmst.sh 6 en 1:
     
     echo_line_no.sh ------------------------------
        114       "==do== CMD :curl -N -s \"$CMD\":"
@@ -2276,7 +2276,7 @@ That's why we need a database solution here.
 
 In the script shell which manages a single parameter, first make sure we have no old entries and then insert the start data.
 
-    docker exec m1 mysql -e "DELETE FROM tmp.tsmst WHERE id_ex = '$ID_EX'; 
+    docker exec m1 mysql -e "DETE FROM tmp.tsmst WHERE id_ex = '$ID_EX'; 
         INSERT INTO tmp.tsmst VALUES ($ID_EX, NOW(), '$CMD')"
 
 In case we have a problem, record this as well:    
@@ -2371,10 +2371,10 @@ If all languages are processed, another mechanism is invoked which will produce 
     | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
     | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
     | 2018-03-09 02:12:14 | 24662 nohup /path_to_your_script/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.ts 0</dev/null 1>&/dev/null |
-    | 2018-03-09 02:13:01 | tsmst.sh INIT en DEL :0:                                                                          |
-    | 2018-03-09 02:13:01 | tsmst.sh INIT fr DEL :0:                                                                          |
-    | 2018-03-09 02:13:01 | tsmst.sh INIT zh DEL :0:                                                                          |
-    | 2018-03-09 02:13:02 | tsmst.sh INIT nl DEL :0:                                                                          |
+    | 2018-03-09 02:13:01 | tsmst.sh INIT en D :0:                                                                            |
+    | 2018-03-09 02:13:01 | tsmst.sh INIT fr D :0:                                                                            |
+    | 2018-03-09 02:13:01 | tsmst.sh INIT zh D :0:                                                                            |
+    | 2018-03-09 02:13:02 | tsmst.sh INIT nl D :0:                                                                            |
     | 2018-03-09 02:16:03 | tsmst.sh == GOOD!!!===== LG :fr: === used :182: secs                                              |
     | 2018-03-09 02:16:03 | 22380 while fr done, about to _transfer_tmp_to_dj5                                                |
     | 2018-03-09 02:16:03 | 24756 done INSERT INTO tn_fr                                                                      |
@@ -2585,7 +2585,7 @@ As MySQL or MariaDB don't have a special data type `microtime`, I was looking fo
     ALTER TABLE `tsmst`
     ADD `microtime` decimal(16,6) NOT NULL;
     
-    DELIMITER //
+    DIMITER //
     
     CREATE DEFINER=`root`@`localhost` TRIGGER `tmp`.`tsmst_BEFORE_INSERT` BEFORE INSERT ON `tsmst` FOR EACH ROW
      BEGIN
@@ -2593,7 +2593,7 @@ As MySQL or MariaDB don't have a special data type `microtime`, I was looking fo
      END
      //
     
-    DELIMITER ;
+    DIMITER ;
 
 This is the first time that I defined a trigger. 
 
@@ -2634,18 +2634,18 @@ Now it looks really fine (in order to make it more readable for me and you I int
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     | tmstmp                     | comment                                                                                                     |
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
-    | 2018-03-09 19:09:45.077000 | tsmst.sh INIT en DEL :1:                                                                                    |
+    | 2018-03-09 19:09:45.077000 | tsmst.sh INIT en D :1:                                                                                      |
     
-    | 2018-03-09 19:09:54.465791 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.467829 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.469888 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.471953 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.473298 | 24663 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.465791 | 24670 tsmst_trigger nohup /path_to_your_script/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.467829 | 24670 tsmst_trigger nohup /path_to_your_script/tsmst.sh 2181 en 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.469888 | 24670 tsmst_trigger nohup /path_to_your_script/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.471953 | 24670 tsmst_trigger nohup /path_to_your_script/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.473298 | 24663 tsmst_trigger nohup /path_to_your_script/tsmst.sh 2181 de 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
     
-    | 2018-03-09 19:10:02.085619 | tsmst.sh INIT nl DEL :0:                                                                                    |
-    | 2018-03-09 19:10:02.144768 | tsmst.sh INIT en DEL :0:                                                                                    |
-    | 2018-03-09 19:10:02.214229 | tsmst.sh INIT fr DEL :0:                                                                                    |
-    | 2018-03-09 19:10:02.275222 | tsmst.sh INIT zh DEL :0:                                                                                    |
+    | 2018-03-09 19:10:02.085619 | tsmst.sh INIT nl D :0:                                                                                      |
+    | 2018-03-09 19:10:02.144768 | tsmst.sh INIT en D :0:                                                                                      |
+    | 2018-03-09 19:10:02.214229 | tsmst.sh INIT fr D :0:                                                                                      |
+    | 2018-03-09 19:10:02.275222 | tsmst.sh INIT zh D :0:                                                                                      |
     
     | 2018-03-09 19:13:18.152125 | 22384 while fr done, about to _transfer_tmp_to_dj5                                                          |
     | 2018-03-09 19:13:18.201954 | 24808 DROP TABLE IF EXISTS bak.tn_2181_fr                                                                   |
@@ -2744,18 +2744,18 @@ Omitting these lines which are now superfluous, the whole picture is even cleare
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     | tmstmp                     | comment                                                                                                     |
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
-    | 2018-03-09 19:09:45.077000 | tsmst.sh INIT en DEL :1:                                                                                    |
+    | 2018-03-09 19:09:45.077000 | tsmst.sh INIT en D :1:                                                                                      |
     
-    | 2018-03-09 19:09:54.465791 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.467829 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 en 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.469888 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.471953 | 24670 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-09 19:09:54.473298 | 24663 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 2181 de 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.465791 | 24670 tsmst_trigger nohup /path_to_your_script/tsmst.sh 2181 nl 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.467829 | 24670 tsmst_trigger nohup /path_to_your_script/tsmst.sh 2181 en 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.469888 | 24670 tsmst_trigger nohup /path_to_your_script/tsmst.sh 2181 fr 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.471953 | 24670 tsmst_trigger nohup /path_to_your_script/tsmst.sh 2181 zh 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
+    | 2018-03-09 19:09:54.473298 | 24663 tsmst_trigger nohup /path_to_your_script/tsmst.sh 2181 de 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
     
-    | 2018-03-09 19:10:02.085619 | tsmst.sh INIT nl DEL :0:                                                                                    |
-    | 2018-03-09 19:10:02.144768 | tsmst.sh INIT en DEL :0:                                                                                    |
-    | 2018-03-09 19:10:02.214229 | tsmst.sh INIT fr DEL :0:                                                                                    |
-    | 2018-03-09 19:10:02.275222 | tsmst.sh INIT zh DEL :0:                                                                                    |
+    | 2018-03-09 19:10:02.085619 | tsmst.sh INIT nl D :0:                                                                                      |
+    | 2018-03-09 19:10:02.144768 | tsmst.sh INIT en D :0:                                                                                      |
+    | 2018-03-09 19:10:02.214229 | tsmst.sh INIT fr D :0:                                                                                      |
+    | 2018-03-09 19:10:02.275222 | tsmst.sh INIT zh D :0:                                                                                      |
     
     | 2018-03-09 19:13:18.152125 | 22384 while fr done, about to _transfer_tmp_to_dj5                                                          |
     | 2018-03-09 19:13:18.201954 | 24808 DROP TABLE IF EXISTS bak.tn_2181_fr                                                                   |
@@ -2850,8 +2850,8 @@ I guess the best way to get a clearer picture will then be to filter the result 
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
     | tmstmp                     | comment                                                                                                     |
     +----------------------------+-------------------------------------------------------------------------------------------------------------+
-    | 2018-03-12 13:55:03.321134 | 24743 _tsmst_write_trigger nohup /path_to_your_script/tsmst.sh 1624 fr 0 2>&1 1>>/tmp/good.tsms3 0</dev/null 1>&/dev/null |
-    | 2018-03-12 13:56:01.976050 | tsmst.sh INIT fr DEL :0:                                                                                    |
+    | 2018-03-12 13:55:03.321134 | 24740 tsmst_trigger nohup /path_to_your_script/tsmst.sh 1624 fr 0 2>&1 1>>/tmp/g.t 0</dev/null 1>&/dev/null |
+    | 2018-03-12 13:56:01.976050 | tsmst.sh INIT fr D :0:                                                                                      |
     | 2018-03-12 13:56:02.743360 | 24912 _build_tns fr -- de not ready yet 1624 _build_tn too early                                            |
     | 2018-03-12 13:56:33.790927 | 24875 _db_copy_tmp_to_bak DROP TABLE IF EXISTS bak.tn_1624_fr                                               |
     | 2018-03-12 13:56:33.820771 | 24886 _db_copy_tmp_to_bak INSERT INTO bak.tn_1624_fr SELECT * FROM tmp.tn_1624_fr                           |
@@ -3118,7 +3118,7 @@ The next run shows that my initial observation that the windup will take much ti
 Well, it still doesn't work. If I want to repeat the whole process, I get problems when a switch of languages has happened as then the update causes a database error. So I have to make sure that when I start the first process which triggers all the other languages first clears all entries;
 
         if ($this->_get_vars('d')) {
-            $sql = "DELETE FROM tmp.tsmst_time WHERE id_ex = '$this->id_ex'";
+            $sql = "DETE FROM tmp.tsmst_time WHERE id_ex = '$this->id_ex'";
             $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
         }
 
@@ -3199,27 +3199,31 @@ A snippet covering most from the processing file called by Cron:
     # which is not the start language
     done < "$CMDFILE.$DATESHORT"
     
-    echo sudo mv -f $CMDFILE $CMDFILE.bak
     sudo mv -f $CMDFILE $CMDFILE.bak  
     # Force overwrite, this is the last original version for debug purposes
     # sudo because the container has written this file, so it's a different owner
 
-Unfortunately I had a lot of trouble getting all these processes running in parallel. In order to make sure that we really get parallel processing I introduced two function calls:
+Unfortunately I had a lot of trouble getting all these processes running in parallel although I made heavy use of Google expertise. In order to make sure that we really get parallel processing I introduced two function calls:
 
     echo_line_no "before while " DATE     
     echo_line_no "after while " DATE     
 
-Even if each process only takes about 2 dozen seconds, with 5 processes it's easy to see if the while loop runs much faster. And if it does, your mechanism is correct. Of course, if you take notes of the times in your debug table, you can see if they are started simultaneously as well:
+Even if each process only takes about 2 dozen seconds as with ID 1624, with 5 processes it's easy to see if the while loop runs much faster. And if it does, your mechanism is correct. Of course, if you take notes of the times in your debug table, you can see if they are started simultaneously as well:
 
-    M:9519574 [tmp]>select * from tsmst where id_ex=1624 and comment like '%init%' and comment  LIKE '%83%'  ORDER BY 1,2 limit 50;
+    M:9519574 [tmp]>SELECT * FROM tsmst 
+    	WHERE id_ex=1624 
+    	AND comment LIKE '%init%' 
+    	AND comment  LIKE '%83%'  
+    	ORDER BY 1,2 
+        LIMIT 50;
     +-------+----------------------------+------------------------------+
     | id_ex | tmstmp                     | comment                      |
     +-------+----------------------------+------------------------------+
-    |  1624 | 2018-03-19 17:18:01.882205 | 83 en tsmst.sh INIT DEL :0:  |
-    |  1624 | 2018-03-19 17:18:02.346524 | 83 es tsmst.sh INIT DEL :0:  |
-    |  1624 | 2018-03-19 17:18:02.640180 | 83 fr tsmst.sh INIT DEL :0:  |
-    |  1624 | 2018-03-19 17:18:03.162806 | 83 it tsmst.sh INIT DEL :0:  |
-    |  1624 | 2018-03-19 17:18:03.588183 | 83 ru tsmst.sh INIT DEL :0:  |
+    |  1624 | 2018-03-19 17:18:01.882205 | 83 en tsmst.sh INIT D :0:    |
+    |  1624 | 2018-03-19 17:18:02.346524 | 83 es tsmst.sh INIT D :0:    |
+    |  1624 | 2018-03-19 17:18:02.640180 | 83 fr tsmst.sh INIT D :0:    |
+    |  1624 | 2018-03-19 17:18:03.162806 | 83 it tsmst.sh INIT D :0:    |
+    |  1624 | 2018-03-19 17:18:03.588183 | 83 ru tsmst.sh INIT D :0:    |
     +-------+----------------------------+------------------------------+
     5 rows in set (0.00 sec)
 
