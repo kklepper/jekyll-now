@@ -64,8 +64,8 @@ published: true
 > - [Digression: Processing multiple languages in parallel](#digression-processing-multiple-languages-in-parallel-table-of-content)
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 > - [Digression: Mathematics](#digression-mathematics-table-of-content)
-- [Search engines](#search-engines-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
+- [Search engines](#search-engines-table-of-content)
 
 Workaround for shells without LINENO <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -3332,18 +3332,13 @@ These are paragraphs 4 to 6 of the above-mentioned article:
 
 Great. Still I have no idea how the modern abstract conceptions relate to these down to earth questions, and in particular how modern theories provide answers to these. Maybe I should try to study the Wikipedia articles in order to understand. But from my experience with other Wikipedia articles specialized on higher mathematics, I don't have much hope. And indeed: it didn't take long for me to get lost. 
 
-I wonder how many mathematicians with high university degrees know this in abstract and in detail.
+I wonder how many mathematicians with high university degrees know this in abstract and in detail. Compared with all this programming is really easy.
+
+Programming is not science. It is not about discovering things, it is about creating things, so it is engineering. The beauty of programming is that you can do whatever you want provided the hardware and software tools admit what you have in mind.
+
+I concede that mathematicians do create as well, but not in the same sense. Programming is tied to the real world, in the end to somebody sitting in front of a screen or some other device controlling and acting, and at the base to some piece of hardware.
 
 End of digression.
-
-Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
-----------
-
-This text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution to their problems related to any of the search-relevant technical terms I have used. 
-
-As people in times of Docker containers tend to use minimal Linux systems like `Boot2Docker`, `CoreOS` or `Alpine Linux` using `ash` instead of `bash`, most probably there will be more need for a substitute for LINENO. That's the path I have taken. Those 2 MySQL (or rather MariaDB) replication engines run in Docker containers as does the master. The OS is `Boot2Docker` which is based on `Tiny Linux` which in turn is based on `Busybox`. No `bash`, only `ash`.
-
-Furthermore, I hope that I have done a good job and explained everything in a way that it can be understood easily and that you, having read so far, did enjoy the article and don't regret having spent your time.
 
 A big thank you to you all <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -3363,3 +3358,13 @@ I remember, on the MySQL mailing list in 1998, a guy who replied nearly every qu
 The whole open source movement is something nobody could have ever dreamed of. Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game considerably again. 
 
 All this is reality and somehow I am part of it. Absolutely amazing.
+
+Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+This text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution to their problems related to any of the search-relevant technical terms I have used. 
+
+As people in times of Docker containers tend to use minimal Linux systems like `Boot2Docker`, `CoreOS` or `Alpine Linux` using `ash` instead of `bash`, most probably there will be more need for a substitute for LINENO. That's the path I have taken. Those 2 MySQL (or rather MariaDB) replication engines run in Docker containers as does the master. The OS is `Boot2Docker` which is based on `Tiny Linux` which in turn is based on `Busybox`. No `bash`, only `ash`.
+
+Furthermore, I hope that I have done a good job and explained everything in a way that it can be understood easily and that you, having read so far, did enjoy the article and don't regret having spent your time.
+
