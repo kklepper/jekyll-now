@@ -65,7 +65,7 @@ published: true
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 > - [Digression: Mathematics](#digression-mathematics-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
-- [Search engines](#search-engines-table-of-content)
+- [Postscript: Search engines](#postscript-search-engines-table-of-content)
 
 Workaround for shells without LINENO <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -3359,7 +3359,7 @@ The whole open source movement is something nobody could have ever dreamed of. E
 
 All this is reality and somehow I am part of it. Absolutely amazing.
 
-Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Postscript: Search engines <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 This text will be indexed by search engines and may be found for quite some time to come by people like me looking for a solution to their problems related to any of the search-relevant technical terms I have used. 
