@@ -3299,7 +3299,7 @@ The same holds true for the stopwatch table: we can monitor the processes and se
     |   373 | 2018-03-21 13:34:02.363616 | it | 2018-03-21 13:18:03.028418 | 959.33514785767 |
     +-------+----------------------------+----+----------------------------+-----------------+
 
-With this sample you see that the times taken are very diverse as well which again relates to the nature column `created` and select with respect to this column. The reason is that I changed my mind. I didn't want to delete all data with every new run but keep this data for further inspection. So I had to rewrite my code accordingly.
+With this sample you see that the times taken are very diverse as well which again relates to the nature of the data. Also you see that I introduced a new column `created` and select with respect to this column. The reason is that I changed my mind. I no longer wanted to delete all data with every new run but keep this data for further inspection instead. So I had to rewrite my code accordingly.
 
 Here is a sample with the data we already had a look at:
 
