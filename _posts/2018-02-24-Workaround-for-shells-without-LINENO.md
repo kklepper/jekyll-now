@@ -2215,6 +2215,8 @@ These are the 2 debugging instructions I inserted in my code:
     
     echo_line_no "== GOOD!!! ID_EX :$ID_EX: =================== used :$USED: secs " DATE      
 
+By using this kind of unusual syntax I make sure that I can see at a glance what interests me most.
+
 The result is beautiful, much better than all of these echoes I used before.
 
     docker@boot2docker:/mnt/sda1/tmp$ nohup /path_to_your_script/tsm3.sh "6" </dev/null &>/dev/null &
