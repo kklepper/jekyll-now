@@ -2264,7 +2264,9 @@ Digression: Debugging by database <span style="font-size: 11px;float: right;"><a
 
 That's alright, but not really good. We worked with 2 parameters here only, and both produced relatively short execution times. What about a long parameter list and really long execution times? We just wouldn't be able to interpret what's going on.
 
-That's why we need a database solution here.
+That's why we need a database solution here. Fortunately, we have one at our disposal. This makes debugging much more comfortable. 
+
+With the browser, we can see single messages, but if the process is started from the shell, we need to use a log file. Both methods are very hard to analyze. With a database table, you can always select exactly what you're interested in. That's a great help.
 
     M:7727678 [tmp]>SHOW CREATE TABLE tsmst\G
     *************************** 1. row ***************************
