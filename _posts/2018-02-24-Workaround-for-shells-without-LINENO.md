@@ -2355,7 +2355,7 @@ That's much better than `grep`ing the log file.
 Digression: More complexity by languages <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-We have seen more complexity and the samples suggest that there is even more to show. The next example shows our script working on different languages: in the case of ID `2181` the 5 languages `de` (German), `en` (English), `fr` (French), `nl` (Dutch), `zh` (Chinese). 
+We have seen more complexity and the samples suggest that there is even more to show. The next example shows our script working on different languages: in the case of ID `2181` these are the 5 languages `de` (German), `en` (English), `fr` (French), `nl` (Dutch), `zh` (Chinese). 
 
 In order to get things right, I used this same table to record debug messages from my PHP program as well. This proved to be a very clever idea.
 
@@ -2363,7 +2363,7 @@ The mechanism starts with just one language and if there are other languages to 
 
 Crontab runs a shell script every minute looking for the existence of this file, and if so, executes the commands in this file (next 4 lines) and moves that trigger file to a backup file for debug purposes.
 
-If a language is processed (`tsmst.sh == GOOD!!!`), the data is transferred from the `tmp` database to the main database `dj5` (`done INSERT INTO`), the backup table in database `bak` is dropped (`DROP TABLE IF EXISTS`), at last the `tmp` result table is copied to the database `bak` in case the data should be of use for inspection (`INSERT INTO bak`). Of course, before doing that, the `bak` table has to be created, which is not recorded here (`CREATE TABLE $bak LIKE $tbl`). I didn't use that `bak` table for a long time now, so I guess I don't need it anymore and can safely drop this process.
+If a language is processed successfully (`tsmst.sh == GOOD!!!`), the data is transferred from the `tmp` database to the main database `dj5` (`done INSERT INTO`), the backup table in database `bak` is dropped (`DROP TABLE IF EXISTS`), then the `tmp` result table is copied to the database `bak` in case the data should be of use for inspection (`INSERT INTO bak`). Of course, before doing that, the `bak` table has to be created, which is not recorded here (`CREATE TABLE $bak LIKE $tbl`). I didn't use that `bak` table for a long time now, so I guess I don't need it anymore and can safely drop this part of the process.
 
 If all languages are processed, another mechanism is invoked which will produce results files for each language (the last 5 lines). The whole protocol looks really nice and is extremely useful for debugging.
 
@@ -2419,17 +2419,15 @@ Of course, there are many debugging techniques. When I started with PHP, there w
 
 And if there should be some new desire, I'd just enhance my function. Actually, it is a small set of functions. In CodeIgniter, they reside in a helper file.
 
-When exceptions were introduced in PHP, I wasn't convinced that this concept would give me any advantage, and since then I have seen many examples, but never made it a habit -- in fact I don't use them at all. They are fancy and they are cool, but I need ad hoc debugging techniques, and this is overkill. I didn't even use them back in times when I was programming in VC++ and Delphi, although they were highly recommended to me by a very gifted colleague.
+When exceptions were introduced in PHP, I wasn't convinced that this concept would give me any advantage, and since then I have seen many examples, but never made it a habit -- in fact I don't use them at all. They are fancy and they are cool, but I need ad hoc debugging techniques, and this is overkill. I didn't even use them back in times when I was programming in VC++ and Delphi, although they were highly recommended to me by a very gifted colleague. 
 
-But that's another story. PHP is an interpreted language, debugging is easy. With Delphi and VC++, being languages to be compiled first before you can see if there is an error, debugging was extremely time-consuming and boring just the same.
+But that's another story. PHP is an interpreted language, debugging is easy. With Delphi and VC++, being languages to be compiled first before you can see if there is an error, debugging was extremely time-consuming and boring just the same. Exceptions may make more sense in this context.
 
 The same holds true with testing mechanisms. There are test units everywhere, but I don't use them. Either code is okay and it works under all circumstances, or it doesn't and I have to find out the conditions. In all these years, cases where some error would return were extremely seldom. And in these one or two cases the error conditions were so complex, it wouldn't have paid out to define a test case in the first place.
 
-Things may be different when you publish open source code to be used by a plethora of other people. I know that the MySQL team had the habit to translate every error fixed into a test case in order to prevent that this error would creep in again. Well, eventually they had to to pay somebody full-time to run all these test cases. Sorry, my time is limited. 
+Things may be different when you publish open source code to be used by a plethora of other people. I know that the MySQL team had and most probably still has the habit to translate every error fixed into a test case in order to prevent that this error would creep in again. Well, eventually they had to to pay somebody full-time to run all these test cases. Sorry, my time is limited. 
 
-Maybe I will change my mind if there is a program state which is stable in a sense, but so far I never reached this state, and I doubt I ever will.
-
-My debug messages tell me everything I need and are inserted by PSPad shortcuts with a few keystrokes. 
+Maybe I will change my mind if there is a program state which is stable in a sense, but so far I never reached this state, and I doubt I ever will. My debug messages tell me everything I need and are inserted by PSPad shortcuts with a few keystrokes. 
 
 Digression: Dirty example <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -2438,15 +2436,15 @@ For example, I produced a very weird problem somehow. Quite often, I load CodeIg
 
     $this->load->model('C_helper', 'ch'); 
 
-The shortcut `ch` is optional. Next I can use this model with a simple syntax `$this->ch...`. As proof that this works, I might call a public property of this class with the shortcut `eex` and add `should be 5 DAY` in the title section and the call to the public property `$this->ch->check_interval` as a 2nd argument:
+The shortcut `ch` is optional. Next I can use this model with a simple syntax `$this->ch...`. As proof that this works, I might insert a debug message `xwp_echo` with the shortcut `eex`, add `should be 5 DAY` in the title section and insert the call to the public property `$this->ch->check_interval` as a 2nd argument:
 
-    xwp_echo("\nL: ".__LINE__."\n  :: \n  :: \nF: ".__FILE__."\nM: ".__METHOD__."\n" . wp_title(' should be 5 DAY '), $this->ch->check_interval );
+    xwp_echo("\nL: ".__LINE__."\n  :: \n  :: \nF: ".__FILE__."\nM: ".__METHOD__."\n" . wp_title(' should be 5 DAY '), $this->ch->check_interval);
 
 This function `xwp_echo` is such a quick and dirty helper. The `x` can be added or deleted very quickly and will cause the whole process to stop if set and show the elapsed time. 
 
-The function `wp_echo` is a simple `echo` with placeholders for easy addition of variable names to check their content plus information about the situation I am right in line to line number and method name and filename, but it takes a 2nd parameter, and if set will take care of proper formatting for strings, arrays and objects.
+The function `wp_echo` is a simple `echo` with placeholders for easy addition of variable names to check their content plus information about the situation I am right in. `L:` precedes the line number and `M:` method name and `F:` filename, and also this function takes an optional 2nd parameter, and if set will take care of proper formatting for strings, arrays and objects.
 
-The output in this case is easy:
+The output in this case is easy as the variable to show is just a string:
 
     L: 8425
       :: 
@@ -2481,7 +2479,7 @@ So this works. How come I get the error
 
 when calling the very similar
 
-    xwp_echo("\nL: ".__LINE__."\n  :: \n  :: \nF: ".__FILE__."\nM: ".__METHOD__."\n" . wp_title(' should be 600 '), $this->mh->mem_lim );
+    xwp_echo("\nL: ".__LINE__."\n  :: \n  :: \nF: ".__FILE__."\nM: ".__METHOD__."\n" . wp_title(' should be 600 '), $this->mh->mem_lim);
 
 I never had this kind of error, and I couldn't find anything about it via Google, except trivial faulty use. So no chance except finding myself. 
 
