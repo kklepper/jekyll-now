@@ -2495,7 +2495,7 @@ If I set the parameter before I load the module, I get the error. If I set it af
     #xecho("<hr><pre> L: ".__LINE__."  ::  :: M: ".__METHOD__ . " F: ".__FILE__." ".date('H:i:s').' (  ) '."</pre>\n"   );
         $this->CI->id_ex = 6;        
 
-Here you see 2 other nifty functions at work constructed very similar, but without the property of being able to display arrays and objects. The first one can be called before anything else is loaded, they are cheap, they are easy to read (just one line, as a rule) and with the `x` can be used to exit. Those functions stand out in the source code as all the debugging functions start in column one, so they are easy to detect. Example:   
+Here you see 2 other nifty functions at work constructed very similar, but without the property of being able to display arrays and objects. The first one can be called before anything else is loaded, both are cheap, they are easy to read (just one line, as a rule) and with the `x` can be used to exit. Those functions stand out in the source code as all the debugging functions start in column one, so they are easy to detect. Example:   
 
     L: 789 key 108 id_avb 51519 M: Ex_common::_get_dm_entries 15:58:07 (  ) 
     
@@ -2505,7 +2505,7 @@ Here you see 2 other nifty functions at work constructed very similar, but witho
     
     L: 2846 id_avb :49301: this->id_ex :0: M: C_helper::_is_gs_error 15:58:07 ( YES check_now ) 
 
-Here you can see that I skim through a whole lot of entries of type `L: 789 key` to find the one where something will happen (`YES check_now`). 
+Here you can see that I skim through a whole lot of entries of type `L: ??? key` to find the one where something will happen (`YES check_now`). 
 
 Now back to the other problem. By commenting the first line `$this->CI->id_ex = 6;` above I can turn the error off, by uncommenting I turn it on. So what's happening here?
 
@@ -2521,7 +2521,7 @@ How come? Who took it away? Or do I have different instances of that class? No, 
 
 In order to be able to check what the problem is here I wanted to see what this array in the loader class says. Maybe this entry had been erased by some enigmatic process.
 
-I had already defined a subclass `WP_Loader` to the original `CI_Loader` class. That's the place to add a new method `get_ci_models`.
+I had already defined a subclass `WP_Loader` to the original `CI_Loader` class. That's the place to add a new method `get_ci_models` according to the CodeIgniter programming paradigm.
 
     // ====================================================================
     /**
@@ -2570,9 +2570,15 @@ But the real circumstance that produces this trouble is the fact that I call thi
 
 I checked the existence of the models somewhere in the sequence, but when being in the constructor, this model cannot have been recorded yet. So `ex_model` in turn wants to call `mh` which, being constructed, isn't available yet. I should have asked for the existence of models at this place. Later on, this information doesn't tell me anything of use.
 
-I don't pretend to have really understood what happened here, but this explanation sounds plausible. Anyway, removing my call in the constructor and placing it some other place totally resolved the whole issue.
+I don't pretend to have really understood what happened here, but this explanation sounds plausible. Anyway, removing my call in the constructor and placing it some other place delivering the exact same functionality totally resolved the whole issue. 
 
-For other very complex problems, I developed a technique where I could switch on or off this kind of dirty debug messages in certain functions via `GET` variables. This turned out to be very helpful as well.
+I hope I could show you how my quick and dirty debugging messages helped me resolve this issue.
+
+For other very complex problems, I developed a technique where I could switch on or off this kind of dirty debug messages in certain functions via `GET` variables. This turned out to be very helpful as well. 
+
+For example, introducing a token for a function and interspersing this function with debug messages shown when this token is set via `GET` variable will make it possible to trace all the different possibilities within this function. Say I have lots of conditions to return lots of different results, I can see very quickly which condition triggers which result in a special case.
+
+With the same idea I can intersperse the whole file with these conditioned debug messages, for example to trace the value of a special variable which may be set in an irritating high number of cases so that it may be hard to see why this variable has a wrong value or rather where this wrong value entered the picture.
 
 This kind of debugging is really messy, I admit that. But I can comment any of these lines anytime in order to uncomment them whenever I should happen to need them again. That makes debugging very fast and easy. It's not elegant, it's not professional, but it simply works.
 
