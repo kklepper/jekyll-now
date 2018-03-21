@@ -3318,7 +3318,6 @@ Here is a sample with the data we already had a look at:
     |  2181 | 2018-03-19 17:32:19.595637 | en | 2018-03-19 17:27:50.601722 | 197.26366615295 |
     |  2181 | 2018-03-19 17:32:25.499570 | zh | 2018-03-19 17:29:04.624718 | 200.87510609627 |
     |  2181 | 2018-03-19 17:32:35.500922 | nl | 2018-03-19 17:29:03.622256 | 211.87900304794 |
-    | 72600 | 2018-03-16 14:20:52.376751 | de | 2018-03-16 14:55:56.084824 | 102.625         |
     +-------+----------------------------+----+----------------------------+-----------------+
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
