@@ -51,7 +51,7 @@ published: true
 - [Why roll your own, revisited](#why-roll-your-own-revisited-table-of-content)
 - [Have fun](#have-fun-table-of-content)
 > - [Digression: Proof of concept](#digression-proof-of-concept-table-of-content)
-> - [Digression: Record by database](#digression-record-by-database-table-of-content)
+> - [Digression: Debugging by database](#digression-debugging-by-database-table-of-content)
 > - [Digression: More complexity by languages](#digression-more-complexity-by-languages-table-of-content)
 > - [Digression: Dirty debugging techniques](#digression-dirty-debugging-techniques-table-of-content)
 > - [Digression: Dirty example](#digression-dirty-example-table-of-content)
