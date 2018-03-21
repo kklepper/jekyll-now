@@ -121,11 +121,13 @@ It's for people like me I take the pain to write this all up, those who are new 
 
 Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on it, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. And still I don't now what I'm heading for in the end.
 
+As it turned out, the whole discussion is held together by the idea of how to debug intelligently several different scenarios. I don't know how you do it, and I don't know how anybody else does it, as hardly somebody reveals anything about this kind of work, but I can tell you how I do it. This technique of mine has developed over dozens of years and still is valid for me.
+
 Another caveat: As I took my notes while developing my ideas, I recorded all detours as well and didn't hesitate to document my stupidity. It is a question if all of these dumb attempts should have been cleared later. But even if you pursue the wrong way, you do learn a lot nevertheless. 
 
 Contemplating about it, I decided to leave all that in place. It makes you look much smarter if you present a solution in a way that nobody can understand how you ever could reach it. This attitude is well known. But if you want to learn how to get to a solution, you have to study how this can be done from scratch.
 
-Not those are smart who nod and pretend to understand, but those who dare to ask if they don't understand. That's the only chance to grow and become smarter. As a teacher, I prefer the latter type.
+Not those are smart who nod and pretend to understand, but those who dare to ask if they don't understand. That's the only chance to grow and become smarter. As a teacher, I preferred the latter type.
 
 More complex cases <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
