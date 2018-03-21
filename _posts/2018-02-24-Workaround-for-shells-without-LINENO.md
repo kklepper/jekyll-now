@@ -2277,7 +2277,7 @@ That's why we need a database solution here.
 
 In the script shell which manages a single parameter, first make sure we have no old entries and then insert the start data.
 
-    docker exec m1 mysql -e "DETE FROM tmp.tsmst WHERE id_ex = '$ID_EX'; 
+    docker exec m1 mysql -e "DELETE FROM tmp.tsmst WHERE id_ex = '$ID_EX'; 
         INSERT INTO tmp.tsmst VALUES ($ID_EX, NOW(), '$CMD')"
 
 In case we have a problem, record this as well:    
@@ -3119,7 +3119,7 @@ The next run shows that my initial observation that the windup will take much ti
 Well, it still doesn't work. If I want to repeat the whole process, I get problems when a switch of languages has happened as then the update causes a database error. So I have to make sure that when I start the first process which triggers all the other languages first clears all entries;
 
         if ($this->_get_vars('d')) {
-            $sql = "DETE FROM tmp.tsmst_time WHERE id_ex = '$this->id_ex'";
+            $sql = "DELETE FROM tmp.tsmst_time WHERE id_ex = '$this->id_ex'";
             $query = $this->dba->query($sql . "\r\n# L: ".__LINE__.'. F:'.__FILE__.". M: ".__METHOD__);
         }
 
