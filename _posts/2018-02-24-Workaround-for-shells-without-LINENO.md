@@ -1042,7 +1042,7 @@ Digression: Docker and mysqlbinlog <span style="font-size: 11px;float: right;"><
 
 Another example: We use docker to get information from the slave which relay log it is working on:
 
-    $ docker exec s1 mysql -e 'SHOW SLAVE STATUS\G'
+    $ docker exec s1 mysql -e "SHOW SLAVE STATUS\G"
     *************************** 1. row ***************************
                    Slave_IO_State: Waiting for master to send event
                       Master_Host: mysql
@@ -1094,7 +1094,7 @@ Another example: We use docker to get information from the slave which relay log
 
 Or even more compact:
 
-    $ docker exec s1 mysql -e 'SHOW SLAVE STATUS\G' | grep Relay_Log_File
+    $ docker exec s1 mysql -e "SHOW SLAVE STATUS\G" | grep Relay_Log_File
                    Relay_Log_File: mysql-relay.000002
 
 These binary files are where information may be found when things go wrong -- at least they say so.
@@ -1144,7 +1144,7 @@ While I was reorganizing my tmp.sql_log table, I dropped the idea of using `RANG
 
 You may have noticed that I have called the database `tmp` here explicitly. The reason is that I don't want to replicate stuff I deposit there:
 
-    $ docker exec s1 mysql -e 'SHOW SLAVE STATUS\G' | grep Replicate_Ignore_DB:
+    $ docker exec s1 mysql -e "SHOW SLAVE STATUS\G" | grep Replicate_Ignore_DB:
               Replicate_Ignore_DB: tmp,bak
 
 What's the current state of the table definition?
@@ -3284,6 +3284,42 @@ This is the function definition with my debugging stuff still in place:
         docker exec m1 mysql -e "INSERT INTO tmp.tsmst VALUES ($ID_EX, NOW(6), '$1')" 
     } # docker_insert 
     #--------------------------------------------------------------------
+
+The same holds true for the stopwatch table: we can monitor the processes and select whatever we want. Here is an example of how to do that from the shell:
+
+    docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SELECT * FROM tmp.tsmst_time 
+    	WHERE 1 AND created > '2018-03-21 13:15:28.918475' ORDER BY 1,2"
+    +-------+----------------------------+----+----------------------------+-----------------+
+    | id_ex | tmstmp                     | lg | created                    | time_taken      |
+    +-------+----------------------------+----+----------------------------+-----------------+
+    |   373 | 2018-03-21 13:22:11.172365 | de | 2018-03-21 13:16:49.921566 | 321.2522289753  |
+    |   373 | 2018-03-21 13:32:41.013453 | nl | 2018-03-21 13:18:03.856239 | 877.15743994713 |
+    |   373 | 2018-03-21 13:32:59.214258 | en | 2018-03-21 13:18:02.304582 | 896.90995502472 |
+    |   373 | 2018-03-21 13:33:38.567028 | fr | 2018-03-21 13:18:02.794449 | 935.77269911766 |
+    |   373 | 2018-03-21 13:34:02.363616 | it | 2018-03-21 13:18:03.028418 | 959.33514785767 |
+    +-------+----------------------------+----+----------------------------+-----------------+
+
+With this sample you see that the times taken are very diverse as well which again relates to the nature column `created` and select with respect to this column. The reason is that I changed my mind. I didn't want to delete all data with every new run but keep this data for further inspection. So I had to rewrite my code accordingly.
+
+Here is a sample with the data we already had a look at:
+
+    docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SELECT * FROM tmp.tsmst_time WHERE 1 ORDER BY 1,2"
+    +-------+----------------------------+----+----------------------------+-----------------+
+    | id_ex | tmstmp                     | lg | created                    | time_taken      |
+    +-------+----------------------------+----+----------------------------+-----------------+
+    |     6 | 2018-03-18 21:58:54.457520 | de | 2018-03-18 21:58:41.660852 | 12.800217866898 |
+    |  1624 | 2018-03-19 17:18:24.400905 | en | 2018-03-19 17:18:02.263434 | 22.137600183487 |
+    |  1624 | 2018-03-19 17:18:25.710967 | es | 2018-03-19 17:18:03.007292 | 22.703884840012 |
+    |  1624 | 2018-03-19 17:18:26.513767 | fr | 2018-03-19 17:18:03.967468 | 22.539812088013 |
+    |  1624 | 2018-03-19 17:18:27.586957 | it | 2018-03-19 17:18:04.970697 | 22.610341072083 |
+    |  1624 | 2018-03-19 17:18:42.362748 | ru | 2018-03-19 17:18:24.528626 | 17.834731817245 |
+    |  1624 | 2018-03-19 17:23:19.777122 | de | 2018-03-19 17:17:04.590292 | 375.18857121468 |
+    |  2181 | 2018-03-19 17:32:03.823225 | fr | 2018-03-19 17:29:03.024284 | 180.79913687706 |
+    |  2181 | 2018-03-19 17:32:19.595637 | en | 2018-03-19 17:27:50.601722 | 197.26366615295 |
+    |  2181 | 2018-03-19 17:32:25.499570 | zh | 2018-03-19 17:29:04.624718 | 200.87510609627 |
+    |  2181 | 2018-03-19 17:32:35.500922 | nl | 2018-03-19 17:29:03.622256 | 211.87900304794 |
+    | 72600 | 2018-03-16 14:20:52.376751 | de | 2018-03-16 14:55:56.084824 | 102.625         |
+    +-------+----------------------------+----+----------------------------+-----------------+
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
