@@ -2257,7 +2257,7 @@ Later, I found that I wanted to get more information about the sequence of shell
         >>>>>>> : == GOOD!!! ID_EX :6: ========= LG :en: ========== used :15: secs
         =========DATE======== :2018-03-13_12:55:03:
 
-Digression: Record by database <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Debugging by database <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 That's alright, but not really good. We worked with 2 parameters here only, and both produced relatively short execution times. What about a long parameter list and really long execution times? We just wouldn't be able to interpret what's going on.
