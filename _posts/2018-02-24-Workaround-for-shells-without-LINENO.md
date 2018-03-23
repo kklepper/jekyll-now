@@ -123,6 +123,8 @@ Always bear in mind that I can only talk from my own experience, which is limite
 
 As it turned out, the whole discussion is held together by the idea of how to debug intelligently several different scenarios. I don't know how you do it, and I don't know how anybody else does it, as hardly somebody reveals anything about this kind of work, but I can tell you how I do it. This technique of mine has developed over dozens of years and is still valid for me.
 
+
+
 Another caveat: As I took my notes while developing my ideas, I recorded all detours as well and didn't hesitate to document my stupidity. It is a question if all of these dumb attempts should have been cleared later. But even if you pursue the wrong way, you do learn a lot nevertheless. 
 
 Contemplating about it, I decided to leave all that in place. It makes you look much smarter if you present a solution in a way that nobody can understand how you ever could reach it. This attitude is well known. But if you want to learn how to get to a solution, you have to study how this can be done from scratch.
@@ -3335,7 +3337,7 @@ It was quite an experience to get a grip on Erlang in order to be able to produc
 
 In case you're interested in learning Erlang, I recommend [Learn You Some Erlang for great good!](http://learnyousomeerlang.com/) by Fred Hébert who also illustrated his opus with very gifted graphics. It is really great fun to follow him on his journey. I am very grateful. Great guy.
 
-Of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity.
+Of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity. Erlang error messages may be highly incomprehensible and not very informative. Also it is important to be able to track down the actions of the program in order to check if it does what it should do, and in case it doesn't, to find out the whereabouts of the faulty section.
 
 Well, looking at the source code of CodeIgniter, there are lots of functions which are extremely short. I could have learned from them as well, but alas I didn't. Frankly, I didn't study their source code if I didn't have to -- I was too eager to become productive. To be fair, they do have plenty of very long functions as well. 
 
