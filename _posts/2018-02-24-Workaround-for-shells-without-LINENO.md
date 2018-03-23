@@ -3371,7 +3371,7 @@ For somebody with a C and PHP background this syntax takes much getting used to.
 
 The comment style is my own. As PSPad doesn't have a native Erlang syntax support, I can get a list of all functions just by searching for the term `%% function`. That's very handy. 
 
-Used within that function `find_str_tg`:
+This mechanism `deb:filea` is used within that function `find_str_tg`:
 
     %% ------------------------------------------ find_str_tg/1
     %% function find_str_tg/1
