@@ -3356,7 +3356,7 @@ The function `filea` of module `deb` takes 3 arguments:
 - and the debug string to be used (`integer_to_list(?LINE) ++ " Tg ~p~n"`) 
 - with parameters to be evaluated (`[Tg]`).  
 
-In Erlang, you denote the number of parameters with a `/`. That is a kind of overloading mechanism; you can have functions with the same name and different number of parameters.
+In Erlang, you denote the number of parameters with a `/`. That is a kind of overloading mechanism; you can have functions with the same name and a different number of parameters.
 
     %% ------------------------------------------ filea/3 
     %% function filea/3
