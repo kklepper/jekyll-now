@@ -3380,7 +3380,7 @@ And now without all the folklore:
         Is_match = string:find(Tg, Sub),     
         Is_match /= nomatch.
         
-As I don't have any sample for this debug output at the moment, I'll show you the output of a different debug string from another function, working exactly along these lines; the first example returns a boolean, the next one an integer:
+As I don't have any sample for this debug output at the moment, I'll show you the output of a different debug string from another function, working exactly along these lines; the first example `find_str_tg` from module `tg` returns a boolean, the next one from module `mytg` returns an integer:
 
                 [...]
                 P1 = string:str(Tg, "efm=1"),
