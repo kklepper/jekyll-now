@@ -3348,7 +3348,12 @@ I put all my primitive dirty debugging functions in the module `deb`, so a call 
     deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " Tg ~p~n", [Tg]),   
     % log the results
 
-`%` is the comment character in Erlang. The function `filea` of module `deb` takes 3 arguments: the name of the file to be written to (`"/tmp/tg_fn_find_str_tg"`) -- given by the name of the module (`tg`) and the name of the function (`find_str_tg`) -- and the debug string to be used (`integer_to_list(?LINE) ++ " Tg ~p~n"`) with parameters to be evaluated (`[Tg]`).  
+`%` is the comment character in Erlang. 
+
+The function `filea` of module `deb` takes 3 arguments: 
+- the name of the file to be written to (`"/tmp/tg_fn_find_str_tg"`) -- given by the name of the module (`tg`) and the name of the function (`find_str_tg`) -- and 
+- the debug string to be used (`integer_to_list(?LINE) ++ " Tg ~p~n"`) 
+- with parameters to be evaluated (`[Tg]`).  
 
 In Erlang, you denote the number of parameters with a `/`. That is a kind of overloading mechanism; you can have functions with the same name and different number of parameters.
 
