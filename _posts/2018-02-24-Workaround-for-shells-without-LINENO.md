@@ -3383,7 +3383,7 @@ Used within that function `find_str_tg`:
         Is_match /= nomatch.
     %% ------------------------------------------ find_str_tg/1
     
-The function with all debugging calls removed is really short:
+The plain function with all debugging calls removed is really short:
     
     %% ------------------------------------------ find_str_tg/1
     %% function find_str_tg/1
@@ -3393,7 +3393,7 @@ The function with all debugging calls removed is really short:
         Is_match /= nomatch.
     %% ------------------------------------------ find_str_tg/1
 
-And now without all comments:
+Without all comments it is just 3 lines:
 
     find_str_tg(Tg, Sub) ->
         Is_match = string:find(Tg, Sub),     
