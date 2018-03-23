@@ -3343,51 +3343,51 @@ For example, to get the line number of the debug message the following construct
 
     integer_to_list(?LINE)
 
-I put all my primitive dirty debugging functions in the module `deb`, so a call to get debug information in module `url` and function `find_str_url` might look like
+I put all my primitive dirty debugging functions in the module `deb`, so a call to get debug information in module `tg` and function `find_str_tg` might look like
 
-    deb:filea("/tmp/url_fn_find_str_url", integer_to_list(?LINE) ++ " find_str_url Url ~p~n", [Url]),   % log the results
+    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg Tg ~p~n", [Tg]),   % log the results
 
 Used within that function:
 
-    %% ------------------------------------------ find_str_url/1
-    %% function find_str_url/1
-    %% ------------------------------------------ find_str_url/1
-    find_str_url(Url, Href) ->
-    deb:filea("/tmp/url_fn_find_str_url", integer_to_list(?LINE) ++ " find_str_url Url Href~p~n", [Url, Href]),   % log the results
-        Is_match = string:find(Url, Href),     
-    deb:filea("/tmp/url_fn_find_str_url", integer_to_list(?LINE) ++ " find_str_url after Is_match ~p~n", [Href]),   % log the results
+    %% ------------------------------------------ find_str_tg/1
+    %% function find_str_tg/1
+    %% ------------------------------------------ find_str_tg/1
+    find_str_tg(Tg, Sub) ->
+    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg Tg Sub~p~n", [Tg, Sub]),   % log the results
+        Is_match = string:find(Tg, Sub),     
+    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg after Is_match ~p~n", [Sub]),   % log the results
         Is_match /= nomatch.
-    %% ------------------------------------------ find_str_url/1
+    %% ------------------------------------------ find_str_tg/1
     
 The function with all debugging calls removed is really short:
     
-    %% ------------------------------------------ find_str_url/1
-    %% function find_str_url/1
-    %% ------------------------------------------ find_str_url/1
-    find_str_url(Url, Href) ->
-        Is_match = string:find(Url, Href),     
+    %% ------------------------------------------ find_str_tg/1
+    %% function find_str_tg/1
+    %% ------------------------------------------ find_str_tg/1
+    find_str_tg(Tg, Sub) ->
+        Is_match = string:find(Tg, Sub),     
         Is_match /= nomatch.
-    %% ------------------------------------------ find_str_url/1
+    %% ------------------------------------------ find_str_tg/1
 
 And now without all the folklore:
 
-    find_str_url(Url, Href) ->
-        Is_match = string:find(Url, Href),     
+    find_str_tg(Tg, Sub) ->
+        Is_match = string:find(Tg, Sub),     
         Is_match /= nomatch.
         
-As I don't have any sample to this debug output at the moment, I'll show you the output of a different debug string from another function, working exactly along these lines; the first example returns a boolean, the next one an integer:
+As I don't have any sample for this debug output at the moment, I'll show you the output of a different debug string from another function, working exactly along these lines; the first example returns a boolean, the next one an integer:
 
                 [...]
-                P1 = string:str(Url, "efm=1"),
-    deb:filea("/tmp/url_fn_test_efm", integer_to_list(?LINE) ++ " Url ~p~n P1 ~p~n ", [Url, P1]),
+                P1 = string:str(Tg, "efm=1"),
+    deb:filea("/tmp/tg_fn_test_efm", integer_to_list(?LINE) ++ " Tg ~p~n P1 ~p~n ", [Tg, P1]),
                 [...]
 
 The output gives the information I'm interested in:
 
-    cat url_fn_test_efm
+    cat tg_fn_test_efm
     [...]
      ---------
-    174 Url "http://172.25.0.5/?efm=1&lg=fr"
+    174 Tg "http://172.25.0.5/?efm=1&lg=fr"
      P1 20
     [...]
 
