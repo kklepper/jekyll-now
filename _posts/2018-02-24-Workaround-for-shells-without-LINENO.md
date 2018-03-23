@@ -3343,7 +3343,7 @@ For example, to get the line number of the debug message the following construct
 
     integer_to_list(?LINE)
 
-I put all my debugging functions in the module `deb`, so a call to get debug information in module `url` and function `find_str_url` might look like
+I put all my primitive dirty debugging functions in the module `deb`, so a call to get debug information in module `url` and function `find_str_url` might look like
 
     deb:filea("/tmp/url_fn_find_str_url", integer_to_list(?LINE) ++ " find_str_url Url ~p~n", [Url]),   % log the results
 
