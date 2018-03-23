@@ -3345,7 +3345,8 @@ For example, to get the line number of the debug message the following construct
 
 I put all my primitive dirty debugging functions in the module `deb`, so a call to get debug information in module `tg` and function `find_str_tg` might look like
 
-    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg Tg ~p~n", [Tg]),   % log the results
+    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg Tg ~p~n", [Tg]),   
+    % log the results
 
 Used within that function:
 
@@ -3353,9 +3354,11 @@ Used within that function:
     %% function find_str_tg/1
     %% ------------------------------------------ find_str_tg/1
     find_str_tg(Tg, Sub) ->
-    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg Tg Sub~p~n", [Tg, Sub]),   % log the results
+    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg Tg Sub~p~n", [Tg, Sub]),   
+    % log the results
         Is_match = string:find(Tg, Sub),     
-    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg after Is_match ~p~n", [Sub]),   % log the results
+    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg after Is_match ~p~n", [Sub]),   
+    % log the results
         Is_match /= nomatch.
     %% ------------------------------------------ find_str_tg/1
     
