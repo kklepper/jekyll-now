@@ -3411,7 +3411,7 @@ As you see, I use files to get this information as by implementation it is impos
 
 As this information is written by a docker container, the owner is root. 
 
-Looking back, it might have been better to use a database, though. No idea if it would be possible to copy the ideas above within this Erlang language construction.
+Looking back, it might have been better to use a [RDBMS](https://en.wikipedia.org/wiki/Relational_database_management_system) system. No idea if it would be possible to copy the ideas above within this Erlang language construction, though, and if it would be sensible. This solution, again, is quick and dirty and works.
 
 Well, looking at the source code of CodeIgniter, there are lots of functions which are extremely short. I could have learned from them as well, but alas I didn't. Frankly, I didn't study their source code if I didn't have to -- I was too eager to become productive. To be fair, they do have plenty of very long functions as well. 
 
