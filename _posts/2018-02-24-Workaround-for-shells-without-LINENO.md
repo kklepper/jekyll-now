@@ -3357,7 +3357,7 @@ Used within that function:
     deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg Tg Sub~p~n", [Tg, Sub]),   
     % log the results
         Is_match = string:find(Tg, Sub),     
-    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg after Is_match ~p~n", [Sub]),   
+    deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " find_str_tg Is_match ~p~n", [Is_match]),   
     % log the results
         Is_match /= nomatch.
     %% ------------------------------------------ find_str_tg/1
