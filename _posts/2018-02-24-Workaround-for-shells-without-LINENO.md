@@ -3377,13 +3377,13 @@ And now without all the folklore:
         
 As I don't have any sample to this debug output at the moment, I'll show you the output of a different debug string from another function, working exactly along these lines; the first example returns a boolean, the next one an integer:
 
-                P1 = string:str(Url, "del=1"),
-    deb:filea("/tmp/url_fn_test_del", integer_to_list(?LINE) ++ " Url ~p~n P1 ~p~n ", [Url, P1]),   % log the results
+                P1 = string:str(Url, "efm=1"),
+    deb:filea("/tmp/url_fn_test_efm", integer_to_list(?LINE) ++ " Url ~p~n P1 ~p~n ", [Url, P1]),   % log the results
 
 The output gives the information I'm interested in:
 
      ---------
-    174 Url "http://172.25.0.5/?del=1&lg=fr"
+    174 Url "http://172.25.0.5/?efm=1&lg=fr"
      P1 20
 
 As you see, I use files to get this information as by implementation it is impossible to track this on-screen.
