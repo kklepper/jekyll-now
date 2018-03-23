@@ -3350,6 +3350,23 @@ I put all my primitive dirty debugging functions in the module `deb`, so a call 
 
 The function `filea` of module `deb` takes 3 arguments: the name of the file to be written to (`"/tmp/tg_fn_find_str_tg"`) -- given by the name of the module `tg` and the name of the function `find_str_tg` -- and the debug string to be used `integer_to_list(?LINE) ++ " Tg ~p~n"` with parameters to be evaluated `[Tg]`.
 
+    %% ------------------------------------------ filea/3 
+    %% function filea/3
+    %% ------------------------------------------ filea/3 
+    filea(P,F,D) ->     
+        F1 = "---------~n" ++ F,
+        file:write_file(P, format(F1,D), [append]). 
+        % path, format, data
+    %% ------------------------------------------ filea/3 
+
+Or, without folklore:
+
+    filea(P,F,D) ->     
+        F1 = "---------~n" ++ F,
+        file:write_file(P, format(F1,D), [append]). 
+
+For somebody with a C and PHP background this syntax takes much getting used to. I guess that's the main reason why Erlang is pretty unpopular.
+
 Used within that function `find_str_tg`:
 
     %% ------------------------------------------ find_str_tg/1
