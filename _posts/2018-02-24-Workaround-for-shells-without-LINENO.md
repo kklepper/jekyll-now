@@ -3377,16 +3377,36 @@ And now without all the folklore:
         
 As I don't have any sample to this debug output at the moment, I'll show you the output of a different debug string from another function, working exactly along these lines; the first example returns a boolean, the next one an integer:
 
+                [...]
                 P1 = string:str(Url, "efm=1"),
-    deb:filea("/tmp/url_fn_test_efm", integer_to_list(?LINE) ++ " Url ~p~n P1 ~p~n ", [Url, P1]),   % log the results
+    deb:filea("/tmp/url_fn_test_efm", integer_to_list(?LINE) ++ " Url ~p~n P1 ~p~n ", [Url, P1]),
+                [...]
 
 The output gives the information I'm interested in:
 
+    cat url_fn_test_efm
+    [...]
      ---------
     174 Url "http://172.25.0.5/?efm=1&lg=fr"
      P1 20
+    [...]
 
-As you see, I use files to get this information as by implementation it is impossible to track this on-screen.
+As you see, I use files to get this information as by implementation it is impossible to track this on-screen. In order to get a clear picture, I use a separate file for every function. The name of the debug file begins with the module name followed by the function name. This proved to be sufficient. 
+
+    docker@boot2docker:/mnt/sda1/tmp$ ls -latr mytg_f*
+    -rw-r--r--    1 root     root          5770 Mar 23 16:33 mytg_fn_insert_w_p-126
+    -rw-r--r--    1 root     root          4942 Mar 23 17:30 mytg_fn_skip_this_tg
+    -rw-r--r--    1 root     root          5900 Mar 23 17:30 mytg_fn_record_tg
+    -rw-r--r--    1 root     root         11226 Mar 23 17:30 mytg_fn_prefix_ht
+    -rw-r--r--    1 root     root      28901898 Mar 23 17:30 mytg_fn_out
+    -rw-r--r--    1 root     root         21690 Mar 23 17:30 mytg_fn_insert_w_p
+    -rw-r--r--    1 root     root         93505 Mar 23 17:30 mytg_fn_get_tg
+    -rw-r--r--    1 root     root          6254 Mar 23 17:30 mytg_fn_find_lg-25
+    -rw-r--r--    1 root     root         20925 Mar 23 17:30 mytg_fn_append_lg
+
+As this information is written by a docker container, the owner is root. 
+
+Looking back, it might have been better to use a database, though. No idea if it would be possible to copy the ideas above within this Erlang language construction.
 
 Well, looking at the source code of CodeIgniter, there are lots of functions which are extremely short. I could have learned from them as well, but alas I didn't. Frankly, I didn't study their source code if I didn't have to -- I was too eager to become productive. To be fair, they do have plenty of very long functions as well. 
 
