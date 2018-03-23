@@ -3359,7 +3359,7 @@ The function `filea` of module `deb` takes 3 arguments: the name of the file to 
         % path, format, data
     %% ------------------------------------------ filea/3 
 
-Or, without folklore:
+Or, without comments:
 
     filea(P,F,D) ->     
         F1 = "---------~n" ++ F,
@@ -3391,7 +3391,7 @@ The function with all debugging calls removed is really short:
         Is_match /= nomatch.
     %% ------------------------------------------ find_str_tg/1
 
-And now without all the folklore:
+And now without all comments:
 
     find_str_tg(Tg, Sub) ->
         Is_match = string:find(Tg, Sub),     
