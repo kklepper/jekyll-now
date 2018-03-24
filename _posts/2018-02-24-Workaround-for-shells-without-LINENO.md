@@ -3375,7 +3375,7 @@ Or, without comments:
 
 For somebody with a C and PHP background this syntax takes much getting used to. I guess that's the main reason why Erlang is pretty unpopular. Apart from that, this function is just prettifying the native function `file:write_file`. No big deal.
 
-The comment style is my own. As PSPad doesn't have a native Erlang explorer support (yet -- it does have syntax support, though), I can get a list of all functions just by searching for the term `%% function`. That's very handy. 
+The comment style is my own. As PSPad doesn't have a native Erlang code explorer support (yet -- it does have syntax support, though), I can get a list of all functions just by searching for the term `%% function`. That's very handy. 
 
 This mechanism `deb:filea` is used within that function `find_str_tg`:
 
