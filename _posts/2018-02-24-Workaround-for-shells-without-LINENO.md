@@ -3470,7 +3470,7 @@ This is the first paragraph of the above mentioned Wikipedia article:
 
 That sounds really good, but it is totally incomprehensible.
 
-A couple of years ago, I happened to find a book trying to explain this whole development by Galois from his forerunners to this day and I bought it and read it and didn't understand anything. What a pity.
+A couple of years ago, I happened to find a book trying to explain this whole development by Galois from his forerunners to this day for the interested layman and I bought it and read it and didn't understand anything. What a pity.
 
 These are paragraphs 4 to 6 of the above-mentioned article:
 
