@@ -3416,7 +3416,7 @@ As I don't have any sample for this debug output at the moment, I'll show you th
 
 The output gives the information I'm interested in:
 
-    cat tg_fn_test_efm
+    docker@boot2docker:/mnt/sda1/tmp$ cat tg_fn_test_efm
     [...]
      ---------
     174 Tg "http://172.25.0.5/?efm=1&lg=fr"
