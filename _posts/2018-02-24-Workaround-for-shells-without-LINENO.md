@@ -3499,7 +3499,7 @@ Nowadays, whenever I have a problem without having an idea, I immediately call G
 
 It's hard to look into the future, but we can look back. My first encounter with computers was in the 60s, when [ALGOL 60](https://en.wikipedia.org/wiki/Algol_60) had just been invented. We tediously punched lots of cards a deck of which was transferred to an operator, and a week later the result was handed back, maybe with a typo.
 
-The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/Fortran), so that was my second language. The Department of Theoretical Physics owned the second computer of the whole university, a [Zuse Z25](https://en.wikipedia.org/wiki/Z25_(computer)), which was fed with telex ticker tape. Here I learned my first and only machine language.
+The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/Fortran), so that was my second language. The Department of Theoretical Physics owned the second computer of the whole university, a [Zuse Z25](https://en.wikipedia.org/wiki/Z25_(computer)), which was fed with telex ticker tape which also understood ALGOL 60. Here I learned my first and only machine language.
 
 My next encounter with computers was in the 80s, when personal computers hit the market. I was in sales and services then. 10 years later, I led a team which developed a professional program for Windows with VC++ which was later rewritten in Delphi. At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists, at least.
 
