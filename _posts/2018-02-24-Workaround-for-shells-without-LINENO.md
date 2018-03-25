@@ -3501,9 +3501,9 @@ It's hard to look into the future, but we can look back. My first encounter with
 
 The same IBM mainframe also understood [Fortran](https://en.wikipedia.org/wiki/Fortran), so that was my second language. The Department of Theoretical Physics owned the second computer of the whole university, a [Zuse Z25](https://en.wikipedia.org/wiki/Z25_(computer)), which was fed with telex ticker tape which also understood ALGOL 60. Here I learned my first and only machine language.
 
-My next encounter with that technology was in the 80s, when personal computers hit the market. I was in sales and services then. 10 years later, I led a team which developed a professional program for Windows with VC++ which was later rewritten in Delphi to be released for the market we were successfully servicing then with a DOS program whose days seemed to be numbered. At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists, at least.
+My next encounter with that technology was in the 80s, when personal computers hit the market. I was in sales and services then. 10 years later, I led a team which developed a professional program for Windows with VC++ which was later rewritten in Delphi to be released for the market we were successfully servicing then with a DOS program whose days seemed to be numbered. 
 
-I remember, on the MySQL mailing list in 1998, a guy who replied nearly every question in a very terse style. He signed as engineer at TCX AB, and I was wondering what his boss may say to his spending his time on the mailing list. His name was [Monty Widenius](https://de.wikipedia.org/wiki/Michael_Widenius).
+At the end of the 90s, the Internet, PHP and MySQL were hot. But still there was next to no communication online except for mailing lists, at least. I remember, on the MySQL mailing list in 1998, a guy who replied nearly every question in a very terse style. He signed as engineer at TCX AB, and I was wondering what his boss may say to his spending his time on the mailing list. His name was [Monty Widenius](https://de.wikipedia.org/wiki/Michael_Widenius).
 
 The whole open source movement is something nobody could have ever dreamed of. Even in the new century, the invention of `git`, `github` and `stackoverflow` changed the game considerably again. 
 
