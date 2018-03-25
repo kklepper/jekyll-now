@@ -1171,13 +1171,13 @@ In replication, every machine must have a different ID. If you have several slav
 Oh, 3 warnings here... Better see what it is:
 
     M:7727678 [tmp]>SHOW WARNINGS;
-    +-------+------+-------------------------------------------------------------------+
-    | Level | Code | Message                                                           |
-    +-------+------+-------------------------------------------------------------------+
+    +-------+------+-----------------------------------------------------------------------+
+    | Level | Code | Message                                                               |
+    +-------+------+-----------------------------------------------------------------------+
     | Error |  145 | Table './tmp/tmp.sql_log' is marked as crashed and should be repaired |
     | Error | 1194 | Table 'tmp.sql_log' is marked as crashed and should be repaired       |
-    | Error | 1034 | 1 client is using or hasn't closed the table properly             |
-    +-------+------+-------------------------------------------------------------------+
+    | Error | 1034 | 1 client is using or hasn't closed the table properly                 |
+    +-------+------+-----------------------------------------------------------------------+
     3 rows in set (0.00 sec)
 
 No choice of what to do:
@@ -1190,7 +1190,7 @@ No choice of what to do:
     Msg_text: OK
     1 row in set (49.02 sec)
 
-Well, the table had about 1.2 GB data, so it took some time. Here I chose the delimiter `\G` to show you the difference. This feature is particularly interesting with extremely long rows. 
+Well, the table had about 1.2 GB data, so it took some time. Here I chose the delimiter `\G` to show you the difference. This feature is particularly interesting with extremely long result rows. 
 
 Everything okay now? Test it.
 
