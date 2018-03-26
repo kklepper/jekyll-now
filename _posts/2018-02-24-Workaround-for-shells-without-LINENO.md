@@ -129,7 +129,9 @@ Another caveat: As I took my notes while developing my ideas, I recorded all det
 
 Contemplating about it, I decided to leave all that in place. It makes you look much smarter if you present a solution in a way that nobody can understand how you ever could reach it. This attitude is well known. But if you want to learn how to get to a solution, you have to study how this can be done from scratch.
 
-Not those are smart who nod and pretend to understand, but those who dare to ask if they don't understand. That's the only chance to grow and become smarter. As a teacher, I preferred the latter type and encouraged everybody to ask early and often.
+Not those are smart who nod and pretend to understand, but those who dare to ask if they don't understand. That's the only chance to grow and become smarter. As a teacher, I preferred the latter type and encouraged everybody to ask early and often. 
+
+Interestingly, most didn't, and the reason is that you have to be clever to find out that there is a question to be asked in the first place and then also to be able to articulate that question. That's why it's common sense that once you arrive at a question the solution is not far away.
 
 More complex cases <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
