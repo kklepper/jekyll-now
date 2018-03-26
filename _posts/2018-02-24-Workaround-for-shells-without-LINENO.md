@@ -121,7 +121,7 @@ It's for people like me I take the pain to write this all up, those who are new 
 
 Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on it, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. And still I don't now what I'm heading for in the end.
 
-Obviously I digressed a lot, and in order to show it, I made it clear when I started to digress. Maybe the most interesting parts are to be found in these digressions -- you will decide. Maybe you first skip those digressions altogether and later return. Some parts build on top of each other, others are self containing.
+Obviously I digressed a lot, and in order to show it, I made it clear when I started to digress. Maybe the most interesting parts are to be found in these digressions -- you will decide. You may first skip those digressions altogether and later return. Some parts build on top of each other, others are self containing.
 
 As it turned out, the whole discussion is held together by the idea of how to debug intelligently several different scenarios. I don't know how you do it, and I don't know how anybody else does it, as hardly somebody reveals anything about this kind of work, but I can tell you how I do it. This technique of mine has developed over dozens of years and is still valid for me.
 
