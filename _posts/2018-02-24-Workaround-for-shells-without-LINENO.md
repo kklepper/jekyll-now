@@ -133,6 +133,12 @@ Not those are smart who nod and pretend to understand, but those who dare to ask
 
 Interestingly, most didn't, and the reason is that you have to be clever to find out that there is a question to be asked in the first place and then also to be able to articulate that question. That's why it's common sense that once you arrive at a question the solution is not far away.
 
+It should be easy, though, to just confess to not be able to understand anything. But that's obviously embarrassing. It should not be. In fact, that is the source of knowledge in general.
+
+And it is a well-known situation in debugging, too. There is something which should not be and you don't understand at all why this could happen. You have no clue. That's where the adventure begins. 
+
+You have to become creative and maybe invent new tools, new strategies, new points of view to be able to get a grip on what's happening. One thing for sure: if you don't cease you will succeed.
+
 More complex cases <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
