@@ -92,7 +92,7 @@ This basically answers the question [How to show line number when executing bash
 
 Anything more to add? 
 
-Sure. Why do you need this? How do you work with this? What can you do with this? Why do you want to tinker with this at all?
+Sure. Why do you need this? How do you work with this? What can you do with this? Is this simple approach really sufficient or useful? Why do you want to tinker with this at all?
 
 Debugging <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -111,7 +111,7 @@ Line numbers are not just for fun, they are badly needed for debugging, and that
 
 I could leave all of that as an exercise to you, but this is not the intention of Stack Overflow as I understand it. Hence I elaborate on the subject to give you as complete an insight as is possible for me. 
 
-Sorry, it gets a bit lengthy for that reason. While I was developing my ideas, I digressed a bit into database specifics new to me. If you are not interested, please simply skip those sections.
+Sorry, it gets a bit lengthy for that reason. While I was developing my ideas, I digressed a bit into database specifics and other stuff new to me. If you are not interested, simply skip those sections. I have denoted those sections as digression explicitly.
 
 In case you fear I get talkative or be prating, please stop reading. 
 
@@ -119,7 +119,7 @@ In particular I don't want to insult all you experts who are better than I, have
 
 It's for people like me I take the pain to write this all up, those who are new to the subject and have to fight their way more or less alone. Kind of paying back my debt according to the old mailing list ethics. In addition it turned out that this study revealed a lot of insight for myself as well.
 
-Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on it, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. And still I don't now what I'm heading for in the end.
+Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on it, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. 
 
 Obviously I digressed a lot, and in order to show it, I made it clear when I started to digress. Maybe the most interesting parts are to be found in these digressions -- you will decide. You may first skip those digressions altogether and later return. Some parts build on top of each other, others are self containing.
 
