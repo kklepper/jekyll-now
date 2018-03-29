@@ -63,6 +63,7 @@ published: true
 > - [Digression: Adding a stopwatch by PHP](#digression-adding-a-stopwatch-by-php-table-of-content)
 > - [Digression: Adding a stopwatch table](#digression-adding-a-stopwatch-table-table-of-content)
 > - [Digression: Processing multiple languages in parallel](#digression-processing-multiple-languages-in-parallel-table-of-content)
+> - [Digression: Stress test](#stress-test-style-table-of-content)
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 > - [Digression: Mathematics](#digression-mathematics-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
@@ -3361,6 +3362,82 @@ Here is a sample with the data we already had a look at:
     |  2181 | 2018-03-19 17:32:25.499570 | zh | 2018-03-19 17:29:04.624718 | 200.87510609627 |
     |  2181 | 2018-03-19 17:32:35.500922 | nl | 2018-03-19 17:29:03.622256 | 211.87900304794 |
     +-------+----------------------------+----+----------------------------+-----------------+
+
+Digression: Stress test <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+----------
+
+Now let's see if my concept really works out. `noh.sh` is just a shortcut for
+
+    nohup /path_to_your_script/tsm3.sh "$1 "  2>&1 >> /tmp/good.tsms3 </dev/null &>/dev/null &
+
+and will get a lot a list of 25 parameters:
+    
+    docker@boot2docker:/path_to_your_script$  /noh.sh "6 330 373 359 391 463 1547 1608 1624 1673 1790 1854 1913 1934 1952 1957 2097 2160 2181 2236 2348 2491 2607 4867"
+
+This will put my Linux machine under pressure:
+
+    docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SELECT * FROM tmp.tsmst_time WHERE 1 AND created > '2018-03-29 21:43:08.918475' ORDER BY 1,2"
+    +-------+----------------------------+----+----------------------------+-----------------+
+    | id_ex | tmstmp                     | lg | created                    | time_taken      |
+    +-------+----------------------------+----+----------------------------+-----------------+
+    |     6 | 2018-03-29 21:45:11.101720 | de | 2018-03-29 21:44:38.008564 | 34.746479034424 |
+    |   330 | 2018-03-29 21:44:42.078859 | de | 2018-03-29 21:44:38.520749 |                 |
+    |   359 | 2018-03-29 21:45:32.615974 | de | 2018-03-29 21:44:41.683020 | 51.350949048996 |
+    |   373 | 2018-03-29 21:53:01.943406 | de | 2018-03-29 21:44:41.340021 | 500.67747497559 |
+    |   373 | 2018-03-29 22:31:48.033890 | en | 2018-03-29 22:17:22.486302 | 865.54739403725 |
+    |   373 | 2018-03-29 22:36:03.800876 | fr | 2018-03-29 22:21:18.091132 | 885.70977807045 |
+    |   373 | 2018-03-29 22:37:46.070054 | en | 2018-03-29 22:37:44.575939 | 1.4918439388275 |
+    |   373 | 2018-03-29 22:39:06.825500 | it | 2018-03-29 22:24:19.583193 | 887.24399900436 |
+    |   373 | 2018-03-29 22:46:11.749947 | nl | 2018-03-29 22:31:48.265910 | 863.48417305946 |
+    |   391 | 2018-03-29 21:44:54.149166 | en | 2018-03-29 21:44:54.149166 |                 |
+    |   391 | 2018-03-29 22:11:54.230193 | de | 2018-03-29 22:11:54.230193 |                 |
+    |   391 | 2018-03-29 22:12:14.628192 | fr | 2018-03-29 22:12:14.628192 |                 |
+    |   391 | 2018-03-29 22:12:34.759525 | nl | 2018-03-29 22:12:34.759525 |                 |
+    |   463 | 2018-03-29 21:45:28.338717 | de | 2018-03-29 21:45:22.893972 |                 |
+    |  1547 | 2018-03-29 21:45:30.045056 | de | 2018-03-29 21:45:28.419043 |                 |
+    |  1608 | 2018-03-29 21:45:40.846581 | pt | 2018-03-29 21:45:39.986344 |                 |
+    |  1624 | 2018-03-29 21:57:59.360025 | de | 2018-03-29 21:50:20.575167 | 458.78588986397 |
+    |  1624 | 2018-03-29 22:36:24.266277 | en | 2018-03-29 22:36:04.222124 | 20.043766021729 |
+    |  1624 | 2018-03-29 22:36:43.675729 | es | 2018-03-29 22:36:24.535742 | 19.140374898911 |
+    |  1624 | 2018-03-29 22:37:03.541746 | fr | 2018-03-29 22:36:43.770397 | 19.77134013176  |
+    |  1624 | 2018-03-29 22:37:23.907251 | it | 2018-03-29 22:37:03.647754 | 20.258808851242 |
+    |  1624 | 2018-03-29 22:37:43.911716 | ru | 2018-03-29 22:37:24.000275 | 19.911689996719 |
+    |  1624 | 2018-03-29 22:37:51.501695 | en | 2018-03-29 22:37:46.269440 | 5.2336549758911 |
+    |  1673 | 2018-03-29 21:53:21.774959 | en | 2018-03-29 21:53:21.774959 |                 |
+    |  1790 | 2018-03-29 22:11:33.309635 | en | 2018-03-29 21:58:04.260606 | 809.0502538681  |
+    |  1790 | 2018-03-29 22:37:51.875712 | fr | 2018-03-29 22:37:51.875712 |                 |
+    |  1790 | 2018-03-29 22:49:52.943679 | fr | 2018-03-29 22:49:52.943679 |                 |
+    |  1854 | 2018-03-29 22:01:36.906924 | de | 2018-03-29 22:01:34.344943 |                 |
+    |  1913 | 2018-03-29 22:04:17.521803 | de | 2018-03-29 22:01:57.846220 | 139.6760468483  |
+    |  1934 | 2018-03-29 22:04:19.831006 | fr | 2018-03-29 22:04:18.343478 |                 |
+    |  1952 | 2018-03-29 22:11:51.727924 | de | 2018-03-29 22:06:43.993047 | 307.73625278473 |
+    |  1957 | 2018-03-29 22:21:17.913546 | nl | 2018-03-29 22:06:55.477266 | 862.43753194809 |
+    |  2097 | 2018-03-29 22:07:03.272026 | pt | 2018-03-29 22:07:03.019619 |                 |
+    |  2160 | 2018-03-29 22:08:03.733620 | nl | 2018-03-29 22:07:57.333693 |                 |
+    |  2160 | 2018-03-29 22:39:35.207848 | en | 2018-03-29 22:39:07.171963 | 28.035924911499 |
+    |  2160 | 2018-03-29 22:39:35.494995 | it | 2018-03-29 22:39:35.494995 |                 |
+    |  2181 | 2018-03-29 22:14:34.840794 | de | 2018-03-29 22:08:16.564087 | 378.27790307999 |
+    |  2181 | 2018-03-29 22:43:25.106526 | en | 2018-03-29 22:39:45.790175 | 219.31648898125 |
+    |  2181 | 2018-03-29 22:46:53.622741 | fr | 2018-03-29 22:43:25.260552 | 208.36245107651 |
+    |  2181 | 2018-03-29 22:49:52.826749 | nl | 2018-03-29 22:46:12.179704 | 220.64748096466 |
+    |  2181 | 2018-03-29 22:50:18.113479 | zh | 2018-03-29 22:46:53.738447 | 204.37515306473 |
+    |  2181 | 2018-03-29 22:50:23.236269 | nl | 2018-03-29 22:50:18.498836 | 4.7373580932617 |
+    |  2236 | 2018-03-29 22:24:19.363008 | de | 2018-03-29 22:11:35.479954 | 763.88407492638 |
+    |  2348 | 2018-03-29 22:11:53.776044 | en | 2018-03-29 22:11:53.776044 |                 |
+    |  2491 | 2018-03-29 22:12:54.944729 | en | 2018-03-29 22:12:54.944729 |                 |
+    |  2607 | 2018-03-29 22:15:07.960500 | en | 2018-03-29 22:14:38.558319 | 29.403391122818 |
+    |  4867 | 2018-03-29 22:17:22.015778 | en | 2018-03-29 22:15:08.975494 | 133.041670084   |
+    |  4867 | 2018-03-29 22:50:23.571944 | de | 2018-03-29 22:50:23.571944 |                 |
+    |  4867 | 2018-03-29 22:52:31.522952 | es | 2018-03-29 22:52:31.522952 |                 |
+    +-------+----------------------------+----+----------------------------+-----------------+
+
+`tsm3.sh` takes a break of 5 seconds before starting the next process, but this doesn't seem to be important at all. 
+
+We see that our simple start with number `6` takes twice as much time as before. Our well known candidate `1624` behaviors quite naturally except that all the other languages are created more than 30 minutes after the first one. The same phenomenon can be seen with `2181` as well.
+
+I guess the reason is that a lot of parallel processes not only have to be worked off by this machine but also use my Internet connection with 16 Mbit/s. That doesn't seem to be too bad because on my Windows machine I listen to a concert on YouTube without any compromise. 
+
+Interesting. No idea what happens here, but anyway every job seems to be worked off as it should.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
