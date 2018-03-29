@@ -63,7 +63,7 @@ published: true
 > - [Digression: Adding a stopwatch by PHP](#digression-adding-a-stopwatch-by-php-table-of-content)
 > - [Digression: Adding a stopwatch table](#digression-adding-a-stopwatch-table-table-of-content)
 > - [Digression: Processing multiple languages in parallel](#digression-processing-multiple-languages-in-parallel-table-of-content)
-> - [Digression: Stress test](#stress-test-style-table-of-content)
+> - [Digression: Stress test](#digression-stress-test-table-of-content)
 > - [Digression: Erlang style](#digression-erlang-style-table-of-content)
 > - [Digression: Mathematics](#digression-mathematics-table-of-content)
 - [A big thank you to you all](#a-big-thank-you-to-you-all-table-of-content)
@@ -3433,9 +3433,9 @@ This will put my Linux machine under pressure:
 
 `tsm3.sh` takes a break of 5 seconds before starting the next process, but this doesn't seem to be important at all. 
 
-We see that our simple start with number `6` takes twice as much time as before. Our well known candidate `1624` behaviors quite naturally except that all the other languages are created more than 30 minutes after the first one. The same phenomenon can be seen with `2181` as well.
+We see that our simple start with number `6` takes twice as much time as before. Our well known candidate `1624` behaviors quite naturally except that all the other languages are created more than 30 minutes after the first one. The same phenomenon can be seen with `2181` as well. This is definitely not what I expected.
 
-I guess the reason is that a lot of parallel processes not only have to be worked off by this machine but also use my Internet connection with 16 Mbit/s. That doesn't seem to be too bad because on my Windows machine I listen to a concert on YouTube without any compromise. 
+I guess the reason is that a lot of parallel processes not only have to be worked off by this machine but also use my Internet connection with 16 Mbit/s. But that doesn't seem to be the case because on my Windows machine I listen to a concert on YouTube without any compromise. Some of these processes seem to take extremely long to be finished. This is all very irritating and shows that I have to investigate this phenomenon further on. So bad. I'd like to be happy now, but I ain't.
 
 Interesting. No idea what happens here, but anyway every job seems to be worked off as it should.
 
