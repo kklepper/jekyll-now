@@ -3322,7 +3322,7 @@ Adding a column in order to select with respect to that column will most probabl
     ALTER TABLE `tsmst_time`
     ADD INDEX `created` (`created`);
 
-We can see immediately the affect of that operation; before:
+We can see immediately the effect of that operation; before:
 
     M:357314 [tmp]>explain SELECT * FROM tmp.tsmst_time WHERE 1 AND created > '2018-03-29 20:49:08.918475' ORDER BY 1,2;
     +------+-------------+------------+------+---------------+------+---------+------+------+-----------------------------+
