@@ -3317,6 +3317,32 @@ The same holds true for the stopwatch table: we can monitor the processes and se
 
 With this sample you see that the times taken are very diverse as well which again relates to the nature of the data. Also you see that I introduced a new column `created` and select with respect to this column. The reason is that I changed my mind. I no longer wanted to delete all data with every new run but keep this data for further inspection instead. So I had to rewrite my code accordingly.
 
+Adding a column in order to select with respect to that column will most probably make adding an index on that column a valuable action:
+
+    ALTER TABLE `tsmst_time`
+    ADD INDEX `created` (`created`);
+
+We can see immediately the affect of that operation; before:
+
+    M:357314 [tmp]>explain SELECT * FROM tmp.tsmst_time WHERE 1 AND created > '2018-03-29 20:49:08.918475' ORDER BY 1,2;
+    +------+-------------+------------+------+---------------+------+---------+------+------+-----------------------------+
+    | id   | select_type | table      | type | possible_keys | key  | key_len | ref  | rows | Extra                       |
+    +------+-------------+------------+------+---------------+------+---------+------+------+-----------------------------+
+    |    1 | SIMPLE      | tsmst_time | ALL  | NULL          | NULL | NULL    | NULL |  297 | Using where; Using filesort |
+    +------+-------------+------------+------+---------------+------+---------+------+------+-----------------------------+
+    1 row in set (0.01 sec)
+    
+After:
+
+    M:357314 [tmp]>explain SELECT * FROM tmp.tsmst_time WHERE 1 AND created > '2018-03-29 20:49:08.918475' ORDER BY 1,2;
+    +------+-------------+------------+-------+---------------+---------+---------+------+------+---------------------------------------+
+    | id   | select_type | table      | type  | possible_keys | key     | key_len | ref  | rows | Extra                                 |
+    +------+-------------+------------+-------+---------------+---------+---------+------+------+---------------------------------------+
+    |    1 | SIMPLE      | tsmst_time | range | created       | created | 7       | NULL |   16 | Using index condition; Using filesort |
+    +------+-------------+------------+-------+---------------+---------+---------+------+------+---------------------------------------+
+    1 row in set (0.00 sec)
+
+
 Here is a sample with the data we already had a look at:
 
     docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SELECT * FROM tmp.tsmst_time WHERE 1 ORDER BY 1,2"
