@@ -3378,7 +3378,8 @@ and will get a long list of 25 parameters:
 
 This surely will put my Linux machine under pressure:
 
-    docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SELECT * FROM tmp.tsmst_time WHERE 1 AND created > '2018-03-29 21:43:08.918475' ORDER BY 1,2"
+    docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SELECT * FROM tmp.tsmst_time 
+        WHERE 1 AND created > '2018-03-29 21:43:08.918475' ORDER BY 1,2"
     +-------+----------------------------+----+----------------------------+-----------------+
     | id_ex | tmstmp                     | lg | created                    | time_taken      |
     +-------+----------------------------+----+----------------------------+-----------------+
