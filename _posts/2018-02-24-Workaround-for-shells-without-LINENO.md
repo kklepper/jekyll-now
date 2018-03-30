@@ -3434,11 +3434,15 @@ This surely will put my Linux machine under pressure:
     |  4867 | 2018-03-29 22:52:31.522952 | es | 2018-03-29 22:52:31.522952 |                 |
     +-------+----------------------------+----+----------------------------+-----------------+
 
-`tsm3.sh` takes a break of 5 seconds before starting the next process, but this doesn't seem to be important at all. 
+To interpret this data correctly, you should know that `tsm3.sh` takes a break of 5 seconds before starting the next process, but this doesn't seem to be important at all. 
 
-We see that our simple start with number `6` takes twice as much time as before. Our well known candidate `1624` behaviors quite naturally except that all the other languages are created more than 30 minutes after the first one. The same phenomenon can be seen with `2181` as well. This is definitely not what I expected.
+We see that our simple start with number `6` takes twice as much time as before. Is this significant or should it be verified? 
 
-I guess the reason is that a lot of parallel processes not only have to be worked off by this machine but also use my Internet connection with 16 Mbit/s. But that doesn't seem to be the case because on my Windows machine I listen to a concert on YouTube without any compromise. Some of these processes seem to take extremely long to be finished. This is all very irritating and shows that I have to investigate this phenomenon further on. So bad. I'd like to be happy now, but I ain't.
+Our well known candidate `1624` behaviors quite naturally except that all the other languages are created more than 30 minutes after the first one. The same phenomenon can be seen with `2181` as well. This is definitely not what I expected.
+
+I guess the reason is that a lot of parallel processes not only have to be worked off by this machine but also use my Internet connection with 16 Mbit/s. But that doesn't seem to be the case because at the same time on my Windows machine being on the same Internet connection I listen to a concert on YouTube without any compromise. 
+
+Some of these processes seem to take extremely long to be finished. This is all very irritating and shows that I have to investigate this phenomenon further on. So bad. I'd like to be happy now, but I ain't.
 
 Interesting. No idea what happens here, but anyway every job seems to be worked off as it should. What does the machine say?
 
@@ -3451,7 +3455,9 @@ Interesting. No idea what happens here, but anyway every job seems to be worked 
     GiB Mem : 64.0/3.771    [                                                                                                    ]
     GiB Swap:100.0/0.883    [      
 
-If I interpret this data correctly, we don't have a problem with this machine at all. Inspection shows that all the processes not having been completed have some other problem buried in the code being executed or by the data provided by them. So I'll have to work on them one by one to clear things up.
+If I interpret this data correctly, we don't have a problem with this machine at all. 
+
+Inspection shows that all the processes not having been completed have some other problem buried in the code being executed or by the data provided by them. So I'll have to work on them one by one to clear things up.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
