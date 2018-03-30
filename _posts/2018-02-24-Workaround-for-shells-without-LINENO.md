@@ -3368,13 +3368,13 @@ Digression: Stress test <span style="font-size: 11px;float: right;"><a href="#to
 
 Now let's see if my concept really works out. `noh.sh` is just a shortcut for
 
-    nohup /path_to_your_script/tsm3.sh "$1 "  2>&1 >> /tmp/good.tsms3 </dev/null &>/dev/null &
+    nohup /path_to_your_script/tsm3.sh "$1"  2>&1 >> /tmp/good.tsms3 </dev/null &>/dev/null &
 
-and will get a lot a list of 25 parameters:
+and will get a long list of 25 parameters:
     
     docker@boot2docker:/path_to_your_script$  /noh.sh "6 330 373 359 391 463 1547 1608 1624 1673 1790 1854 1913 1934 1952 1957 2097 2160 2181 2236 2348 2491 2607 4867"
 
-This will put my Linux machine under pressure:
+This surely will put my Linux machine under pressure:
 
     docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SELECT * FROM tmp.tsmst_time WHERE 1 AND created > '2018-03-29 21:43:08.918475' ORDER BY 1,2"
     +-------+----------------------------+----+----------------------------+-----------------+
@@ -3437,7 +3437,18 @@ We see that our simple start with number `6` takes twice as much time as before.
 
 I guess the reason is that a lot of parallel processes not only have to be worked off by this machine but also use my Internet connection with 16 Mbit/s. But that doesn't seem to be the case because on my Windows machine I listen to a concert on YouTube without any compromise. Some of these processes seem to take extremely long to be finished. This is all very irritating and shows that I have to investigate this phenomenon further on. So bad. I'd like to be happy now, but I ain't.
 
-Interesting. No idea what happens here, but anyway every job seems to be worked off as it should.
+Interesting. No idea what happens here, but anyway every job seems to be worked off as it should. What does the machine say?
+
+    top - 21:48:22 up 6 days, 19:11, 14 users,  load average: 1.29, 1.35, 1.17
+    Tasks: 276 total,   1 running, 275 sleeping,   0 stopped,   0 zombie
+    %Cpu0  :   7.6/16.7   24[|||||||||||||||||||||||||                                                                           ]
+    %Cpu1  :   5.9/21.1   27[|||||||||||||||||||||||||||                                                                         ]
+    %Cpu2  :   8.5/18.3   27[||||||||||||||||||||||||||                                                                          ]
+    %Cpu3  :  10.0/12.0   22[||||||||||||||||||||||                                                                              ]
+    GiB Mem : 64.0/3.771    [                                                                                                    ]
+    GiB Swap:100.0/0.883    [      
+
+If I interpret this data correctly, we don't have a CPU problem but a memory problem. The machine is swapping a lot, and this takes time. Oh my, looks like the next adventure.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
