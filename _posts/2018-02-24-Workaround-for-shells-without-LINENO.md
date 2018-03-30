@@ -3450,7 +3450,7 @@ Interesting. No idea what happens here, but anyway every job seems to be worked 
     GiB Mem : 64.0/3.771    [                                                                                                    ]
     GiB Swap:100.0/0.883    [      
 
-If I interpret this data correctly, we don't have a CPU problem but a memory problem. The machine is swapping a lot, and this takes time. Oh my, looks like the next adventure.
+If I interpret this data correctly, we don't have a problem with this machine at all. Inspection shows that all the processes not having been completed have some other problem buried in the code being executed or by the data provided by them. So I'll have to work on them one by one to clear things up.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
