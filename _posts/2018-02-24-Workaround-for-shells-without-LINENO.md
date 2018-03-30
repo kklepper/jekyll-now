@@ -2446,6 +2446,8 @@ The same holds true with testing mechanisms. There are test units everywhere, bu
 
 Things may be different when you publish open source code to be used by a plethora of other people. I know that the MySQL team had and most probably still has the habit to translate every error fixed into a test case in order to prevent that this error would creep in again. Well, eventually they had to to pay somebody full-time to run all these test cases. Sorry, my time is limited. 
 
+The whole situation is certainly different when you have tens or hundreds of developers all working on the same big project, each on his own small slice, all of which has to work together seamlessly. I never was part of such an endeavor, so I don't have that experience.
+
 Maybe I will change my mind if there is a program state which is stable in a sense, but so far I never reached this state, and I doubt I ever will. My debug messages tell me everything I need and are inserted by PSPad shortcuts with a few keystrokes. 
 
 Digression: Dirty example <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
