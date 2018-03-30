@@ -1046,7 +1046,7 @@ Here we use `docker` in combination with the `mysql` client like a function whic
 
 You can do quite complex database operations this way.
 
-In particular, I always found it extremely hard to interpret `SHOW processlist` because you cannot restrict the output in any way, but now you can very easily using `grep`:
+In particular, I always found it extremely hard to interpret `SHOW processlist` because you cannot restrict the output in any way within `mysql`. 
 
     docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SHOW processlist"
     +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------+----------+
@@ -1080,25 +1080,7 @@ In particular, I always found it extremely hard to interpret `SHOW processlist` 
     | 192999 | root    | localhost         | NULL | Query       |     0 | init                                                                  | SHOW processlist |    0.000 |
     +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------+----------+
 
-Omit all sleeping processes:
-
-    docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SHOW processlist" | grep -v Sleep
-    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
-    | Id     | User    | Host              | db   | Command     | Time  | State                                                                 | Info                                                                                                 | Progress |
-    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
-    | 142342 | replica | 172.26.0.5:43678  | NULL | Binlog Dump | 69896 | Master has sent all binlog to slave; waiting for binlog to be updated | NULL                                                                                                 |    0.000 |
-    | 190118 | hsi     | 172.26.0.8:43054  | dj5  | Query       |     0 | Writing to net                                                        | SELECT COUNT(*)
-                FROM tmp.sitemap_2160_en
-                WHERE 1 AND status = 'in_process' |    0.000 |
-    | 190841 | replica | 172.26.0.6:43678  | NULL | Binlog Dump |  1325 | Master has sent all binlog to slave; waiting for binlog to be updated | NULL                                                                                                 |    0.000 |
-    | 192938 | hsi     | 172.26.0.10:33578 | dj5  | Query       |     0 | Sending data                                                          | SELECT COUNT(*)
-                FROM tmp.counter
-                WHERE 1
-                            AND id_ex = '373'
-                            # L: 2 |    0.000 |
-    | 193457 | root    | localhost         | NULL | Query       |     0 | init                                                                  | SHOW processlist                                                                                     |    0.000 |
-    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
-
+I never had the idea to use the MySQL client from the shell using the parameter `-e` in order to be able to filter the output by `grep`. Omit all sleeping processes:
 
     docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SHOW processlist" | grep -v Sleep
     +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
