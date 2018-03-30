@@ -3512,6 +3512,25 @@ If I interpret this data correctly, we don't have a problem with this machine at
 
 Inspection shows that all the processes not having been completed have some other problem buried in the code being executed or by the data provided by them. So I'll have to work on them one by one to clear things up.
 
+The next query shows that my monitoring mechanism triggered by Cron every 3 minutes does its job, at least for some time, which is due to the fact that I had a bug in this mechanism.
+
+    docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SELECT * FROM tmp.tsmst_time 
+        WHERE 1 AND created > '2018-03-30 17:07:28.918475' AND id_ex = 2160 AND lg = 'it' 
+        ORDER BY 1,2"
+    +-------+----------------------------+----+----------------------------+------------+
+    | id_ex | tmstmp                     | lg | created                    | time_taken |
+    +-------+----------------------------+----+----------------------------+------------+
+    |  2160 | 2018-03-30 17:13:05.750286 | it | 2018-03-30 17:13:05.750286 |            |
+    |  2160 | 2018-03-30 17:41:52.046099 | it | 2018-03-30 17:41:52.046099 |            |
+    |  2160 | 2018-03-30 17:43:09.444095 | it | 2018-03-30 17:43:09.444095 |            |
+    |  2160 | 2018-03-30 17:44:02.845920 | it | 2018-03-30 17:44:02.845920 |            |
+    |  2160 | 2018-03-30 17:45:02.791379 | it | 2018-03-30 17:45:02.791379 |            |
+    |  2160 | 2018-03-30 17:48:03.279948 | it | 2018-03-30 17:48:03.279948 |            |
+    |  2160 | 2018-03-30 17:51:03.193669 | it | 2018-03-30 17:51:03.193669 |            |
+    |  2160 | 2018-03-30 17:54:01.941504 | it | 2018-03-30 17:54:01.941504 |            |
+    +-------+----------------------------+----+----------------------------+------------+
+
+
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
 I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
