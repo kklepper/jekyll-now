@@ -1088,7 +1088,7 @@ I never had the idea to use the MySQL client from the shell using the parameter 
     +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
     | 142342 | replica | 172.26.0.5:43678  | NULL | Binlog Dump | 69896 | Master has sent all binlog to slave; waiting for binlog to be updated | NULL                                                                                                 |    0.000 |
     | 190118 | hsi     | 172.26.0.8:43054  | dj5  | Query       |     0 | Writing to net                                                        | SELECT COUNT(*)
-                FROM tmp.sitemap_2160_en
+                FROM tmp.sm_2160_en
                 WHERE 1 AND status = 'in_process' |    0.000 |
     | 190841 | replica | 172.26.0.6:43678  | NULL | Binlog Dump |  1325 | Master has sent all binlog to slave; waiting for binlog to be updated | NULL                                                                                                 |    0.000 |
     | 192938 | hsi     | 172.26.0.10:33578 | dj5  | Query       |     0 | Sending data                                                          | SELECT COUNT(*)
@@ -3117,7 +3117,7 @@ When the process finishes, we take the time and update this row. We not only kno
 
 To round up things, I additionally write this value to the monitoring table as well:
 
-        $this->_tmp_tsmst_record(__LINE__ . ' ' . __METHOD__ . " done $lg $this->id_ex :$this->_current_sitemap_lg: exhibitor_model->_show_ex_sitemap time_used :$time_used:");
+        $this->_tmp_tsmst_record(__LINE__ . ' ' . __METHOD__ . " done $lg $this->id_ex :$this->_current_sm_lg: exhibitor_model->_show_ex_sm time_used :$time_used:");
 
 Interestingly, the whole process takes much more time when started from the shell versus the browser. I have no idea why this is so. The browser lives on a different machine and has to transmit its message across the network. I would have thought that the relation would've been just the opposite. For example, instead of these 17 seconds recorded in this sample the values taken from the browser are 12 or 13 seconds. The difference will not be significant if the whole process takes much longer.
 
