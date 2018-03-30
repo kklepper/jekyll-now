@@ -3436,7 +3436,7 @@ In case you're interested in learning Erlang, I recommend [Learn You Some Erlang
 
 Of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity. Erlang error messages may be highly incomprehensible and not very informative. Also it is important to be able to track down the actions of the program in order to check if it does what it should do, and in case it doesn't, to find out the whereabouts of the faulty section.
 
-For example, to get the line number of the debug message the following construct may be used:
+For example, to get the line number of the debug message the following Erlang construct (macro expansion) may be used:
 
     integer_to_list(?LINE)
 
