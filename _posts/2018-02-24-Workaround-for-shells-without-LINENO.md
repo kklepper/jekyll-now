@@ -215,7 +215,7 @@ The result for the enhanced version using the test script `test_echo_line_no.sh`
     example 9:
         -- with variable and with VARTOKEN
         86  whatsup "hi my dear buddy :$buddy:"
-        >>>>>> : hi my dear buddy :joe:
+        >>>>>> : hi my dear buddy :hsi:
 
 How to use <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
@@ -332,7 +332,7 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     
     whatsup "hey"
     
-    buddy=joe
+    buddy=hsi
     
     echo '
     example 8:
@@ -1046,7 +1046,78 @@ Here we use `docker` in combination with the `mysql` client like a function whic
 
 You can do quite complex database operations this way.
 
-Notice that for MySQL, `This option is incompatible with GTID-based replication` ([Replication Slave Options and Variables](https://dev.mysql.com/doc/refman/5.6/en/replication-options-slave.html#sysvar_sql_slave_skip_counter)). This restriction with respect to `SQL_SLAVE_SKIP_COUNTER` does not apply to [MariaDB](https://mariadb.com/kb/en/library/set-global-sql_slave_skip_counter/).
+In particular, I always found it extremely hard to interpret `SHOW processlist` because you cannot restrict the output in any way, but now you can very easily using `grep`:
+
+    docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SHOW processlist"
+    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------+----------+
+    | Id     | User    | Host              | db   | Command     | Time  | State                                                                 | Info             | Progress |
+    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------+----------+
+    | 142342 | replica | 172.26.0.5:43678  | NULL | Binlog Dump | 69633 | Master has sent all binlog to slave; waiting for binlog to be updated | NULL             |    0.000 |
+    | 185057 | root    | localhost         | dj5  | Sleep       |    16 |                                                                       | NULL             |    0.000 |
+    | 185074 | root    | localhost         | tmp  | Sleep       |  1770 |                                                                       | NULL             |    0.000 |
+    | 190117 | hsi     | 172.26.0.8:43052  | dj5  | Sleep       |    44 |                                                                       | NULL             |    0.000 |
+    | 190118 | hsi     | 172.26.0.8:43054  | dj5  | Sleep       |     0 |                                                                       | NULL             |    0.000 |
+    | 190119 | hsi     | 172.26.0.8:43056  | dj5  | Sleep       |  2088 |                                                                       | NULL             |    0.000 |
+    | 190121 | hsi     | 172.26.0.8:43062  | dj5  | Sleep       |    44 |                                                                       | NULL             |    0.000 |
+    | 190122 | hsi     | 172.26.0.8:43064  | dj5  | Query       |     0 | init                                                                  | SET AUTOCOMMIT=1 |    0.000 |
+    | 190123 | hsi     | 172.26.0.8:43066  | dj5  | Sleep       |  2088 |                                                                       | NULL             |    0.000 |
+    | 190841 | replica | 172.26.0.6:43678  | NULL | Binlog Dump |  1062 | Master has sent all binlog to slave; waiting for binlog to be updated | NULL             |    0.000 |
+    | 192017 | hsi     | 172.26.0.10:57684 | dj5  | Sleep       |     0 |                                                                       | NULL             |    0.000 |
+    | 192018 | hsi     | 172.26.0.10:57686 | dj5  | Sleep       |     0 |                                                                       | NULL             |    0.000 |
+    | 192019 | hsi     | 172.26.0.10:57688 | dj5  | Sleep       |   445 |                                                                       | NULL             |    0.000 |
+    | 192053 | hsi     | 172.26.0.10:57786 | dj5  | Sleep       |     0 |                                                                       | NULL             |    0.000 |
+    | 192054 | hsi     | 172.26.0.10:57788 | dj5  | Sleep       |     0 |                                                                       | NULL             |    0.000 |
+    | 192055 | hsi     | 172.26.0.10:57790 | dj5  | Sleep       |   439 |                                                                       | NULL             |    0.000 |
+    | 192574 | hsi     | 172.26.0.10:59990 | dj5  | Sleep       |    14 |                                                                       | NULL             |    0.000 |
+    | 192575 | hsi     | 172.26.0.10:59992 | dj5  | Sleep       |     0 |                                                                       | NULL             |    0.000 |
+    | 192576 | hsi     | 172.26.0.10:59994 | dj5  | Sleep       |   279 |                                                                       | NULL             |    0.000 |
+    | 192870 | hsi     | 172.26.0.10:33330 | dj5  | Sleep       |    23 |                                                                       | NULL             |    0.000 |
+    | 192872 | hsi     | 172.26.0.10:33338 | dj5  | Sleep       |     0 |                                                                       | NULL             |    0.000 |
+    | 192873 | hsi     | 172.26.0.10:33340 | dj5  | Sleep       |    74 |                                                                       | NULL             |    0.000 |
+    | 192937 | hsi     | 172.26.0.10:33576 | dj5  | Sleep       |     7 |                                                                       | NULL             |    0.000 |
+    | 192938 | hsi     | 172.26.0.10:33578 | dj5  | Sleep       |     0 |                                                                       | NULL             |    0.000 |
+    | 192939 | hsi     | 172.26.0.10:33580 | dj5  | Sleep       |    39 |                                                                       | NULL             |    0.000 |
+    | 192999 | root    | localhost         | NULL | Query       |     0 | init                                                                  | SHOW processlist |    0.000 |
+    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------+----------+
+
+Omit all sleeping processes:
+
+    docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SHOW processlist" | grep -v Sleep
+    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
+    | Id     | User    | Host              | db   | Command     | Time  | State                                                                 | Info                                                                                                 | Progress |
+    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
+    | 142342 | replica | 172.26.0.5:43678  | NULL | Binlog Dump | 69896 | Master has sent all binlog to slave; waiting for binlog to be updated | NULL                                                                                                 |    0.000 |
+    | 190118 | hsi     | 172.26.0.8:43054  | dj5  | Query       |     0 | Writing to net                                                        | SELECT COUNT(*)
+                FROM tmp.sitemap_2160_en
+                WHERE 1 AND status = 'in_process' |    0.000 |
+    | 190841 | replica | 172.26.0.6:43678  | NULL | Binlog Dump |  1325 | Master has sent all binlog to slave; waiting for binlog to be updated | NULL                                                                                                 |    0.000 |
+    | 192938 | hsi     | 172.26.0.10:33578 | dj5  | Query       |     0 | Sending data                                                          | SELECT COUNT(*)
+                FROM tmp.counter
+                WHERE 1
+                            AND id_ex = '373'
+                            # L: 2 |    0.000 |
+    | 193457 | root    | localhost         | NULL | Query       |     0 | init                                                                  | SHOW processlist                                                                                     |    0.000 |
+    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
+
+
+    docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SHOW processlist" | grep -v Sleep
+    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
+    | Id     | User    | Host              | db   | Command     | Time  | State                                                                 | Info                                                                                                 | Progress |
+    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
+    | 142342 | replica | 172.26.0.5:43678  | NULL | Binlog Dump | 69896 | Master has sent all binlog to slave; waiting for binlog to be updated | NULL                                                                                                 |    0.000 |
+    | 190118 | hsi     | 172.26.0.8:43054  | dj5  | Query       |     0 | Writing to net                                                        | SELECT COUNT(*)
+                FROM tmp.sitemap_2160_en
+                WHERE 1 AND status = 'in_process' |    0.000 |
+    | 190841 | replica | 172.26.0.6:43678  | NULL | Binlog Dump |  1325 | Master has sent all binlog to slave; waiting for binlog to be updated | NULL                                                                                                 |    0.000 |
+    | 192938 | hsi     | 172.26.0.10:33578 | dj5  | Query       |     0 | Sending data                                                          | SELECT COUNT(*)
+                FROM tmp.counter
+                WHERE 1
+                            AND id_ex = '373'
+                            # L: 2 |    0.000 |
+    | 193457 | root    | localhost         | NULL | Query       |     0 | init                                                                  | SHOW processlist                                                                                     |    0.000 |
+    +--------+---------+-------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+----------+
+
+Notice that for MySQL, the statement `This option is incompatible with GTID-based replication` ([Replication Slave Options and Variables](https://dev.mysql.com/doc/refman/5.6/en/replication-options-slave.html#sysvar_sql_slave_skip_counter)). This restriction with respect to `SQL_SLAVE_SKIP_COUNTER` does not apply to [MariaDB](https://mariadb.com/kb/en/library/set-global-sql_slave_skip_counter/).
 
 Obviously, the slave is in sync with the master after this operation. So skipping the offending operation on the slave will get the slave running again. 
 
