@@ -3178,7 +3178,7 @@ Maybe you use some kind of PDO mechanism, so your style is different. I didn't s
 
 Very good. I still had to add something which bugged me with the shell script, if you remember. With `id_ex` 6 I start with `lg` en and then switch to de. This is reflected now in `tsmst_time` table .
 
-The next run shows that my initial observation that the windup will take much time is not true. Looking at `id_ex` 2181, all languages take about the same time, while with 1624 we see that `de` takes much longer than the other languages, so this is just due to the different nature of the data.
+The next run shows that my initial observation that the windup will take much time is not true. Looking at `id_ex` 2181, all languages take about the same time, while with 1624 we see that `de` takes much longer than the other languages, so this is just due to the different nature of the data, which may be very diverse with respect to the different languages.
 
     M:7727678 [tmp]>select * from tsmst_time ORDER BY 1,2;
     +-------+----+----------------------------+-----------------+
