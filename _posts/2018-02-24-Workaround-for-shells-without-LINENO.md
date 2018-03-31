@@ -3337,7 +3337,7 @@ The same holds true for monitoring the actual script `tsmst.sh` which does the j
     +-------+----------------------------+------------------------------+
     5 rows in set (0.00 sec)
 
-This is the function definition with my debugging stuff still in place:
+This is the function definition of `docker_insert` with my debugging stuff still in place:
 
     #--------------------------------------------------------------------
     docker_insert()
