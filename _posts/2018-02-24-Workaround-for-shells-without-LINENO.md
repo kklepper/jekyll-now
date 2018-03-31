@@ -3290,7 +3290,7 @@ For quite some time I didn't see what I should have seen so I introduced more an
 
 If you have a complex setup with several components which all can fail, you first must find out where something goes wrong, or better check one by one that each does its job as expected.
 
-So I introduced a function in my Cron file doing the actual insertion of the data. As my debugging table relies heavily on this ID `id_ex`, I had to extract this information from the line of the data file first. So the first action in the while loop is
+So I introduced a function `docker_insert` in my Cron file doing the actual insertion of the data. As my debugging table relies heavily on this ID `id_ex`, I had to extract this information from the line of the data file first. So the first action in the while loop is
 
     ID_EX=$(echo $line | awk '{print $3}')
     LG=$(echo $line | awk '{print $4}')
