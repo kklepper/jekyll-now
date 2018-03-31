@@ -3390,25 +3390,34 @@ After:
     +------+-------------+------------+-------+---------------+---------+---------+------+------+---------------------------------------+
     1 row in set (0.00 sec)
 
-Here is a sample with the data we already had a look at:
+In order to make reading easier, I changed the sequence of the columns with `Adminer`:
+
+    ALTER TABLE `tsmst_time`
+    CHANGE `lg` `lg` varchar(2) COLLATE 'utf8_general_ci' NOT NULL AFTER `id_ex`,
+    CHANGE `tmstmp` `tmstmp` timestamp(6) NOT NULL DEFAULT '0000-00-00 00:00:00.000000' ON UPDATE CURRENT_TIMESTAMP AFTER `lg`;
+
+Here is a sample with the data we already had a look at (blank lines added for easier readability):
 
     docker@boot2docker:/mnt/sda1/tmp$ docker exec -it m1 mysql -e "SELECT * FROM tmp.tsmst_time 
-        WHERE 1 ORDER BY 1,2"
-    +-------+----------------------------+----+----------------------------+-----------------+
-    | id_ex | tmstmp                     | lg | created                    | time_taken      |
-    +-------+----------------------------+----+----------------------------+-----------------+
-    |     6 | 2018-03-18 21:58:54.457520 | de | 2018-03-18 21:58:41.660852 | 12.800217866898 |
-    |  1624 | 2018-03-19 17:18:24.400905 | en | 2018-03-19 17:18:02.263434 | 22.137600183487 |
-    |  1624 | 2018-03-19 17:18:25.710967 | es | 2018-03-19 17:18:03.007292 | 22.703884840012 |
-    |  1624 | 2018-03-19 17:18:26.513767 | fr | 2018-03-19 17:18:03.967468 | 22.539812088013 |
-    |  1624 | 2018-03-19 17:18:27.586957 | it | 2018-03-19 17:18:04.970697 | 22.610341072083 |
-    |  1624 | 2018-03-19 17:18:42.362748 | ru | 2018-03-19 17:18:24.528626 | 17.834731817245 |
-    |  1624 | 2018-03-19 17:23:19.777122 | de | 2018-03-19 17:17:04.590292 | 375.18857121468 |
-    |  2181 | 2018-03-19 17:32:03.823225 | fr | 2018-03-19 17:29:03.024284 | 180.79913687706 |
-    |  2181 | 2018-03-19 17:32:19.595637 | en | 2018-03-19 17:27:50.601722 | 197.26366615295 |
-    |  2181 | 2018-03-19 17:32:25.499570 | zh | 2018-03-19 17:29:04.624718 | 200.87510609627 |
-    |  2181 | 2018-03-19 17:32:35.500922 | nl | 2018-03-19 17:29:03.622256 | 211.87900304794 |
-    +-------+----------------------------+----+----------------------------+-----------------+
+        WHERE 1 ORDER BY 1,3"
+    +-------+----+----------------------------+----------------------------+-----------------+
+    | id_ex | lg | tmstmp                     | created                    | time_taken      |
+    +-------+----+----------------------------+----------------------------+-----------------+
+    |     6 | de | 2018-03-31 23:37:23.594228 | 2018-03-31 23:37:10.952516 | 12.643800973892 |
+    
+    |  1624 | de | 2018-03-31 14:36:42.595195 | 2018-03-31 14:30:24.206813 | 378.39054298401 |
+    |  1624 | en | 2018-03-31 14:31:23.868442 | 2018-03-31 14:31:02.899937 | 20.968441963196 |
+    |  1624 | es | 2018-03-31 14:31:24.989542 | 2018-03-31 14:31:03.299472 | 21.69013094902  |
+    |  1624 | fr | 2018-03-31 14:31:28.853736 | 2018-03-31 14:31:04.190114 | 24.663626909256 |
+    |  1624 | it | 2018-03-31 14:31:27.297834 | 2018-03-31 14:31:05.045764 | 22.251433849335 |
+    |  1624 | ru | 2018-03-31 14:31:41.188132 | 2018-03-31 14:31:23.987434 | 17.200453042984 |
+    
+    |  2181 | de | 2018-03-31 14:46:03.040637 | 2018-03-31 14:40:05.368257 | 357.67352581024 |
+    |  2181 | en | 2018-03-31 14:44:22.955732 | 2018-03-31 14:41:02.741131 | 200.21481800079 |
+    |  2181 | fr | 2018-03-31 14:44:07.650007 | 2018-03-31 14:41:03.218709 | 184.43111896515 |
+    |  2181 | nl | 2018-03-31 14:44:38.812241 | 2018-03-31 14:41:03.652391 | 215.15999889374 |
+    |  2181 | zh | 2018-03-31 14:44:27.232105 | 2018-03-31 14:41:04.632230 | 202.59982514381 |
+    +-------+----+----------------------------+----------------------------+-----------------+
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
@@ -3417,21 +3426,21 @@ I'm glad I have developed it. I'm not sure if this would have happened if I woul
 Digression: Erlang style <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-You may wonder about the big line numbers in one of those PHP files. That's not a problem but due to the complexity of the task being addressed by this class. A problem are the long function definitions. There are quite a lot of methods in that class defined in that file, but still many of these functions are really really big. And that's not really good.
+You may wonder about the big line numbers in one of those PHP files. That's not a problem for PHP or PSPad but due to the complexity of the task being addressed by this class. A problem are the long function definitions. There are quite a lot of methods in that class defined in that file, but still many of these functions are really really big. And that's not really good.
 
-I learned that from my first experiences with `Erlang`. Functions in Erlang are short, sometimes extremely short. Nevertheless they produce programs in Erlang with millions of rows. 
+I learned that wisdom from my first experiences with `Erlang`. Functions in Erlang are short, sometimes extremely short. Nevertheless Erlang experts produce Erlang programs with millions of rows. 
 
 It was quite an experience to get a grip on Erlang in order to be able to produce productive code. I wish I had learned something along these lines earlier so that I could have used that experience in my programming habits in PHP as well.
 
-In case you're interested in learning Erlang, I recommend [Learn You Some Erlang for great good!](http://learnyousomeerlang.com/) by Fred Hébert who also illustrated his opus with very gifted graphics. It is really great fun to follow him on his journey. I am very grateful. Great guy.
+In case you're interested in learning Erlang, I recommend [Learn You Some Erlang for great good!](http://learnyousomeerlang.com/) by Fred Hébert who also illustrated his opus with very gifted graphics. It is really great fun to follow him on his journey. I am very grateful to him. Great guy.
 
-Of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity. Erlang error messages may be highly incomprehensible and not very informative. Also it is important to be able to track down the actions of the program in order to check if it does what it should do, and in case it doesn't, to find out the whereabouts of the faulty section.
+Of course, the problem of debugging that Erlang code arose as well. Guess what, I wrote my own debugging functions in Erlang in order to enhance my productivity. Erlang error messages as such may be highly incomprehensible and not very informative. Also it is important to be able to track down the actions of the program in order to check if it does what it should do, and in case it doesn't, to find out the whereabouts of the faulty section.
 
 For example, to get the line number of the debug message the following Erlang construct (macro expansion) may be used:
 
     integer_to_list(?LINE)
 
-I put all my primitive dirty debugging functions in the module `deb`, so a call to get debug information in module `tg` and function `find_str_tg` might look like
+I put all my primitive dirty debugging functions in the module `deb`, so a call to get debug information in module `tg` and function `find_str_tg` with debug function `filea` might look like
 
     deb:filea("/tmp/tg_fn_find_str_tg", integer_to_list(?LINE) ++ " Tg ~p~n", [Tg]),   
     % log the results
