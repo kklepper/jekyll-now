@@ -3288,7 +3288,7 @@ Even if each process only takes about 2 dozen seconds as with ID 1624, with 5 pr
 
 For quite some time I didn't see what I should have seen so I introduced more and more debugging mechanisms in order to be able to see. This included the need to get the debugging mechanisms of this Cron file into my debugging table, as the output of the Cron file is not visible if Cron calls it, except you write it to a logging file etc. etc.
 
-If you have a complex setup with several components which all can fail, you first must find out where something goes wrong, or better check one by one, that each does its job as expected.
+If you have a complex setup with several components which all can fail, you first must find out where something goes wrong, or better check one by one that each does its job as expected.
 
 So I introduced a function in my Cron file doing the actual insertion of the data. As my debugging table relies heavily on this ID `id_ex`, I had to extract this information from the line of the data file first. So the first action in the while loop is
 
