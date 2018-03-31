@@ -3340,8 +3340,7 @@ The same holds true for monitoring the actual script `tsmst.sh` which does the j
 This is the function definition of `docker_insert` with my debugging stuff still in place:
 
     #--------------------------------------------------------------------
-    docker_insert()
-    {
+    docker_insert() {
     #echo "docker_insert---------ID_EX :$ID_EX:-----------$1----------" 
     #exit
         docker exec m1 mysql -e "INSERT INTO tmp.tsmst VALUES ($ID_EX, NOW(6), '$1')" 
