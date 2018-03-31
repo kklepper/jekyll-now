@@ -3223,7 +3223,7 @@ It is quite easy to start a docker job from the host, as we saw. The other way a
 
 I have lots of data of which I don't know in which languages this data is given. Maybe it is only one, maybe a whole bunch, as we have seen already.
 
-My way to tackle this problem is to begin somewhere, make a guess about the language, find out which language it is, then maybe switch languages if my guess was wrong, and then find out if there are other languages, how much and which.
+My way to tackle this problem is to begin somewhere, make a guess about the language, find out which language it really is, then maybe switch languages if my guess was wrong, and then find out if there are other languages as well, and if so how much and which.
 
 Once you know that, you may want to start the same process for each of the other languages in parallel in order to speed up the whole procedure. You may want to do that from the browser, making your program open a new browser session, but it is obvious that you cannot do that with a number of IDs in parallel each of them having a number of languages, so you will look for a method to call these processes from the host shell. 
 
