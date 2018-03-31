@@ -3252,17 +3252,6 @@ An example for the command file may look like
 
 A snippet covering most from the processing file `cron_parallel.sh` called by Cron:
 
-    # summer
-    #TIMEDIFF=7200
-    # winter
-    TIMEDIFF=3600
-    # when called directly by shell
-    DATEUTP=$(date "+%d.%m.%Y %H:%M:%S");
-    # to compensate UTC when called by cron
-    DATE=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%d.%m.%Y %H:%M:%S")
-    # for renaming the command file
-    DATESHORT=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%d.%m.%Y_%H.%M")
-    
     CMDFILE=/tmp/trigger.cmd
     
     # Some error checking first
@@ -3271,6 +3260,9 @@ A snippet covering most from the processing file `cron_parallel.sh` called by Cr
         echo_line_no "FILE $FILE, not exist CMDFILE $CMDFILE" DATE
         exit
     fi
+    
+    # for renaming the command file
+    DATESHORT=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%d.%m.%Y_%H.%M")
     
     # next sort and remove duplicates, write to a unique file for debugging later
     sort $CMDFILE | uniq > $CMDFILE.$DATESHORT
