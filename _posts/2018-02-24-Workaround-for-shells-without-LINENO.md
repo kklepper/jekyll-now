@@ -3425,6 +3425,8 @@ The most important take-away from this debugging-by-database approach is that I 
 
 Now I can see what the engine is doing. Before, when this little doughnut kept circling and circling, I had no idea if the program was caught in a loop or what. Now I can see if this is the case or if the engine is just busy collecting data. As data is very diverse, you may hit a sample which has lots of data so your engine is kept busy for a very long time.
 
+But even if the browser does give you information, it is not very convenient to cycle through the output using the browser search function, especially if you have lots of output. Filtering database records is much more convenient and significant, so most probably you will find the problem easier and faster.
+
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
 I'm glad I have developed it. I'm not sure if this would have happened if I wouldn't have taken the pain to describe what I did in this article -- well, it developed into a kind of a diary. It was interesting for me, at least.
