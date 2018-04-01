@@ -3425,7 +3425,28 @@ The most important take-away from this debugging-by-database approach is that I 
 
 Now I can see what the engine is doing. Before, when this little doughnut kept circling and circling, I had no idea if the program was caught in a loop or what. Now I can see if this is the case or if the engine is just busy collecting data. As data is very diverse, you may hit a sample which has lots of data so your engine is kept busy for a very long time.
 
-But even if the browser does give you information, it is not very convenient to cycle through the output using the browser search function, especially if you have lots of output. Filtering database records is much more convenient and significant, so most probably you will find the problem easier and faster.
+But even if the browser does give you information, it is not very convenient to cycle through the output using the browser search function, especially if you have lots of output. Filtering database records is much more convenient and significant, so most probably you will find the problem easier and faster. 
+
+Example:
+
+    M:893794 [ci4]>SELECT * FROM tmp.tsmst 
+    	WHERE id_ex=2491 AND comment LIKE '%7441%' ORDER BY 2;
+    +-------+----------------------------+----+------------------------------------+
+    | id_ex | tmstmp                     | lg | comment                            |
+    +-------+----------------------------+----+------------------------------------+
+    |  2491 | 2018-04-01 17:49:16.157270 | it | 7441 en Mixatabnis::_process_wtn   |
+    |  2491 | 2018-04-01 17:50:09.144577 | it | 7441 en Mixatabnis::_process_wtn   |
+    |  2491 | 2018-04-01 17:50:33.062956 | it | 7441 en Mixatabnis::_process_wtn   |
+    |  2491 | 2018-04-01 17:51:44.460260 | it | 7441 en Mixatabnis::_process_wtn   |
+    ...
+    |  2491 | 2018-04-01 18:51:34.374961 | it | 7441 en Mixatabnis::_process_wtn   |
+    |  2491 | 2018-04-01 18:51:37.561730 | it | 7441 en Mixatabnis::_process_wtn   |
+    |  2491 | 2018-04-01 18:51:45.726918 | it | 7441 en Mixatabnis::_process_wtn   |
+    |  2491 | 2018-04-01 18:51:53.929338 | it | 7441 en Mixatabnis::_process_wtn   |
+    +-------+----------------------------+----+------------------------------------+
+    148 rows in set (0.02 sec)
+
+You see here that this part of the program has been passed regularly and you can also see that the time taken to process things varies quite much, also due to the nature of the data.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
