@@ -3421,7 +3421,7 @@ Here is a sample with the data we already had a look at (blank lines added for e
     |  2181 | zh | 2018-03-31 14:44:27.232105 | 2018-03-31 14:41:04.632230 | 202.59982514381 |
     +-------+----+----------------------------+----------------------------+-----------------+
 
-The most important take away from this debugging by database approach is that I can produce debugging output synchronously and filter by any condition easily. Before, I relied on visual output in the browser. That technique is unusable when the browser doesn't give you any information except that the engine is working.
+The most important take-away from this debugging-by-database approach is that I can produce debugging output synchronously and filter by any condition easily. Before, I relied on visual output in the browser. That technique is unusable when the browser doesn't give you any information except that the engine is working.
 
 Now I can see what the engine is doing. Before, when this little doughnut kept circling and circling, I had no idea if the program was caught in a loop or what. Now I can see if this is the case or if the engine is just busy collecting data. As data is very diverse, you may hit a sample which has lots of data so your engine is kept busy for a very long time.
 
