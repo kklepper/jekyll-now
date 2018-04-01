@@ -1325,7 +1325,9 @@ So for this shortcut expansion in PSPad I don't have to clutter the AHK namespac
     ::svl::SHOW VARIABLES LIKE '%%';   
     ::sww::SHOW WARNINGS;
 
-I use those extensively from [SuperPuTTY](https://github.com/jimradford/superputty) (after having tried numerous other SSH clients for too long a time with more or less trouble): 
+I use those extensively from [SuperPuTTY](https://github.com/jimradford/superputty) (after having tried numerous other SSH clients for too long a time with more or less trouble). The only circumstance that bugged me for a long time was that I lost my workspace when I sent my Windows machine to sleep. After awakening, only a couple of session tabs were reloaded. Of course, I lost all my history anyway, but as I had defined my SuperPuTTY layout, I wanted to have exactly that layout back.
+
+Well, a double-click on this layout did the trick, but not without costs. I had quite a number of error messages until I understood that the best is to just shut SuperPuTTY down, either on hibernation or on wakeup, and then do a clean restart. That's easy, fast and without trouble. 
 
 SuperPuTTY is my window to my Linux workhorse on the same network. This box is booted from a stick with boot2docker. The docker containers I work with don't live in virtual machines like Vagrant on the same box, but rather more production-like on this separate machine. 
 
@@ -3418,6 +3420,10 @@ Here is a sample with the data we already had a look at (blank lines added for e
     |  2181 | nl | 2018-03-31 14:44:38.812241 | 2018-03-31 14:41:03.652391 | 215.15999889374 |
     |  2181 | zh | 2018-03-31 14:44:27.232105 | 2018-03-31 14:41:04.632230 | 202.59982514381 |
     +-------+----+----------------------------+----------------------------+-----------------+
+
+The most important take away from this debugging by database approach is that I can produce debugging output synchronously and filter by any condition easily. Before, I relied on visual output in the browser. That technique is unusable when the browser doesn't give you any information except that the engine is working.
+
+Now I can see what the engine is doing. Before, when this little doughnut kept circling and circling, I had no idea if the program was caught in a loop or what. Now I can see if this is the case or if the engine is just busy collecting data. As data is very diverse, you may hit a sample which has lots of data so your engine is kept busy for a very long time.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
