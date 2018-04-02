@@ -70,7 +70,7 @@ published: true
 Workaround for shells without LINENO <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-In a fairly sophisticated script I wouldn't like to see all line numbers; rather I would like to be in control about the output.  
+In a fairly sophisticated script I wouldn't like to see all line numbers; rather I would like to be in control of the output.  
 
 Define a function
 
