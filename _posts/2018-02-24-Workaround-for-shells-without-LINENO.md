@@ -10,8 +10,8 @@ published: true
 ## Table of Content <span id="toc"></span>
 
 - [Workaround for shells without LINENO](#workaround-for-shells-without-lineno-table-of-content)
-- [Digression: Debugging](#digression-debugging-table-of-content)
-- [Digression: Scope](#digression-scope-table-of-content)
+> - [Digression: Debugging](#digression-debugging-table-of-content)
+> - [Digression: Scope](#digression-scope-table-of-content)
 - [More complex cases](#more-complex-cases-table-of-content)
 - [How to use](#how-to-use-table-of-content)
 - [Caveats](#caveats-table-of-content)
@@ -97,7 +97,7 @@ Anything more to add?
 
 Sure. Why do you need this? How do you work with this? What can you do with this? Is this simple approach really sufficient or useful? Why do you want to tinker with this at all?
 
-Debugging <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Debugging <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Lucky are those who have bash, but ash does not have LINENO, alas. Which is bad if you need to do a lot of testing on `Busybox` or the like.
@@ -124,7 +124,7 @@ It's for people like me I take the pain to write this all up, those who are new 
 
 Always bear in mind that I can only talk from my own experience, which is limited. So take this text with a grain of salt. Working on it, I added more and more of my daily routines and took notes of my investigation into realms new to me. That's far more than I initially planned for. 
 
-Scope <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
+Digression: Scope <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
 Obviously I digressed a lot, and in order to show it, I made it clear when I started to digress. Maybe the most interesting parts are to be found in these digressions -- you will decide. You may first skip those digressions altogether and later return. Some parts build on top of each other, others are self containing.
