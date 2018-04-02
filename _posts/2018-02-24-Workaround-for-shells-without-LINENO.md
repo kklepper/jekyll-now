@@ -116,7 +116,7 @@ I could leave all of that as an exercise to you, but this is not the intention o
 
 Sorry, it gets a bit lengthy for that reason. While I was developing my ideas, I digressed a bit into database specifics and other stuff new to me. If you are not interested, simply skip those sections. I have denoted those sections as digression explicitly.
 
-In case you fear I get talkative or be prating, please stop reading. Maybe I was too eager to show off and presented too much material. If so, I'm sorry, I don't want to overwhelm you. If you came here via a search engine, you will most probably be only interested in stuff around the keywords you used.
+In case you fear I get talkative or be prating, please stop reading. Maybe I was too eager to show off and presented too much material. If so, I'm sorry, I don't want to overwhelm you. If you came here via a search engine, you will most probably be only interested in stuff concerning the keywords you used.
 
 In particular I don't want to insult all you experts who are better than I, have far more experience and can do all of this easily on their own. 
 
