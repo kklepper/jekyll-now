@@ -106,7 +106,7 @@ That's why I finally developed a simple and powerful workaround with interesting
 
 Instead of using 
 
-    echo $LINENO this is a simple comment with a line number
+    echo $LINENO this is a simple comment with a line number # only works with bash
 
 which does not work with e.g. `Busybox` or `Boot2Docker` or `Tiny Linux`, introduce a small and simple function `echo_line_no` (or whatever function name you like better) which prints the line number pretty much, but not exactly like LINENO. 
 
