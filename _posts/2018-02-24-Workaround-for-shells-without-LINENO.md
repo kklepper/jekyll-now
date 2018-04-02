@@ -10,8 +10,8 @@ published: true
 ## Table of Content <span id="toc"></span>
 
 - [Workaround for shells without LINENO](#workaround-for-shells-without-lineno-table-of-content)
-- [Debugging](#debugging-table-of-content)
-- [Scope](#scope-table-of-content)
+- [Digression: Debugging](#digression-debugging-table-of-content)
+- [Digression: Scope](#digression-scope-table-of-content)
 - [More complex cases](#more-complex-cases-table-of-content)
 - [How to use](#how-to-use-table-of-content)
 - [Caveats](#caveats-table-of-content)
