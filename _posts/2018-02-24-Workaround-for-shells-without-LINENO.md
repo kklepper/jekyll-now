@@ -89,6 +89,8 @@ Output is
 
 if the number of this line in the source file is 16. 
 
+In a fairly sophisticated script I wouldn't like to see all line numbers; rather I would like to be in control about the output.  
+
 This basically answers the question [How to show line number when executing bash script](https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script) for users of ash or other shells without `LINENO`. 
 
 Anything more to add? 
