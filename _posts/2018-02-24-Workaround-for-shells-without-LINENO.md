@@ -70,6 +70,8 @@ published: true
 Workaround for shells without LINENO <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
+In a fairly sophisticated script I wouldn't like to see all line numbers; rather I would like to be in control about the output.  
+
 Define a function
 
     echo_line_no () {
@@ -87,8 +89,6 @@ Output is
     16   "this is a simple comment with a line number"
 
 if the number of this line in the source file is 16. 
-
-In a fairly sophisticated script I wouldn't like to see all line numbers; rather I would like to be in control about the output.  
 
 This basically answers the question [How to show line number when executing bash script](https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script) for users of ash or other shells without `LINENO`. 
 
