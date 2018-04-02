@@ -3446,7 +3446,7 @@ Example:
     +-------+----------------------------+----+------------------------------------+
     148 rows in set (0.02 sec)
 
-You see here that this part of the program has been passed regularly, 148 times to be exact, and took about 3 minitues to complete. You can also see that the time taken to process things varies quite much, also due to the nature of the data. This kind of insight is next to impossible to gain via browser. Of course, you can use a log file and shell tools `grep`, `awk`, `wc` and the like, if you don't have a database at your disposal.
+You see here that this part of the program has been passed regularly, 148 times to be exact, and took about 3 minutes to complete. You can also see that the time taken to process things varies quite much, also due to the nature of the data. This kind of insight is next to impossible to gain via browser. Of course, you can use a log file and shell tools `grep`, `awk`, `wc` and the like, if you don't have a database at your disposal.
 
 The whole investigation presented here is not just for fun or educational purposes. I have rearranged central parts of my code and refactored a major mechanism for simplification and empowerment which usually is not easy and prone to introduce lots of new bugs. This technique has saved me much time and effort. 
 
