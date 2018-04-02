@@ -3614,7 +3614,11 @@ I wonder how many mathematicians with high university degrees know this in abstr
 
 Programming is not science. It is not about discovering things, it is about creating things, so it is engineering. The beauty of programming is that you can do whatever you want provided the hardware and software tools admit what you have in mind.
 
-I concede that mathematicians do create as well, but not in the same sense. Programming is tied to the real world, in the end to somebody sitting in front of a screen or some other device controlling and acting, and at the base to some piece of hardware.
+I concede that mathematicians do create as well, but not in the same sense. Programming is tied to the real world, in the end to somebody sitting in front of a screen or some other device controlling and acting, and at the base to some piece of hardware. Finally his program should yield the results it was constructed for in the first place. 
+
+There is no unlimited time for a solution, the cost-benefit ratio must be sensible, so I'm afraid in most cases it isn't possible to look for better, more effective, more beautiful, less buggy programs. They must quote good enough for most purposes, that's all you can ask for.
+
+It's not too hard to write a small beautiful program. But real-world problems tend to be very complex, so the programs will be very complex, and that makes it very hard or rather labor-intensive to write good programs.
 
 End of digression.
 
