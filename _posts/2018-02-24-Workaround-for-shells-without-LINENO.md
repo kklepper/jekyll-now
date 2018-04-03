@@ -146,6 +146,8 @@ And it is a well-known situation in debugging, too. There is something which sho
 
 You have to become creative and maybe invent new tools, new strategies, new points of view to be able to get a grip on what's happening. One thing for sure: if you don't cease you will succeed.
 
+End of digression.
+
 More complex cases <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
