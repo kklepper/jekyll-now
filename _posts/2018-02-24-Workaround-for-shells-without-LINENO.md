@@ -2203,6 +2203,7 @@ To get some more information I may add comments manually like so:
 This will call `vi` which was very alien to me until I found a few simple rules:
 
 - press `i` switch to insert mode
+- add your comment
 - when done, press `:` to switch to command mode 
 - type `x`, then press `Enter` to write content to disk     
 
