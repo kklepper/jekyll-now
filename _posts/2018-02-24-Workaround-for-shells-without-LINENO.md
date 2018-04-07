@@ -2196,6 +2196,16 @@ So how to prevent this? Create another supervising script? I don't know. It happ
 
 Of course, this simple and primitive automatic procedure is possible only because I work alone. I have no experience with teamwork since the 90s, when revision control didn't exist yet. This condition may change, though, and if so I hope to profit from the experience of my collaborators.
 
+To get some more information I may add comments manually like so:
+
+    git commit --amend 
+
+This will call `vi` which was very alien to me until I found a few simple rules:
+
+- press `i` switch to insert mode
+- when done, press `:` to switch to command mode 
+- type `x`, then press `Enter` to write content to disk     
+
 Digression: Automatic boot2docker setup <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
