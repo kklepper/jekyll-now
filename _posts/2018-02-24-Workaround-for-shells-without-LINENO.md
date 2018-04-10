@@ -2210,7 +2210,7 @@ This will call `vi` which was very alien to me until I found a few simple rules:
 Digression: Automatic boot2docker setup <span style="font-size: 11px;float: right;"><a href="#toc">Table of Content</a></span>
 ----------
 
-One more thing that I had been struggling with very long until I found a good solution: If you work with boot2docker, at reboot you will lose all data which is not saved at some safe place. In particular, crontab data and the home directory `/home/docker` is lost. Of course, data in the `tmp` directory is lost as well, but that's to be expected and rather nice.
+One more thing that I had been struggling with very long until I found a good solution: If you work with boot2docker, at reboot you will lose all data which is not saved at some safe place. In particular, crontab data and the home directory `/home/docker` is lost. Of course, data in the `tmp` directory is lost as well, but that's to be expected and rather nice as a kind of automatic cleanup. 
 
 There is one place where you can manipulate the startup behavior:
 
