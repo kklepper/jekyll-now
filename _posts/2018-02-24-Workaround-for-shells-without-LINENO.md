@@ -1384,13 +1384,13 @@ Although I use AHK for years now, there is hardly a day that I don't open the AH
 
 Another principally simple and nifty command I use regularly reads like this:
 
-    git checkout temp$NO && git merge -s ours master && git checkout master && git merge temp$NO && git push origin master && git checkout temp$NO && git branch -a --color 
+    cur_branch=$(git rev-parse --abbrev-ref HEAD) && git checkout $cur_branch && git merge -s ours master && git checkout master && git merge $cur_branch && git push origin master && git checkout $cur_branch && git branch -a --color 
 
 That's quite a long line and you don't want to type that in. What does it do? Well, usually I use the branch temp for git. If I get screwed up, I might define the shell variable `NO` and branch out to `temp$NO`, say `NO=2`. If that's okay and I feel like pushing to the master, I call the above sequence.
 
-It checks out the branch I am in and merges this to master and checks out master, and -- yes, it merges the temp branch back -- and then pushes the master to origin and then checks back to the temp branch I was in and shows my branches in colors. Great. All that with just a few keystrokes you have to remember.
+It checks out the branch I am in and merges this to master and checks out master, and -- yes, it merges the current branch back -- and then pushes the master to origin and then checks back to the current branch I was in and shows my branches in colors. Great. All that with just a few keystrokes I have to remember.
 
-I'm sorry, I cannot explain why it merges the temp branch back -- I didn't construct this, I found it somewhere online and found it extremely useful. I didn't record the URL, though, which I do quite often, but not here, unfortunately. If you Google for `git merge -s ours master && git checkout master` you find a Russian page with a similar sequence, that's it. I don't speak Russian, so I didn't find it there. The original must've been lost, at least to Google.
+I'm sorry, I cannot explain why it merges the current branch back -- I didn't construct this, I found it somewhere online and found it extremely useful and developed it somewhat further. I didn't record the URL, though, which I do quite often, but not here, unfortunately. If you Google for `git merge -s ours master && git checkout master` you find a Russian page with a similar sequence, that's it. I don't speak Russian, so I didn't find it there. The original must've been lost, at least to Google.
 
 Your creativity will find lots of situations where you can ease your workload. 
 
