@@ -2229,7 +2229,6 @@ It is inconvenient to manipulate this file directly (remember this path and be r
         mkdir /c
         mount /dev/sda1 /c
         /bin/sh /path_to_your_script/up.sh
-        echo "$date "  > /dev/stdout | tee -a $LOG
         echo "$now up" >> $LOG
     else
         echo "$now down" >> $LOG
