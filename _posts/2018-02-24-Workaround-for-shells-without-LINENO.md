@@ -2214,18 +2214,25 @@ One more thing that I had been struggling with very long until I found a good so
 
 There is one place where you can manipulate the startup behavior:
 
-    /var/lib/boot2docker/profile
+    /var/lib/boot2docker/profile/
 
 It is inconvenient to manipulate this file directly (remember this path and be root), so I only use it to call another script from my `path_to_your_script` directory called `up.sh` where I put all my instructions to instead.
 
-    #FILE=/var/lib/boot2docker/profile
     #!/bin/sh
+    FILE=/var/lib/boot2docker/profile
+    
+    LOG="/path_to_your_script/up.log"
+    
+    now=$(date "+%Y-%m-%d_%H:%M:%S")
     
     if [ ! -d "/c" ]; then
         mkdir /c
         mount /dev/sda1 /c
         /bin/sh /path_to_your_script/up.sh
+        echo "$date "  > /dev/stdout | tee -a $LOG
+        echo "$now up" >> $LOG
     else
+        echo "$now down" >> $LOG
         /bin/sh /path_to_your_script/docker_stop.sh
     fi
 
