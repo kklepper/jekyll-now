@@ -227,7 +227,7 @@ Create a script defining the function only. This script is to be included in the
     #!/bin/ash
     FILE=echo_line_no.sh  
     
-    function echo_line_no () {
+    echo_line_no () {
     #echo "--echo_line_no input -0- :$0: -1- :$1: -2- :$2:"
     # to see what is coming in
         input=$1
@@ -266,7 +266,7 @@ Here is the script used for testing the functionality of `echo_line_no` whose ou
     
     source /path_to_your_script/echo_line_no.sh
     
-    function whatsup {
+    whatsup () {
     #echo "    debug ==:$1:====== argument given to function whatsup ========"
     # to see what we get
         echo_line_no "$1"
@@ -942,7 +942,7 @@ To implement this, add the first snippet to the top of `echo_line_no.sh`,
     TIMEDIFF=3600
     # to compensate UTC when called by cron
     
-    function get_date {
+    get_date () {
         DATETAKEN=$(date --date="@$(($(date -u +%s) + $TIMEDIFF))" "+%Y-%m-%d_%H:%M:%S")
     } # get_date 
 
